@@ -53,9 +53,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f4f2ed" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e0e11" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0e0e11">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -77,7 +76,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 ]}
 </script>
 
-<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("iside-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>document.documentElement.classList.add("js");try{document.documentElement.setAttribute("data-theme",localStorage.getItem("iside-theme")||"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>

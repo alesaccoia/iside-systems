@@ -41,10 +41,10 @@ readPal();
   };
   let saved = null;
   try { saved = localStorage.getItem("iside-theme"); } catch(e){}
-  apply(saved || "light");
+  apply(saved || "dark");
   if (!btn) return;
   btn.addEventListener("click", () => {
-    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
     try { localStorage.setItem("iside-theme", next); } catch(e){}
     apply(next);
   });

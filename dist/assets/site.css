@@ -2,20 +2,9 @@
    ISIDE SYSTEMS — shared stylesheet
    Sober technical layout: system sans for reading, mono for data.
    ============================================================ */
+/* Dark is the default: the palette below is the dark one, and a light
+   preference is applied as an override by the theme toggle. */
 :root{
-  --bg:#f4f2ed;      --bg-rgb:244,242,237;
-  --ink:#16161a;     --ink-rgb:22,22,26;
-  --dim:#77746c;
-  --acc:#c8341a;
-  --acc2:#1d4ed8;
-  --line:rgba(22,22,26,.14);
-  --line-soft:rgba(22,22,26,.07);
-  --hover:rgba(22,22,26,.035);
-  --pad:clamp(18px,5.5vw,96px);
-  --sans:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
-  --mono:"SFMono-Regular",ui-monospace,"Menlo","Consolas",monospace;
-}
-:root[data-theme="dark"]{
   --bg:#0e0e11;      --bg-rgb:14,14,17;
   --ink:#eceae4;     --ink-rgb:236,234,228;
   --dim:#7d7a80;
@@ -24,6 +13,19 @@
   --line:rgba(236,234,228,.16);
   --line-soft:rgba(236,234,228,.07);
   --hover:rgba(236,234,228,.04);
+  --pad:clamp(18px,5.5vw,96px);
+  --sans:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,"Menlo","Consolas",monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f4f2ed;      --bg-rgb:244,242,237;
+  --ink:#16161a;     --ink-rgb:22,22,26;
+  --dim:#77746c;
+  --acc:#c8341a;
+  --acc2:#1d4ed8;
+  --line:rgba(22,22,26,.14);
+  --line-soft:rgba(22,22,26,.07);
+  --hover:rgba(22,22,26,.035);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
