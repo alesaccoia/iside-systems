@@ -91,7 +91,7 @@ nav.main a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--acc)}
   padding:5px 9px;cursor:pointer;transition:color .25s,border-color .25s}
 #themeBtn:hover{color:var(--ink);border-color:var(--acc)}
 @media(max-width:760px){
-  nav.main{gap:16px;font-size:9.5px;letter-spacing:.12em}
+  nav.main{gap:14px;font-size:11px;letter-spacing:.1em}
   .brand b + span{display:none}
 }
 
