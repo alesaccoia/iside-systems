@@ -386,34 +386,29 @@ L_IT = dict(
            "i modelli che trasformano quei numeri in una decisione, e quando serve portare l'AI "
            "dentro il flusso di lavoro fino al punto in cui toglie davvero lavoro ripetitivo alle "
            "persone.",
-           "Posso costruire e prototipare tutto questo, attingendo da una codebase personale estesa "
-           "per rispondere alle esigenze di ogni team. Non sono però il reparto sviluppo di nessuno: "
-           "oltre una certa dimensione lo sviluppo spetta al vostro team o a un partner."],
+           "Posso costruire e prototipare tutto questo, attingendo da una codebase personale estesa. "
+           "Non sono però il reparto sviluppo di nessuno: oltre una certa dimensione lo sviluppo "
+           "spetta al vostro team o a un partner."],
     cap_lbl="02 — Cosa faccio",
     caps=[("Strategia e<br>Data Science",
            "Cosa misurare e cosa modellare, prima ancora di quale strumento comprare. Modelli "
-           "statistici, data mining e machine learning sui dati che avete già; previsioni, "
-           "segmentazione, disegno degli esperimenti e lettura onesta dei risultati. Esperienza "
-           "maturata fra istituti di ricerca, ad-tech e misurazione dei media, e statistica "
-           "insegnata all'università.",
+           "statistici, data mining e machine learning sui dati che avete già: previsioni, "
+           "segmentazione, esperimenti, e una lettura onesta dei risultati.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
-           "Guidare l'adozione, non consegnare un pilota e sparire. Selezione dei casi d'uso che "
-           "pagano davvero, costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI "
-           "Act obbliga a documentare, e la formazione che decide se qualcosa sopravvive al primo "
-           "trimestre. Certificato in AI &amp; Law e AI Governance.",
+           "Guidare l'adozione, non consegnare un pilota e sparire. Casi d'uso che pagano davvero, "
+           "costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI Act obbliga a "
+           "documentare. Certificato in AI &amp; Law e AI Governance.",
            ["Selezione casi d'uso", "Pilota → produzione", "Governance", "AI Act", "Formazione", "Change"]),
           ("Operations di<br>marketing e crescita",
-           "L'impianto che rende autonomo un team: un tracking plan che le persone seguono davvero, "
-           "eventi e pipeline in un unico posto, flussi CRM e lifecycle che partono da soli, "
-           "dashboard con una cadenza di lettura associata. Una sola definizione di conversione, "
-           "condivisa da tutti, e basta numeri montati a mano il lunedì.",
+           "L'impianto che rende autonomo un team: tracking plan seguito davvero, eventi e pipeline "
+           "in un unico posto, flussi CRM e lifecycle che partono da soli, dashboard con una cadenza "
+           "di lettura. Una definizione condivisa di conversione, e basta numeri montati a mano.",
            ["Tracking plan", "GA4 · GTM", "Pipeline dati", "CRM e lifecycle", "Automazioni", "Dashboard"]),
           ("Advisory per<br>founder e team",
            "Le decisioni difficili, senza una casella nell'organigramma: è fattibile con i dati e le "
-           "persone che avete, si compra o si costruisce, quale fornitore, chi assumere per primo, e "
-           "quali dei piani AI sul tavolo stanno in piedi. Se uno strumento esistente risolve già il "
-           "problema, lo dico e lo porto dentro invece di aprire un cantiere.",
+           "persone che avete, si compra o si costruisce, quale fornitore, chi assumere per primo. "
+           "Se uno strumento esistente risolve già il problema, lo dico invece di aprire un cantiere.",
            ["Fattibilità", "Build vs buy", "Scelta fornitori", "Due diligence", "Assunzioni", "Retainer o equity"])],
     sect_lbl="03 — Dove si applica",
     sect_h2="Qualunque campo<br>con dati da scavare.",
@@ -582,34 +577,30 @@ L_EN = dict(
            "and what to model, getting the data where it is needed without anyone copying it, "
            "building the models that turn those numbers into a decision, and — where it helps — "
            "bringing AI into the workflow to the point where it genuinely removes repetitive work.",
-           "I can build and prototype all of this, drawing on an extensive personal codebase to meet "
-           "each team's needs. I am not, however, anyone's development department: past a certain "
-           "size the development belongs with your team or a partner."],
+           "I can build and prototype all of this, drawing on an extensive personal codebase. I am "
+           "not, however, anyone's development department: past a certain size the development "
+           "belongs with your team or a partner."],
     cap_lbl="02 — What I do",
     caps=[("Data strategy<br>&amp; data science",
            "What to measure and what to model, before the question of which tool to buy. Statistical "
-           "modelling, data mining and machine learning on the data you already hold; forecasting, "
-           "segmentation, experiment design, and an honest reading of the result. Experience built "
-           "across research institutes, ad-tech and media measurement, and statistics taught at "
-           "university level.",
+           "modelling, data mining and machine learning on the data you already hold: forecasting, "
+           "segmentation, experiments, and an honest reading of the result.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
           ("AI <br>Adoption",
-           "Driving adoption, not delivering a pilot and leaving. Selecting the use cases that "
-           "actually pay, the real cost of running them, who has to change how they work, what the "
-           "AI Act obliges you to document, and the training that decides whether any of it survives "
-           "the first quarter. Certified in AI &amp; Law and AI Governance.",
+           "Driving adoption, not delivering a pilot and leaving. The use cases that actually pay, "
+           "the real cost of running them, who has to change how they work, what the AI Act obliges "
+           "you to document. Certified in AI &amp; Law and AI Governance.",
            ["Use-case selection", "Pilot → production", "Governance", "EU AI Act", "Training", "Change"]),
           ("Marketing &amp; growth<br>operations",
-           "The plumbing that makes a team autonomous: a tracking plan people actually follow, events "
-           "and pipelines into one place, CRM and lifecycle flows that fire without supervision, "
-           "dashboards with a reporting cadence attached. One agreed definition of a conversion, and "
-           "no more assembling Monday's numbers by hand.",
+           "The plumbing that makes a team autonomous: a tracking plan people follow, events and "
+           "pipelines into one place, CRM and lifecycle flows that fire unsupervised, dashboards "
+           "with a reporting cadence. One agreed definition of a conversion, and no more assembling "
+           "Monday's numbers by hand.",
            ["Tracking plan", "GA4 · GTM", "Data pipelines", "CRM &amp; lifecycle", "Automation", "Dashboards"]),
           ("Advisory for<br>founders &amp; teams",
            "The hard calls, without a box on the org chart: is this feasible with the data and people "
-           "you have, build or buy, which vendor, who to hire first, and which of the AI plans on the "
-           "table are real. Where an existing tool already solves the problem, I say so and bring it "
-           "in rather than open a building site.",
+           "you have, build or buy, which vendor, who to hire first. Where an existing tool already "
+           "solves the problem, I say so rather than open a building site.",
            ["Feasibility", "Build vs buy", "Vendor selection", "Due diligence", "Hiring", "Retainer or equity"])],
     sect_lbl="03 — Where it applies",
     sect_h2="Any field with<br>data worth mining.",
