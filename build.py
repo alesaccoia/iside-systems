@@ -391,9 +391,9 @@ L_IT = dict(
     caps=[("Strategia e<br>Data Science",
            "Cosa misurare e cosa modellare, prima ancora di quale strumento comprare. Modelli "
            "statistici, data mining e machine learning sui dati che avete già; previsioni, "
-           "segmentazione, disegno degli esperimenti e lettura onesta dei risultati. Quindici anni "
-           "fra istituti di ricerca, ad-tech e misurazione dei media, e statistica insegnata "
-           "all'università.",
+           "segmentazione, disegno degli esperimenti e lettura onesta dei risultati. Esperienza "
+           "maturata fra istituti di ricerca, ad-tech e misurazione dei media, e statistica "
+           "insegnata all'università.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
            "Guidare l'adozione, non consegnare un pilota e sparire. Selezione dei casi d'uso che "
@@ -492,7 +492,7 @@ L_IT = dict(
     p_title="Progetti — Iside Systems",
     p_desc="Indice dei progetti: sistemi AI, analytics e crescita, ricerca e strategia. Iside Systems, Alessandro Saccoia.",
     p_kicker="Indice progetti",
-    p_h1="Quindici anni di sistemi, misurazioni e decisioni.",
+    p_h1="Esperienza in sistemi, misurazione e decisioni.",
     p_lede="Ruoli ricoperti, non progetti venduti. Ogni voce indica la posizione — fondatore, CTO, "
            "responsabile di funzione, ingegnere di ricerca — perché quello che conta qui è "
            "l'ampiezza dei problemi affrontati, non un portfolio di consegne.",
@@ -509,9 +509,10 @@ L_IT = dict(
     portrait_cap="Alessandro Saccoia — Milano",
     a_kicker="Chi sono",
     a_h1="Iside Systems è lo studio di Alessandro Saccoia.",
-    a_lede="Tecnologo, professore a contratto, co-fondatore. Quindici anni sulla macchina che sta "
-           "dietro alle decisioni — misurazione, dati, strumenti e automazione — fra istituti di "
-           "ricerca, ad-tech, telco, misurazione dei media e oggi le mie stesse aziende.",
+    a_lede="Tecnologo, professore a contratto, co-fondatore. Esperienza costruita sulla macchina "
+           "che sta dietro alle decisioni — misurazione, dati, strumenti e automazione — fra "
+           "istituti di ricerca, ad-tech, telco, misurazione dei media e oggi le mie stesse "
+           "aziende.",
     a_p=["Iside Systems è il modo in cui questo lavoro viene venduto: strategia e scienza dei dati, "
          "AI Adoption, e le operations di marketing e crescita che le tengono insieme. Né "
          "agenzia né software house. Costruisco e prototipo quello che serve allo strato "
@@ -586,7 +587,7 @@ L_EN = dict(
     caps=[("Data strategy<br>&amp; data science",
            "What to measure and what to model, before the question of which tool to buy. Statistical "
            "modelling, data mining and machine learning on the data you already hold; forecasting, "
-           "segmentation, experiment design, and an honest reading of the result. Fifteen years "
+           "segmentation, experiment design, and an honest reading of the result. Experience built "
            "across research institutes, ad-tech and media measurement, and statistics taught at "
            "university level.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
@@ -683,7 +684,7 @@ L_EN = dict(
     p_title="Projects — Iside Systems",
     p_desc="Project index: AI systems, analytics and growth, research and strategy. Iside Systems, Alessandro Saccoia.",
     p_kicker="Project index",
-    p_h1="Fifteen years of systems, measurement and decisions.",
+    p_h1="Experience in systems, measurement and decisions.",
     p_lede="Roles held, not projects sold. Each entry states the position — founder, CTO, head of "
            "function, research engineer — because what matters here is the range of problems "
            "addressed, not a portfolio of deliverables.",
@@ -699,7 +700,7 @@ L_EN = dict(
     portrait_cap="Alessandro Saccoia — Milan",
     a_kicker="About",
     a_h1="Iside Systems is the practice of Alessandro Saccoia.",
-    a_lede="Computer scientist, contract professor, co-founder. Fifteen years spent on the machinery "
+    a_lede="Computer scientist, contract professor, co-founder. Experience built on the machinery "
            "behind decisions — measurement, data, tooling and automation — in research institutes, "
            "ad-tech, telecoms, media measurement, and now in my own companies.",
     a_p=["Iside Systems is how that work is sold: data strategy and science, AI adoption, and the "
