@@ -60,14 +60,16 @@ PROJECTS = [
              "learned.",
              ["Media measurement", "Attribution"])),
     dict(seed=8,  cat="strategy product",     year="2021 — 22",
-         it=("Vodafone Business", "Product manager",
-             "Product management dentro una grande telco: requisiti, roadmap e delivery fra team "
-             "tecnici e commerciali, in un contesto dove la governance non è facoltativa.",
-             ["Prodotto", "Enterprise"]),
-         en=("Vodafone Business", "Product manager",
-             "Product management inside a large telecom: requirements, roadmap and delivery across "
-             "engineering and commercial teams, in an environment where governance is not optional.",
-             ["Product", "Enterprise"])),
+         it=("Vodafone Business", "Product manager · Vodafone Analytics",
+             "Vodafone Analytics: analisi territoriale e martech costruiti sui big data della rete "
+             "telco. Requisiti, roadmap e delivery fra team tecnici e commerciali, in un contesto "
+             "dove la governance del dato non è facoltativa.",
+             ["Big data telco", "Geoanalytics", "Martech", "Prodotto"]),
+         en=("Vodafone Business", "Product manager · Vodafone Analytics",
+             "Vodafone Analytics: territorial analysis and martech built on telco network big data. "
+             "Requirements, roadmap and delivery across engineering and commercial teams, in an "
+             "environment where data governance is not optional.",
+             ["Telco big data", "Geoanalytics", "Martech", "Product"])),
     dict(seed=4,  cat="ai analytics",         year="2018 — 20",
          it=("Beintoo", "Head of data science",
              "Guida della data science nell'ad-tech: dataset comportamentali e di localizzazione su "
@@ -748,7 +750,7 @@ L_EN = dict(
 def chips(items):
     return "".join(f'<span class="chip">{i}</span>' for i in items)
 
-SITE = "https://iside.systems"          # cambia qui se cambia il dominio
+SITE = "https://isidesystems.com"          # cambia qui se cambia il dominio
 GTM  = "GTM-584NQHC3"
 PATHS = {"home":     ("", "en/"),
          "projects": ("progetti.html", "en/projects.html"),
@@ -1119,10 +1121,12 @@ def page_about(L, asset, home, projects, about, alt_href):
              "Senior manager, marketing effectiveness. Performance measurement and marketing "
              "effectiveness across Southern Europe and EMEA."),
             ("01/2021 — 04/2022", "Vodafone Business, Milano" if it else "Vodafone Business, Milan",
-             "Product manager della linea Big Data Analytics: design, raccolta dei requisiti e "
-             "gestione operativa dei clienti in esercizio." if it else
-             "Product manager of the Big Data Analytics product line: design, requirement gathering "
-             "and operations management for in-life clients."),
+             "Product manager di Vodafone Analytics, il prodotto di analisi territoriale e martech "
+             "costruito sui big data telco: design, raccolta dei requisiti e gestione operativa dei "
+             "clienti in esercizio." if it else
+             "Product manager of Vodafone Analytics, their territorial-analysis and martech product "
+             "built on telco big data: design, requirement gathering and operations management for "
+             "in-life clients."),
             ("10/2018 — 11/2020", "Beintoo, Milano" if it else "Beintoo, Milan",
              "Head of data science. Ricerca su business intelligence e trasformazione digitale "
              "omnichannel; analytics avanzata e big data per ad-tech e market intelligence." if it else

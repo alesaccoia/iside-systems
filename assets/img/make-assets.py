@@ -75,7 +75,7 @@ def og(path):
         d.text((x, (243 + k * 42) * S), line, font=f_sub, fill=LIGHT)
     d.line([x, 432 * S, x + 96 * S, 432 * S], fill=ACC_D, width=3 * S)
     d.text((x, 462 * S), "ALESSANDRO SACCOIA — MILANO", font=f_meta, fill=DIM_D)
-    d.text((x, 493 * S), "ISIDE.SYSTEMS", font=f_meta, fill=DIM_D)
+    d.text((x, 493 * S), "ISIDESYSTEMS.COM", font=f_meta, fill=DIM_D)
 
     im.resize((W, H), Image.LANCZOS).save(path, quality=92)
     print("wrote", os.path.relpath(path, HERE))
