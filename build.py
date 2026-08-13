@@ -492,10 +492,10 @@ L_IT = dict(
     p_title="Progetti — Iside Systems",
     p_desc="Indice dei progetti: sistemi AI, analytics e crescita, ricerca e strategia. Iside Systems, Alessandro Saccoia.",
     p_kicker="Indice progetti",
-    p_h1="Quindici anni di decisioni con cui ho dovuto convivere.",
-    p_lede="Ruoli ricoperti, non progetti venduti. Ogni voce dichiara in che posizione ero — "
-           "fondatore, CTO, responsabile di funzione o ingegnere di ricerca — perché il valore di "
-           "questo elenco è l'ampiezza delle decisioni, non un portfolio di consegne.",
+    p_h1="Quindici anni di sistemi, misurazioni e decisioni.",
+    p_lede="Ruoli ricoperti, non progetti venduti. Ogni voce indica la posizione — fondatore, CTO, "
+           "responsabile di funzione, ingegnere di ricerca — perché quello che conta qui è "
+           "l'ampiezza dei problemi affrontati, non un portfolio di consegne.",
     p_filters=[("all","Tutti"),("ai","Sistemi AI"),("analytics","Analytics e crescita"),
                ("product","Prodotti e open source"),("creative","Interattivo e audio"),
                ("research","Ricerca"),("strategy","Strategia")],
@@ -683,10 +683,10 @@ L_EN = dict(
     p_title="Projects — Iside Systems",
     p_desc="Project index: AI systems, analytics and growth, research and strategy. Iside Systems, Alessandro Saccoia.",
     p_kicker="Project index",
-    p_h1="Fifteen years of decisions I had to live with.",
-    p_lede="Roles held, not projects sold. Each entry states what seat I was in — founder, CTO, head "
-           "of function or research engineer — because the value of this list is the range of "
-           "decisions, not a portfolio of deliverables.",
+    p_h1="Fifteen years of systems, measurement and decisions.",
+    p_lede="Roles held, not projects sold. Each entry states the position — founder, CTO, head of "
+           "function, research engineer — because what matters here is the range of problems "
+           "addressed, not a portfolio of deliverables.",
     p_filters=[("all","All"),("ai","AI systems"),("analytics","Analytics &amp; growth"),
                ("product","Products &amp; open source"),("creative","Interactive &amp; audio"),
                ("research","Research"),("strategy","Strategy")],
