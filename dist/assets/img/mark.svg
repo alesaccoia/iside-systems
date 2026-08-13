@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Iside Systems">
+  <style>
+    .ink { stroke: #16161a; }
+    .acc { stroke: #c8341a; }
+    @media (prefers-color-scheme: dark) {
+      .ink { stroke: #eceae4; }
+      .acc { stroke: #ff4a2b; }
+    }
+  </style>
+  <g fill="none">
+    <rect class="ink" x="3.3" y="3.3" width="25.4" height="25.4" stroke-width="2.6"/>
+    <rect class="acc" x="10.6" y="10.6" width="10.8" height="10.8" stroke-width="2.6"/>
+  </g>
+</svg>
