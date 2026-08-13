@@ -750,7 +750,7 @@ L_EN = dict(
 def chips(items):
     return "".join(f'<span class="chip">{i}</span>' for i in items)
 
-SITE = "https://isidesystems.com"          # cambia qui se cambia il dominio
+SITE = "https://www.isidesystems.com"          # cambia qui se cambia il dominio
 GTM  = "GTM-584NQHC3"
 PATHS = {"home":     ("", "en/"),
          "projects": ("progetti.html", "en/projects.html"),
@@ -808,6 +808,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{img}">
+<meta property="og:image:secure_url" content="{img}">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">

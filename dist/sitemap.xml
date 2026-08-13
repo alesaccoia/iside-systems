@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://isidesystems.com/</loc>
+    <loc>https://www.isidesystems.com/</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/"/>
   </url>
   <url>
-    <loc>https://isidesystems.com/en/</loc>
+    <loc>https://www.isidesystems.com/en/</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/"/>
   </url>
   <url>
-    <loc>https://isidesystems.com/progetti.html</loc>
+    <loc>https://www.isidesystems.com/progetti.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/progetti.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/projects.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/progetti.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/progetti.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/progetti.html"/>
   </url>
   <url>
-    <loc>https://isidesystems.com/en/projects.html</loc>
+    <loc>https://www.isidesystems.com/en/projects.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/progetti.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/projects.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/progetti.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/progetti.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/progetti.html"/>
   </url>
   <url>
-    <loc>https://isidesystems.com/chi-sono.html</loc>
+    <loc>https://www.isidesystems.com/chi-sono.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/chi-sono.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/about.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/chi-sono.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/chi-sono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/chi-sono.html"/>
   </url>
   <url>
-    <loc>https://isidesystems.com/en/about.html</loc>
+    <loc>https://www.isidesystems.com/en/about.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://isidesystems.com/chi-sono.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://isidesystems.com/en/about.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://isidesystems.com/chi-sono.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/chi-sono.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/chi-sono.html"/>
   </url>
 </urlset>
