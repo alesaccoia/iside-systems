@@ -18,11 +18,13 @@ export class TrackManager {
     this.notifyChanged();
   }
 
-  addTrack({ type, name, midiNote, channel, density, euclid }) {
+  addTrack(opts) {
+    const { type, euclid } = opts;
     const id = crypto.randomUUID();
+    // melodic tracks take scale, root, mode, motif… so pass the options through
     const track = type === 'percussion'
-      ? new PercussionTrack(id, this, { name, midiNote, channel, density, euclid })
-      : new MelodicTrack(id, this, { name, channel });
+      ? new PercussionTrack(id, this, opts)
+      : new MelodicTrack(id, this, opts);
     track.setSteps(this.steps);
     this.tracks.push(track);
     this.containerEl.appendChild(track.render());
@@ -66,14 +68,7 @@ export class TrackManager {
     this.tracks = [];
     this.steps = data.steps || 16;
     for (const td of data.tracks || []) {
-      const track = this.addTrack({
-        type: td.type,
-        name: td.name,
-        midiNote: td.midiNote,
-        channel: td.channel,
-        density: td.density,
-        euclid: td.euclid
-      });
+      const track = this.addTrack({ ...td });
       track.load?.(td);
     }
     // Ensure all tracks have the correct step count and redraw
@@ -201,29 +196,30 @@ class PercussionTrack extends BaseTrack {
     super(id, manager, opts);
     this.type = 'percussion';
     this.midiNote = Number(opts.midiNote ?? 36);
-    this.density = Number(opts.density ?? 0.5);
+    // density used to gate the written steps AND to sprinkle extra hits, so a
+    // pattern never played what the grid showed. Split in two: the grid is
+    // honoured, ghost notes are opt-in.
+    this.density = Number(opts.density ?? 1);
+    this.ghost = Number(opts.ghost ?? 0);
     this.euclid = opts.euclid || null; // { beats, steps, rotate }
     this.random = prng();
   }
 
   renderControls(container) {
-    container.appendChild(makeNumber('Note', this.midiNote, v => { this.midiNote = clamp(v, 0, 127); this.manager.notifyChanged(); }));
-    container.appendChild(makeNumber('Ch', this.channel, v => { this.channel = clamp(v, 0, 15); this.manager.notifyChanged(); }));
+    container.appendChild(makeNumber('Note', this.midiNote, v => { this.midiNote = clamp(v, 0, 127); this.manager.notifyChanged(); }, 0, 127, 1, 58));
+    container.appendChild(makeNumber('Ch', this.channel, v => { this.channel = clamp(v, 0, 15); this.manager.notifyChanged(); }, 0, 15, 1, 48));
     container.appendChild(makeRange('Density', this.density, v => { this.density = clamp(v, 0, 1); this.manager.notifyChanged(); }, 0, 1, 0.01));
-    const btn = document.createElement('button');
-    btn.className = 'btn subtle';
-    btn.textContent = 'Euclid';
-    btn.addEventListener('click', () => {
-      const beats = Number(prompt('Beats?', String(this.euclid?.beats ?? 5)) || 0);
-      const steps = Number(prompt('Steps?', String(this.euclid?.steps ?? this.steps)) || 0);
-      const rotate = Number(prompt('Rotate?', String(this.euclid?.rotate ?? 0)) || 0);
-      this.euclid = { beats: clamp(beats, 0, 64), steps: clamp(steps, 1, 64), rotate: clamp(rotate, 0, 64) };
-      this.applyEuclid();
-      this.manager.notifyChanged();
-    });
-    container.appendChild(btn);
+    container.appendChild(makeRange('Ghost', this.ghost, v => { this.ghost = clamp(v, 0, 1); this.manager.notifyChanged(); }, 0, 1, 0.01));
+
+    // Euclid used to hide behind three prompt() dialogs; these apply as you type
+    const e = this.euclid || { beats: 4, steps: this.steps, rotate: 0 };
+    const push = () => { this.euclid = e; this.applyEuclid(); this.manager.notifyChanged(); };
+    container.appendChild(makeNumber('Hits', e.beats, v => { e.beats = clamp(v, 0, 64); push(); }, 0, 64, 1, 48));
+    container.appendChild(makeNumber('Of', e.steps, v => { e.steps = clamp(v, 1, 64); push(); }, 1, 64, 1, 48));
+    container.appendChild(makeNumber('Rot', e.rotate, v => { e.rotate = clamp(v, 0, 64); push(); }, 0, 64, 1, 48));
+
     const rm = document.createElement('button');
-    rm.className = 'btn subtle'; rm.textContent = 'Remove';
+    rm.className = 'btn subtle'; rm.textContent = this.manager.labels?.remove || 'Remove';
     rm.addEventListener('click', () => this.manager.removeTrack(this.id));
     container.appendChild(rm);
   }
@@ -233,9 +229,11 @@ class PercussionTrack extends BaseTrack {
     const { beats, steps, rotate } = this.euclid;
     const pattern = bjorklund(beats, steps);
     this.stepStates = new Array(this.steps).fill(false);
-    for (let i = 0; i < steps; i++) {
-      const idx = (i + rotate) % steps;
-      if (pattern[i]) this.stepStates[idx] = true;
+    // tile the figure across the whole grid: a 5-in-8 asked on 16 steps used to
+    // fill only the first bar and leave the second silent
+    for (let i = 0; i < this.steps; i++) {
+      const src = ((i - rotate) % steps + steps) % steps;
+      if (pattern[src]) this.stepStates[i] = true;
     }
     this.redrawSteps();
   }
@@ -244,28 +242,29 @@ class PercussionTrack extends BaseTrack {
     const s = normalizeStep(this.stepStates[stepIndex]);
     const should = stepCondition(s, this.transport.loopCount);
     if (!s.on || !should) {
-      // stochastic fill
-      if (this.random() < this.density * 0.15) this.trigger(stepTimeMs);
+      if (this.ghost && this.random() < this.ghost * 0.25) this.trigger(stepTimeMs, 62);
       return;
     }
     if (this.random() < this.density * s.prob) this.trigger(stepTimeMs);
   }
 
-  trigger(whenMs) {
-    this.midi.noteOn(this.midiNote, 110, this.channel, whenMs);
+  trigger(whenMs, velocity = 110) {
+    this.midi.noteOn(this.midiNote, velocity, this.channel, whenMs);
     this.midi.noteOff(this.midiNote, this.channel, whenMs + 25);
     this.visualizer.ping({ hue: 160, energy: 0.7, x: this.channel / 16 });
   }
 
   serialize() {
     const base = super.serialize();
-    return { ...base, midiNote: this.midiNote, density: this.density, euclid: this.euclid };
+    return { ...base, midiNote: this.midiNote, density: this.density, ghost: this.ghost,
+             euclid: this.euclid };
   }
 
   load(data) {
     super.load(data);
     if (typeof data.midiNote === 'number') this.midiNote = data.midiNote;
     if (typeof data.density === 'number') this.density = data.density;
+    if (typeof data.ghost === 'number') this.ghost = data.ghost;
     if (data.euclid) { this.euclid = data.euclid; this.applyEuclid(); }
   }
 }
@@ -274,77 +273,229 @@ class MelodicTrack extends BaseTrack {
   constructor(id, manager, opts) {
     super(id, manager, opts);
     this.type = 'melodic';
-    this.scale = 'minor';
-    this.root = 48; // C3
-    this.range = 24; // two octaves
-    this.harmonicity = 0.5; // chord probability
+    this.scale = opts.scale || 'minor';
+    this.root = Number(opts.root ?? 48);              // C3
+    this.octaves = Number(opts.octaves ?? 2);
+    this.harmonicity = Number(opts.harmonicity ?? 0.2); // how often a degree becomes a chord
+    this.density = Number(opts.density ?? 1);           // how often an active step speaks
+    this.gate = Number(opts.gate ?? 1);                 // note length, in steps
+    this.mode = opts.mode || 'motif';   // motif | up | down | updown | walk | random
+    this.motifLen = Number(opts.motifLen ?? 8);
+    this.mutate = Number(opts.mutate ?? 0.12);          // chance a degree is rewritten each loop
+    this.euclid = opts.euclid || null;
     this.random = prng();
+    this.cursor = 0;            // where the arpeggio or the walk has got to
+    this.hitIndex = 0;          // which note of the motif comes next
+    this.dir = 1;
+    this.lastLoop = -1;
+    this.motif = this.makeMotif();
+  }
+
+  /* A motif is a short list of scale degrees. Repeating it is what makes a
+     phrase sound composed rather than sampled from noise; mutation keeps it
+     from becoming wallpaper. */
+  makeMotif() {
+    const len = clamp(this.motifLen, 2, 32);
+    const span = 7;
+    const out = [];
+    let d = 0;
+    for (let i = 0; i < len; i++) {
+      if (i === 0) { out.push(0); continue; }   // phrases start on the root
+      // small intervals most of the time, an occasional leap
+      const jump = this.random() < 0.22
+        ? Math.round((this.random() * 4) - 2) * 2
+        : Math.round((this.random() * 2) - 1);
+      d = clamp(d + jump, -span, span);
+      out.push(d);
+    }
+    return out;
+  }
+
+  mutateMotif() {
+    if (this.motif.length < 2) return;
+    const i = 1 + Math.floor(this.random() * (this.motif.length - 1));
+    const delta = this.random() < 0.5 ? -1 : 1;
+    this.motif[i] = clamp(this.motif[i] + delta * (this.random() < 0.3 ? 2 : 1), -7, 7);
   }
 
   renderControls(container) {
-    container.appendChild(makeNumber('Ch', this.channel, v => { this.channel = clamp(v, 0, 15); this.manager.notifyChanged(); }));
-    const sel = document.createElement('select'); sel.className = '';
-    ;['minor','major','dorian','phrygian','lydian','mixolydian','locrian','whole'].forEach(k => {
-      const o = document.createElement('option'); o.value = k; o.textContent = k; if (k===this.scale) o.selected = true; sel.appendChild(o);
-    });
-    sel.addEventListener('change', () => { this.scale = sel.value; this.manager.notifyChanged(); });
-    container.appendChild(wrap('Scale', sel));
-    container.appendChild(makeNumber('Root', this.root, v => { this.root = clamp(v, 0, 120); this.manager.notifyChanged(); }));
-    container.appendChild(makeNumber('Range', this.range, v => { this.range = clamp(v, 12, 72); this.manager.notifyChanged(); }));
-    container.appendChild(makeRange('Chord', this.harmonicity, v => { this.harmonicity = clamp(v, 0, 1); this.manager.notifyChanged(); }, 0, 1, 0.01));
-    const rm = document.createElement('button'); rm.className = 'btn subtle'; rm.textContent = 'Remove';
-    rm.addEventListener('click', () => this.manager.removeTrack(this.id)); container.appendChild(rm);
+    const changed = () => this.manager.notifyChanged();
+    container.appendChild(makeNumber('Ch', this.channel, v => { this.channel = clamp(v, 0, 15); changed(); }, 0, 15, 1, 48));
+
+    container.appendChild(makeSelect('Mode', this.mode,
+      [['motif', 'Motif'], ['up', 'Arp up'], ['down', 'Arp down'], ['updown', 'Arp up/down'],
+       ['walk', 'Walk'], ['random', 'Random']],
+      v => { this.mode = v; this.cursor = 0; changed(); }));
+
+    container.appendChild(makeSelect('Scale', this.scale,
+      ['minor', 'major', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'locrian', 'whole',
+       'pentaMinor', 'pentaMajor'].map(k => [k, k]),
+      v => { this.scale = v; changed(); }));
+
+    // root as a note name, not a MIDI number nobody wants to convert in their head
+    const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    const roots = [];
+    for (let oct = 1; oct <= 5; oct++)
+      for (let n = 0; n < 12; n++) roots.push([String(12 * (oct + 1) + n), `${names[n]}${oct}`]);
+    container.appendChild(makeSelect('Root', String(this.root), roots,
+      v => { this.root = Number(v); changed(); }));
+
+    container.appendChild(makeNumber('Oct', this.octaves, v => { this.octaves = clamp(v, 1, 4); changed(); }, 1, 4, 1, 44));
+    container.appendChild(makeNumber('Len', this.motifLen, v => {
+      this.motifLen = clamp(v, 2, 32); this.motif = this.makeMotif(); changed();
+    }, 2, 32, 1, 48));
+    container.appendChild(makeRange('Mutate', this.mutate, v => { this.mutate = clamp(v, 0, 1); changed(); }, 0, 1, 0.01));
+    container.appendChild(makeRange('Chord', this.harmonicity, v => { this.harmonicity = clamp(v, 0, 1); changed(); }, 0, 1, 0.01));
+    container.appendChild(makeRange('Density', this.density, v => { this.density = clamp(v, 0, 1); changed(); }, 0, 1, 0.01));
+    container.appendChild(makeRange('Gate', this.gate, v => { this.gate = clamp(v, 0.25, 4); changed(); }, 0.25, 4, 0.25));
+
+    const e = this.euclid || { beats: 5, steps: this.steps, rotate: 0 };
+    const push = () => { this.euclid = e; this.applyEuclid(); changed(); };
+    container.appendChild(makeNumber('Hits', e.beats, v => { e.beats = clamp(v, 0, 64); push(); }, 0, 64, 1, 48));
+    container.appendChild(makeNumber('Of', e.steps, v => { e.steps = clamp(v, 1, 64); push(); }, 1, 64, 1, 48));
+
+    const gen = document.createElement('button');
+    gen.className = 'btn';
+    gen.textContent = this.manager.labels?.newMotif || 'New motif';
+    gen.addEventListener('click', () => { this.random = prng(); this.motif = this.makeMotif(); changed(); });
+    container.appendChild(gen);
+
+    const rm = document.createElement('button');
+    rm.className = 'btn subtle';
+    rm.textContent = this.manager.labels?.remove || 'Remove';
+    rm.addEventListener('click', () => this.manager.removeTrack(this.id));
+    container.appendChild(rm);
+  }
+
+  /* Euclid fills the grid the same way it does for drums. */
+  applyEuclid() {
+    if (!this.euclid) return;
+    const { beats, steps, rotate } = this.euclid;
+    const pattern = bjorklund(beats, steps);
+    this.stepStates = new Array(this.steps).fill(false);
+    // tile the figure across the whole grid: a 5-in-8 asked on 16 steps used to
+    // fill only the first bar and leave the second silent
+    for (let i = 0; i < this.steps; i++) {
+      const src = ((i - rotate) % steps + steps) % steps;
+      if (pattern[src]) this.stepStates[i] = true;
+    }
+    this.redrawSteps();
+  }
+
+  degreeFor(stepIndex) {
+    const len = this.motif.length || 1;
+    switch (this.mode) {
+      // indexed by hit order, not by step: the phrase starts on the root even
+      // when the euclid figure puts its first hit off the downbeat
+      case 'motif':  return this.motif[(this.hitIndex++) % len];
+      case 'up':     return (this.cursor++) % 8;
+      case 'down':   return 7 - ((this.cursor++) % 8);
+      case 'updown': {
+        const d = this.cursor;
+        this.cursor += this.dir;
+        if (this.cursor > 7) { this.cursor = 6; this.dir = -1; }
+        if (this.cursor < 0) { this.cursor = 1; this.dir = 1; }
+        return d;
+      }
+      case 'walk': {
+        const step = this.random() < 0.5 ? -1 : 1;
+        this.cursor = clamp(this.cursor + step * (this.random() < 0.25 ? 2 : 1), -7, 7);
+        return this.cursor;
+      }
+      default:       return Math.floor(this.random() * 8);
+    }
   }
 
   onTick(stepIndex, stepTimeMs) {
+    // one mutation per loop, so a phrase drifts instead of being redrawn
+    const loop = this.transport.loopCount;
+    if (loop !== this.lastLoop) {
+      this.lastLoop = loop;
+      this.hitIndex = 0;
+      if (this.mode !== 'motif' && this.mode !== 'walk') { this.cursor = 0; this.dir = 1; }
+      if (this.mode === 'motif' && this.random() < this.mutate) this.mutateMotif();
+    }
+
     const s = normalizeStep(this.stepStates[stepIndex]);
-    const should = stepCondition(s, this.transport.loopCount);
-    if ((!s.on || !should) && this.random() > 0.05) return;
-    const notes = this.generateNotes();
+    if (!s.on || !stepCondition(s, loop)) return;
+    if (this.random() > this.density * s.prob) return;
+
+    const notes = this.notesFor(this.degreeFor(stepIndex));
+    const stepMs = 60000 / (this.transport.bpm * 4);
     for (const n of notes) {
-      const v = 80 + Math.floor(this.random()*40);
-      const off = stepTimeMs + 140 + Math.floor(this.random()*220);
+      const v = 74 + Math.floor(this.random() * 30);
       this.midi.noteOn(n, v, this.channel, stepTimeMs);
-      this.midi.noteOff(n, this.channel, off);
+      this.midi.noteOff(n, this.channel, stepTimeMs + stepMs * this.gate * 0.92);
     }
     this.visualizer.ping({ hue: 0, energy: 0.8, x: this.channel / 16 });
   }
 
-  generateNotes() {
-    const scaleIntervals = getScale(this.scale);
-    const stepsInScale = scaleIntervals.length;
-    const baseDegree = Math.floor(this.random() * stepsInScale);
-    const baseNote = this.root + scaleIntervals[baseDegree] + Math.floor(this.random()*this.range/12)*12;
-    const notes = [baseNote];
+  notesFor(degree) {
+    const intervals = getScale(this.scale);
+    const size = intervals.length - 1;              // last entry is the octave
+    const wrap = ((degree % size) + size) % size;
+    const octave = Math.floor(degree / size);
+    const top = this.root + this.octaves * 12;
+    // fold into the declared range instead of letting a negative degree drop
+    // an octave below the root
+    const fold = n => {
+      while (n > top) n -= 12;
+      while (n < this.root) n += 12;
+      return n;
+    };
+    const notes = [fold(this.root + intervals[wrap] + octave * 12)];
     if (this.random() < this.harmonicity) {
-      // simple chord: add a third and fifth within range
-      const third = this.root + scaleIntervals[(baseDegree + 2) % stepsInScale] + 12 * Math.floor(this.random()*this.range/12);
-      const fifth = this.root + scaleIntervals[(baseDegree + 4) % stepsInScale] + 12 * Math.floor(this.random()*this.range/12);
-      if (third <= this.root + this.range) notes.push(third);
-      if (fifth <= this.root + this.range) notes.push(fifth);
+      notes.push(fold(this.root + intervals[(wrap + 2) % size] + octave * 12));
+      notes.push(fold(this.root + intervals[(wrap + 4) % size] + octave * 12));
     }
-    return notes;
+    return notes.map(n => clamp(n, 0, 127));
   }
 
   serialize() {
     const base = super.serialize();
-    return { ...base, scale: this.scale, root: this.root, range: this.range, harmonicity: this.harmonicity };
+    return { ...base, scale: this.scale, root: this.root, octaves: this.octaves,
+             harmonicity: this.harmonicity, density: this.density, gate: this.gate,
+             mode: this.mode, motifLen: this.motifLen, mutate: this.mutate,
+             motif: this.motif.slice(), euclid: this.euclid };
   }
 
   load(data) {
     super.load(data);
     if (data.scale) this.scale = data.scale;
     if (typeof data.root === 'number') this.root = data.root;
-    if (typeof data.range === 'number') this.range = data.range;
+    if (typeof data.octaves === 'number') this.octaves = data.octaves;
     if (typeof data.harmonicity === 'number') this.harmonicity = data.harmonicity;
+    if (typeof data.density === 'number') this.density = data.density;
+    if (typeof data.gate === 'number') this.gate = data.gate;
+    if (data.mode) this.mode = data.mode;
+    if (typeof data.motifLen === 'number') this.motifLen = data.motifLen;
+    if (typeof data.mutate === 'number') this.mutate = data.mutate;
+    if (Array.isArray(data.motif)) this.motif = data.motif.slice();
+    if (data.euclid) { this.euclid = data.euclid; this.applyEuclid(); }
   }
 }
 
-function makeNumber(label, value, onChange) {
+function makeNumber(label, value, onChange, min, max, step, width) {
   const input = document.createElement('input');
   input.type = 'number'; input.value = String(value);
+  if (min !== undefined) input.min = String(min);
+  if (max !== undefined) input.max = String(max);
+  if (step !== undefined) input.step = String(step);
+  if (width) input.style.width = width + 'px';
   input.addEventListener('input', () => onChange(Number(input.value)));
   return wrap(label, input);
+}
+
+function makeSelect(label, value, options, onChange) {
+  const sel = document.createElement('select');
+  options.forEach(([v, text]) => {
+    const o = document.createElement('option');
+    o.value = v; o.textContent = text;
+    if (String(v) === String(value)) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', () => onChange(sel.value));
+  return wrap(label, sel);
 }
 function makeRange(label, value, onChange, min, max, step) {
   const input = document.createElement('input');
@@ -393,6 +544,8 @@ function getScale(name) {
     case 'mixolydian': return [0,2,4,5,7,9,10,12];
     case 'locrian': return [0,1,3,5,6,8,10,12];
     case 'whole': return [0,2,4,6,8,10,12];
+    case 'pentaMinor': return [0,3,5,7,10,12];
+    case 'pentaMajor': return [0,2,4,7,9,12];
     default: return [0,2,3,5,7,8,10,12];
   }
 }

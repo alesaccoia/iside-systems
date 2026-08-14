@@ -21,10 +21,16 @@ const T = {
         + "spegnerla. <b>Tasto destro</b> su una casella per darle una probabilità (0–1) e una "
         + "condizione: <b>always</b>, <b>1:2</b>, <b>fill</b>… È lì che il pattern smette di "
         + "ripetersi uguale."],
-      ["Lascia generare", "Sulle tracce ritmiche, <b>Euclid</b> distribuisce N colpi su M step nel "
-        + "modo più uniforme possibile — la base di quasi tutti i ritmi del mondo — e <b>Density</b> "
-        + "decide quanto spesso il generatore aggiunge o toglie. Le tracce melodiche pescano da una "
-        + "scala: scegli scala, nota radice, estensione e quanto spesso costruire accordi."],
+      ["Ritmi euclidei", "Sulle tracce ritmiche i campi <b>Hits / Of / Rot</b> distribuiscono N colpi "
+        + "su M step nel modo più uniforme possibile — la base di quasi tutti i ritmi del mondo — e si "
+        + "applicano mentre suona. <b>Density</b> è quanto spesso un colpo scritto viene davvero "
+        + "suonato, <b>Ghost</b> quanti colpi extra fuori griglia."],
+      ["Melodie con una forma", "Una traccia melodica non pesca una nota a caso a ogni step: tiene un "
+        + "<b>motivo</b>, una frase breve di gradi della scala. <b>Mode</b> sceglie come si muove "
+        + "(<b>Motif</b>, arpeggi su/giù, <b>Walk</b>), <b>Len</b> quanto è lunga la frase, "
+        + "<b>Mutate</b> quanto cambia a ogni giro: a 0 si ripete identica, alta deriva. "
+        + "<b>Root</b> e <b>Scale</b> danno la tonalità, <b>Oct</b> l'estensione, <b>Chord</b> quanto "
+        + "spesso il grado diventa accordo, <b>Gate</b> la durata. <b>New motif</b> ne genera un'altra."],
       ["Componi", "Salva lo stato corrente come <b>Pattern</b>, poi accodane altri: in modalità "
         + "<b>Song</b> si susseguono con le ripetizioni che decidi. <b>Queue Next</b> cambia pattern "
         + "al giro successivo, senza interrompere."],
@@ -55,10 +61,16 @@ const T = {
       ["Switch steps on", "Each track has its own grid: click a cell to turn it on or off. "
         + "<b>Right-click</b> a cell to give it a probability (0–1) and a condition: <b>always</b>, "
         + "<b>1:2</b>, <b>fill</b>… That is where the pattern stops repeating itself."],
-      ["Let it generate", "On rhythmic tracks, <b>Euclid</b> spreads N hits across M steps as "
-        + "evenly as possible — the backbone of most rhythms in the world — and <b>Density</b> "
-        + "decides how often the generator adds or drops one. Melodic tracks draw from a scale: "
-        + "pick the scale, root, range, and how often to build chords."],
+      ["Euclidean rhythms", "On rhythmic tracks the <b>Hits / Of / Rot</b> fields spread N hits "
+        + "across M steps as evenly as possible — the backbone of most rhythms in the world — and "
+        + "apply while it plays. <b>Density</b> is how often a written hit actually sounds, "
+        + "<b>Ghost</b> how many extra hits fall off the grid."],
+      ["Melodies with a shape", "A melodic track does not draw a fresh random note at every step: it "
+        + "holds a <b>motif</b>, a short phrase of scale degrees. <b>Mode</b> picks how it moves "
+        + "(<b>Motif</b>, arpeggios up/down, <b>Walk</b>), <b>Len</b> sets the phrase length, "
+        + "<b>Mutate</b> how much it changes each loop: at 0 it repeats exactly, high it drifts. "
+        + "<b>Root</b> and <b>Scale</b> give the key, <b>Oct</b> the range, <b>Chord</b> how often a "
+        + "degree becomes a chord, <b>Gate</b> the note length. <b>New motif</b> writes another one."],
       ["Arrange", "Save the current state as a <b>Pattern</b>, then queue more: in <b>Song</b> mode "
         + "they follow one another with the repeats you set. <b>Queue Next</b> switches pattern at "
         + "the next loop, without interrupting."],
@@ -109,6 +121,17 @@ const SVG = [
   + '<line x1="86" y1="42" x2="96" y2="42" stroke="currentColor" opacity=".5"/>'
   + '<text x="66" y="46" font-size="10" font-family="monospace" fill="var(--acc)">x4</text>',
 ];
+
+SVG.splice(3, 0,
+  // a motif: the same short phrase twice, one note nudged
+  '<g fill="currentColor" opacity=".55">'
+  + '<rect x="16" y="46" width="8" height="6"/><rect x="28" y="38" width="8" height="6"/>'
+  + '<rect x="40" y="50" width="8" height="6"/><rect x="52" y="42" width="8" height="6"/></g>'
+  + '<line x1="66" y1="26" x2="66" y2="60" stroke="currentColor" opacity=".3"/>'
+  + '<g fill="currentColor" opacity=".55">'
+  + '<rect x="76" y="46" width="8" height="6"/><rect x="88" y="38" width="8" height="6"/>'
+  + '<rect x="100" y="50" width="8" height="6"/></g>'
+  + '<rect x="112" y="30" width="8" height="6" fill="var(--acc)"/>');
 
 const guide = document.getElementById("guide");
 if (guide){

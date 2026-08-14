@@ -2,6 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- Consent Mode: denied where consent is required, granted elsewhere -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var _c="denied",_g="granted";
+try{
+  var _v=localStorage.getItem("iside-consent");
+  if(_v==="granted")_c="granted";
+  if(_v==="denied")_g="denied";
+}catch(e){}
+var _eea=['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT',
+ 'LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH'];
+gtag('consent','default',{ad_storage:_c,ad_user_data:_c,ad_personalization:_c,analytics_storage:_c,
+ functionality_storage:'granted',security_storage:'granted',wait_for_update:500,region:_eea});
+gtag('consent','default',{ad_storage:_g,ad_user_data:_g,ad_personalization:_g,analytics_storage:_g,
+ functionality_storage:'granted',security_storage:'granted'});
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-584NQHC3');</script>
+<!-- End Google Tag Manager -->
+
+
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AlgoSynth — algorithmic sequencer</title>
 <meta name="description" content="An algorithmic sequencer in the browser: Euclidean rhythms, per-step probability and conditions, patterns and song mode, MIDI out. A tool by Iside Systems.">
@@ -31,6 +57,9 @@
 <link rel="stylesheet" href="/algosynth/algosynth.css">
 </head>
 <body class="algo">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-584NQHC3"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="app">
   <header class="topbar">
     <a class="brand" href="/en">

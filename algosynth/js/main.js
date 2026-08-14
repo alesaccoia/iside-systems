@@ -229,13 +229,19 @@ function flash(el) {
 bindUI();
 
 // Default tracks for demo
-trackManager.addTrack({ type: 'percussion', name: 'KICK', midiNote: 36, channel: 9, density: 0.4,
+trackManager.addTrack({ type: 'percussion', name: 'KICK', midiNote: 36, channel: 9, density: 1,
                         euclid: { beats: 4, steps: 16, rotate: 0 } });
-trackManager.addTrack({ type: 'percussion', name: 'SNARE', midiNote: 38, channel: 9, density: 0.5,
+trackManager.addTrack({ type: 'percussion', name: 'SNARE', midiNote: 38, channel: 9, density: 1,
                         euclid: { beats: 2, steps: 16, rotate: 4 } });
-trackManager.addTrack({ type: 'percussion', name: 'HATS', midiNote: 42, channel: 9, density: 0.6,
-                        euclid: { beats: 5, steps: 8, rotate: 0 } });
-trackManager.addTrack({ type: 'melodic', name: 'MELO', channel: 0 });
+trackManager.addTrack({ type: 'percussion', name: 'HATS', midiNote: 42, channel: 9, density: 1,
+                        ghost: 0.35, euclid: { beats: 5, steps: 8, rotate: 0 } });
+// bass and lead share root and scale, so the demo starts in one key
+trackManager.addTrack({ type: 'melodic', name: 'BASS', channel: 1, root: 36, octaves: 1,
+                        scale: 'pentaMinor', mode: 'motif', motifLen: 8, mutate: 0.06, harmonicity: 0,
+                        gate: 1.6, euclid: { beats: 3, steps: 8, rotate: 0 } });
+trackManager.addTrack({ type: 'melodic', name: 'LEAD', channel: 0, root: 60, octaves: 2,
+                        mode: 'motif', motifLen: 8, mutate: 0.15, harmonicity: 0.25,
+                        euclid: { beats: 5, steps: 16, rotate: 2 } });
 
 // Setup initial pattern bank with one pattern
 const firstPattern = patterns.create('Pattern 1');

@@ -7,10 +7,24 @@
 <!-- Consent Mode: everything denied until the visitor says otherwise -->
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-var _c="denied";try{if(localStorage.getItem("iside-consent")==="granted")_c="granted";}catch(e){}
+var _c="denied",_g="granted";
+try{
+  var _v=localStorage.getItem("iside-consent");
+  if(_v==="granted")_c="granted";
+  if(_v==="denied")_g="denied";      // a refusal travels with the visitor everywhere
+}catch(e){}
+// Where consent is legally required, everything waits for the banner. Elsewhere
+// the default is granted — otherwise every region reports a 0% consent rate.
+var _eea=['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT',
+ 'LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH'];
 gtag('consent','default',{
   ad_storage:_c, ad_user_data:_c, ad_personalization:_c, analytics_storage:_c,
-  functionality_storage:'granted', security_storage:'granted', wait_for_update:500
+  functionality_storage:'granted', security_storage:'granted', wait_for_update:500,
+  region:_eea
+});
+gtag('consent','default',{
+  ad_storage:_g, ad_user_data:_g, ad_personalization:_g, analytics_storage:_g,
+  functionality_storage:'granted', security_storage:'granted'
 });
 </script>
 
