@@ -549,7 +549,13 @@ function bindFigure(c, draw, ratio){
 
   function size(){
     W = c.getBoundingClientRect().width;
-    H = Math.max(240, Math.min(360, W * (ratio || 0.42)));
+    // narrow screens get their own aspect: these diagrams re-lay-out rather
+    // than shrink, and the vertical versions need the room
+    const r = (typeof ratio === "object")
+      ? (W < 620 ? ratio.narrow : ratio.wide)
+      : (ratio || 0.42);
+    H = W < 620 ? Math.max(300, Math.min(720, W * r))
+                : Math.max(240, Math.min(360, W * r));
     c.style.height = H + "px";
     c.width = W * DPR; c.height = H * DPR;
   }
@@ -650,20 +656,14 @@ caseFigure2("fig-training", "card-training", (x, W, H, p, labels, mono) => {
       x.fillStyle = PAL.dim; x.fillText(labels[4] || "", (bx0 + bx1) / 2, base + 18);
     }
   }
-}, 0.40);
+}, { wide: 0.40, narrow: 0.62 });
 
 /* --- 02: sources -> ingestion -> store -> James -> views --- */
 caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
   const narrow = W < 620;
-  const padL = 14, padR = 14, padT = 26, padB = 26;
-  const cols = [padL + (W - padL - padR) * 0.10,
-                padL + (W - padL - padR) * 0.40,
-                padL + (W - padL - padR) * 0.66,
-                padL + (W - padL - padR) * 0.95];
-  const midY = (H - padT - padB) / 2 + padT;
   const src = (canvas.dataset.src || "META|GA4").split("|");
   const out = (canvas.dataset.out || "FUNNEL|PLAN|CALENDAR|SOV").split("|");
-  const fs = narrow ? 8.5 : 10.5;
+  const fs = narrow ? 9 : 10.5;
   x.font = `${fs}px ${mono}`; x.textBaseline = "middle";
 
   const box = (cx, cy, w, h, label, accent, e) => {
@@ -676,110 +676,189 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
     x.fillText(label, cx, cy);
     x.globalAlpha = 1;
   };
+
+  if (narrow){
+    /* vertical flow: sources grid -> ingestion -> James -> outputs grid */
+    const padX = 10, padT = 16, padB = 16;
+    const iw = W - padX * 2, ih = H - padT - padB;
+    const cols = 2, bw = (iw - 12) / cols, bh = 24, vgap = 8;
+    const srcRows = Math.ceil(src.length / cols);
+    const outRows = Math.ceil(out.length / cols);
+    const srcH = srcRows * bh + (srcRows - 1) * vgap;
+    const outH = outRows * bh + (outRows - 1) * vgap;
+    const link = (ih - srcH - outH - bh * 2) / 3;      // three connector gaps
+    let y = padT;
+
+    src.forEach((sname, i) => {
+      const r = Math.floor(i / cols), c2 = i % cols;
+      const cx = padX + bw / 2 + c2 * (bw + 12);
+      const cy = y + r * (bh + vgap) + bh / 2;
+      box(cx, cy, bw, bh, sname, false, clamp(p * 3 - i * .1, 0, 1));
+    });
+    y += srcH;
+
+    const drop = (y0, y1, e) => {
+      if (e <= 0) return;
+      x.strokeStyle = `rgba(${PAL.inkRgb},.34)`;
+      x.beginPath(); x.moveTo(W / 2, y0); x.lineTo(W / 2, y0 + (y1 - y0) * e); x.stroke();
+    };
+    drop(y, y + link, clamp((p - .3) * 4, 0, 1));
+    y += link;
+
+    box(W / 2, y + bh / 2, bw, bh, "AIRBYTE", false, clamp((p - .38) * 4, 0, 1));
+    y += bh;
+    drop(y, y + link, clamp((p - .46) * 4, 0, 1));
+    y += link;
+
+    box(W / 2, y + bh / 2, bw + 20, bh + 6, "JAMES", true, clamp((p - .54) * 4, 0, 1));
+    y += bh;
+    drop(y, y + link, clamp((p - .62) * 4, 0, 1));
+    y += link;
+
+    out.forEach((oname, i) => {
+      const r = Math.floor(i / cols), c2 = i % cols;
+      const cx = padX + bw / 2 + c2 * (bw + 12);
+      const cy = y + r * (bh + vgap) + bh / 2;
+      box(cx, cy, bw, bh, oname, false, clamp((p - .7 - i * .05) * 4, 0, 1));
+    });
+    return;
+  }
+
+  /* wide: left to right */
+  const padL = 14, padR = 14, padT = 26, padB = 26;
+  const cols = [padL + (W - padL - padR) * 0.10,
+                padL + (W - padL - padR) * 0.40,
+                padL + (W - padL - padR) * 0.66,
+                padL + (W - padL - padR) * 0.95];
+  const midY = (H - padT - padB) / 2 + padT;
   const wire = (x0, y0, x1, y1, e) => {
     if (e <= 0) return;
     x.strokeStyle = `rgba(${PAL.inkRgb},.34)`; x.lineWidth = 1;
-    const mx = x0 + (x1 - x0) * e;
     x.beginPath(); x.moveTo(x0, y0);
     x.lineTo(x0 + (x1 - x0) * .5 * e, y0);
     if (e > .5){ x.lineTo(x0 + (x1 - x0) * .5, y0 + (y1 - y0) * clamp((e - .5) * 2, 0, 1)); }
     if (e > .9){ x.lineTo(x1, y1); }
     x.stroke();
   };
-
-  const bw = narrow ? 84 : 104, bh = 26;
-  const sp = Math.min(38, (H - padT - padB - bh) / Math.max(src.length - 1, 1));
-  // sources
+  const bw = 104, bh = 24;
+  const sp = Math.min(34, (H - padT - padB - bh) / Math.max(src.length - 1, 1));
   src.forEach((sname, i) => {
     const y = midY + (i - (src.length - 1) / 2) * sp;
-    box(cols[0], y, bw, bh, sname, false, clamp(p * 4 - i * .2, 0, 1));
-    wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * .04) * 3, 0, 1));
+    box(cols[0], y, bw, bh, sname, false, clamp(p * 4 - i * .12, 0, 1));
+    wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * .03) * 3, 0, 1));
   });
-  // ingestion + store
   box(cols[1], midY, bw, bh, "AIRBYTE", false, clamp((p - .3) * 4, 0, 1));
   wire(cols[1] + bw / 2, midY, cols[2] - bw / 2, midY, clamp((p - .42) * 4, 0, 1));
-  // james
-  box(cols[2], midY, bw + 16, bh + 12, "JAMES", true, clamp((p - .5) * 4, 0, 1));
-  // outputs
+  box(cols[2], midY, bw + 16, bh + 10, "JAMES", true, clamp((p - .5) * 4, 0, 1));
+  const osp = Math.min(30, (H - padT - padB - bh) / Math.max(out.length - 1, 1));
   out.forEach((oname, i) => {
-    const y = midY + (i - 1.5) * (sp * 0.72);
+    const y = midY + (i - (out.length - 1) / 2) * osp;
     wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .62 - i * .05) * 4, 0, 1));
-    box(cols[3], y, bw, bh - 4, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
+    box(cols[3], y, bw, bh, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
   });
-}, 0.46);
-
+}, { wide: 0.46, narrow: 1.55 });
 
 /* --- 03: a stack that has to hold, plus the governance layer around it --- */
 caseFigure2("fig-cloud", "card-cloud", (x, W, H, p, labels, mono) => {
   const narrow = W < 620;
-  const padL = 24, padR = 24, padT = 30, padB = 30;
-  const iw = W - padL - padR, ih = H - padT - padB;
-  const fs = narrow ? 8.5 : 10;
-  x.font = `${fs}px ${mono}`; x.textBaseline = "middle"; x.textAlign = "center";
-
-  // left: the old environment, a single crowded block
-  const oldW = iw * 0.16, oldH = ih * 0.34;
-  const ox = padL + oldW / 2, oy = padT + ih / 2;
-  const e0 = clamp(p * 4, 0, 1);
-  x.globalAlpha = e0 * .75;
-  x.strokeStyle = `rgba(${PAL.inkRgb},.5)`; x.lineWidth = 1;
-  x.strokeRect(ox - oldW / 2, oy - oldH / 2, oldW, oldH);
-  for (let i = 0; i < 5; i++){
-    const yy = oy - oldH / 2 + 6 + i * ((oldH - 12) / 4);
-    x.beginPath(); x.moveTo(ox - oldW / 2 + 6, yy); x.lineTo(ox + oldW / 2 - 6, yy); x.stroke();
-  }
-  x.globalAlpha = 1;
-
-  // the migration arrow
-  const ax0 = ox + oldW / 2 + 10, ax1 = padL + iw * 0.42;
-  const ae = clamp((p - .2) * 3, 0, 1);
-  if (ae > 0){
-    x.strokeStyle = PAL.acc;
-    x.beginPath(); x.moveTo(ax0, oy); x.lineTo(ax0 + (ax1 - ax0) * ae, oy); x.stroke();
-    if (ae > .95){
-      x.beginPath(); x.moveTo(ax1, oy); x.lineTo(ax1 - 6, oy - 4); x.lineTo(ax1 - 6, oy + 4);
-      x.closePath(); x.fillStyle = PAL.acc; x.fill();
-    }
-  }
-
-  // right: the new environment as separated, labelled tiers
+  const fs = narrow ? 9 : 10;
+  x.font = `${fs}px ${mono}`; x.textBaseline = "middle";
   const tiers = ["APP", "DB", "BACKUP", "DEPLOY"];
-  const tw = iw * 0.40, tx = padL + iw * 0.50, th = 26, tgap = 12;
-  const total = tiers.length * th + (tiers.length - 1) * tgap;
-  tiers.forEach((t, i) => {
-    const e = clamp((p - .34 - i * .07) * 4, 0, 1);
+
+  // the old environment: one crowded block
+  const oldBox = (cx, cy, w, h, e) => {
     if (e <= 0) return;
-    const ty = padT + (ih - total) / 2 + i * (th + tgap);
+    x.globalAlpha = e * .8;
+    x.strokeStyle = `rgba(${PAL.inkRgb},.5)`; x.lineWidth = 1;
+    x.strokeRect(cx - w / 2, cy - h / 2, w, h);
+    for (let i = 0; i < 5; i++){
+      const yy = cy - h / 2 + 6 + i * ((h - 12) / 4);
+      x.beginPath(); x.moveTo(cx - w / 2 + 6, yy); x.lineTo(cx + w / 2 - 6, yy); x.stroke();
+    }
+    x.globalAlpha = 1;
+  };
+  // one tier of the new environment: label left, health trace right
+  const tier = (tx, ty, tw, th, label, e) => {
+    if (e <= 0) return;
     x.globalAlpha = e;
     x.strokeStyle = `rgba(${PAL.inkRgb},.55)`;
     x.strokeRect(tx, ty, tw, th);
     x.fillStyle = PAL.dim; x.textAlign = "left";
-    x.fillText(t, tx + 10, ty + th / 2);
-    // the monitoring pulse alongside each tier
+    x.fillText(label, tx + 10, ty + th / 2);
+    const traceW = Math.min(70, tw * 0.42);
+    const x0 = tx + tw - traceW - 10;
     x.strokeStyle = PAL.acc; x.globalAlpha = e * .8;
     x.beginPath();
-    for (let k = 0; k <= 22; k++){
-      const px = tx + tw - 78 + k * 3;
-      const py = ty + th / 2 + Math.sin((k + i * 3) * 0.9) * (k % 7 === 0 ? 7 : 2.5);
+    for (let k = 0; k <= 20; k++){
+      const px = x0 + k * (traceW / 20);
+      const py = ty + th / 2 + Math.sin(k * 0.9) * (k % 7 === 0 ? 6 : 2.2);
       k ? x.lineTo(px, py) : x.moveTo(px, py);
     }
     x.stroke();
     x.globalAlpha = 1;
-  });
-
-  // the governance frame drawn around the new environment
-  const ge = clamp((p - .7) * 3.4, 0, 1);
-  if (ge > 0){
-    const gx = tx - 14, gy = padT + (ih - total) / 2 - 16;
-    const gw = tw + 28, gh = total + 32;
-    x.setLineDash([3, 4]); x.strokeStyle = PAL.acc; x.globalAlpha = ge;
-    x.strokeRect(gx, gy, gw * ge, gh);
+  };
+  const arrow = (x0, y0, x1, y1, e) => {
+    if (e <= 0) return;
+    x.strokeStyle = PAL.acc; x.lineWidth = 1;
+    x.beginPath(); x.moveTo(x0, y0);
+    x.lineTo(x0 + (x1 - x0) * e, y0 + (y1 - y0) * e);
+    x.stroke();
+    if (e > .95){
+      x.fillStyle = PAL.acc;
+      x.beginPath();
+      if (x1 === x0){ x.moveTo(x1, y1); x.lineTo(x1 - 4, y1 - 6); x.lineTo(x1 + 4, y1 - 6); }
+      else { x.moveTo(x1, y1); x.lineTo(x1 - 6, y1 - 4); x.lineTo(x1 - 6, y1 + 4); }
+      x.closePath(); x.fill();
+    }
+  };
+  const frame = (fx, fy, fw, fh, e, caption) => {
+    if (e <= 0) return;
+    x.setLineDash([3, 4]); x.strokeStyle = PAL.acc; x.globalAlpha = e;
+    x.strokeRect(fx, fy, fw * e, fh);
     x.setLineDash([]);
-    if (ge > .9){
+    if (e > .9 && caption){
       x.fillStyle = PAL.acc; x.textAlign = "center";
-      x.fillText((labels[3] || "").toUpperCase() + " · " + (labels[4] || "").toUpperCase(),
-                 gx + gw / 2, gy + gh + 14);
+      x.fillText(caption, fx + fw / 2, fy + fh + 15);
     }
     x.globalAlpha = 1;
+  };
+  const caption = ((labels[3] || "") + " · " + (labels[4] || "")).toUpperCase();
+
+  if (narrow){
+    /* stacked: old block, arrow down, tiers full width, frame around them */
+    const padX = 12, padT = 14;
+    const iw = W - padX * 2;
+    const oldW = Math.min(120, iw * 0.5), oldH = 54;
+    const oy = padT + oldH / 2;
+    oldBox(W / 2, oy, oldW, oldH, clamp(p * 4, 0, 1));
+
+    const aTop = oy + oldH / 2 + 6, aBot = aTop + 34;
+    arrow(W / 2, aTop, W / 2, aBot, clamp((p - .2) * 3, 0, 1));
+
+    const th = 30, tgap = 10;
+    const tx = padX + 8, tw = iw - 16;
+    const top = aBot + 22;
+    tiers.forEach((t, i) => {
+      tier(tx, top + i * (th + tgap), tw, th, t, clamp((p - .34 - i * .07) * 4, 0, 1));
+    });
+    const total = tiers.length * th + (tiers.length - 1) * tgap;
+    frame(tx - 8, top - 12, tw + 16, total + 24, clamp((p - .7) * 3.4, 0, 1), caption);
+    return;
   }
-}, 0.44);
+
+  /* wide: old on the left, new stack on the right */
+  const padL = 24, padR = 24, padT = 30, padB = 30;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const oldW = iw * 0.16, oldH = ih * 0.34;
+  const ox = padL + oldW / 2, oy = padT + ih / 2;
+  oldBox(ox, oy, oldW, oldH, clamp(p * 4, 0, 1));
+  arrow(ox + oldW / 2 + 10, oy, padL + iw * 0.42, oy, clamp((p - .2) * 3, 0, 1));
+
+  const tw = iw * 0.40, tx = padL + iw * 0.50, th = 26, tgap = 12;
+  const total = tiers.length * th + (tiers.length - 1) * tgap;
+  const top = padT + (ih - total) / 2;
+  tiers.forEach((t, i) => {
+    tier(tx, top + i * (th + tgap), tw, th, t, clamp((p - .34 - i * .07) * 4, 0, 1));
+  });
+  frame(tx - 14, top - 16, tw + 28, total + 32, clamp((p - .7) * 3.4, 0, 1), caption);
+}, { wide: 0.44, narrow: 1.05 });

@@ -545,7 +545,7 @@ L_IT = dict(
     cs_back="Torna ai case study",
     cs_other="Gli altri case study",
     cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
-    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM",
+    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM|REFERRAL",
     cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
     cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
              "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
@@ -902,7 +902,7 @@ L_EN = dict(
     cs_back="Back to case studies",
     cs_other="The other case studies",
     cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
-    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL",
+    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL|REFERRAL",
     cs_cta_h2="Does one of these<br>look like your problem?",
     cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
              "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
