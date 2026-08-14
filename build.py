@@ -1437,7 +1437,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
 
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
   <div class="lbl">{L['proj_lbl']}</div>
-  <div class="grid3 rv">
+  <div class="grid3 rv" data-cols="3">
 {tiles}  </div>
   <p style="margin-top:26px"><a class="meta" href="{projects}" style="color:var(--acc);text-decoration:none">{L['proj_more']}</a></p>
 </section>
@@ -1472,7 +1472,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
 
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
   <div class="lbl">{L['eng_lbl']}</div>
-  <div class="grid3 rv">
+  <div class="grid3 rv" data-cols="4">
 {engs}  </div>
 </section>
 
@@ -1646,7 +1646,7 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 
 <section class="pad" style="padding-top:clamp(50px,8vh,90px);padding-bottom:clamp(50px,8vh,90px)">
   <div class="lbl">{L['a_cred']}</div>
-  <div class="grid3 rv">
+  <div class="grid3 rv" data-cols="4">
 {cred}  </div>
 </section>
 

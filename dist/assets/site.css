@@ -134,6 +134,19 @@ button.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);c
 /* ---------- generic cards / grid ---------- */
 .grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
   gap:1px;background:var(--line);border:1px solid var(--line)}
+/* auto-fill keeps reserving empty tracks on wide screens: where the number of
+   cards is fixed, state it and let them share the full width */
+.grid3[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid3[data-cols="4"]{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1080px){
+  .grid3[data-cols="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .grid3[data-cols="3"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .grid3[data-cols="3"],.grid3[data-cols="4"]{grid-template-columns:minmax(0,1fr)}
+}
 .tile{background:var(--bg);padding:26px 24px 30px;display:flex;flex-direction:column;gap:12px;
   text-decoration:none;transition:background .35s}
 .tile{transition:background .35s,border-color .35s}
