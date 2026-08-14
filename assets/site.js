@@ -573,52 +573,57 @@ function caseFigure(id, draw, ratio){
 
 /* --- 01: three seminars, then workshops, then the recurring briefs --- */
 caseFigure("fig-training", (x, W, H, p, labels, mono) => {
-  const padL = 28, padR = 24, padB = 54, padT = 30;
+  const narrow = W < 620;
+  const padL = 26, padR = 22, padB = narrow ? 26 : 52, padT = 30;
   const iw = W - padL - padR, ih = H - padT - padB;
-  const n = 3;                                   // the three rising steps
-  const sw = iw * 0.135, gap = (iw * 0.52 - sw * n) / (n - 1);
+  const base = padT + ih;
+  const n = 3;
+  const zone = iw * 0.46;                        // the three steps live in the left half
+  const sw = zone * 0.26, gap = (zone - sw * n) / (n - 1);
+  // below 620px the labels under the marks would collide, and the list right
+  // under the figure already spells them out — so they are simply dropped
+  const showLabels = !narrow;
 
   x.font = `10.5px ${mono}`; x.textBaseline = "middle"; x.textAlign = "center";
 
-  // baseline
   x.strokeStyle = `rgba(${PAL.inkRgb},.18)`;
-  x.beginPath(); x.moveTo(padL, padT + ih); x.lineTo(W - padR, padT + ih); x.stroke();
+  x.beginPath(); x.moveTo(padL, base); x.lineTo(W - padR, base); x.stroke();
 
   for (let i = 0; i < n; i++){
     const e = clamp((p - i * 0.13) * 3, 0, 1);
     const bx = padL + i * (sw + gap);
     const bh = ih * (0.34 + i * 0.22) * e;
-    x.fillStyle = PAL.ink; x.globalAlpha = .16 + .1 * i;
-    x.fillRect(bx, padT + ih - bh, sw, bh);
+    x.fillStyle = PAL.ink; x.globalAlpha = .14 + .09 * i;
+    x.fillRect(bx, base - bh, sw, bh);
     x.globalAlpha = 1;
-    x.strokeStyle = PAL.ink; x.lineWidth = 1;
-    x.strokeRect(bx + .5, padT + ih - bh + .5, sw - 1, bh - 1);
-    if (e > .7){
+    x.strokeStyle = PAL.ink;
+    x.strokeRect(bx + .5, base - bh + .5, sw - 1, bh - 1);
+    if (showLabels && e > .7){
       x.fillStyle = PAL.dim;
-      x.fillText(labels[i] || "", bx + sw / 2, padT + ih + 18);
+      x.fillText(labels[i] || "", bx + sw / 2, base + 18);
     }
   }
 
-  // workshops: a marker sitting on top of the third step
-  const wx = padL + (n - 1) * (sw + gap) + sw + gap * 0.9;
+  // workshops: a ring above the line, clear of the last step
+  const wx = padL + iw * 0.58;
   const we = clamp((p - .5) * 3, 0, 1);
   if (we > 0){
-    const r = 13 * we;
+    const r = 13 * we, wy = padT + ih * 0.30;
     x.strokeStyle = PAL.acc; x.lineWidth = 1.5;
-    x.beginPath(); x.arc(wx, padT + ih * 0.24, r, 0, Math.PI * 2); x.stroke();
-    x.beginPath(); x.moveTo(wx, padT + ih * 0.24 + r); x.lineTo(wx, padT + ih); x.stroke();
-    if (we > .8){ x.fillStyle = PAL.acc; x.fillText(labels[3] || "", wx, padT + ih + 18); }
+    x.beginPath(); x.arc(wx, wy, r, 0, Math.PI * 2); x.stroke();
+    x.beginPath(); x.moveTo(wx, wy + r); x.lineTo(wx, base); x.stroke();
+    x.lineWidth = 1;
+    if (showLabels && we > .8){ x.fillStyle = PAL.acc; x.fillText(labels[3] || "", wx, base + 18); }
   }
 
-  // recurring briefs: a dotted run of small marks to the right edge
+  // recurring briefs: dotted run to the right edge
   const be = clamp((p - .62) * 2.8, 0, 1);
   if (be > 0){
-    const bx0 = wx + 34, bx1 = W - padR;
-    const y = padT + ih * 0.62;
+    const bx0 = padL + iw * 0.68, bx1 = W - padR, y = padT + ih * 0.62;
     x.strokeStyle = `rgba(${PAL.inkRgb},.35)`; x.setLineDash([2, 5]);
     x.beginPath(); x.moveTo(bx0, y); x.lineTo(bx0 + (bx1 - bx0) * be, y); x.stroke();
     x.setLineDash([]);
-    const count = 7;
+    const count = 6;
     for (let i = 0; i < count; i++){
       const t = (i + .5) / count;
       if (t > be) break;
@@ -626,7 +631,9 @@ caseFigure("fig-training", (x, W, H, p, labels, mono) => {
       x.fillStyle = i % 2 ? PAL.acc : PAL.ink;
       x.fillRect(px - 1.5, y - 5, 3, 10);
     }
-    if (be > .85){ x.fillStyle = PAL.dim; x.fillText(labels[4] || "", (bx0 + bx1) / 2, padT + ih + 18); }
+    if (showLabels && be > .85){
+      x.fillStyle = PAL.dim; x.fillText(labels[4] || "", (bx0 + bx1) / 2, base + 18);
+    }
   }
 }, 0.40);
 
