@@ -738,7 +738,7 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
       const r = Math.floor(i / cols), c2 = i % cols;
       const cx = padX + bw / 2 + c2 * (bw + 12);
       const cy = y + r * (bh + vgap) + bh / 2;
-      box(cx, cy, bw, bh, sname, false, clamp(p * 3 - i * .1, 0, 1));
+      box(cx, cy, bw, bh, sname, false, clamp((p - i * Math.min(.04, .18 / Math.max(src.length - 1, 1))) * 6, 0, 1));
     });
     y += srcH;
 
@@ -764,7 +764,7 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
       const r = Math.floor(i / cols), c2 = i % cols;
       const cx = padX + bw / 2 + c2 * (bw + 12);
       const cy = y + r * (bh + vgap) + bh / 2;
-      box(cx, cy, bw, bh, oname, false, clamp((p - .7 - i * .05) * 4, 0, 1));
+      box(cx, cy, bw, bh, oname, false, clamp((p - .7 - i * Math.min(.05, .14 / Math.max(out.length - 1, 1))) * 8, 0, 1));
     });
     return;
   }
@@ -779,27 +779,35 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
   const wire = (x0, y0, x1, y1, e) => {
     if (e <= 0) return;
     x.strokeStyle = `rgba(${PAL.inkRgb},.34)`; x.lineWidth = 1;
+    const mx = x0 + (x1 - x0) * .5;         // the elbow stays put while it draws
     x.beginPath(); x.moveTo(x0, y0);
-    x.lineTo(x0 + (x1 - x0) * .5 * e, y0);
-    if (e > .5){ x.lineTo(x0 + (x1 - x0) * .5, y0 + (y1 - y0) * clamp((e - .5) * 2, 0, 1)); }
-    if (e > .9){ x.lineTo(x1, y1); }
+    x.lineTo(x0 + (mx - x0) * clamp(e * 2.5, 0, 1), y0);
+    if (e > .4){ x.lineTo(mx, y0 + (y1 - y0) * clamp((e - .4) * 3.4, 0, 1)); }
+    if (e > .7){ x.lineTo(x0 + (x1 - x0) * (.5 + .5 * clamp((e - .7) * 3.4, 0, 1)), y1); }
     x.stroke();
   };
   const bw = 104, bh = 24;
   const sp = Math.min(34, (H - padT - padB - bh) / Math.max(src.length - 1, 1));
+  // the per-item delay used to be a fixed step, so with enough boxes the last
+  // ones never reached e=1: they stayed half-drawn, which is what made the
+  // bottom wire look like a diagonal and the bottom box look greyed out
+  const sStag = Math.min(.03, .15 / Math.max(src.length - 1, 1));
   src.forEach((sname, i) => {
     const y = midY + (i - (src.length - 1) / 2) * sp;
-    box(cols[0], y, bw, bh, sname, false, clamp(p * 4 - i * .12, 0, 1));
-    wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * .03) * 3, 0, 1));
+    box(cols[0], y, bw, bh, sname, false, clamp((p - i * sStag) * 8, 0, 1));
+    wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * sStag) * 5, 0, 1));
   });
   box(cols[1], midY, bw, bh, "AIRBYTE", false, clamp((p - .3) * 4, 0, 1));
-  wire(cols[1] + bw / 2, midY, cols[2] - bw / 2, midY, clamp((p - .42) * 4, 0, 1));
+  // the James box is wider than the others: ending the wire at the standard
+  // half-width left a stub floating inside it
+  wire(cols[1] + bw / 2, midY, cols[2] - (bw + 16) / 2, midY, clamp((p - .42) * 4, 0, 1));
   box(cols[2], midY, bw + 16, bh + 10, "JAMES", true, clamp((p - .5) * 4, 0, 1));
   const osp = Math.min(30, (H - padT - padB - bh) / Math.max(out.length - 1, 1));
+  const oStag = Math.min(.05, .16 / Math.max(out.length - 1, 1));
   out.forEach((oname, i) => {
     const y = midY + (i - (out.length - 1) / 2) * osp;
-    wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .62 - i * .05) * 4, 0, 1));
-    box(cols[3], y, bw, bh, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
+    wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .58 - i * oStag) * 8, 0, 1));
+    box(cols[3], y, bw, bh, oname, false, clamp((p - .68 - i * oStag) * 8, 0, 1));
   });
 }, { wide: 0.46, narrow: 1.30 });
 

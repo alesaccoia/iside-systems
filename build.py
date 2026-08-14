@@ -1116,7 +1116,7 @@ LABS = {
         cta="Open the instrument", note="Better with sound on. Mobile needs one tap to start audio.",
         back="Back to projects")),
 "algosynth": dict(
-    shot="img/algosynth.jpg", demo=None,
+    shot="img/algosynth.jpg", demo={"it": "/algosynth", "en": "/algosynth/en"},
     it=dict(kicker="Lab", title="AlgoSynth",
         lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre: i pattern non si "
              "disegnano nota per nota, si generano e poi si piegano.",
@@ -1127,7 +1127,8 @@ LABS = {
         cols=[("Interazione", ["Generazione algoritmica dei pattern", "Controllo dello swing",
                                "Song mode multitraccia", "Parametri modificabili durante l'esecuzione"]),
               ("Tecnica", ["Web MIDI API", "Uscita verso hardware esterno", "Interamente nel browser"])],
-        cta=None, note="Lo strumento non è pubblicato qui: questa pagina lo documenta.",
+        cta="Apri lo strumento", note="Solo desktop, larghezza minima 900 px. Serve un tap su Play "
+        "per far partire l'audio.",
         back="Torna ai progetti"),
     en=dict(kicker="Lab", title="AlgoSynth",
         lede="An algorithmic sequencer inspired by Autechre's Acroyear: patterns are not drawn note "
@@ -1139,7 +1140,8 @@ LABS = {
         cols=[("Interaction", ["Algorithmic pattern generation", "Swing control", "Multi-track song mode",
                                "Parameters editable while playing"]),
               ("Technical", ["Web MIDI API", "Output to external hardware", "Entirely in the browser"])],
-        cta=None, note="The instrument is not published here: this page documents it.",
+        cta="Open the instrument", note="Desktop only, minimum width 900 px. One tap on Play starts "
+        "the audio.",
         back="Back to projects")),
 }
 
@@ -1738,8 +1740,13 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
         for h, items in t["cols"])
     # the English pages live one level down, so the demo link needs the hop
     root = "../" if asset.startswith("../") else ""
-    demo = (f'<p style="margin-top:30px"><a class="labcta" href="{root}{lab["demo"]}">{t["cta"]}</a></p>'
-            if lab["demo"] and t["cta"] else "")
+    # a string demo is a relative path inside the site; a dict is already absolute
+    # and carries its own per-language destination
+    href = lab["demo"]
+    if isinstance(href, dict): href = href[L["lang"]]
+    elif href: href = root + href
+    demo = (f'<p style="margin-top:30px"><a class="labcta" href="{href}">{t["cta"]}</a></p>'
+            if href and t["cta"] else "")
     title = f'{t["title"]} — Iside Systems'
     return (head(L, title, t["lede"], asset, alt_href, key)
             + header(L, asset, home, projects, about, "projects", alt_href, cases)
