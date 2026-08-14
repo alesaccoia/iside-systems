@@ -123,8 +123,55 @@ def og_priors(path):
     print("wrote", os.path.relpath(path, HERE))
 
 
+def og_algosynth(path):
+    """Social card for AlgoSynth: a step grid with the playhead lit."""
+    W, H, S = 1200, 630, 2
+    im = Image.new("RGB", (W * S, H * S), NIGHT)
+    d = ImageDraw.Draw(im)
+
+    f_title = font(HELV, 86 * S, 1)
+    f_sub   = font(HELV, 30 * S, 0)
+    f_meta  = font(MONO, 19 * S)
+
+    x = 80 * S
+    d.text((x, 150 * S), "AlgoSynth", font=f_title, fill=LIGHT)
+    d.text((x, 268 * S), "Sequencer algoritmico", font=f_sub, fill=LIGHT)
+    d.text((x, 310 * S), "Algorithmic sequencer", font=f_sub, fill=DIM_D)
+    d.line([x, 382 * S, x + 96 * S, 382 * S], fill=ACC_D, width=3 * S)
+    d.text((x, 412 * S), "UNO STRUMENTO DI ISIDE SYSTEMS", font=f_meta, fill=DIM_D)
+    d.text((x, 443 * S), "ISIDESYSTEMS.COM/ALGOSYNTH", font=f_meta, fill=DIM_D)
+    mark(d, x + 22 * S, 520 * S, 44 * S, w=int(3.4 * S), ink=LIGHT, acc=ACC_D)
+    d.text((x + 62 * S, 512 * S), "ISIDE SYSTEMS", font=f_meta, fill=LIGHT)
+
+    # four tracks of sixteen steps, euclidean-ish, with the playhead on column 5
+    cell, gap = 26 * S, 5 * S
+    gx, gy = 700 * S, 150 * S
+    rows = [                                    # twelve steps: any more runs off the card
+        [1,0,0, 1,0,0, 1,0,0, 1,0,0],
+        [0,0,0, 1,0,0, 0,0,0, 1,0,1],
+        [1,0,1, 1,0,1, 1,0,1, 1,0,1],
+        [0,0,1, 0,1,0, 0,1,0, 0,1,0],
+    ]
+    head = 3
+    for r, row in enumerate(rows):
+        for c, on in enumerate(row):
+            x0 = gx + c * (cell + gap)
+            y0 = gy + r * (cell + gap) * 1.6
+            box = [x0, y0, x0 + cell, y0 + cell]
+            if c == head:
+                d.rectangle(box, fill=ACC_D if on else None, outline=ACC_D, width=int(1.6 * S))
+            elif on:
+                d.rectangle(box, fill=(150, 148, 156))
+            else:
+                d.rectangle(box, outline=(56, 56, 62), width=int(1.4 * S))
+
+    im.resize((W, H), Image.LANCZOS).save(path, quality=92)
+    print("wrote", os.path.relpath(path, HERE))
+
+
 if __name__ == "__main__":
     icon(180, os.path.join(HERE, "apple-touch-icon.png"))
     icon(32, os.path.join(HERE, "favicon-32.png"))
     og(os.path.join(HERE, "og-image.png"))
     og_priors(os.path.join(HERE, "og-priors.png"))
+    og_algosynth(os.path.join(HERE, "og-algosynth.png"))

@@ -21,7 +21,8 @@ cp assets/site.css assets/site.js                               dist/assets/
 cp assets/img/mark.svg assets/img/favicon-32.png \
    assets/img/apple-touch-icon.png assets/img/og-image.png \
    assets/img/alessandro.jpg assets/img/moire.jpg \
-   assets/img/algosynth.jpg assets/img/og-priors.png             dist/assets/img/
+   assets/img/algosynth.jpg assets/img/og-priors.png \
+   assets/img/og-algosynth.png                                  dist/assets/img/
 
 mkdir -p dist/lab
 cp -R lab/moire dist/lab/
@@ -30,6 +31,12 @@ cp -R lab/moire dist/lab/
 mkdir -p dist/priors/en
 cp priors/index.html priors/priors.css priors/priors.js dist/priors/
 cp priors/en/index.html                                 dist/priors/en/
+
+# AlgoSynth: the original sequencer, restyled — also unlinked
+mkdir -p dist/algosynth/en dist/algosynth/js
+cp algosynth/index.html algosynth/algosynth.css dist/algosynth/
+cp algosynth/js/*.js                            dist/algosynth/js/
+cp algosynth/en/index.html                      dist/algosynth/en/
 
 find dist -name '.DS_Store' -delete
 
