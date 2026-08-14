@@ -108,9 +108,51 @@ body.priors{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
   transition:opacity .35s,transform .35s;pointer-events:none;max-width:min(90vw,520px)}
 .pnotice.in{opacity:1;transform:translate(-50%,0)}
 
-@media(max-width:980px){
+/* ---------- too small to work in ---------- */
+.psmall{display:none;flex:1;align-items:center;justify-content:center;
+  padding:12vh clamp(20px,7vw,60px);text-align:center}
+.psmall .in{max-width:420px}
+.psmall h2{font-size:clamp(24px,6vw,34px);letter-spacing:-.03em;margin-bottom:16px}
+.psmall p{font-size:15.5px;line-height:1.75;color:var(--dim);margin-inline:auto}
+.psmall .req{margin-top:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--acc)}
+.psmall .back{display:inline-block;margin-top:26px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-decoration:none;
+  border-bottom:1px solid var(--line)}
+.psmall .back:hover{color:var(--acc);border-bottom-color:var(--acc)}
+
+/* Below this width the canvas and the properties panel cannot coexist, and
+   stacking them makes a tool nobody can actually use. Say so instead. */
+@media(max-width:900px){
   body.priors{overflow:auto}
-  .pstage{grid-template-columns:1fr;min-height:0}
-  .pcanvas{height:62vh}
-  .ppanel{border-left:0;border-top:1px solid var(--line)}
+  .pstage{display:none}
+  .psmall{display:flex}
+  .pbar .tools,.pbar .right .psel,.pbar .right .pb{display:none}
+}
+
+/* ---------- guide ---------- */
+.pguide{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);
+  display:flex;align-items:flex-start;justify-content:center;padding:6vh 20px;
+  overflow-y:auto;opacity:0;transition:opacity .35s}
+.pguide.in{opacity:1}
+.pguide[hidden]{display:none}
+.pguide .sheet{background:var(--bg);border:1px solid var(--line);max-width:760px;width:100%;
+  padding:clamp(24px,4vw,44px);transform:translateY(12px);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.pguide.in .sheet{transform:none}
+.pguide h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.03em}
+.pguide .intro{font-size:16px;line-height:1.7;color:var(--dim);margin-top:14px;max-width:62ch}
+.pguide h3{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--acc);margin:30px 0 6px}
+.pguide .step{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--line-soft)}
+.pguide .step p{font-size:15px;line-height:1.65;color:var(--dim);margin:0}
+.pguide .step b{color:var(--ink);font-weight:500}
+.pguide svg{width:150px;height:84px;display:block;border:1px solid var(--line)}
+.pguide .close{margin-top:26px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;padding:12px 22px;border:1px solid var(--ink);background:var(--ink);
+  color:var(--bg);cursor:pointer}
+.pguide .close:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+@media(max-width:640px){
+  .pguide .step{grid-template-columns:1fr;gap:12px}
+  .pguide svg{width:100%}
 }

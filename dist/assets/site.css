@@ -7,12 +7,14 @@
 :root{
   --bg:#0e0e11;      --bg-rgb:14,14,17;
   --ink:#eceae4;     --ink-rgb:236,234,228;
-  --dim:#7d7a80;
+  /* secondary text was 4.6:1 against the background — legible in theory, tiring
+     in practice. 7.7:1 keeps it clearly secondary without making it work. */
+  --dim:#a6a3a9;
   --acc:#ff4a2b;
   --acc2:#5aa9ff;
-  --line:rgba(236,234,228,.16);
-  --line-soft:rgba(236,234,228,.07);
-  --hover:rgba(236,234,228,.04);
+  --line:rgba(236,234,228,.2);
+  --line-soft:rgba(236,234,228,.09);
+  --hover:rgba(236,234,228,.05);
   --pad:clamp(18px,5.5vw,96px);
   --sans:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
   --mono:"SFMono-Regular",ui-monospace,"Menlo","Consolas",monospace;

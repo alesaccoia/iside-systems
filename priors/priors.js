@@ -35,6 +35,35 @@ const T = {
     cleared: "Evidenza rimossa.", loaded: "Rete caricata.", saved: "Rete esportata.",
     badFile: "File non valido.",
     obs: "osservato", removeEdge: "Scollega dai genitori",
+    guide: "Guida",
+    gTitle: "Priors — reti bayesiane",
+    gIntro: "Una rete bayesiana descrive come le cause influenzano gli effetti in termini di "
+      + "probabilità. Quando osservi qualcosa — un test positivo, un parere, un allarme — Priors "
+      + "ricalcola all'istante quanto diventano probabili tutte le altre cose, anche a monte. "
+      + "È il calcolo che quasi nessuno fa a mente correttamente.",
+    gHow: "Come si usa",
+    gSteps: [
+      ["Crea un nodo", "Clicca <b>Nodo</b> e poi il punto della tela. Ogni nodo è una variabile con "
+        + "i suoi stati — presente/assente, buono/medio/scarso. Trascinalo dove vuoi."],
+      ["Collega le cause", "Clicca <b>Collega</b>, poi prima il nodo causa e poi quello effetto. "
+        + "La freccia va dalla causa all'effetto. I cicli vengono rifiutati."],
+      ["Metti i numeri", "Seleziona un nodo: nel pannello a destra compaiono gli stati e la tabella "
+        + "delle probabilità, una riga per ogni combinazione degli stati dei genitori. Le righe si "
+        + "normalizzano a 1 da sole."],
+      ["Osserva e leggi", "Clicca uno stato dentro un nodo per fissarlo come <b>evidenza</b>: "
+        + "diventa rosso e tutte le altre probabilità si aggiornano. Ricliccalo per toglierlo."],
+    ],
+    gTry: "Da dove partire",
+    gTryText: "Apri un esempio dal menu in alto. Nel test diagnostico, fissa l'esito su «Positivo» "
+      + "e guarda la probabilità di malattia: sale dal 20% al 43%, non al 90% come suggerisce "
+      + "l'intuito. È l'errore di ragionamento più comune che esista.",
+    gClose: "Ho capito, inizia",
+    smallTitle: "Serve uno schermo più grande.",
+    smallText: "Priors mette la tela e il pannello delle probabilità uno accanto all'altro: "
+      + "impilarli su uno schermo stretto renderebbe lo strumento inutilizzabile. È pensato per "
+      + "desktop.",
+    smallReq: "Larghezza minima 900 px",
+    smallBack: "← Torna al sito",
   },
   en: {
     select: "Select", node: "Node", connect: "Connect", comment: "Note",
@@ -55,6 +84,34 @@ const T = {
     cleared: "Evidence cleared.", loaded: "Network loaded.", saved: "Network exported.",
     badFile: "Not a valid file.",
     obs: "observed", removeEdge: "Detach from parents",
+    guide: "Guide",
+    gTitle: "Priors — Bayesian networks",
+    gIntro: "A Bayesian network describes how causes bear on effects in terms of probability. "
+      + "When you observe something — a positive test, an opinion, an alarm — Priors immediately "
+      + "recomputes how likely everything else becomes, including upstream. It is the calculation "
+      + "almost nobody performs correctly in their head.",
+    gHow: "How to use it",
+    gSteps: [
+      ["Create a node", "Click <b>Node</b>, then a point on the canvas. Each node is a variable "
+        + "with its states — present/absent, good/moderate/poor. Drag it wherever you like."],
+      ["Connect the causes", "Click <b>Connect</b>, then the cause node and then the effect. The "
+        + "arrow runs from cause to effect. Cycles are refused."],
+      ["Enter the numbers", "Select a node: the panel on the right shows its states and the "
+        + "probability table, one row per combination of parent states. Rows normalise to 1 on "
+        + "their own."],
+      ["Observe and read", "Click a state inside a node to set it as <b>evidence</b>: it turns red "
+        + "and every other probability updates. Click it again to release it."],
+    ],
+    gTry: "Where to start",
+    gTryText: "Open an example from the menu above. In the diagnostic test, set the result to "
+      + "«Positive» and watch the probability of disease: it rises from 20% to 43%, not to 90% as "
+      + "intuition suggests. It is the most common reasoning error there is.",
+    gClose: "Got it, start",
+    smallTitle: "This needs a bigger screen.",
+    smallText: "Priors puts the canvas and the probability panel side by side: stacking them on a "
+      + "narrow screen would make the tool unusable. It is built for the desktop.",
+    smallReq: "Minimum width 900 px",
+    smallBack: "← Back to the site",
   },
 }[LANG];
 
@@ -676,3 +733,82 @@ $("#pfile").addEventListener("change", e => {
 if (!load()) loadExample(Object.keys(EXAMPLES)[0]);
 else render();
 setMode("select");
+
+/* ---------------------------------------------------------------- guide */
+const GUIDE_SVG = [
+  // 1. a node card with its states
+  '<rect x="34" y="14" width="82" height="56" fill="none" stroke="currentColor" opacity=".55"/>'
+  + '<line x1="34" y1="30" x2="116" y2="30" stroke="currentColor" opacity=".55"/>'
+  + '<rect x="40" y="38" width="46" height="6" fill="currentColor" opacity=".35"/>'
+  + '<rect x="40" y="52" width="26" height="6" fill="currentColor" opacity=".35"/>',
+  // 2. two nodes and the arrow between them
+  '<rect x="46" y="8" width="58" height="24" fill="none" stroke="currentColor" opacity=".55"/>'
+  + '<rect x="46" y="52" width="58" height="24" fill="none" stroke="currentColor" opacity=".55"/>'
+  + '<line x1="75" y1="32" x2="75" y2="46" stroke="var(--acc)"/>'
+  + '<path d="M75 52 l-4 -7 l8 0 z" fill="var(--acc)"/>',
+  // 3. the probability table
+  '<rect x="24" y="16" width="102" height="52" fill="none" stroke="currentColor" opacity=".45"/>'
+  + '<line x1="24" y1="30" x2="126" y2="30" stroke="currentColor" opacity=".45"/>'
+  + '<line x1="66" y1="16" x2="66" y2="68" stroke="currentColor" opacity=".45"/>'
+  + '<line x1="96" y1="16" x2="96" y2="68" stroke="currentColor" opacity=".45"/>'
+  + '<text x="75" y="45" font-size="9" fill="var(--acc)" font-family="monospace">0.9</text>'
+  + '<text x="105" y="45" font-size="9" fill="currentColor" opacity=".6" font-family="monospace">0.1</text>'
+  + '<text x="75" y="61" font-size="9" fill="currentColor" opacity=".6" font-family="monospace">0.3</text>'
+  + '<text x="105" y="61" font-size="9" fill="currentColor" opacity=".6" font-family="monospace">0.7</text>',
+  // 4. evidence set on one state
+  '<rect x="34" y="14" width="82" height="56" fill="none" stroke="var(--acc)"/>'
+  + '<line x1="34" y1="30" x2="116" y2="30" stroke="var(--acc)" opacity=".6"/>'
+  + '<rect x="34" y="36" width="82" height="12" fill="var(--acc)" opacity=".3"/>'
+  + '<rect x="40" y="56" width="18" height="6" fill="currentColor" opacity=".3"/>'
+  + '<path d="M92 44 l0 12 l4 -3 l3 6 l3 -1 l-3 -6 l5 -1 z" fill="var(--acc)"/>',
+];
+
+function buildGuide(){
+  const box = document.getElementById("guide");
+  if (!box) return;
+  const steps = T.gSteps.map(([title, body], i) => `
+    <div class="step">
+      <svg viewBox="0 0 150 84" xmlns="http://www.w3.org/2000/svg">${GUIDE_SVG[i]}</svg>
+      <p><b>${title}.</b> ${body}</p>
+    </div>`).join("");
+  box.innerHTML = `<div class="sheet">
+      <h2>${T.gTitle}</h2>
+      <p class="intro">${T.gIntro}</p>
+      <h3>${T.gHow}</h3>
+      ${steps}
+      <h3>${T.gTry}</h3>
+      <p class="intro">${T.gTryText}</p>
+      <button class="close" id="gclose">${T.gClose}</button>
+    </div>`;
+  box.addEventListener("click", e => { if (e.target === box) closeGuide(); });
+  document.getElementById("gclose").addEventListener("click", closeGuide);
+}
+
+function openGuide(){
+  const box = document.getElementById("guide");
+  box.hidden = false;
+  requestAnimationFrame(() => box.classList.add("in"));
+}
+function closeGuide(){
+  const box = document.getElementById("guide");
+  box.classList.remove("in");
+  setTimeout(() => { box.hidden = true; }, 350);
+  try { localStorage.setItem("priors-seen-guide", "1"); } catch (e) {}
+}
+
+function buildSmall(){
+  const box = document.querySelector(".psmall .in");
+  if (!box) return;
+  box.innerHTML = `<h2>${T.smallTitle}</h2><p>${T.smallText}</p>`
+    + `<p class="req">${T.smallReq}</p>`
+    + `<a class="back" href="${LANG === "en" ? "/en" : "/"}">${T.smallBack}</a>`;
+}
+
+buildGuide();
+buildSmall();
+const guideBtn = document.getElementById("pguide");
+if (guideBtn) guideBtn.addEventListener("click", openGuide);
+addEventListener("keydown", e => { if (e.key === "Escape") closeGuide(); });
+try {
+  if (!localStorage.getItem("priors-seen-guide") && innerWidth > 900) openGuide();
+} catch (e) {}

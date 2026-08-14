@@ -81,7 +81,50 @@ def og(path):
     print("wrote", os.path.relpath(path, HERE))
 
 
+def og_priors(path):
+    """Social card for the Priors tool: the network is the picture."""
+    W, H, S = 1200, 630, 2
+    im = Image.new("RGB", (W * S, H * S), NIGHT)
+    d = ImageDraw.Draw(im)
+
+    f_title = font(HELV, 86 * S, 1)
+    f_sub   = font(HELV, 30 * S, 0)
+    f_meta  = font(MONO, 19 * S)
+
+    x = 80 * S
+    d.text((x, 150 * S), "Priors", font=f_title, fill=LIGHT)
+    d.text((x, 268 * S), "Reti bayesiane nel browser", font=f_sub, fill=LIGHT)
+    d.text((x, 310 * S), "Bayesian networks in the browser", font=f_sub, fill=DIM_D)
+    d.line([x, 382 * S, x + 96 * S, 382 * S], fill=ACC_D, width=3 * S)
+    d.text((x, 412 * S), "UNO STRUMENTO DI ISIDE SYSTEMS", font=f_meta, fill=DIM_D)
+    d.text((x, 443 * S), "ISIDESYSTEMS.COM/PRIORS", font=f_meta, fill=DIM_D)
+    mark(d, x + 22 * S, 520 * S, 44 * S, w=int(3.4 * S), ink=LIGHT, acc=ACC_D)
+    d.text((x + 62 * S, 512 * S), "ISIDE SYSTEMS", font=f_meta, fill=LIGHT)
+
+    # a small network: two nodes, an edge, and the bars that carry the posterior
+    def node(cx, cy, w, h, bars, accent=False):
+        d.rectangle([cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2],
+                    outline=ACC_D if accent else LIGHT, width=int(2 * S))
+        d.line([cx - w / 2, cy - h / 2 + 30 * S, cx + w / 2, cy - h / 2 + 30 * S],
+               fill=(70, 70, 76), width=int(1.6 * S))
+        for i, frac in enumerate(bars):
+            top = cy - h / 2 + (46 + i * 30) * S
+            d.rectangle([cx - w / 2 + 10 * S, top, cx - w / 2 + 10 * S + (w - 20 * S) * frac,
+                         top + 16 * S],
+                        fill=ACC_D if (accent and i == 0) else (78, 78, 86))
+
+    nx = 900 * S
+    node(nx, 200 * S, 250 * S, 120 * S, [0.43, 0.57])
+    d.line([nx, 262 * S, nx, 372 * S], fill=(120, 120, 128), width=int(2 * S))
+    d.polygon([(nx, 384 * S), (nx - 7 * S, 370 * S), (nx + 7 * S, 370 * S)], fill=(120, 120, 128))
+    node(nx, 452 * S, 250 * S, 120 * S, [1.0, 0.0], accent=True)
+
+    im.resize((W, H), Image.LANCZOS).save(path, quality=92)
+    print("wrote", os.path.relpath(path, HERE))
+
+
 if __name__ == "__main__":
     icon(180, os.path.join(HERE, "apple-touch-icon.png"))
     icon(32, os.path.join(HERE, "favicon-32.png"))
     og(os.path.join(HERE, "og-image.png"))
+    og_priors(os.path.join(HERE, "og-priors.png"))

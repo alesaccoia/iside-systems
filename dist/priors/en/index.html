@@ -6,6 +6,25 @@
 <title>Priors — Bayesian networks</title>
 <meta name="description" content="Build and query small Bayesian networks in the browser: exact inference, clickable evidence, worked examples.">
 <meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://www.isidesystems.com/priors/en">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Iside Systems">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:title" content="Priors — Bayesian networks">
+<meta property="og:description" content="Build and query small Bayesian networks in the browser: exact inference, clickable evidence, worked examples. A tool by Iside Systems.">
+<meta property="og:url" content="https://www.isidesystems.com/priors/en">
+<meta property="og:image" content="https://www.isidesystems.com/assets/img/og-priors.png">
+<meta property="og:image:secure_url" content="https://www.isidesystems.com/assets/img/og-priors.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Priors — Bayesian networks — Iside Systems">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Priors — Bayesian networks">
+<meta name="twitter:description" content="Build and query small Bayesian networks in the browser: exact inference, clickable evidence, worked examples. A tool by Iside Systems.">
+<meta name="twitter:image" content="https://www.isidesystems.com/assets/img/og-priors.png">
+<meta name="theme-color" content="#0e0e11">
 <script>document.documentElement.classList.add("js");try{document.documentElement.setAttribute("data-theme",localStorage.getItem("iside-theme")||"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
 <link rel="icon" href="/assets/img/mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -23,6 +42,7 @@
     <button class="pb" data-mode="select" aria-pressed="true">Select</button>
     <button class="pb" data-mode="node" aria-pressed="false">Node</button>
     <button class="pb" data-mode="connect" aria-pressed="false">Connect</button>
+    <button class="pb" id="pguide">Guide</button>
     <button class="pb" data-mode="comment" aria-pressed="false">Note</button>
   </div>
   <div class="right">
@@ -41,6 +61,10 @@
   </div>
   <aside class="ppanel" id="panel"></aside>
 </div>
+
+<div class="psmall"><div class="in"></div></div>
+
+<div class="pguide" id="guide" hidden></div>
 
 <input type="file" id="pfile" accept="application/json,.json" hidden>
 <div class="pnotice" id="notice"></div>

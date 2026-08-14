@@ -21,7 +21,7 @@ cp assets/site.css assets/site.js                               dist/assets/
 cp assets/img/mark.svg assets/img/favicon-32.png \
    assets/img/apple-touch-icon.png assets/img/og-image.png \
    assets/img/alessandro.jpg assets/img/moire.jpg \
-   assets/img/algosynth.jpg                                     dist/assets/img/
+   assets/img/algosynth.jpg assets/img/og-priors.png             dist/assets/img/
 
 mkdir -p dist/lab
 cp -R lab/moire dist/lab/
