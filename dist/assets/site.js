@@ -492,3 +492,189 @@ readPal();
     });
   });
 })();
+
+/* ============================================================
+   MOBILE NAV — slide-in panel, focus and scroll handled
+   ============================================================ */
+(function nav(){
+  const btn = document.getElementById("navToggle");
+  const panel = document.getElementById("mainnav");
+  const scrim = document.getElementById("navScrim");
+  if (!btn || !panel || !scrim) return;
+
+  let open = false;
+  function set(state){
+    open = state;
+    btn.setAttribute("aria-expanded", String(state));
+    panel.classList.toggle("open", state);
+    document.body.classList.toggle("navopen", state);
+    if (state){
+      scrim.hidden = false;
+      requestAnimationFrame(() => scrim.classList.add("in"));
+    } else {
+      scrim.classList.remove("in");
+      setTimeout(() => { if (!open) scrim.hidden = true; }, 400);
+    }
+  }
+
+  btn.addEventListener("click", () => set(!open));
+  scrim.addEventListener("click", () => set(false));
+  panel.querySelectorAll("a").forEach(a => a.addEventListener("click", () => set(false)));
+  addEventListener("keydown", e => { if (e.key === "Escape" && open) set(false); });
+  // a resize back to desktop must not leave the body locked
+  addEventListener("resize", () => { if (open && innerWidth > 760) set(false); });
+})();
+
+/* ============================================================
+   CASE STUDY FIGURES — drawn once when they enter view.
+   Both take their labels from data-labels, so the copy stays in build.py.
+   ============================================================ */
+function caseFigure(id, draw, ratio){
+  const c = document.getElementById(id);
+  if (!c) return;
+  const x = c.getContext("2d");
+  let W = 0, H = 0, done = false;
+
+  function size(){
+    W = c.getBoundingClientRect().width;
+    H = Math.max(240, Math.min(360, W * (ratio || 0.42)));
+    c.style.height = H + "px";
+    c.width = W * DPR; c.height = H * DPR;
+  }
+  function paint(p){
+    x.setTransform(DPR, 0, 0, DPR, 0, 0);
+    x.clearRect(0, 0, W, H);
+    const mono = getComputedStyle(document.body).getPropertyValue("--mono");
+    draw(x, W, H, p, (c.dataset.labels || "").split("|"), mono);
+  }
+  function run(){
+    size();
+    if (reduced){ paint(1); done = true; return; }
+    const t0 = performance.now();
+    (function step(){
+      const p = clamp((performance.now() - t0) / 1600, 0, 1);
+      paint(easeOut(p));
+      if (p < 1) requestAnimationFrame(step); else done = true;
+    })();
+  }
+  new IntersectionObserver((e, o) => { if (e.some(i => i.isIntersecting)){ run(); o.disconnect(); } },
+                           { threshold: .25 }).observe(c);
+  let rt;
+  addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (done){ size(); paint(1); } }, 180); });
+  document.addEventListener("themechange", () => { if (done){ size(); paint(1); } });
+}
+
+/* --- 01: three seminars, then workshops, then the recurring briefs --- */
+caseFigure("fig-training", (x, W, H, p, labels, mono) => {
+  const padL = 28, padR = 24, padB = 54, padT = 30;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const n = 3;                                   // the three rising steps
+  const sw = iw * 0.135, gap = (iw * 0.52 - sw * n) / (n - 1);
+
+  x.font = `10.5px ${mono}`; x.textBaseline = "middle"; x.textAlign = "center";
+
+  // baseline
+  x.strokeStyle = `rgba(${PAL.inkRgb},.18)`;
+  x.beginPath(); x.moveTo(padL, padT + ih); x.lineTo(W - padR, padT + ih); x.stroke();
+
+  for (let i = 0; i < n; i++){
+    const e = clamp((p - i * 0.13) * 3, 0, 1);
+    const bx = padL + i * (sw + gap);
+    const bh = ih * (0.34 + i * 0.22) * e;
+    x.fillStyle = PAL.ink; x.globalAlpha = .16 + .1 * i;
+    x.fillRect(bx, padT + ih - bh, sw, bh);
+    x.globalAlpha = 1;
+    x.strokeStyle = PAL.ink; x.lineWidth = 1;
+    x.strokeRect(bx + .5, padT + ih - bh + .5, sw - 1, bh - 1);
+    if (e > .7){
+      x.fillStyle = PAL.dim;
+      x.fillText(labels[i] || "", bx + sw / 2, padT + ih + 18);
+    }
+  }
+
+  // workshops: a marker sitting on top of the third step
+  const wx = padL + (n - 1) * (sw + gap) + sw + gap * 0.9;
+  const we = clamp((p - .5) * 3, 0, 1);
+  if (we > 0){
+    const r = 13 * we;
+    x.strokeStyle = PAL.acc; x.lineWidth = 1.5;
+    x.beginPath(); x.arc(wx, padT + ih * 0.24, r, 0, Math.PI * 2); x.stroke();
+    x.beginPath(); x.moveTo(wx, padT + ih * 0.24 + r); x.lineTo(wx, padT + ih); x.stroke();
+    if (we > .8){ x.fillStyle = PAL.acc; x.fillText(labels[3] || "", wx, padT + ih + 18); }
+  }
+
+  // recurring briefs: a dotted run of small marks to the right edge
+  const be = clamp((p - .62) * 2.8, 0, 1);
+  if (be > 0){
+    const bx0 = wx + 34, bx1 = W - padR;
+    const y = padT + ih * 0.62;
+    x.strokeStyle = `rgba(${PAL.inkRgb},.35)`; x.setLineDash([2, 5]);
+    x.beginPath(); x.moveTo(bx0, y); x.lineTo(bx0 + (bx1 - bx0) * be, y); x.stroke();
+    x.setLineDash([]);
+    const count = 7;
+    for (let i = 0; i < count; i++){
+      const t = (i + .5) / count;
+      if (t > be) break;
+      const px = bx0 + (bx1 - bx0) * t;
+      x.fillStyle = i % 2 ? PAL.acc : PAL.ink;
+      x.fillRect(px - 1.5, y - 5, 3, 10);
+    }
+    if (be > .85){ x.fillStyle = PAL.dim; x.fillText(labels[4] || "", (bx0 + bx1) / 2, padT + ih + 18); }
+  }
+}, 0.40);
+
+/* --- 02: sources -> ingestion -> store -> James -> views --- */
+caseFigure("fig-james", (x, W, H, p, labels, mono) => {
+  const narrow = W < 620;
+  const padL = 14, padR = 14, padT = 26, padB = 26;
+  const cols = [padL + (W - padL - padR) * 0.10,
+                padL + (W - padL - padR) * 0.40,
+                padL + (W - padL - padR) * 0.66,
+                padL + (W - padL - padR) * 0.95];
+  const midY = (H - padT - padB) / 2 + padT;
+  const src = ["META ADS", "GA4", "SAMEAPI"];
+  const out = labels.length >= 5 ? [labels[1], labels[2], labels[3], labels[4]] : ["FUNNEL", "PLAN", "CAL", "SOV"];
+  const fs = narrow ? 9 : 10.5;
+  x.font = `${fs}px ${mono}`; x.textBaseline = "middle";
+
+  const box = (cx, cy, w, h, label, accent, e) => {
+    if (e <= 0) return;
+    x.globalAlpha = e;
+    x.strokeStyle = accent ? PAL.acc : PAL.ink; x.lineWidth = 1;
+    x.strokeRect(cx - w / 2 + .5, cy - h / 2 + .5, w - 1, h - 1);
+    x.fillStyle = accent ? PAL.acc : PAL.dim;
+    x.textAlign = "center";
+    x.fillText(label, cx, cy);
+    x.globalAlpha = 1;
+  };
+  const wire = (x0, y0, x1, y1, e) => {
+    if (e <= 0) return;
+    x.strokeStyle = `rgba(${PAL.inkRgb},.34)`; x.lineWidth = 1;
+    const mx = x0 + (x1 - x0) * e;
+    x.beginPath(); x.moveTo(x0, y0);
+    x.lineTo(x0 + (x1 - x0) * .5 * e, y0);
+    if (e > .5){ x.lineTo(x0 + (x1 - x0) * .5, y0 + (y1 - y0) * clamp((e - .5) * 2, 0, 1)); }
+    if (e > .9){ x.lineTo(x1, y1); }
+    x.stroke();
+  };
+
+  const bw = narrow ? 74 : 104, bh = 26, sp = 40;
+  // sources
+  src.forEach((sname, i) => {
+    const y = midY + (i - 1) * sp;
+    box(cols[0], y, bw, bh, sname, false, clamp(p * 4 - i * .2, 0, 1));
+    wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * .04) * 3, 0, 1));
+  });
+  // ingestion + store
+  box(cols[1], midY, bw, bh, "AIRBYTE", false, clamp((p - .3) * 4, 0, 1));
+  wire(cols[1] + bw / 2, midY, cols[2] - bw / 2, midY, clamp((p - .42) * 4, 0, 1));
+  // james
+  box(cols[2], midY, bw + 16, bh + 12, "JAMES", true, clamp((p - .5) * 4, 0, 1));
+  // outputs
+  out.forEach((oname, i) => {
+    const y = midY + (i - 1.5) * (sp * 0.72);
+    wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .62 - i * .05) * 4, 0, 1));
+    box(cols[3], y, bw, bh - 4, oname.toUpperCase().slice(0, narrow ? 6 : 12), false,
+        clamp((p - .72 - i * .05) * 4, 0, 1));
+  });
+}, 0.46);

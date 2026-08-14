@@ -338,3 +338,57 @@ mark{background:var(--acc);color:var(--bg);
 .labback{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--dim);text-decoration:none}
 .labback:hover{color:var(--ink)}
+
+/* ============================================================
+   MOBILE NAV — hamburger and slide-in panel
+   ============================================================ */
+#navToggle{display:none;width:42px;height:34px;position:relative;background:none;
+  border:1px solid var(--line);cursor:pointer;padding:0;flex:0 0 auto;z-index:620;
+  transition:border-color .25s}
+#navToggle span{position:absolute;left:11px;right:11px;height:1.5px;background:var(--ink);
+  transition:transform .4s cubic-bezier(.76,0,.24,1),opacity .25s}
+#navToggle span:nth-child(1){top:11px}
+#navToggle span:nth-child(2){top:16px}
+#navToggle span:nth-child(3){top:21px}
+#navToggle[aria-expanded="true"]{border-color:var(--acc)}
+#navToggle[aria-expanded="true"] span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+#navToggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+#navToggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+#navScrim{position:fixed;inset:0;z-index:590;background:rgba(0,0,0,.5);
+  opacity:0;transition:opacity .4s ease}
+#navScrim.in{opacity:1}
+#navScrim[hidden]{display:none}
+
+@media(max-width:760px){
+  .navrow{flex-direction:row;justify-content:space-between;align-items:center;text-align:left}
+  .brand{flex-direction:row;gap:10px}
+  #navToggle{display:block}
+  nav.main{
+    position:fixed;top:0;right:0;bottom:0;z-index:600;
+    width:min(78vw,320px);
+    background:var(--bg);border-left:1px solid var(--line);
+    flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    gap:0;padding:86px var(--pad) 34px;
+    transform:translateX(100%);
+    transition:transform .45s cubic-bezier(.76,0,.24,1);
+    overflow-y:auto;
+  }
+  nav.main.open{transform:none}
+  nav.main a{width:100%;padding:16px 0;border-bottom:1px solid var(--line-soft);
+    font-size:13px;letter-spacing:.14em}
+  nav.main a[aria-current="page"]{border-bottom-color:var(--acc)}
+  nav.main .langsw{margin-top:22px}
+  nav.main #themeBtn{margin-top:18px}
+  /* the panel slides over the page, so the page must not scroll behind it */
+  body.navopen{overflow:hidden}
+}
+
+/* ---------- case studies ---------- */
+.cssteps{border-top:1px solid var(--line);margin-top:clamp(30px,5vh,56px)}
+.csstep{display:grid;grid-template-columns:170px minmax(0,1fr);gap:clamp(14px,3vw,40px);
+  padding:22px 0;border-bottom:1px solid var(--line)}
+.csstep .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);padding-top:4px}
+.csstep b{font-weight:500;font-size:18px;letter-spacing:-.02em}
+.csstep i{font-style:normal;display:block;font-size:15px;color:var(--dim);margin-top:6px;line-height:1.7}
+@media(max-width:700px){.csstep{grid-template-columns:1fr;gap:6px;text-align:center}}
