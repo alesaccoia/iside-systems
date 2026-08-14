@@ -27,7 +27,7 @@ PROJECTS = [
              "EU policy intelligence platform. Ingestion and retrieval over legislative corpora "
              "that change weekly, semantic search, and correspondence drafting on top.",
              ["Retrieval", "Semantic search", "Product"])),
-    dict(seed=6,  cat="analytics ai",         year="2024 →",
+    dict(seed=6,  cat="analytics ai",         year="2026 →",
          featured=True,
          it=("Mentor Ripetizioni", "Modello di crescita e infrastruttura di marketing",
              "Ripetizioni online. Framework di misurazione omnichannel su Google Ads, Meta, "
@@ -566,8 +566,8 @@ L_IT = dict(
     cs_cases=[dict(
         slug="ai-adoption",
         n="01", lbl="Adozione dell'AI — società di consulenza e formazione",
-        card="Un percorso che parte dall'aula e finisce dentro i processi: tre seminari per "
-             "costruire il linguaggio comune, poi workshop con le singole business unit per "
+        card="Un percorso che parte dall'aula e finisce dentro i processi: seminari progressivi "
+             "per costruire il linguaggio comune, poi workshop con le singole business unit per "
              "mappare il lavoro reale, individuare i low hanging fruit e disegnare agenti che "
              "rispettino i metodi già in uso.",
         h2="Dall'aula<br>dentro i processi.",
@@ -579,15 +579,15 @@ L_IT = dict(
              "che esce senza che nessuno se ne accorga, e un uso che resta confinato alla curiosità "
              "personale invece di diventare capacità dell'organizzazione."],
         fig="training",
-        steps=[("Seminario 1", "Come funzionano davvero gli strumenti",
+        steps=[("Fondamenta", "Come funzionano davvero gli strumenti",
                 "Un modello mentale non tecnico: come i modelli generano contenuti, differenza fra "
                 "generazione, ricerca e knowledge, estrazione di dati da documenti e immagini, "
                 "ruolo del contesto, perché sbagliano."),
-               ("Seminario 2", "Uso consapevole e gestione dei rischi",
+               ("Rischi", "Uso consapevole e gestione dei rischi",
                 "Cosa succede ai dati: input, elaborazione, output, dove risiedono. GDPR e AI Act "
                 "inquadrati in modo pratico, protezione del know-how, rischi di leakage e uso "
                 "improprio degli output."),
-               ("Seminario 3", "Produttività e automazione",
+               ("Automazione", "Produttività e automazione",
                 "Dal task singolo al processo: pattern ricorrenti, automazioni deterministiche, "
                 "introduzione agli agenti, e soprattutto quando automatizzare e quando no."),
                ("Workshop", "Con le singole business unit",
@@ -606,11 +606,11 @@ L_IT = dict(
                 "aggiornamenti normativi.")],
         out="Il punto di arrivo non è «l'azienda usa l'AI», ma un aumento misurabile della capacità "
             "individuale e di gruppo: le persone fanno le stesse cose meglio e più in fretta, e "
-            "l'organizzazione guadagna capacità che prima non aveva. Tre seminari costruiscono il "
+            "l'organizzazione guadagna capacità che prima non aveva. I seminari costruiscono il "
             "linguaggio comune, i workshop con le business unit trovano dove intervenire davvero, "
             "gli agenti consolidano il guadagno, le pillole impediscono che tutto si spenga dopo "
             "un mese.",
-        chips=["3 seminari progressivi", "Workshop per business unit", "Mappatura dei processi",
+        chips=["Percorso di seminari", "Workshop per business unit", "Mappatura dei processi",
                "Low hanging fruit", "Agenti sui metodi esistenti", "GDPR e AI Act"]),
     dict(
         slug="james",
@@ -936,8 +936,9 @@ L_EN = dict(
     cs_cases=[dict(
         slug="ai-adoption",
         n="01", lbl="AI adoption — consulting and training firm",
-        card="A programme that starts in the room and ends inside the processes: three seminars to "
-             "build the shared language, then workshops with each business unit to map the real "
+        card="A programme that starts in the room and ends inside the processes: progressive "
+             "seminars to build the shared language, then workshops with each business unit to map "
+             "the real "
              "work, find the low-hanging fruit, and design agents that respect the methods already "
              "in use.",
         h2="From the classroom<br>into the processes.",
@@ -949,15 +950,15 @@ L_EN = dict(
              "leaving without anyone noticing, and usage staying at the level of personal curiosity "
              "instead of becoming organisational capability."],
         fig="training",
-        steps=[("Seminar 1", "How the tools actually work",
+        steps=[("Foundations", "How the tools actually work",
                 "A non-technical mental model: how models generate content, the difference between "
                 "generation, search and knowledge, extracting data from documents and images, the "
                 "role of context, and why they get things wrong."),
-               ("Seminar 2", "Informed use and risk",
+               ("Risk", "Informed use and risk",
                 "What happens to the data: input, processing, output, where it lives. GDPR and the "
                 "AI Act framed practically, protecting know-how, the risks of leakage and of "
                 "misusing output."),
-               ("Seminar 3", "Productivity and automation",
+               ("Automation", "Productivity and automation",
                 "From single task to process: recurring patterns, deterministic automation, an "
                 "introduction to agents, and above all when to automate and when not to."),
                ("Workshops", "With each business unit",
@@ -975,10 +976,10 @@ L_EN = dict(
                 "long documents, extracting structured data, deep research, regulatory updates.")],
         out="The destination is not “the company uses AI” but a measurable increase in individual "
             "and group capability: people do the same things better and faster, and the "
-            "organisation gains capacity it did not have. Three seminars build the shared language, "
+            "organisation gains capacity it did not have. The seminars build the shared language, "
             "the business-unit workshops find where to actually intervene, the agents consolidate "
             "the gain, and the recurring briefs stop the whole thing fading after a month.",
-        chips=["3 progressive seminars", "Workshops per business unit", "Process mapping",
+        chips=["Progressive seminars", "Workshops per business unit", "Process mapping",
                "Low-hanging fruit", "Agents on existing methods", "GDPR and the AI Act"]),
     dict(
         slug="james",
@@ -1539,7 +1540,7 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
             "Co-fondatore. Piattaforma di policy intelligence europea — prodotto, backend, sistemi AI."
             if L["lang"] == "it" else
             "Co-founder. EU policy intelligence platform — product, backend and AI systems."),
-           ("2024 →", "Mentor Ripetizioni",
+           ("2026 →", "Mentor Ripetizioni",
             "Responsabile marketing. Modello di crescita, infrastruttura interna, tutor AI."
             if L["lang"] == "it" else
             "Head of marketing. Growth model, in-house infrastructure, AI tutor."),
