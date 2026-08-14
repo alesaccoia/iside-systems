@@ -351,7 +351,7 @@ L_IT = dict(
     desc="Strategia e scienza dei dati, AI Adoption, operations di marketing e crescita. "
          "Costruisco la base su cui i team decidono. Alessandro Saccoia, Milano.",
     hero_meta="Iside Systems SRLS — Milano",
-    h1="Data e AI Strategy e Adoption. Marketing e Growth Science.",
+    h1="Data &amp; AI Strategy e Adoption. Marketing e Growth Science.",
     lede="Costruisco la base su cui un team prende decisioni data driven, guido le organizzazioni "
          "nell'AI Adoption, e curo le operations di marketing e growth — strumenti, automazioni, "
          "misurazione — trasformando entrambe in pratica quotidiana. Né un'agenzia né una software "
