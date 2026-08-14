@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Priors — Bayesian networks</title>
+<meta name="description" content="Build and query small Bayesian networks in the browser: exact inference, clickable evidence, worked examples.">
+<meta name="robots" content="noindex,follow">
+<script>document.documentElement.classList.add("js");try{document.documentElement.setAttribute("data-theme",localStorage.getItem("iside-theme")||"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
+<link rel="icon" href="../../assets/img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../priors.css">
+</head>
+<body class="priors">
+
+<div class="pbar">
+  <a class="home" href="../../en/index.html">
+    <span class="glyph"></span>
+    <span><b>Priors</b><span>← Back to the site</span></span>
+  </a>
+  <span class="sep"></span>
+  <div class="tools">
+    <button class="pb" data-mode="select" aria-pressed="true">Select</button>
+    <button class="pb" data-mode="node" aria-pressed="false">Node</button>
+    <button class="pb" data-mode="connect" aria-pressed="false">Connect</button>
+    <button class="pb" data-mode="comment" aria-pressed="false">Note</button>
+  </div>
+  <div class="right">
+    <select class="psel" id="pexamples" aria-label="Examples"></select>
+    <button class="pb" id="pclearev">Clear evidence</button>
+    <button class="pb" id="pexport">Export</button>
+    <button class="pb" id="pimport">Import</button>
+    <button class="pb danger" id="preset">Clear</button>
+    <span class="plang"><a href="../index.html">EN / IT</a></span>
+  </div>
+</div>
+
+<div class="pstage">
+  <div class="pcanvas">
+    <div class="pworld" id="world"><svg id="wires" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  </div>
+  <aside class="ppanel" id="panel"></aside>
+</div>
+
+<input type="file" id="pfile" accept="application/json,.json" hidden>
+<div class="pnotice" id="notice"></div>
+
+<script src="../priors.js"></script>
+</body>
+</html>

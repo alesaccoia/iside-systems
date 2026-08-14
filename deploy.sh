@@ -26,6 +26,11 @@ cp assets/img/mark.svg assets/img/favicon-32.png \
 mkdir -p dist/lab
 cp -R lab/moire dist/lab/
 
+# Priors: standalone tool, deliberately not linked from the rest of the site
+mkdir -p dist/priors/en
+cp priors/index.html priors/priors.css priors/priors.js dist/priors/
+cp priors/en/index.html                                 dist/priors/en/
+
 find dist -name '.DS_Store' -delete
 
 echo "dist/ ready — $(find dist -type f | wc -l | tr -d ' ') files"

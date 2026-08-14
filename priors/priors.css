@@ -1,0 +1,116 @@
+/* ============================================================
+   PRIORS — Bayesian networks, in the Iside Systems idiom.
+   Palette and type come from the site stylesheet; this file only
+   describes the tool.
+   ============================================================ */
+body.priors{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+
+/* ---------- bar ---------- */
+.pbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:12px clamp(14px,3vw,26px);border-bottom:1px solid var(--line);background:var(--bg);
+  position:sticky;top:0;z-index:40}
+.pbar .home{display:flex;align-items:center;gap:10px;text-decoration:none;flex:0 0 auto}
+.pbar .glyph{width:20px;height:20px;border:1.5px solid var(--ink);position:relative}
+.pbar .glyph::after{content:"";position:absolute;inset:4px;border:1.5px solid var(--acc)}
+.pbar .home b{font-weight:500;font-size:15px;letter-spacing:-.02em}
+.pbar .home span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim)}
+.pbar .home:hover span{color:var(--acc)}
+.pbar .sep{width:1px;height:22px;background:var(--line);flex:0 0 auto}
+.pbar .title{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);flex:0 0 auto}
+.pbar .tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pbar .right{margin-left:auto;display:flex;gap:6px;align-items:center}
+.pb{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:7px 11px;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s;white-space:nowrap}
+.pb:hover{color:var(--ink);border-color:var(--ink)}
+.pb[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pb.danger:hover{color:var(--acc);border-color:var(--acc)}
+.psel{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:7px 9px;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer}
+.plang{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--dim);
+  text-decoration:none}
+.plang:hover{color:var(--ink)}
+
+/* ---------- stage ---------- */
+.pstage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 340px;min-height:0}
+.pcanvas{position:relative;overflow:auto;background:
+  radial-gradient(circle at 1px 1px, rgba(var(--ink-rgb),.16) 1px, transparent 0) 0 0/26px 26px}
+.pworld{position:relative;width:1600px;height:1100px}
+.pworld svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pedge{stroke:rgba(var(--ink-rgb),.45);stroke-width:1.4;fill:none}
+.pedge-head{fill:rgba(var(--ink-rgb),.45)}
+
+/* ---------- node ---------- */
+.pnode{position:absolute;width:210px;background:var(--bg);border:1px solid var(--line);
+  cursor:grab;user-select:none;transition:border-color .25s,box-shadow .25s}
+.pnode:hover{border-color:var(--ink)}
+.pnode.sel{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.pnode.dragging{cursor:grabbing}
+.pnode h4{font-size:14px;font-weight:500;letter-spacing:-.01em;padding:10px 12px;
+  border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:baseline}
+.pnode h4 em{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  color:var(--dim);margin-left:auto}
+.pstate{display:grid;grid-template-columns:1fr 46px;gap:8px;align-items:center;
+  padding:6px 12px;cursor:pointer;position:relative}
+.pstate:hover{background:var(--hover)}
+.pstate .lab{font-size:12.5px;position:relative;z-index:2;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.pstate .val{font-family:var(--mono);font-size:11px;text-align:right;position:relative;z-index:2;
+  color:var(--dim)}
+.pstate .bar{position:absolute;left:0;top:2px;bottom:2px;background:rgba(var(--ink-rgb),.14);
+  z-index:1;transition:width .45s cubic-bezier(.16,1,.3,1)}
+.pstate.obs .bar{background:rgba(255,74,43,.28)}
+.pstate.obs .lab{color:var(--acc)}
+.pstate.obs .val{color:var(--acc)}
+.pnode.hasev{border-color:var(--acc)}
+
+/* ---------- comment ---------- */
+.pcomment{position:absolute;width:280px;padding:14px 16px;border:1px dashed var(--line);
+  background:var(--bg);font-size:13px;line-height:1.6;color:var(--dim);white-space:pre-wrap;
+  cursor:grab;max-height:260px;overflow:auto}
+.pcomment.sel{border-color:var(--acc);border-style:solid}
+
+/* ---------- panel ---------- */
+.ppanel{border-left:1px solid var(--line);overflow-y:auto;padding:18px clamp(14px,1.6vw,20px) 40px;
+  background:var(--bg)}
+.ppanel h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:14px}
+.ppanel .empty{font-size:13.5px;line-height:1.7;color:var(--dim)}
+.pfield{margin-bottom:16px}
+.pfield label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.pfield input[type=text]{width:100%;font-family:var(--sans);font-size:14px;color:var(--ink);
+  background:none;border:1px solid var(--line);padding:9px 10px}
+.pfield input:focus{outline:none;border-color:var(--acc)}
+.pstates li{display:flex;gap:8px;align-items:center;margin-bottom:6px;list-style:none}
+.pstates input{flex:1;font-family:var(--sans);font-size:13.5px;color:var(--ink);background:none;
+  border:1px solid var(--line);padding:7px 9px}
+.pstates .x{border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;
+  font-family:var(--mono);font-size:11px;padding:6px 9px}
+.pstates .x:hover{color:var(--acc);border-color:var(--acc)}
+.pcpt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+.pcpt th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);font-weight:400}
+.pcpt td{padding:4px 4px;border-bottom:1px solid var(--line-soft)}
+.pcpt .cond{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.04em}
+.pcpt input{width:100%;font-family:var(--mono);font-size:12px;color:var(--ink);background:none;
+  border:1px solid var(--line);padding:5px 6px;text-align:right}
+.pcpt input:focus{outline:none;border-color:var(--acc)}
+.pcpt tr.bad input{border-color:var(--acc)}
+.phint{font-size:12px;line-height:1.6;color:var(--dim);margin-top:10px}
+.prow{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+
+/* ---------- notice ---------- */
+.pnotice{position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);opacity:0;
+  background:var(--bg);border:1px solid var(--acc);padding:12px 18px;font-size:13px;z-index:60;
+  transition:opacity .35s,transform .35s;pointer-events:none;max-width:min(90vw,520px)}
+.pnotice.in{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:980px){
+  body.priors{overflow:auto}
+  .pstage{grid-template-columns:1fr;min-height:0}
+  .pcanvas{height:62vh}
+  .ppanel{border-left:0;border-top:1px solid var(--line)}
+}
