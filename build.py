@@ -524,7 +524,10 @@ L_IT = dict(
     f_topics=["Strategia e scienza dei dati", "AI Adoption", "Operations marketing e crescita",
               "Conferenza o docenza", "Advisory", "Altro"],
     f_req="Nome, email e messaggio sono obbligatori.",
-    f_ok="Apro il tuo client di posta con il messaggio già pronto.",
+    f_ok="Messaggio inviato. Ti rispondo entro pochi giorni.",
+    f_sending="Invio in corso…",
+    f_fallback="Invio diretto non disponibile: apro il tuo client di posta con il messaggio pronto.",
+    f_hp="Lascia vuoto questo campo",
     elsewhere="Altrove",
     cs_title="Case study — Iside Systems",
     cs_desc="Due percorsi reali, raccontati senza nominare i clienti: adozione dell'AI dentro le "
@@ -535,6 +538,10 @@ L_IT = dict(
     cs_lede="I clienti non sono nominati: quello che conta è il metodo, non il logo. Il primo caso "
             "parte dalle persone e dai loro processi, il secondo dagli strumenti — e finiscono "
             "nello stesso posto.",
+    mini_cta=["Un problema simile sul tavolo? Scrivimi →",
+              "Se il pezzo che manca è questo, scrivimi →",
+              "Prima conversazione senza impegno — scrivimi →",
+              "Curioso di capire come si applica da voi? Scrivimi →"],
     cs_card_cta="Leggi il caso",
     cs_home_lbl="04 — Case study",
     cs_home_h2="Tre modi diversi<br>di entrare.",
@@ -882,7 +889,10 @@ L_EN = dict(
     f_topics=["Data strategy &amp; science", "AI adoption", "Marketing &amp; growth operations",
               "Speaking or teaching", "Advisory", "Something else"],
     f_req="Name, email and message are required.",
-    f_ok="Opening your mail client with the message ready to send.",
+    f_ok="Message sent. I will reply within a few days.",
+    f_sending="Sending…",
+    f_fallback="Direct sending unavailable: opening your mail client with the message ready.",
+    f_hp="Leave this field empty",
     elsewhere="Elsewhere",
     cs_title="Case studies — Iside Systems",
     cs_desc="Two real engagements, told without naming the clients: AI adoption inside the business "
@@ -893,6 +903,10 @@ L_EN = dict(
     cs_lede="Clients are not named: the method is the point, not the logo. The first case starts "
             "from people and their processes, the second from tooling — and they end up in the "
             "same place.",
+    mini_cta=["Something similar on your desk? Get in touch →",
+              "If this is the piece you are missing, get in touch →",
+              "First conversation, no commitment — get in touch →",
+              "Wondering how it applies to you? Get in touch →"],
     cs_card_cta="Read the case",
     cs_home_lbl="04 — Case studies",
     cs_home_h2="Three different<br>ways in.",
@@ -1377,11 +1391,13 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div class="rv"><h2>{L['pos_h2']}</h2></div>
     <div class="rv">{pos_ps}</div>
   </div>
+  {mini_cta(L, about, 0)}
 </section>
 
 <section class="caps rule" id="capabilities">
   <div class="lbl">{L['cap_lbl']}</div>
-{caps_html}</section>
+{caps_html}  {mini_cta(L, about, 1)}
+</section>
 
 <section class="pad rule" style="padding-top:clamp(50px,8vh,90px);padding-bottom:clamp(50px,8vh,90px)">
   <div class="lbl">{L['sect_lbl']}</div>
@@ -1422,6 +1438,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     </div>
     <div class="figbox rv"><canvas class="fig" id="matrix" data-legend="{L['fig_legend']}" data-plan="{L['fig_plan']}"></canvas></div>
   </div>
+  {mini_cta(L, about, 3)}
 </section>
 
 <section class="pad rule" id="speaking" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
@@ -1492,6 +1509,7 @@ def page_projects(L, asset, home, projects, about, alt_href, cases="case-study.h
   <div class="grid3">
 {tiles}  </div>
   <p class="meta" style="margin-top:30px">{L['p_note']}</p>
+  {mini_cta(L, about, 1)}
 </section>
 
 """ + footer(L, home, projects, about, asset))
@@ -1648,9 +1666,14 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
       </div>
     </div>
 
-    <form class="contact rv" action="mailto:alessandro@iside.systems" method="post" novalidate
+    <form class="contact rv" action="/api/contact" method="post" novalidate
           data-mailto="alessandro@iside.systems"
-          data-msg-required="{L['f_req']}" data-msg-ok="{L['f_ok']}">
+          data-msg-required="{L['f_req']}" data-msg-ok="{L['f_ok']}"
+          data-msg-sending="{L['f_sending']}" data-msg-fallback="{L['f_fallback']}">
+      <div class="hp" aria-hidden="true">
+        <label for="f-site">{L['f_hp']}</label>
+        <input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
       <div class="field"><label for="f-name">{L['f_name']}</label>
         <input id="f-name" name="name" type="text" autocomplete="name" required></div>
       <div class="field"><label for="f-email">{L['f_email']}</label>
@@ -1701,10 +1724,16 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
   <div class="labgrid">{cols}</div>
   {demo}
   <p class="meta" style="margin-top:22px">{t['note']}</p>
+  {mini_cta(L, about, 2)}
   <p style="margin-top:34px"><a class="labback" href="{projects}">← {t['back']}</a></p>
 </section>
 
 """ + footer(L, home, projects, about, asset))
+
+
+def mini_cta(L, about, i=0):
+    """A quiet one-line prompt, dropped between sections."""
+    return (f'<p class="minicta rv"><a href="{about}#contact">{L["mini_cta"][i]}</a></p>')
 
 
 def case_next(L, cases):
@@ -1795,6 +1824,7 @@ def page_case(L, asset, home, projects, about, alt_href, cases, slug):
   </div>
   <div class="cssteps">{steps}</div>
   <p class="lede dim rv" style="margin-top:clamp(30px,5vh,54px)">{c['out']}</p>
+  {mini_cta(L, about, 3)}
 </section>
 
 <section class="pad rule" style="padding-top:clamp(46px,8vh,90px);padding-bottom:clamp(56px,9vh,110px)">

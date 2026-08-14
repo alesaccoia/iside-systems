@@ -434,64 +434,58 @@ readPal();
   const form = document.querySelector("form.contact");
   if (!form) return;
   const note = form.querySelector(".formnote");
-  form.addEventListener("submit", e => {
+  const button = form.querySelector("button[type=submit]");
+  const msg = k => form.dataset[k] || "";
+
+  function mailtoFallback(d){
+    const body = [d.get("message"), "", "—", d.get("name"),
+                  d.get("organisation") || "", d.get("email")].filter(Boolean).join("\n");
+    window.location.href = "mailto:" + (form.dataset.mailto || "alessandro@iside.systems")
+      + "?subject=" + encodeURIComponent(d.get("topic") || "")
+      + "&body=" + encodeURIComponent(body);
+  }
+
+  form.addEventListener("submit", async e => {
     e.preventDefault();
     const d = new FormData(form);
     if (!d.get("name") || !d.get("email") || !d.get("message")){
-      note.textContent = form.dataset.msgRequired || "";
+      note.textContent = msg("msgRequired");
       note.classList.remove("ok");
       return;
     }
-    const body = [
-      d.get("message"), "", "—",
-      d.get("name"),
-      d.get("organisation") || "",
-      d.get("email"),
-    ].filter(Boolean).join("\n");
-    const href = "mailto:" + (form.dataset.mailto || "alessandro@iside.systems")
-      + "?subject=" + encodeURIComponent(d.get("topic") || "")
-      + "&body=" + encodeURIComponent(body);
-    note.textContent = form.dataset.msgOk || "";
-    note.classList.add("ok");
-    window.location.href = href;
-  });
-})();
 
-/* ============================================================
-   COOKIE BAR — Consent Mode v2. The default in the page <head>
-   is "denied"; this only records a choice and updates it.
-   ============================================================ */
-(function consent(){
-  const bar = document.getElementById("cookiebar");
-  if (!bar) return;
-  const KEY = "iside-consent";
+    button.disabled = true;
+    note.classList.remove("ok");
+    note.textContent = msg("msgSending");
 
-  const read = () => { try { return localStorage.getItem(KEY); } catch(e){ return null; } };
-  const save = v => { try { localStorage.setItem(KEY, v); } catch(e){} };
-
-  function update(state){
-    const g = window.gtag || function(){ (window.dataLayer = window.dataLayer || []).push(arguments); };
-    g("consent", "update", {
-      ad_storage: state, ad_user_data: state, ad_personalization: state, analytics_storage: state
-    });
-    (window.dataLayer = window.dataLayer || []).push({
-      event: state === "granted" ? "cookie_consent_granted" : "cookie_consent_denied"
-    });
-  }
-
-  if (read()){ return; }                       // already answered, stay quiet
-
-  bar.hidden = false;
-  requestAnimationFrame(() => bar.classList.add("in"));
-
-  bar.querySelectorAll("[data-consent]").forEach(b => {
-    b.addEventListener("click", () => {
-      const state = b.dataset.consent;
-      save(state);
-      update(state);
-      bar.classList.remove("in");
-      setTimeout(() => { bar.hidden = true; }, 450);
-    });
+    try {
+      const r = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: d.get("name"), email: d.get("email"),
+          organisation: d.get("organisation"), topic: d.get("topic"),
+          message: d.get("message"), website: d.get("website"),
+          page: location.pathname,
+        }),
+      });
+      if (r.ok){
+        form.reset();
+        note.textContent = msg("msgOk");
+        note.classList.add("ok");
+        (window.dataLayer = window.dataLayer || []).push({ event: "contact_sent" });
+      } else {
+        // 503 means the endpoint is there but has no credentials yet — either
+        // way the message must not be lost, so hand it to the mail client
+        note.textContent = msg("msgFallback");
+        mailtoFallback(d);
+      }
+    } catch (err) {
+      note.textContent = msg("msgFallback");
+      mailtoFallback(d);
+    } finally {
+      button.disabled = false;
+    }
   });
 })();
 

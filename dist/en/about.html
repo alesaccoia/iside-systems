@@ -215,9 +215,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <form class="contact rv" action="mailto:alessandro@iside.systems" method="post" novalidate
+    <form class="contact rv" action="/api/contact" method="post" novalidate
           data-mailto="alessandro@iside.systems"
-          data-msg-required="Name, email and message are required." data-msg-ok="Opening your mail client with the message ready to send.">
+          data-msg-required="Name, email and message are required." data-msg-ok="Message sent. I will reply within a few days."
+          data-msg-sending="Sending…" data-msg-fallback="Direct sending unavailable: opening your mail client with the message ready.">
+      <div class="hp" aria-hidden="true">
+        <label for="f-site">Leave this field empty</label>
+        <input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
       <div class="field"><label for="f-name">Name</label>
         <input id="f-name" name="name" type="text" autocomplete="name" required></div>
       <div class="field"><label for="f-email">Email</label>

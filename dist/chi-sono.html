@@ -215,9 +215,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <form class="contact rv" action="mailto:alessandro@iside.systems" method="post" novalidate
+    <form class="contact rv" action="/api/contact" method="post" novalidate
           data-mailto="alessandro@iside.systems"
-          data-msg-required="Nome, email e messaggio sono obbligatori." data-msg-ok="Apro il tuo client di posta con il messaggio già pronto.">
+          data-msg-required="Nome, email e messaggio sono obbligatori." data-msg-ok="Messaggio inviato. Ti rispondo entro pochi giorni."
+          data-msg-sending="Invio in corso…" data-msg-fallback="Invio diretto non disponibile: apro il tuo client di posta con il messaggio pronto.">
+      <div class="hp" aria-hidden="true">
+        <label for="f-site">Lascia vuoto questo campo</label>
+        <input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
       <div class="field"><label for="f-name">Nome</label>
         <input id="f-name" name="name" type="text" autocomplete="name" required></div>
       <div class="field"><label for="f-email">Email</label>
