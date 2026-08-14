@@ -300,9 +300,11 @@ readPal();
     })();
   }
 
-  new IntersectionObserver((ents, obs) => {
+  const io = new IntersectionObserver((ents, obs) => {
     if (ents.some(e => e.isIntersecting)){ run(); obs.disconnect(); }
-  }, { threshold: .3 }).observe(c);
+  }, { threshold: .3 });
+  io.observe(c);
+  setTimeout(() => { if (!done){ io.disconnect(); run(); } }, 1800);
 
   let rt;
   addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (done){ size(); paint(1); } }, 180); });
@@ -557,8 +559,13 @@ function caseFigure(id, draw, ratio){
       if (p < 1) requestAnimationFrame(step); else done = true;
     })();
   }
-  new IntersectionObserver((e, o) => { if (e.some(i => i.isIntersecting)){ run(); o.disconnect(); } },
-                           { threshold: .25 }).observe(c);
+  const io = new IntersectionObserver((e, o) => {
+    if (e.some(i => i.isIntersecting)){ run(); o.disconnect(); }
+  }, { threshold: .25 });
+  io.observe(c);
+  // failsafe: if the observer never delivers (background tab, odd embedding),
+  // draw anyway rather than leave an empty box on the page
+  setTimeout(() => { if (!done){ io.disconnect(); run(); } }, 1800);
   let rt;
   addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (done){ size(); paint(1); } }, 180); });
   document.addEventListener("themechange", () => { if (done){ size(); paint(1); } });
