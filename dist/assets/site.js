@@ -708,3 +708,78 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
   });
 }, 0.46);
 
+
+/* --- 03: a stack that has to hold, plus the governance layer around it --- */
+caseFigure2("fig-cloud", "card-cloud", (x, W, H, p, labels, mono) => {
+  const narrow = W < 620;
+  const padL = 24, padR = 24, padT = 30, padB = 30;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const fs = narrow ? 8.5 : 10;
+  x.font = `${fs}px ${mono}`; x.textBaseline = "middle"; x.textAlign = "center";
+
+  // left: the old environment, a single crowded block
+  const oldW = iw * 0.16, oldH = ih * 0.34;
+  const ox = padL + oldW / 2, oy = padT + ih / 2;
+  const e0 = clamp(p * 4, 0, 1);
+  x.globalAlpha = e0 * .75;
+  x.strokeStyle = `rgba(${PAL.inkRgb},.5)`; x.lineWidth = 1;
+  x.strokeRect(ox - oldW / 2, oy - oldH / 2, oldW, oldH);
+  for (let i = 0; i < 5; i++){
+    const yy = oy - oldH / 2 + 6 + i * ((oldH - 12) / 4);
+    x.beginPath(); x.moveTo(ox - oldW / 2 + 6, yy); x.lineTo(ox + oldW / 2 - 6, yy); x.stroke();
+  }
+  x.globalAlpha = 1;
+
+  // the migration arrow
+  const ax0 = ox + oldW / 2 + 10, ax1 = padL + iw * 0.42;
+  const ae = clamp((p - .2) * 3, 0, 1);
+  if (ae > 0){
+    x.strokeStyle = PAL.acc;
+    x.beginPath(); x.moveTo(ax0, oy); x.lineTo(ax0 + (ax1 - ax0) * ae, oy); x.stroke();
+    if (ae > .95){
+      x.beginPath(); x.moveTo(ax1, oy); x.lineTo(ax1 - 6, oy - 4); x.lineTo(ax1 - 6, oy + 4);
+      x.closePath(); x.fillStyle = PAL.acc; x.fill();
+    }
+  }
+
+  // right: the new environment as separated, labelled tiers
+  const tiers = ["APP", "DB", "BACKUP", "DEPLOY"];
+  const tw = iw * 0.40, tx = padL + iw * 0.50, th = 26, tgap = 12;
+  const total = tiers.length * th + (tiers.length - 1) * tgap;
+  tiers.forEach((t, i) => {
+    const e = clamp((p - .34 - i * .07) * 4, 0, 1);
+    if (e <= 0) return;
+    const ty = padT + (ih - total) / 2 + i * (th + tgap);
+    x.globalAlpha = e;
+    x.strokeStyle = `rgba(${PAL.inkRgb},.55)`;
+    x.strokeRect(tx, ty, tw, th);
+    x.fillStyle = PAL.dim; x.textAlign = "left";
+    x.fillText(t, tx + 10, ty + th / 2);
+    // the monitoring pulse alongside each tier
+    x.strokeStyle = PAL.acc; x.globalAlpha = e * .8;
+    x.beginPath();
+    for (let k = 0; k <= 22; k++){
+      const px = tx + tw - 78 + k * 3;
+      const py = ty + th / 2 + Math.sin((k + i * 3) * 0.9) * (k % 7 === 0 ? 7 : 2.5);
+      k ? x.lineTo(px, py) : x.moveTo(px, py);
+    }
+    x.stroke();
+    x.globalAlpha = 1;
+  });
+
+  // the governance frame drawn around the new environment
+  const ge = clamp((p - .7) * 3.4, 0, 1);
+  if (ge > 0){
+    const gx = tx - 14, gy = padT + (ih - total) / 2 - 16;
+    const gw = tw + 28, gh = total + 32;
+    x.setLineDash([3, 4]); x.strokeStyle = PAL.acc; x.globalAlpha = ge;
+    x.strokeRect(gx, gy, gw * ge, gh);
+    x.setLineDash([]);
+    if (ge > .9){
+      x.fillStyle = PAL.acc; x.textAlign = "center";
+      x.fillText((labels[3] || "").toUpperCase() + " · " + (labels[4] || "").toUpperCase(),
+                 gx + gw / 2, gy + gh + 14);
+    }
+    x.globalAlpha = 1;
+  }
+}, 0.44);

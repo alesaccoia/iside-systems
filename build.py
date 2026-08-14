@@ -503,7 +503,7 @@ L_IT = dict(
     a_cur="01 — Oggi", a_prev="02 — In precedenza", a_cred="03 — Formazione, credenziali, docenza",
     a_speak="04 — Conferenze e docenza", a_contact="05 — Contatti",
     a_cred_cards=[("Formazione", "Informatica, Università degli Studi di Milano."),
-                  ("Certificazioni", "AI and Law. AI Governance. Formazione in transformative AI e AI safety."),
+                  ("Certificazioni", "AI and Law. AI Governance. AWS Certified Cloud Engineer. Formazione in transformative AI e AI safety."),
                   ("Docenza", "IULM — Modelli decisionali per il marketing data-driven, dal 2022/23. "
                               "Università Cattolica — Statistica (Business and Finance) e "
                               "Intelligenza artificiale (master in Comunicazione per le industrie "
@@ -536,8 +536,14 @@ L_IT = dict(
             "parte dalle persone e dai loro processi, il secondo dagli strumenti — e finiscono "
             "nello stesso posto.",
     cs_card_cta="Leggi il caso",
+    cs_home_lbl="04 — Case study",
+    cs_home_h2="Tre modi diversi<br>di entrare.",
+    cs_home_p="Formazione che finisce dentro i processi, misurazione che tiene insieme quattro "
+              "piattaforme, infrastruttura che regge la crescita. Clienti non nominati, metodo "
+              "raccontato per intero.",
+    cs_home_more="Tutti i case study →",
     cs_back="Torna ai case study",
-    cs_other="L'altro case study",
+    cs_other="Gli altri case study",
     cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM",
     cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
@@ -647,7 +653,49 @@ L_IT = dict(
             "una sola risposta.",
         chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM e DEM",
                "Referral", "Funnel configurabile", "Piano vs speso", "Calendario editoriale",
-               "Share of voice"])],
+               "Share of voice"]),
+    dict(
+        slug="cloud-scale",
+        n="03", lbl="Infrastruttura e governance — startup educational",
+        date="2026",
+        card="Una piattaforma che funzionava, cresciuta più in fretta dell'ambiente che la "
+             "ospitava. Migrazione su un'infrastruttura che regge la crescita, processo di "
+             "sviluppo controllato, e un assessment su dati, AI Act e condizioni d'uso.",
+        h2="Far reggere<br>quello che già<br>funziona.",
+        ctx=["Il prodotto c'era ed era stato costruito con un pragmatismo notevole: piattaforma "
+             "viva, utenti veri, funzionalità AI già in produzione. Quello che non reggeva era "
+             "l'ambiente sotto — pensato per partire, non per assorbire traffico crescente e "
+             "utenti contemporanei.",
+             "Il rischio in questi casi non è il down di oggi: è arrivare al punto in cui ogni "
+             "aumento di utilizzo obbliga a riprogettare tutto, e intanto nessuno sa dire dove "
+             "passano i dati né con quali condizioni il servizio viene erogato."],
+        fig="cloud",
+        steps=[("Infrastruttura", "Migrazione verso un ambiente che scala",
+                "Esportazione della piattaforma dall'ambiente esistente e configurazione ordinata "
+                "di applicazione, database, accessi, backup e deployment. L'obiettivo dichiarato è "
+                "assorbire la crescita senza riprogettare il sistema a ogni salto di utilizzo."),
+               ("Osservabilità", "Monitoraggio dal primo giorno",
+                "Strumenti di monitoraggio impostati subito, non dopo il primo incidente: sapere "
+                "come sta il sistema è parte dell'infrastruttura, non un accessorio."),
+               ("Processo", "Sviluppo più rapido e più controllato",
+                "Organizzazione dell'ambiente e del processo di sviluppo — repository, revisione, "
+                "assistenti di codice — per andare più veloci lungo un percorso documentato e "
+                "tracciabile. Velocità e controllo non sono in conflitto se il processo è "
+                "impostato bene."),
+               ("Assessment", "Dati, AI e fornitori esterni",
+                "Analisi tecnico-organizzativa delle funzionalità AI e dei flussi di dati: cosa "
+                "esce dal perimetro, verso quali fornitori, con quali implicazioni rispetto a "
+                "GDPR, AI Act e sicurezza."),
+               ("Condizioni", "Termini d'uso e licenza",
+                "Dall'assessment nascono termini di utilizzo e licenza coerenti con come la "
+                "piattaforma funziona davvero. Gli aspetti ordinari si gestiscono internamente; "
+                "la revisione legale si riserva alle questioni che la meritano.")],
+        out="È il tipo di intervento che non si vede da fuori: nessuna funzionalità nuova, nessun "
+            "redesign. Cambia però la traiettoria — la piattaforma può crescere senza rifarsi, il "
+            "team sviluppa più in fretta con più controllo, e le domande su dati e condizioni "
+            "d'uso hanno una risposta scritta prima che arrivi qualcuno a farle.",
+        chips=["Migrazione cloud", "Backup e deployment", "Monitoraggio", "Processo di sviluppo",
+               "GDPR e AI Act", "Termini d'uso"])],
     cookie_title="Cookie.",
     cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. "
                 "Niente pubblicità, niente profilazione rivenduta a terzi. Puoi rifiutare: il sito "
@@ -813,7 +861,7 @@ L_EN = dict(
     a_cur="01 — Current", a_prev="02 — Previously", a_cred="03 — Education, credentials, teaching",
     a_speak="04 — Speaking &amp; teaching", a_contact="05 — Contact",
     a_cred_cards=[("Education", "Computer science, Università degli Studi di Milano."),
-                  ("Certification", "AI and Law. AI Governance. Training in transformative AI and AI safety."),
+                  ("Certification", "AI and Law. AI Governance. AWS Certified Cloud Engineer. Training in transformative AI and AI safety."),
                   ("Teaching", "IULM — Decisional Models for Data-Driven Marketing, since 2022/23. "
                                "Università Cattolica — Statistics (Business and Finance) and "
                                "Artificial Intelligence (master's in Communication for the Creative "
@@ -846,8 +894,13 @@ L_EN = dict(
             "from people and their processes, the second from tooling — and they end up in the "
             "same place.",
     cs_card_cta="Read the case",
+    cs_home_lbl="04 — Case studies",
+    cs_home_h2="Three different<br>ways in.",
+    cs_home_p="Training that ends up inside the processes, measurement that holds four platforms "
+              "together, infrastructure that absorbs growth. Clients unnamed, method told in full.",
+    cs_home_more="All case studies →",
     cs_back="Back to case studies",
-    cs_other="The other case study",
+    cs_other="The other case studies",
     cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL",
     cs_cta_h2="Does one of these<br>look like your problem?",
@@ -952,7 +1005,47 @@ L_EN = dict(
             "written separately, and at month end “what did we spend it on” has a single answer.",
         chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM &amp; email",
                "Referral", "Configurable funnel", "Plan vs spend", "Editorial calendar",
-               "Share of voice"])],
+               "Share of voice"]),
+    dict(
+        slug="cloud-scale",
+        n="03", lbl="Infrastructure and governance — education startup",
+        date="2026",
+        card="A platform that worked, grown faster than the environment hosting it. Migration onto "
+             "infrastructure that absorbs growth, a controlled development process, and an "
+             "assessment covering data, the AI Act and terms of use.",
+        h2="Making what<br>already works<br>hold up.",
+        ctx=["The product was there and had been built with real pragmatism: a live platform, real "
+             "users, AI features already in production. What did not hold was the environment "
+             "underneath — designed to launch, not to absorb growing traffic and concurrent users.",
+             "The risk in these situations is not today's outage: it is reaching the point where "
+             "every increase in usage forces a redesign, while nobody can say where the data goes "
+             "or on what terms the service is provided."],
+        fig="cloud",
+        steps=[("Infrastructure", "Migration onto something that scales",
+                "Exporting the platform from its existing environment and configuring application, "
+                "database, access, backups and deployment properly. The stated goal is absorbing "
+                "growth without redesigning the system at every jump in usage."),
+               ("Observability", "Monitoring from day one",
+                "Monitoring set up straight away rather than after the first incident: knowing how "
+                "the system is doing is part of the infrastructure, not an add-on."),
+               ("Process", "Faster development, better controlled",
+                "Organising the environment and the development process — repository, review, "
+                "coding assistants — to move faster along a documented, traceable path. Speed and "
+                "control are not in conflict when the process is set up properly."),
+               ("Assessment", "Data, AI and external vendors",
+                "A technical and organisational review of the AI features and data flows: what "
+                "leaves the perimeter, towards which providers, and what that implies for GDPR, "
+                "the AI Act and security."),
+               ("Terms", "Conditions of use and licensing",
+                "Terms of use and licensing follow from the assessment, matching how the platform "
+                "actually works. Ordinary matters are handled in-house; legal review is kept for "
+                "the questions that deserve it.")],
+        out="This is the kind of work nobody sees from outside: no new features, no redesign. What "
+            "changes is the trajectory — the platform can grow without being rebuilt, the team "
+            "ships faster with more control, and the questions about data and terms have a written "
+            "answer before anyone turns up to ask them.",
+        chips=["Cloud migration", "Backups and deployment", "Monitoring", "Development process",
+               "GDPR and the AI Act", "Terms of use"])],
     cookie_title="Cookies.",
     cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no "
                 "profiling sold on to anyone. You can refuse: the site works exactly the same.",
@@ -1035,6 +1128,7 @@ PATHS = {"home":      ("", "en/"),
          "cases":     ("case-study.html", "en/case-studies.html"),
          "case-ai-adoption": ("case-ai-adoption.html", "en/case-ai-adoption.html"),
          "case-james":       ("case-james.html", "en/case-james.html"),
+         "case-cloud-scale": ("case-cloud-scale.html", "en/case-cloud-scale.html"),
          "projects":  ("progetti.html", "en/projects.html"),
          "about":     ("chi-sono.html", "en/about.html"),
          "moire":     ("moire.html", "en/moire.html"),
@@ -1297,6 +1391,16 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
       <div class="facts" style="margin-top:22px">{chips(L['sect_chips'])}</div>
     </div>
   </div>
+</section>
+
+<section class="pad rule" id="cases" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
+  <div class="lbl">{L['cs_home_lbl']}</div>
+  <div class="cols2" style="align-items:end">
+    <div class="rv"><h2>{L['cs_home_h2']}</h2></div>
+    <div class="rv"><p class="dim">{L['cs_home_p']}</p></div>
+  </div>
+  <div class="csrows rv">{case_rows(L)}</div>
+  <p style="margin-top:26px"><a class="meta" href="{cases}" style="color:var(--acc);text-decoration:none">{L['cs_home_more']}</a></p>
 </section>
 
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
@@ -1602,6 +1706,23 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
 """ + footer(L, home, projects, about, asset))
 
 
+def case_next(L, cases):
+    out = ""
+    for c in cases:
+        out += '<a href="%s"><b>%s</b> %s</a>' % (_case_href(c, L["lang"]), c["n"], c["lbl"])
+    return out
+
+
+def case_rows(L):
+    out = ""
+    for c in L["cs_cases"]:
+        out += ('<a class="csrow" href="%s"><span class="n">%s</span>'
+                '<span class="t">%s</span><span class="s">%s</span>'
+                '<span class="go">\u2192</span></a>'
+                % (_case_href(c, L["lang"]), c["n"], c["h2"].replace("<br>", " "), c["lbl"]))
+    return out
+
+
 def _case_href(c, lang):
     return f"case-{c['slug']}.html"
 
@@ -1648,7 +1769,7 @@ def page_cases(L, asset, home, projects, about, alt_href, cases):
 
 def page_case(L, asset, home, projects, about, alt_href, cases, slug):
     c = next(x for x in L["cs_cases"] if x["slug"] == slug)
-    other = next(x for x in L["cs_cases"] if x["slug"] != slug)
+    others = [x for x in L["cs_cases"] if x["slug"] != slug]
     steps = "".join(
         f'<div class="csstep rv"><div class="k">{k}</div>'
         f'<div><b>{h}</b><i>{d}</i></div></div>'
@@ -1677,7 +1798,7 @@ def page_case(L, asset, home, projects, about, alt_href, cases, slug):
 
 <section class="pad rule" style="padding-top:clamp(46px,8vh,90px);padding-bottom:clamp(56px,9vh,110px)">
   <p class="meta">{L['cs_other']}</p>
-  <p style="margin-top:14px"><a class="labcta" href="{_case_href(other, L['lang'])}">{other['n']} — {other['lbl']}</a></p>
+  <div class="csnext">{case_next(L, others)}</div>
   <p style="margin-top:30px"><a class="labback" href="{cases}">← {L['cs_back']}</a></p>
 </section>
 
@@ -1696,7 +1817,8 @@ def write(path, content):
 def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
-    for key in ("home", "cases", "case-ai-adoption", "case-james", "projects", "about"):
+    for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
+                "projects", "about"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -1725,7 +1847,7 @@ write("case-study.html",      page_cases(L_IT, "assets/", "index.html", "progett
                                          "en/case-studies.html", "case-study.html"))
 write("en/case-studies.html", page_cases(L_EN, "../assets/", "index.html", "projects.html", "about.html",
                                          "../case-study.html", "case-studies.html"))
-for _slug in ("ai-adoption", "james"):
+for _slug in ("ai-adoption", "james", "cloud-scale"):
     write(f"case-{_slug}.html",
           page_case(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
                     f"en/case-{_slug}.html", "case-study.html", _slug))

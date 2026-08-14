@@ -74,6 +74,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/case-james.html"/>
   </url>
   <url>
+    <loc>https://www.isidesystems.com/case-cloud-scale.html</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-cloud-scale.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/case-cloud-scale.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/case-cloud-scale.html"/>
+  </url>
+  <url>
+    <loc>https://www.isidesystems.com/en/case-cloud-scale.html</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-cloud-scale.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/case-cloud-scale.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/case-cloud-scale.html"/>
+  </url>
+  <url>
     <loc>https://www.isidesystems.com/progetti.html</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>

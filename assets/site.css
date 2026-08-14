@@ -407,3 +407,24 @@ mark{background:var(--acc);color:var(--bg);
   text-transform:uppercase;color:var(--acc);padding-top:8px}
 .cscard:hover .csgo{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:700px){.cscard .b{text-align:center;align-items:center}}
+
+/* ---------- case rows on the home page ---------- */
+.csrows{border-top:1px solid var(--line);margin-top:clamp(28px,4vh,48px)}
+.csrow{display:grid;grid-template-columns:52px minmax(0,1.1fr) minmax(0,1fr) 30px;
+  gap:clamp(12px,2.4vw,32px);align-items:baseline;padding:24px 0;
+  border-bottom:1px solid var(--line);text-decoration:none;transition:background .35s,padding .4s}
+.csrow:hover{background:var(--hover);padding-left:10px}
+.csrow .n{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--acc)}
+.csrow .t{font-size:clamp(19px,2.2vw,27px);letter-spacing:-.025em}
+.csrow .s{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);line-height:1.7}
+.csrow .go{color:var(--acc);text-align:right;transition:transform .4s}
+.csrow:hover .go{transform:translateX(5px)}
+@media(max-width:760px){
+  .csrow{grid-template-columns:1fr;gap:6px;text-align:center;padding:20px 0}
+  .csrow .go{text-align:center}
+}
+.csnext{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.csnext a{text-decoration:none;font-size:17px;letter-spacing:-.02em;padding:12px 0;
+  border-bottom:1px solid var(--line);transition:padding .35s,color .3s}
+.csnext a b{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--acc);margin-right:10px}
+.csnext a:hover{padding-left:8px;color:var(--acc)}
