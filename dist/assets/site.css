@@ -291,8 +291,9 @@ footer.site .col a:hover{color:var(--ink)}
 }
 
 /* ---------- portrait ---------- */
-.portrait{max-width:190px;margin:0 0 26px}
-.portrait img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 26%;
+/* the portrait is a standing figure at 2:3 — shown whole, never cropped square */
+.portrait{max-width:260px;margin:0 0 26px}
+.portrait img{width:100%;height:auto;aspect-ratio:426/640;object-fit:cover;object-position:50% 50%;
   border:1px solid var(--line)}
 .portrait figcaption{margin-top:9px}
 @media(max-width:700px){.portrait{margin-inline:auto;text-align:center}}
@@ -449,15 +450,15 @@ mark{background:var(--acc);color:var(--bg);
 }
 
 /* ---------- about: portrait beside one column of text ---------- */
-.aboutintro{display:grid;grid-template-columns:200px minmax(0,1fr);
+.aboutintro{display:grid;grid-template-columns:clamp(210px,24vw,280px) minmax(0,1fr);
   gap:clamp(26px,5vw,72px);align-items:start;margin-top:clamp(28px,4vh,44px)}
-.aboutintro .portrait{max-width:200px;margin:0}
+.aboutintro .portrait{max-width:100%;margin:0}
 .abouttext{max-width:64ch}
 .abouttext .lede{margin-bottom:1.1em;max-width:none;color:var(--ink)}
 .abouttext p + p{margin-top:1.1em}
 @media(max-width:860px){
   .aboutintro{grid-template-columns:1fr;gap:24px;justify-items:center;text-align:center}
-  .aboutintro .portrait{margin-inline:auto}
+  .aboutintro .portrait{margin-inline:auto;max-width:230px}
   .abouttext{text-align:left}
 }
 @media(max-width:700px){.abouttext{text-align:center}}

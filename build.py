@@ -1621,7 +1621,7 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
   <h1 style="margin-top:16px;max-width:17ch">{L['a_h1']}</h1>
   <div class="aboutintro rv">
     <figure class="portrait">
-      <img src="{asset}{L['portrait_file']}" alt="{L['portrait_alt']}" width="480" height="640" loading="lazy">
+      <img src="{asset}{L['portrait_file']}" alt="{L['portrait_alt']}" width="426" height="640" loading="lazy">
       <figcaption class="meta">{L['portrait_cap']}</figcaption>
     </figure>
     <div class="abouttext">
