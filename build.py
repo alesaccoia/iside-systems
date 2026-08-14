@@ -606,6 +606,7 @@ L_IT = dict(
             "una sola risposta.",
         chips=["Django · Postgres", "Airbyte", "Funnel configurabile", "Piano vs speso",
                "Calendario editoriale", "Share of voice"])],
+    cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
     cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
     cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
              "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
@@ -875,6 +876,7 @@ L_EN = dict(
             "written separately, and at month end “what did we spend it on” has a single answer.",
         chips=["Django · Postgres", "Airbyte", "Configurable funnel", "Plan vs spend",
                "Editorial calendar", "Share of voice"])],
+    cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
     cs_cta_h2="Does one of these<br>look like your problem?",
     cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
              "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
@@ -1541,7 +1543,7 @@ def page_cases(L, asset, home, projects, about, alt_href, cases):
     </div>
   </div>
   <div class="figbox rv" style="margin-top:clamp(30px,5vh,60px)">
-    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}"></canvas>
+    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}" data-out="{L['cs_fig_out']}"></canvas>
   </div>
   <div class="cssteps">{steps}</div>
   <p class="lede dim rv" style="margin-top:clamp(30px,5vh,54px)">{c['out']}</p>

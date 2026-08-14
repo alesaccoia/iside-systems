@@ -547,7 +547,7 @@ function caseFigure(id, draw, ratio){
     x.setTransform(DPR, 0, 0, DPR, 0, 0);
     x.clearRect(0, 0, W, H);
     const mono = getComputedStyle(document.body).getPropertyValue("--mono");
-    draw(x, W, H, p, (c.dataset.labels || "").split("|"), mono);
+    draw(x, W, H, p, (c.dataset.labels || "").split("|"), mono, c);
   }
   function run(){
     size();
@@ -638,7 +638,7 @@ caseFigure("fig-training", (x, W, H, p, labels, mono) => {
 }, 0.40);
 
 /* --- 02: sources -> ingestion -> store -> James -> views --- */
-caseFigure("fig-james", (x, W, H, p, labels, mono) => {
+caseFigure("fig-james", (x, W, H, p, labels, mono, canvas) => {
   const narrow = W < 620;
   const padL = 14, padR = 14, padT = 26, padB = 26;
   const cols = [padL + (W - padL - padR) * 0.10,
@@ -647,8 +647,8 @@ caseFigure("fig-james", (x, W, H, p, labels, mono) => {
                 padL + (W - padL - padR) * 0.95];
   const midY = (H - padT - padB) / 2 + padT;
   const src = ["META ADS", "GA4", "SAMEAPI"];
-  const out = labels.length >= 5 ? [labels[1], labels[2], labels[3], labels[4]] : ["FUNNEL", "PLAN", "CAL", "SOV"];
-  const fs = narrow ? 9 : 10.5;
+  const out = (canvas.dataset.out || "FUNNEL|PLAN|CALENDAR|SOV").split("|");
+  const fs = narrow ? 8.5 : 10.5;
   x.font = `${fs}px ${mono}`; x.textBaseline = "middle";
 
   const box = (cx, cy, w, h, label, accent, e) => {
@@ -672,7 +672,7 @@ caseFigure("fig-james", (x, W, H, p, labels, mono) => {
     x.stroke();
   };
 
-  const bw = narrow ? 74 : 104, bh = 26, sp = 40;
+  const bw = narrow ? 84 : 104, bh = 26, sp = 40;
   // sources
   src.forEach((sname, i) => {
     const y = midY + (i - 1) * sp;
@@ -688,7 +688,6 @@ caseFigure("fig-james", (x, W, H, p, labels, mono) => {
   out.forEach((oname, i) => {
     const y = midY + (i - 1.5) * (sp * 0.72);
     wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .62 - i * .05) * 4, 0, 1));
-    box(cols[3], y, bw, bh - 4, oname.toUpperCase().slice(0, narrow ? 6 : 12), false,
-        clamp((p - .72 - i * .05) * 4, 0, 1));
+    box(cols[3], y, bw, bh - 4, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
   });
 }, 0.46);
