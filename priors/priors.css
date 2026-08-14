@@ -34,7 +34,7 @@ body.priors{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
 .plang:hover{color:var(--ink)}
 
 /* ---------- stage ---------- */
-.pstage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 340px;min-height:0}
+.pstage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,26vw,420px);min-height:0}
 .pcanvas{position:relative;overflow:auto;background:
   radial-gradient(circle at 1px 1px, rgba(var(--ink-rgb),.16) 1px, transparent 0) 0 0/26px 26px}
 .pworld{position:relative;width:1600px;height:1100px}
@@ -90,13 +90,20 @@ body.priors{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
 .pstates .x{border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;
   font-family:var(--mono);font-size:11px;padding:6px 9px}
 .pstates .x:hover{color:var(--acc);border-color:var(--acc)}
-.pcpt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
-.pcpt th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--dim);text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);font-weight:400}
-.pcpt td{padding:4px 4px;border-bottom:1px solid var(--line-soft)}
-.pcpt .cond{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.04em}
-.pcpt input{width:100%;font-family:var(--mono);font-size:12px;color:var(--ink);background:none;
-  border:1px solid var(--line);padding:5px 6px;text-align:right}
+.pcpt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px;table-layout:fixed}
+.pcpt th:first-child,.pcpt td:first-child{width:34%}
+.pcpt th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);text-align:right;padding:6px 4px;border-bottom:1px solid var(--line);
+  font-weight:400;word-break:break-word}
+.pcpt th:first-child{text-align:left}
+.pcpt td{padding:5px 3px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+.pcpt .cond{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.02em;
+  line-height:1.45;word-break:break-word}
+.pcpt input{width:100%;min-width:0;font-family:var(--mono);font-size:13px;color:var(--ink);
+  background:none;border:1px solid var(--line);padding:7px 8px;text-align:right;
+  -moz-appearance:textfield}
+.pcpt input::-webkit-outer-spin-button,
+.pcpt input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .pcpt input:focus{outline:none;border-color:var(--acc)}
 .pcpt tr.bad input{border-color:var(--acc)}
 .phint{font-size:12px;line-height:1.6;color:var(--dim);margin-top:10px}

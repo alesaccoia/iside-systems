@@ -281,14 +281,20 @@ function cptKey(node, assignment){
   return node.parents.map(pid => `${pid}:${assignment[pid]}`).join("|");
 }
 
+function parentsOf(node){
+  return node.parents.map(id => net.nodes.find(n => n.id === id)).filter(Boolean);
+}
+
 function parentCombos(node){
-  const parents = node.parents.map(id => net.nodes.find(n => n.id === id)).filter(Boolean);
+  const parents = parentsOf(node);
   if (!parents.length) return [{ key: "root", label: [] }];
   const out = [];
   (function walk(i, parts, labels){
     if (i === parents.length){ out.push({ key: parts.join("|"), label: labels.slice() }); return; }
+    // the label carries the states only — the parent names sit in the header,
+    // otherwise every row repeats them and squeezes the number fields
     parents[i].states.forEach(s => {
-      walk(i + 1, parts.concat(`${parents[i].id}:${s}`), labels.concat(`${parents[i].name}: ${s}`));
+      walk(i + 1, parts.concat(`${parents[i].id}:${s}`), labels.concat(s));
     });
   })(0, [], []);
   return out;
@@ -448,6 +454,12 @@ function drawEdges(){
 }
 
 /* ---------------------------------------------------------------- panel */
+/* three decimals is enough to edit with, and trailing zeros only cost width */
+function fmt(v){
+  const n = Math.round((Number(v) || 0) * 1000) / 1000;
+  return String(n);
+}
+
 function renderPanel(){
   const node = net.nodes.find(n => n.id === selected);
   if (!node){
@@ -459,7 +471,7 @@ function renderPanel(){
   const rows = combos.map(({ key, label }) => {
     const cells = node.states.map(s =>
       `<td><input type="number" step="0.01" min="0" max="1" data-key="${escapeHtml(key)}" `
-      + `data-state="${escapeHtml(s)}" value="${(node.cpt[key]?.[s] ?? 0).toFixed(3)}"></td>`).join("");
+      + `data-state="${escapeHtml(s)}" value="${fmt(node.cpt[key]?.[s] ?? 0)}"></td>`).join("");
     const cond = label.length ? `<td class="cond">${escapeHtml(label.join(" · "))}</td>` : "";
     return `<tr>${cond}${cells}</tr>`;
   }).join("");
@@ -477,7 +489,7 @@ function renderPanel(){
 
     <h3 style="margin-top:22px">${T.cpt}</h3>
     <table class="pcpt">
-      <thead><tr>${node.parents.length ? `<th>${T.given}</th>` : ""}
+      <thead><tr>${node.parents.length ? `<th>${escapeHtml(parentsOf(node).map(p => p.name).join(" · "))}</th>` : ""}
         ${node.states.map(s => `<th>${escapeHtml(s)}</th>`).join("")}</tr></thead>
       <tbody>${rows}</tbody>
     </table>
