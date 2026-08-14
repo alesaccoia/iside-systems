@@ -17,6 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # `url` is optional: when present the tile links out and is marked with an arrow.
 PROJECTS = [
     dict(seed=3,  cat="ai product",           year="2024 →",
+         featured=True,
          it=("Thembi", "Co-fondatore · prodotto, backend, sistemi AI",
              "Piattaforma di policy intelligence europea. Ingestione e retrieval su corpora "
              "legislativi che cambiano ogni settimana, embedding e ricerca vettoriale, stesura "
@@ -28,6 +29,7 @@ PROJECTS = [
              "top. Django, Postgres with pgvector, GCP.",
              ["RAG", "pgvector", "Product"])),
     dict(seed=6,  cat="analytics ai",         year="2024 →",
+         featured=True,
          it=("Mentor Ripetizioni", "Modello di crescita e infrastruttura di marketing",
              "Ripetizioni online. Framework di misurazione omnichannel su Google Ads, Meta, "
              "LinkedIn Ads e TikTok, tool proprietario per costruire i piani editoriali sugli stadi "
@@ -123,6 +125,7 @@ PROJECTS = [
              "Microsoft and the Milan Chamber of Commerce.",
              ["Teaching", "Adoption"])),
     dict(seed=13, cat="ai research product", year="2024",
+         featured=True,
          url="https://github.com/alesaccoia/VoiceStreamAI",
          it=("VoiceStreamAI", "Open source · Python / JavaScript · MIT",
              "Server e client per trascrizione audio in near-realtime: streaming via WebSocket, "
@@ -276,6 +279,7 @@ PROJECTS = [
              "Swift and Core MIDI.",
              ["Swift", "Core MIDI", "macOS"])),
     dict(seed=25, cat="creative", year="Lab",
+         url={"it": "algosynth.html", "en": "algosynth.html"},
          it=("AlgoSynth", "Sequencer algoritmico",
              "Ispirato ad Acroyear di Autechre: generazione di pattern, uscita MIDI, controllo dello "
              "swing e song mode multitraccia, con controllo dei parametri in tempo reale e supporto "
@@ -286,6 +290,7 @@ PROJECTS = [
              "multi-track song mode, with real-time parameter control and Web MIDI support.",
              ["Web MIDI", "Algorithmic", "Sequencer"])),
     dict(seed=26, cat="creative", year="Lab",
+         url={"it": "moire.html", "en": "moire.html"},
          it=("Moire", "Sintesi audiovisiva",
              "Generatore di pattern moiré con sintesi audio-video sincronizzata: più tipi di "
              "pattern (linee, griglia, cerchi, radiale), controllo dei parametri in tempo reale e "
@@ -319,17 +324,6 @@ PROJECTS = [
              "A public wiki on artificial intelligence: entries, definitions and teaching material "
              "maintained openly.",
              ["Wiki", "Outreach"])),
-    dict(seed=29, cat="product", year="Lab",
-         url="https://github.com/alesaccoia/pyremoteview",
-         it=("PyRemoteView", "Open source · su PyPI",
-             "Applicazione web per sfogliare e visualizzare da remoto immagini che risiedono su un "
-             "altro server via SSH, con generazione automatica delle miniature e cache per le "
-             "prestazioni.",
-             ["Python", "SSH", "PyPI"]),
-         en=("PyRemoteView", "Open source · on PyPI",
-             "Web application for remotely browsing and viewing images stored on another server "
-             "over SSH, with automatic thumbnail generation and caching for performance.",
-             ["Python", "SSH", "PyPI"])),
     dict(seed=30, cat="research ai", year="Lab",
          url="https://github.com/alesaccoia/chessmaster",
          it=("ChessMaster", "Open source · PyTorch",
@@ -342,19 +336,6 @@ PROJECTS = [
              "AlphaZero's self-play approach: the agent learns entirely by playing itself, with "
              "automatic game recording and video generation.",
              ["PyTorch", "Reinforcement learning", "Self-play"])),
-    dict(seed=12, cat="ai product",           year="In corso",
-         it=("Codebase di prototipazione", "Stack personale · supporto alle decisioni",
-             "Una codebase privata ed estesa — ingestione, chunking, embedding, ricerca vettoriale, "
-             "harness di valutazione — tenuta apposta per rispondere a una domanda di fattibilità in "
-             "giorni. Serve a confermare o uccidere un'idea prima che qualcuno commissioni un "
-             "trimestre di sviluppo. Informa le decisioni; non è un prodotto in vendita.",
-             ["Prototipazione", "Fattibilità"]),
-         en=("Prototype codebase", "Personal working stack · decision support",
-             "An extensive private codebase — ingestion, chunking, embedding, vector search, "
-             "evaluation harnesses — kept so that a feasibility question can be answered in days. "
-             "Used to prove or kill an idea before anyone commissions a quarter of engineering. It "
-             "informs decisions; it is not sold as a product.",
-             ["Prototyping", "Feasibility"])),
 ]
 
 # ---------------------------------------------------------------- copy
@@ -381,39 +362,34 @@ L_IT = dict(
            "numeri non concordano fra loro, gli strumenti non si parlano, e metà settimana se ne va a "
            "montare report a mano. Fare strategia su quella base è tirare a indovinare con slide "
            "migliori.",
-           "Il mio lavoro è informato dalla strategia ma parte dalla base: decidere cosa misurare e "
-           "cosa modellare, far arrivare i dati dove servono senza che nessuno li ricopi, costruire "
-           "i modelli che trasformano quei numeri in una decisione, e quando serve portare l'AI "
-           "dentro il flusso di lavoro fino al punto in cui toglie davvero lavoro ripetitivo alle "
-           "persone.",
-           "Posso costruire e prototipare tutto questo, attingendo da una codebase personale estesa "
-           "per rispondere alle esigenze di ogni team. Non sono però il reparto sviluppo di nessuno: "
-           "oltre una certa dimensione lo sviluppo spetta al vostro team o a un partner."],
+           "<mark>Il mio lavoro è informato dalla strategia ma parte dalla base: decidere cosa "
+           "misurare e cosa modellare, far arrivare i dati dove servono senza che nessuno li "
+           "ricopi, costruire i modelli che trasformano quei numeri in una decisione, e quando "
+           "serve portare l'AI dentro il flusso di lavoro fino al punto in cui toglie davvero "
+           "lavoro ripetitivo alle persone.</mark>",
+           "Posso costruire e prototipare tutto questo, attingendo da una codebase personale estesa. "
+           "Per lo sviluppo finale lavoro insieme al vostro team, oppure a un partner che posso "
+           "coinvolgere io."],
     cap_lbl="02 — Cosa faccio",
     caps=[("Strategia e<br>Data Science",
            "Cosa misurare e cosa modellare, prima ancora di quale strumento comprare. Modelli "
-           "statistici, data mining e machine learning sui dati che avete già; previsioni, "
-           "segmentazione, disegno degli esperimenti e lettura onesta dei risultati. Esperienza "
-           "maturata fra istituti di ricerca, ad-tech e misurazione dei media, e statistica "
-           "insegnata all'università.",
+           "statistici, data mining e machine learning sui dati che avete già: previsioni, "
+           "segmentazione, esperimenti, e una lettura onesta dei risultati.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
-           "Guidare l'adozione, non consegnare un pilota e sparire. Selezione dei casi d'uso che "
-           "pagano davvero, costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI "
-           "Act obbliga a documentare, e la formazione che decide se qualcosa sopravvive al primo "
-           "trimestre. Certificato in AI &amp; Law e AI Governance.",
+           "Guidare l'adozione, non consegnare un pilota e sparire. Casi d'uso che pagano davvero, "
+           "costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI Act obbliga a "
+           "documentare. Certificato in AI &amp; Law e AI Governance.",
            ["Selezione casi d'uso", "Pilota → produzione", "Governance", "AI Act", "Formazione", "Change"]),
           ("Operations di<br>marketing e crescita",
-           "L'impianto che rende autonomo un team: un tracking plan che le persone seguono davvero, "
-           "eventi e pipeline in un unico posto, flussi CRM e lifecycle che partono da soli, "
-           "dashboard con una cadenza di lettura associata. Una sola definizione di conversione, "
-           "condivisa da tutti, e basta numeri montati a mano il lunedì.",
+           "L'impianto che rende autonomo un team: tracking plan seguito davvero, eventi e pipeline "
+           "in un unico posto, flussi CRM e lifecycle che partono da soli, dashboard con una cadenza "
+           "di lettura. Una definizione condivisa di conversione, e basta numeri montati a mano.",
            ["Tracking plan", "GA4 · GTM", "Pipeline dati", "CRM e lifecycle", "Automazioni", "Dashboard"]),
           ("Advisory per<br>founder e team",
            "Le decisioni difficili, senza una casella nell'organigramma: è fattibile con i dati e le "
-           "persone che avete, si compra o si costruisce, quale fornitore, chi assumere per primo, e "
-           "quali dei piani AI sul tavolo stanno in piedi. Se uno strumento esistente risolve già il "
-           "problema, lo dico e lo porto dentro invece di aprire un cantiere.",
+           "persone che avete, si compra o si costruisce, quale fornitore, chi assumere per primo. "
+           "Se uno strumento esistente risolve già il problema, lo dico invece di aprire un cantiere.",
            ["Fattibilità", "Build vs buy", "Scelta fornitori", "Due diligence", "Assunzioni", "Retainer o equity"])],
     sect_lbl="03 — Dove si applica",
     sect_h2="Qualunque campo<br>con dati da scavare.",
@@ -578,38 +554,34 @@ L_EN = dict(
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
            "disagree with each other, the tools do not talk, and half the week goes to assembling "
            "reports by hand. Strategy on that foundation is guesswork with better slides.",
-           "My work is informed by strategy but starts at the foundation: deciding what to measure "
-           "and what to model, getting the data where it is needed without anyone copying it, "
-           "building the models that turn those numbers into a decision, and — where it helps — "
-           "bringing AI into the workflow to the point where it genuinely removes repetitive work.",
-           "I can build and prototype all of this, drawing on an extensive personal codebase to meet "
-           "each team's needs. I am not, however, anyone's development department: past a certain "
-           "size the development belongs with your team or a partner."],
+           "<mark>My work is informed by strategy but starts at the foundation: deciding what to "
+           "measure and what to model, getting the data where it is needed without anyone copying "
+           "it, building the models that turn those numbers into a decision, and — where it helps — "
+           "bringing AI into the workflow to the point where it genuinely removes repetitive "
+           "work.</mark>",
+           "I can build and prototype all of this, drawing on an extensive personal codebase. For "
+           "the final development I work alongside your team, or with a partner I can bring in."],
     cap_lbl="02 — What I do",
     caps=[("Data strategy<br>&amp; data science",
            "What to measure and what to model, before the question of which tool to buy. Statistical "
-           "modelling, data mining and machine learning on the data you already hold; forecasting, "
-           "segmentation, experiment design, and an honest reading of the result. Experience built "
-           "across research institutes, ad-tech and media measurement, and statistics taught at "
-           "university level.",
+           "modelling, data mining and machine learning on the data you already hold: forecasting, "
+           "segmentation, experiments, and an honest reading of the result.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
           ("AI <br>Adoption",
-           "Driving adoption, not delivering a pilot and leaving. Selecting the use cases that "
-           "actually pay, the real cost of running them, who has to change how they work, what the "
-           "AI Act obliges you to document, and the training that decides whether any of it survives "
-           "the first quarter. Certified in AI &amp; Law and AI Governance.",
+           "Driving adoption, not delivering a pilot and leaving. The use cases that actually pay, "
+           "the real cost of running them, who has to change how they work, what the AI Act obliges "
+           "you to document. Certified in AI &amp; Law and AI Governance.",
            ["Use-case selection", "Pilot → production", "Governance", "EU AI Act", "Training", "Change"]),
           ("Marketing &amp; growth<br>operations",
-           "The plumbing that makes a team autonomous: a tracking plan people actually follow, events "
-           "and pipelines into one place, CRM and lifecycle flows that fire without supervision, "
-           "dashboards with a reporting cadence attached. One agreed definition of a conversion, and "
-           "no more assembling Monday's numbers by hand.",
+           "The plumbing that makes a team autonomous: a tracking plan people follow, events and "
+           "pipelines into one place, CRM and lifecycle flows that fire unsupervised, dashboards "
+           "with a reporting cadence. One agreed definition of a conversion, and no more assembling "
+           "Monday's numbers by hand.",
            ["Tracking plan", "GA4 · GTM", "Data pipelines", "CRM &amp; lifecycle", "Automation", "Dashboards"]),
           ("Advisory for<br>founders &amp; teams",
            "The hard calls, without a box on the org chart: is this feasible with the data and people "
-           "you have, build or buy, which vendor, who to hire first, and which of the AI plans on the "
-           "table are real. Where an existing tool already solves the problem, I say so and bring it "
-           "in rather than open a building site.",
+           "you have, build or buy, which vendor, who to hire first. Where an existing tool already "
+           "solves the problem, I say so rather than open a building site.",
            ["Feasibility", "Build vs buy", "Vendor selection", "Due diligence", "Hiring", "Retainer or equity"])],
     sect_lbl="03 — Where it applies",
     sect_h2="Any field with<br>data worth mining.",
@@ -746,15 +718,82 @@ L_EN = dict(
     cookie_reject="Refuse",
 )
 
+# ---------------------------------------------------------------- lab pages
+# Small dedicated pages for the two instruments, linked only from the project
+# index. Kept out of the nav and the sitemap on purpose.
+LABS = {
+"moire": dict(
+    shot="img/moire.jpg", demo="lab/moire/index.html",
+    it=dict(kicker="Lab", title="Moire",
+        lede="Generatore di pattern moiré con sintesi audio-video sincronizzata: le figure che "
+             "vedete e quello che sentite sono guidati dagli stessi parametri.",
+        body=["Quattro famiglie di pattern — linee, griglia, cerchi, radiale — sovrapposte con uno "
+              "sfasamento d'angolo regolabile: è lì che nasce l'interferenza moiré. Densità, "
+              "angolo, scala e velocità si controllano in tempo reale.",
+              "La parte audio è una sintesi FM agganciata agli stessi controlli: cambiare la "
+              "densità visiva sposta il timbro. Non è una sonificazione aggiunta dopo, i due "
+              "motori condividono lo stato."],
+        cols=[("Interazione", ["Pattern: linee, griglia, cerchi, radiale", "Densità e sfasamento angolare",
+                               "Scala e velocità", "Tutto in tempo reale"]),
+              ("Tecnica", ["Canvas 2D", "Web Audio API, sintesi FM", "Moduli ES, nessuna dipendenza",
+                           "Gira interamente nel browser"])],
+        cta="Apri lo strumento", note="Meglio con l'audio acceso. Su mobile serve un tocco per avviare il suono.",
+        back="Torna ai progetti"),
+    en=dict(kicker="Lab", title="Moire",
+        lede="A moiré pattern generator with synchronised audio-visual synthesis: what you see and "
+             "what you hear are driven by the same parameters.",
+        body=["Four pattern families — lines, grid, circles, radial — overlaid with an adjustable "
+              "angular offset, which is where the moiré interference comes from. Density, angle, "
+              "scale and speed are all live controls.",
+              "The audio side is FM synthesis wired to those same controls, so changing the visual "
+              "density moves the timbre. It is not sonification bolted on afterwards: both engines "
+              "share one state."],
+        cols=[("Interaction", ["Patterns: lines, grid, circles, radial", "Density and angular offset",
+                               "Scale and speed", "Everything live"]),
+              ("Technical", ["Canvas 2D", "Web Audio API, FM synthesis", "ES modules, no dependencies",
+                             "Runs entirely in the browser"])],
+        cta="Open the instrument", note="Better with sound on. Mobile needs one tap to start audio.",
+        back="Back to projects")),
+"algosynth": dict(
+    shot="img/algosynth.jpg", demo=None,
+    it=dict(kicker="Lab", title="AlgoSynth",
+        lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre: i pattern non si "
+             "disegnano nota per nota, si generano e poi si piegano.",
+        body=["Generazione di pattern ritmici e melodici con controllo dello swing, song mode "
+              "multitraccia e uscita MIDI via Web MIDI verso qualunque strumento collegato.",
+              "L'idea presa da Acroyear è che il materiale nasca da regole e non dalla mano: si "
+              "imposta un processo, lo si ascolta, si interviene sui parametri mentre suona."],
+        cols=[("Interazione", ["Generazione algoritmica dei pattern", "Controllo dello swing",
+                               "Song mode multitraccia", "Parametri modificabili durante l'esecuzione"]),
+              ("Tecnica", ["Web MIDI API", "Uscita verso hardware esterno", "Interamente nel browser"])],
+        cta=None, note="Lo strumento non è pubblicato qui: questa pagina lo documenta.",
+        back="Torna ai progetti"),
+    en=dict(kicker="Lab", title="AlgoSynth",
+        lede="An algorithmic sequencer inspired by Autechre's Acroyear: patterns are not drawn note "
+             "by note, they are generated and then bent.",
+        body=["Rhythmic and melodic pattern generation with swing control, multi-track song mode, "
+              "and MIDI output over Web MIDI to any connected instrument.",
+              "The idea taken from Acroyear is that the material comes from rules rather than from "
+              "the hand: you set a process running, listen, and work the parameters while it plays."],
+        cols=[("Interaction", ["Algorithmic pattern generation", "Swing control", "Multi-track song mode",
+                               "Parameters editable while playing"]),
+              ("Technical", ["Web MIDI API", "Output to external hardware", "Entirely in the browser"])],
+        cta=None, note="The instrument is not published here: this page documents it.",
+        back="Back to projects")),
+}
+
+
 # ---------------------------------------------------------------- helpers
 def chips(items):
     return "".join(f'<span class="chip">{i}</span>' for i in items)
 
 SITE = "https://www.isidesystems.com"          # cambia qui se cambia il dominio
 GTM  = "GTM-584NQHC3"
-PATHS = {"home":     ("", "en/"),
-         "projects": ("progetti.html", "en/projects.html"),
-         "about":    ("chi-sono.html", "en/about.html")}
+PATHS = {"home":      ("", "en/"),
+         "projects":  ("progetti.html", "en/projects.html"),
+         "about":     ("chi-sono.html", "en/about.html"),
+         "moire":     ("moire.html", "en/moire.html"),
+         "algosynth": ("algosynth.html", "en/algosynth.html")}
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -939,7 +978,7 @@ def page_home(L, asset, home, projects, about, alt_href):
   </article>
 """
     tiles = ""
-    for pr in PROJECTS[:3]:
+    for pr in [x for x in PROJECTS if x.get("featured")][:3]:
         name, role, body, tags = pr[L["lang"]]
         tiles += f"""    <div class="tile">
       <canvas class="thumb" data-seed="{pr['seed']}"></canvas>
@@ -1063,9 +1102,14 @@ def page_projects(L, asset, home, projects, about, alt_href):
     for pr in PROJECTS:
         name, role, body, tags = pr[L["lang"]]
         url = pr.get("url")
+        internal = isinstance(url, dict)
+        if internal:
+            url = url[L["lang"]]
         tag = "a" if url else "div"
-        attrs = f' href="{url}" target="_blank" rel="noopener"' if url else ""
-        arrow = ' <span class="ext">↗</span>' if url else ""
+        attrs = (f' href="{url}"' if internal
+                 else f' href="{url}" target="_blank" rel="noopener"') if url else ""
+        arrow = "" if internal or not url else ' <span class="ext">↗</span>'
+        arrow = ' <span class="ext">→</span>' if internal else arrow
         tiles += f"""    <{tag} class="tile" data-cat="{pr['cat']}"{attrs}>
       <canvas class="thumb" data-seed="{pr['seed']}"></canvas>
       <div class="top"><h4>{name}{arrow}</h4><span class="meta">{pr['year']}</span></div>
@@ -1269,6 +1313,40 @@ def page_about(L, asset, home, projects, about, alt_href):
 """ + footer(L, home, projects, about, asset))
 
 
+def page_lab(L, asset, home, projects, about, alt_href, key):
+    lab = LABS[key]
+    t = lab[L["lang"]]
+    body = "".join(f'<p class="dim" style="margin-top:1.2em">{b}</p>' for b in t["body"])
+    cols = "".join(
+        f'<div class="rv"><h3>{h}</h3><ul>' + "".join(f"<li>{i}</li>" for i in items) + "</ul></div>"
+        for h, items in t["cols"])
+    demo = (f'<p style="margin-top:30px"><a class="labcta" href="{lab["demo"]}">{t["cta"]}</a></p>'
+            if lab["demo"] and t["cta"] else "")
+    title = f'{t["title"]} — Iside Systems'
+    return (head(L, title, t["lede"], asset, alt_href, key)
+            + header(L, asset, home, projects, about, "projects", alt_href)
+            + f"""
+<section class="labhero">
+  <p class="meta">{t['kicker']}</p>
+  <h1 style="margin-top:14px">{t['title']}</h1>
+  <p class="lede dim" style="margin-top:20px">{t['lede']}</p>
+  <img class="labshot" src="{asset}{lab['shot']}" alt="{t['title']}" loading="lazy">
+</section>
+
+<section class="pad" style="padding-top:clamp(40px,7vh,80px);padding-bottom:clamp(50px,9vh,110px)">
+  <div class="cols2">
+    <div class="rv"><p class="dim">{t['body'][0]}</p></div>
+    <div class="rv"><p class="dim">{t['body'][1]}</p></div>
+  </div>
+  <div class="labgrid">{cols}</div>
+  {demo}
+  <p class="meta" style="margin-top:22px">{t['note']}</p>
+  <p style="margin-top:34px"><a class="labback" href="{projects}">← {t['back']}</a></p>
+</section>
+
+""" + footer(L, home, projects, about, asset))
+
+
 # ---------------------------------------------------------------- write
 def write(path, content):
     full = os.path.join(HERE, path)
@@ -1309,6 +1387,12 @@ def write_seo():
 write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/index.html"))
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
+
+for key in ("moire", "algosynth"):
+    write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
+                                     f"en/{key}.html", key))
+    write(f"en/{key}.html", page_lab(L_EN, "../assets/", "index.html", "projects.html", "about.html",
+                                     f"../{key}.html", key))
 
 # English under /en/
 write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../index.html"))

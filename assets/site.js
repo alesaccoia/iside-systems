@@ -151,9 +151,9 @@ readPal();
       x.beginPath(); x.arc(n.x, n.y, n.r, 0, Math.PI * 2); x.fill();
       if (n.lab){
         x.fillStyle = PAL.dim;
-        x.font = `9px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
+        x.font = `10px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
         x.textAlign = "center"; x.textBaseline = "middle";
-        x.fillText(n.lab, n.x, n.y - 13);
+        x.fillText(n.lab, n.x, n.y - 14);
       }
     });
 
@@ -213,7 +213,7 @@ readPal();
 
   function size(){
     const r = c.getBoundingClientRect();
-    W = r.width; H = W < 620 ? Math.max(300, Math.min(360, W * 0.95)) : Math.max(300, Math.min(430, W * 0.56));
+    W = r.width; H = W < 620 ? Math.max(330, Math.min(400, W * 1.05)) : Math.max(330, Math.min(460, W * 0.60));
     c.style.height = H + "px";
     c.width = W * DPR; c.height = H * DPR;
   }
@@ -222,7 +222,7 @@ readPal();
     x.setTransform(DPR, 0, 0, DPR, 0, 0);
     x.clearRect(0, 0, W, H);
     const mono = getComputedStyle(document.body).getPropertyValue("--mono");
-    const fs = W < 420 ? 7 : W < 620 ? 8 : 9;
+    const fs = W < 420 ? 9 : W < 620 ? 10 : 11;
     x.font = `${fs}px ${mono}`;
     x.textBaseline = "middle";
 
