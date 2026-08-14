@@ -661,7 +661,7 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
                 padL + (W - padL - padR) * 0.66,
                 padL + (W - padL - padR) * 0.95];
   const midY = (H - padT - padB) / 2 + padT;
-  const src = ["META ADS", "GA4", "SAMEAPI"];
+  const src = (canvas.dataset.src || "META|GA4").split("|");
   const out = (canvas.dataset.out || "FUNNEL|PLAN|CALENDAR|SOV").split("|");
   const fs = narrow ? 8.5 : 10.5;
   x.font = `${fs}px ${mono}`; x.textBaseline = "middle";
@@ -687,10 +687,11 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
     x.stroke();
   };
 
-  const bw = narrow ? 84 : 104, bh = 26, sp = 40;
+  const bw = narrow ? 84 : 104, bh = 26;
+  const sp = Math.min(38, (H - padT - padB - bh) / Math.max(src.length - 1, 1));
   // sources
   src.forEach((sname, i) => {
-    const y = midY + (i - 1) * sp;
+    const y = midY + (i - (src.length - 1) / 2) * sp;
     box(cols[0], y, bw, bh, sname, false, clamp(p * 4 - i * .2, 0, 1));
     wire(cols[0] + bw / 2, y, cols[1] - bw / 2, midY, clamp((p - .18 - i * .04) * 3, 0, 1));
   });

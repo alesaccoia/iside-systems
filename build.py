@@ -343,7 +343,8 @@ L_IT = dict(
     nav=("Studio", "Progetti", "Chi sono", "Case study"),
     nav_open="Apri il menu",
     news_label="In evidenza",
-    news=[("Apr — Mag 2026", "Tre seminari «Agenti AI e strumenti di Intelligenza Artificiale per la produttività aziendale» con Microsoft e Camera di commercio di Milano — primo appuntamento 4 maggio, Microsoft House"),
+    news=[("10 agosto 2026", "Nuovo case study — James: misurazione omnichannel e piano editoriale per una società di servizi educativi", "case-james.html"),
+          ("Apr — Mag 2026", "Tre seminari «Agenti AI e strumenti di Intelligenza Artificiale per la produttività aziendale» con Microsoft e Camera di commercio di Milano — primo appuntamento 4 maggio, Microsoft House"),
           ("2026", "Disponibile per conferenze, keynote e lezioni su AI Adoption, strategia dei dati e crescita"),
           ("A.A. 2025/26", "Corsi attivi: IULM e Università Cattolica")],
     title="Iside Systems — Data e AI Strategy, Adoption, Growth Science",
@@ -538,6 +539,7 @@ L_IT = dict(
     cs_back="Torna ai case study",
     cs_other="L'altro case study",
     cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
+    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM",
     cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
     cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
              "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
@@ -595,10 +597,12 @@ L_IT = dict(
     dict(
         slug="james",
         n="02", lbl="James — marketing operations per una società di servizi educativi",
-        card="Quattro piattaforme pubblicitarie, quattro dashboard e nessun numero condiviso. "
+        card="Meta, TikTok, Google Ads Search e Display, più le iniziative CRM sulla base "
+             "clienti: piattaforme diverse, dashboard diverse, nessun numero condiviso. "
              "James unisce ingestione dei dati, modello del funnel, pianificazione e misurazione "
              "in un unico posto: il piano editoriale nasce dagli stadi del funnel invece di essere "
              "scritto a parte.",
+        date="10 agosto 2026",
         h2="Quattro piattaforme,<br>una sola versione<br>dei numeri.",
         ctx=["Meta, Google, il sito, il CRM: ogni piattaforma con la sua dashboard e la sua "
              "definizione di conversione. Il piano editoriale viveva su un foglio, il budget su un "
@@ -623,6 +627,16 @@ L_IT = dict(
                 "Ogni canale ha una cadenza attesa — minimo e massimo di uscite nel periodo — e un "
                 "ruolo dichiarato nel funnel. I contenuti in calendario portano canale, "
                 "responsabile, campagna collegata e link al post pubblicato."),
+               ("Canali", "Paid, ricerca e social",
+                "Il modello copre l'intero mix: Meta, TikTok, Google Ads Search e Google Ads "
+                "Display. Ogni canale entra con la propria spesa e il proprio ruolo nel funnel — "
+                "la ricerca intercetta domanda esistente, display e social la costruiscono — e "
+                "viene misurato con le stesse definizioni degli altri."),
+               ("Base installata", "CRM, DEM e referral",
+                "Accanto all'acquisizione ci sono le iniziative sulla base clienti: campagne DEM "
+                "per il recupero dei clienti inattivi e programmi referral. Vivono nello stesso "
+                "modello del paid, così il costo per acquisizione di un canale si confronta con "
+                "quello di una riattivazione invece di stare su un foglio a parte."),
                ("Contesto", "Tag, eventi, concorrenza",
                 "Tassonomia multidimensionale con quote attese per dimensione, eventi annotati "
                 "direttamente sui grafici, e traffico mensile dei concorrenti importato per "
@@ -631,8 +645,9 @@ L_IT = dict(
             "usano lo stesso modello. Il piano editoriale nasce dagli stadi del funnel invece di "
             "essere scritto a parte, e a fine mese la domanda «quanto abbiamo speso su cosa» ha "
             "una sola risposta.",
-        chips=["Misurazione omnichannel", "Funnel configurabile", "Piano vs speso",
-               "Calendario editoriale", "Share of voice"])],
+        chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM e DEM",
+               "Referral", "Funnel configurabile", "Piano vs speso", "Calendario editoriale",
+               "Share of voice"])],
     cookie_title="Cookie.",
     cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. "
                 "Niente pubblicità, niente profilazione rivenduta a terzi. Puoi rifiutare: il sito "
@@ -646,7 +661,8 @@ L_EN = dict(
     nav=("Practice", "Projects", "About", "Case studies"),
     nav_open="Open the menu",
     news_label="Latest",
-    news=[("Apr — May 2026", "Three seminars, “AI agents and AI tools for business productivity”, with Microsoft and the Milan Chamber of Commerce — first date 4 May, Microsoft House"),
+    news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
+          ("Apr — May 2026", "Three seminars, “AI agents and AI tools for business productivity”, with Microsoft and the Milan Chamber of Commerce — first date 4 May, Microsoft House"),
           ("2026", "Available for conferences, keynotes and lectures on AI adoption, data strategy and growth"),
           ("2025/26", "Teaching at IULM and Università Cattolica")],
     title="Iside Systems — Data &amp; AI Strategy, Adoption, Growth Science",
@@ -833,6 +849,7 @@ L_EN = dict(
     cs_back="Back to case studies",
     cs_other="The other case study",
     cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
+    cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL",
     cs_cta_h2="Does one of these<br>look like your problem?",
     cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
              "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
@@ -888,9 +905,11 @@ L_EN = dict(
     dict(
         slug="james",
         n="02", lbl="James — marketing operations for an online education company",
-        card="Four advertising platforms, four dashboards and no shared numbers. James holds "
+        card="Meta, TikTok, Google Ads Search and Display, plus the CRM initiatives on the "
+             "existing base: different platforms, different dashboards, no shared numbers. James holds "
              "ingestion, the funnel model, planning and measurement in one place: the editorial "
              "plan comes out of the funnel stages instead of being written separately.",
+        date="10 August 2026",
         h2="Four platforms,<br>one version<br>of the numbers.",
         ctx=["Meta, Google, the site, the CRM: every platform with its own dashboard and its own "
              "definition of a conversion. The editorial plan lived in one spreadsheet, the budget "
@@ -914,6 +933,16 @@ L_EN = dict(
                 "Every channel carries an expected cadence — minimum and maximum outputs per "
                 "period — and a declared role in the funnel. Calendar items carry channel, owner, "
                 "linked campaign and a link to the published post."),
+               ("Channels", "Paid, search and social",
+                "The model covers the whole mix: Meta, TikTok, Google Ads Search and Google Ads "
+                "Display. Each channel comes in with its own spend and its own role in the funnel "
+                "— search captures existing demand, display and social build it — and is measured "
+                "with the same definitions as the others."),
+               ("Installed base", "CRM, email and referral",
+                "Alongside acquisition sit the initiatives on the existing customer base: email "
+                "campaigns to win back inactive customers, and referral programmes. They live in "
+                "the same model as paid, so a channel's cost per acquisition can be compared with "
+                "the cost of a reactivation instead of sitting in a separate spreadsheet."),
                ("Context", "Tags, events, competition",
                 "A multi-dimensional taxonomy with expected shares per dimension, events annotated "
                 "directly on the charts, and monthly competitor traffic imported to compare your "
@@ -921,8 +950,9 @@ L_EN = dict(
         out="The result is not a prettier dashboard: it is that planning and measurement now use "
             "the same model. The editorial plan comes out of the funnel stages instead of being "
             "written separately, and at month end “what did we spend it on” has a single answer.",
-        chips=["Omnichannel measurement", "Configurable funnel", "Plan vs spend",
-               "Editorial calendar", "Share of voice"])],
+        chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM &amp; email",
+               "Referral", "Configurable funnel", "Plan vs spend", "Editorial calendar",
+               "Share of voice"])],
     cookie_title="Cookies.",
     cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no "
                 "profiling sold on to anyone. You can refuse: the site works exactly the same.",
@@ -1138,9 +1168,12 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
 """
 
 def newsbar(L, about):
-    items = "".join(
-        f'<span class="item"><time>{w}</time><a href="{about}#speaking">{t}</a></span>'
-        for w, t in L["news"])
+    items = ""
+    for entry in L["news"]:
+        w, t = entry[0], entry[1]
+        # entries with their own link are already relative to the current folder
+        href = entry[2] if len(entry) > 2 else f"{about}#speaking"
+        items += f'<span class="item"><time>{w}</time><a href="{href}">{t}</a></span>' 
     return f'<div class="newsbar"><span class="tag">{L["news_label"]}</span>{items}</div>\n'
 
 def footer(L, home, projects, about, asset):
@@ -1580,9 +1613,9 @@ def page_cases(L, asset, home, projects, about, alt_href, cases):
         cards += f"""
     <a class="cscard rv" href="{_case_href(c, L['lang'])}">
       <canvas class="csfig" id="card-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}"
-              data-out="{L['cs_fig_out']}" data-replay="1"></canvas>
+              data-out="{L['cs_fig_out']}" data-src="{L['cs_fig_src']}" data-replay="1"></canvas>
       <div class="b">
-        <p class="meta">{c['n']} — {c['lbl']}</p>
+        <p class="meta">{c['n']} — {c['lbl']}{" · " + c["date"] if c.get("date") else ""}</p>
         <h2>{c['h2']}</h2>
         <p class="dim">{c['card']}</p>
         <div class="facts">{chips(c['chips'][:4])}</div>
@@ -1624,7 +1657,7 @@ def page_case(L, asset, home, projects, about, alt_href, cases, slug):
             + header(L, asset, home, projects, about, "cases", alt_href, cases)
             + f"""
 <section class="labhero">
-  <p class="meta">{L['cs_kicker']} · {c['n']}</p>
+  <p class="meta">{L['cs_kicker']} · {c['n']}{" · " + c["date"] if c.get("date") else ""}</p>
   <h1 style="margin-top:14px;max-width:18ch">{c['h2']}</h1>
   <p class="lede dim" style="margin-top:20px">{c['lbl']}</p>
 </section>
@@ -1636,7 +1669,7 @@ def page_case(L, asset, home, projects, about, alt_href, cases, slug):
   </div>
   <div class="facts" style="margin-top:28px">{chips(c['chips'])}</div>
   <div class="figbox rv" style="margin-top:clamp(30px,5vh,60px)">
-    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}" data-out="{L['cs_fig_out']}"></canvas>
+    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}" data-out="{L['cs_fig_out']}" data-src="{L['cs_fig_src']}"></canvas>
   </div>
   <div class="cssteps">{steps}</div>
   <p class="lede dim rv" style="margin-top:clamp(30px,5vh,54px)">{c['out']}</p>
