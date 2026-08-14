@@ -531,8 +531,18 @@ readPal();
    CASE STUDY FIGURES — drawn once when they enter view.
    Both take their labels from data-labels, so the copy stays in build.py.
    ============================================================ */
+function caseFigure2(id, cardId, draw, ratio){
+  [id, cardId].forEach(i => {
+    const el = document.getElementById(i);
+    if (el) bindFigure(el, draw, ratio);
+  });
+}
+
 function caseFigure(id, draw, ratio){
-  const c = document.getElementById(id);
+  document.querySelectorAll("#" + id).forEach(c => bindFigure(c, draw, ratio));
+}
+
+function bindFigure(c, draw, ratio){
   if (!c) return;
   const x = c.getContext("2d");
   let W = 0, H = 0, done = false;
@@ -563,6 +573,11 @@ function caseFigure(id, draw, ratio){
     if (e.some(i => i.isIntersecting)){ run(); o.disconnect(); }
   }, { threshold: .25 });
   io.observe(c);
+  // on the index cards the figure replays when the card is hovered
+  if (c.dataset.replay){
+    const card = c.closest("a") || c;
+    card.addEventListener("pointerenter", () => { if (done){ done = false; run(); } });
+  }
   // failsafe: if the observer never delivers (background tab, odd embedding),
   // draw anyway rather than leave an empty box on the page
   setTimeout(() => { if (!done){ io.disconnect(); run(); } }, 1800);
@@ -572,7 +587,7 @@ function caseFigure(id, draw, ratio){
 }
 
 /* --- 01: three seminars, then workshops, then the recurring briefs --- */
-caseFigure("fig-training", (x, W, H, p, labels, mono) => {
+caseFigure2("fig-training", "card-training", (x, W, H, p, labels, mono) => {
   const narrow = W < 620;
   const padL = 26, padR = 22, padB = narrow ? 26 : 52, padT = 30;
   const iw = W - padL - padR, ih = H - padT - padB;
@@ -638,7 +653,7 @@ caseFigure("fig-training", (x, W, H, p, labels, mono) => {
 }, 0.40);
 
 /* --- 02: sources -> ingestion -> store -> James -> views --- */
-caseFigure("fig-james", (x, W, H, p, labels, mono, canvas) => {
+caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
   const narrow = W < 620;
   const padL = 14, padR = 14, padT = 26, padB = 26;
   const cols = [padL + (W - padL - padR) * 0.10,
@@ -691,3 +706,4 @@ caseFigure("fig-james", (x, W, H, p, labels, mono, canvas) => {
     box(cols[3], y, bw, bh - 4, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
   });
 }, 0.46);
+

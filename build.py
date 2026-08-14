@@ -20,14 +20,13 @@ PROJECTS = [
          featured=True,
          it=("Thembi", "Co-fondatore · prodotto, backend, sistemi AI",
              "Piattaforma di policy intelligence europea. Ingestione e retrieval su corpora "
-             "legislativi che cambiano ogni settimana, embedding e ricerca vettoriale, stesura "
-             "assistita della corrispondenza. Django, Postgres con pgvector, GCP.",
-             ["RAG", "pgvector", "Prodotto"]),
+             "legislativi che cambiano ogni settimana, ricerca semantica e stesura assistita "
+             "della corrispondenza.",
+             ["Retrieval", "Ricerca semantica", "Prodotto"]),
          en=("Thembi", "Co-founder · product, backend, AI systems",
              "EU policy intelligence platform. Ingestion and retrieval over legislative corpora "
-             "that change weekly, embeddings and vector search, and correspondence drafting on "
-             "top. Django, Postgres with pgvector, GCP.",
-             ["RAG", "pgvector", "Product"])),
+             "that change weekly, semantic search, and correspondence drafting on top.",
+             ["Retrieval", "Semantic search", "Product"])),
     dict(seed=6,  cat="analytics ai",         year="2024 →",
          featured=True,
          it=("Mentor Ripetizioni", "Modello di crescita e infrastruttura di marketing",
@@ -527,23 +526,38 @@ L_IT = dict(
     f_ok="Apro il tuo client di posta con il messaggio già pronto.",
     elsewhere="Altrove",
     cs_title="Case study — Iside Systems",
-    cs_desc="Due percorsi reali, raccontati senza nominare i clienti: adozione dell'AI in una "
-            "società di consulenza, e James, la piattaforma di marketing operations costruita per "
-            "una società di servizi educativi.",
+    cs_desc="Due percorsi reali, raccontati senza nominare i clienti: adozione dell'AI dentro le "
+            "business unit di una società di consulenza, e James, la piattaforma di marketing "
+            "operations costruita per una società di servizi educativi.",
     cs_kicker="Case study",
     cs_h1="Due modi di far entrare i dati e l'AI in un'organizzazione.",
     cs_lede="I clienti non sono nominati: quello che conta è il metodo, non il logo. Il primo caso "
-            "parte dalle persone, il secondo dagli strumenti — e finiscono nello stesso posto.",
+            "parte dalle persone e dai loro processi, il secondo dagli strumenti — e finiscono "
+            "nello stesso posto.",
+    cs_card_cta="Leggi il caso",
+    cs_back="Torna ai case study",
+    cs_other="L'altro case study",
+    cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
+    cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
+    cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
+             "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
+             "da tutti. Il primo passo è capire da quale lato conviene entrare.",
+    cs_cta_link="Scrivimi →",
     cs_cases=[dict(
+        slug="ai-adoption",
         n="01", lbl="Adozione dell'AI — società di consulenza e formazione",
-        h2="Da uso individuale<br>a pratica di studio.",
+        card="Un percorso che parte dall'aula e finisce dentro i processi: tre seminari per "
+             "costruire il linguaggio comune, poi workshop con le singole business unit per "
+             "mappare il lavoro reale, individuare i low hanging fruit e disegnare agenti che "
+             "rispettino i metodi già in uso.",
+        h2="Dall'aula<br>dentro i processi.",
         ctx=["L'AI era già entrata in azienda, ma dalla porta di servizio: ognuno usava lo strumento "
              "che preferiva, con criteri propri, e senza una risposta condivisa alle due domande "
              "che bloccano tutti — dove finiscono i nostri dati, e di chi è la responsabilità "
              "sull'output.",
              "Il rischio non era tecnologico ma organizzativo: competenze che divergono, know-how "
              "che esce senza che nessuno se ne accorga, e un uso che resta confinato alla curiosità "
-             "personale invece di diventare produttività."],
+             "personale invece di diventare capacità dell'organizzazione."],
         fig="training",
         steps=[("Seminario 1", "Come funzionano davvero gli strumenti",
                 "Un modello mentale non tecnico: come i modelli generano contenuti, differenza fra "
@@ -554,40 +568,53 @@ L_IT = dict(
                 "inquadrati in modo pratico, protezione del know-how, rischi di leakage e uso "
                 "improprio degli output."),
                ("Seminario 3", "Produttività e automazione",
-                "Dal task singolo al processo: pattern ricorrenti, workflow deterministici, "
+                "Dal task singolo al processo: pattern ricorrenti, automazioni deterministiche, "
                 "introduzione agli agenti, e soprattutto quando automatizzare e quando no."),
-               ("In aggiunta", "Workshop pratici",
-                "Aggiunti in corso d'opera, sui casi reali portati dai partecipanti: si lavora sui "
-                "documenti e sui processi dello studio, non su esempi da manuale."),
+               ("Workshop", "Con le singole business unit",
+                "Qui il percorso smette di essere formazione e diventa analisi. Sessioni dedicate "
+                "a ogni business unit per capire a fondo come si lavora davvero: quali passaggi si "
+                "ripetono, dove si perde tempo, quali controlli non sono negoziabili. Da lì "
+                "emergono i low hanging fruit — le cose che si possono migliorare subito, senza "
+                "riscrivere il modo di lavorare."),
+               ("Progettazione", "Agenti disegnati sui metodi esistenti",
+                "Gli agenti nascono dalla mappatura, non da un catalogo: seguono i metodi "
+                "prestabiliti dell'organizzazione invece di chiederle di adattarsi a loro. È la "
+                "differenza fra uno strumento che viene adottato e uno che viene aggirato."),
                ("Nel tempo", "Pillole di aggiornamento",
                 "Contenuti brevi e ricorrenti costruiti sui feedback dei seminari e sull'uso "
-                "osservato: riassumere PDF lunghi, estrarre dati strutturati, deep research, "
+                "osservato: riassumere documenti lunghi, estrarre dati strutturati, deep research, "
                 "aggiornamenti normativi.")],
-        out="L'obiettivo dichiarato era trasformare un utilizzo disordinato in un approccio "
-            "strutturato, consapevole e progressivamente automatizzabile. La forma del percorso "
-            "conta quanto il contenuto: tre seminari costruiscono il linguaggio comune, i workshop "
-            "lo mettono alla prova sui processi veri, le pillole impediscono che tutto si spenga "
-            "dopo un mese.",
-        chips=["3 seminari progressivi", "Workshop sui casi reali", "Pillole ricorrenti",
-               "GDPR e AI Act", "Da workflow ad agenti"]),
+        out="Il punto di arrivo non è «l'azienda usa l'AI», ma un aumento misurabile della capacità "
+            "individuale e di gruppo: le persone fanno le stesse cose meglio e più in fretta, e "
+            "l'organizzazione guadagna capacità che prima non aveva. Tre seminari costruiscono il "
+            "linguaggio comune, i workshop con le business unit trovano dove intervenire davvero, "
+            "gli agenti consolidano il guadagno, le pillole impediscono che tutto si spenga dopo "
+            "un mese.",
+        chips=["3 seminari progressivi", "Workshop per business unit", "Mappatura dei processi",
+               "Low hanging fruit", "Agenti sui metodi esistenti", "GDPR e AI Act"]),
     dict(
+        slug="james",
         n="02", lbl="James — marketing operations per una società di servizi educativi",
+        card="Quattro piattaforme pubblicitarie, quattro dashboard e nessun numero condiviso. "
+             "James unisce ingestione dei dati, modello del funnel, pianificazione e misurazione "
+             "in un unico posto: il piano editoriale nasce dagli stadi del funnel invece di essere "
+             "scritto a parte.",
         h2="Quattro piattaforme,<br>una sola versione<br>dei numeri.",
         ctx=["Meta, Google, il sito, il CRM: ogni piattaforma con la sua dashboard e la sua "
              "definizione di conversione. Il piano editoriale viveva su un foglio, il budget su un "
              "altro, e nessuno dei due parlava con la spesa reale.",
-             "Invece di comprare l'ennesimo strumento ho costruito James: una piattaforma Django "
-             "che tiene insieme ingestione dei dati, modello del funnel, pianificazione e "
-             "misurazione. È indipendente dal cliente — nasce riutilizzabile."],
+             "Invece di comprare l'ennesimo strumento ho costruito James: una piattaforma che tiene "
+             "insieme ingestione dei dati, modello del funnel, pianificazione e misurazione. È "
+             "indipendente dal cliente — nasce riutilizzabile."],
         fig="james",
         steps=[("Ingestione", "Un solo magazzino",
-                "I dati arrivano via Airbyte dalle piattaforme pubblicitarie e analytics e vengono "
-                "specchiati deduplicandoli per chiave naturale, non per id grezzo: i re-sync non "
+                "I dati arrivano dalle piattaforme pubblicitarie e analytics e vengono raccolti in "
+                "un unico posto, deduplicati per chiave naturale: le sincronizzazioni ripetute non "
                 "creano doppioni."),
                ("Modello", "Funnel configurabile",
                 "Stadi e KPI si definiscono dall'interfaccia: metrica di origine, aggregazione, "
                 "rapporti fra metriche, moltiplicatori, livello di entità. Ogni stadio può essere "
-                "agganciato alle campagne reali tramite i loro id."),
+                "agganciato alle campagne reali."),
                ("Pianificazione", "Piano contro speso",
                 "I piani budget scompongono il periodo per linea, in percentuale o in importo, e "
                 "il confronto con la spesa reale è automatico. Le voci che sono effort operativo e "
@@ -604,14 +631,8 @@ L_IT = dict(
             "usano lo stesso modello. Il piano editoriale nasce dagli stadi del funnel invece di "
             "essere scritto a parte, e a fine mese la domanda «quanto abbiamo speso su cosa» ha "
             "una sola risposta.",
-        chips=["Django · Postgres", "Airbyte", "Funnel configurabile", "Piano vs speso",
+        chips=["Misurazione omnichannel", "Funnel configurabile", "Piano vs speso",
                "Calendario editoriale", "Share of voice"])],
-    cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
-    cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
-    cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
-             "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
-             "da tutti. Il primo passo è capire da quale lato conviene entrare.",
-    cs_cta_link="Scrivimi →",
     cookie_title="Cookie.",
     cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. "
                 "Niente pubblicità, niente profilazione rivenduta a terzi. Puoi rifiutare: il sito "
@@ -800,23 +821,38 @@ L_EN = dict(
     f_ok="Opening your mail client with the message ready to send.",
     elsewhere="Elsewhere",
     cs_title="Case studies — Iside Systems",
-    cs_desc="Two real engagements, told without naming the clients: AI adoption inside a "
-            "consulting firm, and James, the marketing operations platform built for an online "
-            "education company.",
+    cs_desc="Two real engagements, told without naming the clients: AI adoption inside the business "
+            "units of a consulting firm, and James, the marketing operations platform built for an "
+            "online education company.",
     cs_kicker="Case studies",
     cs_h1="Two ways to get data and AI inside an organisation.",
     cs_lede="Clients are not named: the method is the point, not the logo. The first case starts "
-            "from people, the second from tooling — and they end up in the same place.",
+            "from people and their processes, the second from tooling — and they end up in the "
+            "same place.",
+    cs_card_cta="Read the case",
+    cs_back="Back to case studies",
+    cs_other="The other case study",
+    cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
+    cs_cta_h2="Does one of these<br>look like your problem?",
+    cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
+             "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
+             "The first step is working out which side to come in from.",
+    cs_cta_link="Get in touch →",
     cs_cases=[dict(
+        slug="ai-adoption",
         n="01", lbl="AI adoption — consulting and training firm",
-        h2="From individual use<br>to shared practice.",
+        card="A programme that starts in the room and ends inside the processes: three seminars to "
+             "build the shared language, then workshops with each business unit to map the real "
+             "work, find the low-hanging fruit, and design agents that respect the methods already "
+             "in use.",
+        h2="From the classroom<br>into the processes.",
         ctx=["AI was already inside the company, but it had come in through the back door: everyone "
              "used whatever tool they preferred, on their own terms, with no shared answer to the "
              "two questions that stop everybody — where does our data end up, and who is "
              "responsible for the output.",
              "The risk was organisational rather than technical: skills drifting apart, know-how "
              "leaving without anyone noticing, and usage staying at the level of personal curiosity "
-             "instead of becoming productivity."],
+             "instead of becoming organisational capability."],
         fig="training",
         steps=[("Seminar 1", "How the tools actually work",
                 "A non-technical mental model: how models generate content, the difference between "
@@ -827,38 +863,49 @@ L_EN = dict(
                 "AI Act framed practically, protecting know-how, the risks of leakage and of "
                 "misusing output."),
                ("Seminar 3", "Productivity and automation",
-                "From single task to process: recurring patterns, deterministic workflows, an "
+                "From single task to process: recurring patterns, deterministic automation, an "
                 "introduction to agents, and above all when to automate and when not to."),
-               ("Added", "Hands-on workshops",
-                "Added mid-course, on the real cases participants brought: work happens on the "
-                "firm's own documents and processes, not on textbook examples."),
+               ("Workshops", "With each business unit",
+                "This is where the programme stops being training and becomes analysis. Dedicated "
+                "sessions with every business unit to understand how the work actually happens: "
+                "which steps repeat, where time is lost, which controls are non-negotiable. The "
+                "low-hanging fruit falls out of that — what can be improved immediately, without "
+                "rewriting how people work."),
+               ("Design", "Agents shaped around existing methods",
+                "The agents come out of the mapping rather than off a shelf: they follow the "
+                "organisation's established methods instead of asking it to adapt to them. That is "
+                "the difference between a tool that gets adopted and one that gets worked around."),
                ("Over time", "Short recurring briefs",
                 "Brief, regular pieces built on seminar feedback and on observed usage: summarising "
-                "long PDFs, extracting structured data, deep research, regulatory updates.")],
-        out="The stated goal was to turn scattered usage into a structured, informed and "
-            "progressively automatable approach. The shape of the programme matters as much as its "
-            "content: three seminars build the shared language, the workshops test it against real "
-            "processes, and the recurring briefs stop the whole thing fading after a month.",
-        chips=["3 progressive seminars", "Workshops on real cases", "Recurring briefs",
-               "GDPR and the AI Act", "From workflows to agents"]),
+                "long documents, extracting structured data, deep research, regulatory updates.")],
+        out="The destination is not “the company uses AI” but a measurable increase in individual "
+            "and group capability: people do the same things better and faster, and the "
+            "organisation gains capacity it did not have. Three seminars build the shared language, "
+            "the business-unit workshops find where to actually intervene, the agents consolidate "
+            "the gain, and the recurring briefs stop the whole thing fading after a month.",
+        chips=["3 progressive seminars", "Workshops per business unit", "Process mapping",
+               "Low-hanging fruit", "Agents on existing methods", "GDPR and the AI Act"]),
     dict(
+        slug="james",
         n="02", lbl="James — marketing operations for an online education company",
+        card="Four advertising platforms, four dashboards and no shared numbers. James holds "
+             "ingestion, the funnel model, planning and measurement in one place: the editorial "
+             "plan comes out of the funnel stages instead of being written separately.",
         h2="Four platforms,<br>one version<br>of the numbers.",
         ctx=["Meta, Google, the site, the CRM: every platform with its own dashboard and its own "
              "definition of a conversion. The editorial plan lived in one spreadsheet, the budget "
              "in another, and neither talked to actual spend.",
-             "Rather than buy yet another tool I built James: a Django platform holding ingestion, "
-             "the funnel model, planning and measurement together. It is client-independent — "
-             "reusable by design."],
+             "Rather than buy yet another tool I built James: a platform holding ingestion, the "
+             "funnel model, planning and measurement together. It is client-independent — reusable "
+             "by design."],
         fig="james",
         steps=[("Ingestion", "One warehouse",
-                "Data arrives through Airbyte from the ad and analytics platforms and is mirrored "
-                "deduplicated by natural key rather than by raw id, so re-syncs do not create "
-                "duplicates."),
+                "Data arrives from the ad and analytics platforms and is collected in one place, "
+                "deduplicated by natural key, so repeated syncs do not create duplicates."),
                ("Model", "Configurable funnel",
                 "Stages and KPIs are defined from the interface: source metric, aggregation, ratios "
                 "between metrics, multipliers, entity level. Each stage can be tied to the real "
-                "campaigns through their ids."),
+                "campaigns."),
                ("Planning", "Plan against spend",
                 "Budget plans break the period down by line, as a percentage or an amount, and the "
                 "comparison with real spend is automatic. Lines that are operational effort rather "
@@ -874,14 +921,8 @@ L_EN = dict(
         out="The result is not a prettier dashboard: it is that planning and measurement now use "
             "the same model. The editorial plan comes out of the funnel stages instead of being "
             "written separately, and at month end “what did we spend it on” has a single answer.",
-        chips=["Django · Postgres", "Airbyte", "Configurable funnel", "Plan vs spend",
+        chips=["Omnichannel measurement", "Configurable funnel", "Plan vs spend",
                "Editorial calendar", "Share of voice"])],
-    cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
-    cs_cta_h2="Does one of these<br>look like your problem?",
-    cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
-             "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
-             "The first step is working out which side to come in from.",
-    cs_cta_link="Get in touch →",
     cookie_title="Cookies.",
     cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no "
                 "profiling sold on to anyone. You can refuse: the site works exactly the same.",
@@ -962,6 +1003,8 @@ SITE = "https://www.isidesystems.com"          # cambia qui se cambia il dominio
 GTM  = "GTM-584NQHC3"
 PATHS = {"home":      ("", "en/"),
          "cases":     ("case-study.html", "en/case-studies.html"),
+         "case-ai-adoption": ("case-ai-adoption.html", "en/case-ai-adoption.html"),
+         "case-james":       ("case-james.html", "en/case-james.html"),
          "projects":  ("progetti.html", "en/projects.html"),
          "about":     ("chi-sono.html", "en/about.html"),
          "moire":     ("moire.html", "en/moire.html"),
@@ -1497,7 +1540,9 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
     cols = "".join(
         f'<div class="rv"><h3>{h}</h3><ul>' + "".join(f"<li>{i}</li>" for i in items) + "</ul></div>"
         for h, items in t["cols"])
-    demo = (f'<p style="margin-top:30px"><a class="labcta" href="{lab["demo"]}">{t["cta"]}</a></p>'
+    # the English pages live one level down, so the demo link needs the hop
+    root = "../" if asset.startswith("../") else ""
+    demo = (f'<p style="margin-top:30px"><a class="labcta" href="{root}{lab["demo"]}">{t["cta"]}</a></p>'
             if lab["demo"] and t["cta"] else "")
     title = f'{t["title"]} — Iside Systems'
     return (head(L, title, t["lede"], asset, alt_href, key)
@@ -1524,30 +1569,26 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
 """ + footer(L, home, projects, about, asset))
 
 
+def _case_href(c, lang):
+    return f"case-{c['slug']}.html"
+
+
 def page_cases(L, asset, home, projects, about, alt_href, cases):
-    blocks = ""
+    """The index: one card per case, each with a live preview of its figure."""
+    cards = ""
     for c in L["cs_cases"]:
-        steps = "".join(
-            f'<div class="csstep rv"><div class="k">{k}</div>'
-            f'<div><b>{h}</b><i>{d}</i></div></div>'
-            for k, h, d in c["steps"])
-        blocks += f"""
-<section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
-  <div class="lbl">{c['n']} — {c['lbl']}</div>
-  <div class="cols2" style="align-items:start">
-    <div class="rv"><h2>{c['h2']}</h2></div>
-    <div class="rv">
-      <p class="dim">{c['ctx'][0]}</p>
-      <p class="dim" style="margin-top:1.2em">{c['ctx'][1]}</p>
-      <div class="facts" style="margin-top:24px">{chips(c['chips'])}</div>
-    </div>
-  </div>
-  <div class="figbox rv" style="margin-top:clamp(30px,5vh,60px)">
-    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}" data-out="{L['cs_fig_out']}"></canvas>
-  </div>
-  <div class="cssteps">{steps}</div>
-  <p class="lede dim rv" style="margin-top:clamp(30px,5vh,54px)">{c['out']}</p>
-</section>
+        cards += f"""
+    <a class="cscard rv" href="{_case_href(c, L['lang'])}">
+      <canvas class="csfig" id="card-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}"
+              data-out="{L['cs_fig_out']}" data-replay="1"></canvas>
+      <div class="b">
+        <p class="meta">{c['n']} — {c['lbl']}</p>
+        <h2>{c['h2']}</h2>
+        <p class="dim">{c['card']}</p>
+        <div class="facts">{chips(c['chips'][:4])}</div>
+        <span class="csgo">{L['cs_card_cta']} →</span>
+      </div>
+    </a>
 """
     return (head(L, L["cs_title"], L["cs_desc"], asset, alt_href, "cases")
             + header(L, asset, home, projects, about, "cases", alt_href, cases)
@@ -1558,11 +1599,53 @@ def page_cases(L, asset, home, projects, about, alt_href, cases):
   <h1 style="margin-top:16px;max-width:19ch">{L['cs_h1']}</h1>
   <p class="lede dim" style="margin-top:22px">{L['cs_lede']}</p>
 </section>
-{blocks}
-<section class="pad rule" style="padding-top:clamp(60px,10vh,120px);padding-bottom:clamp(60px,10vh,120px)">
+
+<section class="pad" style="padding-bottom:clamp(56px,9vh,110px)">
+  <div class="cscards">{cards}  </div>
+</section>
+
+<section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(60px,10vh,120px)">
   <h2 class="rv">{L['cs_cta_h2']}</h2>
   <p class="lede dim rv" style="margin-top:22px">{L['cs_cta_p']}</p>
   <p style="margin-top:30px"><a class="meta" href="{about}#contact" style="color:var(--acc);text-decoration:none">{L['cs_cta_link']}</a></p>
+</section>
+
+""" + footer(L, home, projects, about, asset))
+
+
+def page_case(L, asset, home, projects, about, alt_href, cases, slug):
+    c = next(x for x in L["cs_cases"] if x["slug"] == slug)
+    other = next(x for x in L["cs_cases"] if x["slug"] != slug)
+    steps = "".join(
+        f'<div class="csstep rv"><div class="k">{k}</div>'
+        f'<div><b>{h}</b><i>{d}</i></div></div>'
+        for k, h, d in c["steps"])
+    return (head(L, f"{c['lbl']} — Iside Systems", c["card"], asset, alt_href, f"case-{slug}")
+            + header(L, asset, home, projects, about, "cases", alt_href, cases)
+            + f"""
+<section class="labhero">
+  <p class="meta">{L['cs_kicker']} · {c['n']}</p>
+  <h1 style="margin-top:14px;max-width:18ch">{c['h2']}</h1>
+  <p class="lede dim" style="margin-top:20px">{c['lbl']}</p>
+</section>
+
+<section class="pad" style="padding-top:clamp(46px,8vh,90px);padding-bottom:clamp(30px,5vh,50px)">
+  <div class="cols2" style="align-items:start">
+    <div class="rv"><p class="dim">{c['ctx'][0]}</p></div>
+    <div class="rv"><p class="dim">{c['ctx'][1]}</p></div>
+  </div>
+  <div class="facts" style="margin-top:28px">{chips(c['chips'])}</div>
+  <div class="figbox rv" style="margin-top:clamp(30px,5vh,60px)">
+    <canvas class="fig" id="fig-{c['fig']}" data-labels="{'|'.join(k for k, _h, _d in c['steps'])}" data-out="{L['cs_fig_out']}"></canvas>
+  </div>
+  <div class="cssteps">{steps}</div>
+  <p class="lede dim rv" style="margin-top:clamp(30px,5vh,54px)">{c['out']}</p>
+</section>
+
+<section class="pad rule" style="padding-top:clamp(46px,8vh,90px);padding-bottom:clamp(56px,9vh,110px)">
+  <p class="meta">{L['cs_other']}</p>
+  <p style="margin-top:14px"><a class="labcta" href="{_case_href(other, L['lang'])}">{other['n']} — {other['lbl']}</a></p>
+  <p style="margin-top:30px"><a class="labback" href="{cases}">← {L['cs_back']}</a></p>
 </section>
 
 """ + footer(L, home, projects, about, asset))
@@ -1580,7 +1663,7 @@ def write(path, content):
 def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
-    for key in ("home", "cases", "projects", "about"):
+    for key in ("home", "cases", "case-ai-adoption", "case-james", "projects", "about"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -1605,10 +1688,17 @@ def write_seo():
 
 
 # Italian at the root
-write("case-study.html",    page_cases(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
-                                        "en/case-studies.html", "case-study.html"))
+write("case-study.html",      page_cases(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
+                                         "en/case-studies.html", "case-study.html"))
 write("en/case-studies.html", page_cases(L_EN, "../assets/", "index.html", "projects.html", "about.html",
-                                        "../case-study.html", "case-studies.html"))
+                                         "../case-study.html", "case-studies.html"))
+for _slug in ("ai-adoption", "james"):
+    write(f"case-{_slug}.html",
+          page_case(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
+                    f"en/case-{_slug}.html", "case-study.html", _slug))
+    write(f"en/case-{_slug}.html",
+          page_case(L_EN, "../assets/", "index.html", "projects.html", "about.html",
+                    f"../case-{_slug}.html", "case-studies.html", _slug))
 
 write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/index.html"))
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
