@@ -686,8 +686,10 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
     const outRows = Math.ceil(out.length / cols);
     const srcH = srcRows * bh + (srcRows - 1) * vgap;
     const outH = outRows * bh + (outRows - 1) * vgap;
-    const link = (ih - srcH - outH - bh * 2) / 3;      // three connector gaps
-    let y = padT;
+    // connectors are capped, then the whole stack is centred in what is left
+    const link = clamp((ih - srcH - outH - bh * 2) / 3, 16, 44);
+    const content = srcH + outH + bh * 2 + link * 3;
+    let y = padT + Math.max(0, (ih - content) / 2);
 
     src.forEach((sname, i) => {
       const r = Math.floor(i / cols), c2 = i % cols;
@@ -756,7 +758,7 @@ caseFigure2("fig-james", "card-james", (x, W, H, p, labels, mono, canvas) => {
     wire(cols[2] + (bw + 16) / 2, midY, cols[3] - bw / 2, y, clamp((p - .62 - i * .05) * 4, 0, 1));
     box(cols[3], y, bw, bh, oname, false, clamp((p - .72 - i * .05) * 4, 0, 1));
   });
-}, { wide: 0.46, narrow: 1.55 });
+}, { wide: 0.46, narrow: 1.30 });
 
 /* --- 03: a stack that has to hold, plus the governance layer around it --- */
 caseFigure2("fig-cloud", "card-cloud", (x, W, H, p, labels, mono) => {
