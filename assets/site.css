@@ -203,7 +203,9 @@ form.contact button:hover{background:transparent;color:var(--ink)}
 footer.site{border-top:1px solid var(--line);padding:56px var(--pad) 44px;
   display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:26px}
 footer.site .col b{font-weight:500;font-size:14px;display:block;margin-bottom:8px}
-footer.site .col a{display:block;font-size:14.5px;color:var(--dim);text-decoration:none;line-height:2}
+footer.site .col a,footer.site .col span{display:block;font-size:14.5px;color:var(--dim);
+  text-decoration:none;line-height:2}
+footer.site .col a:hover{color:var(--ink)}
 footer.site .col a:hover{color:var(--ink)}
 .colophon{grid-column:1/-1;border-top:1px solid var(--line-soft);padding-top:20px;
   font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
@@ -291,9 +293,7 @@ footer.site .col a:hover{color:var(--ink)}
 /* ---------- portrait ---------- */
 .portrait{max-width:190px;margin:0 0 26px}
 .portrait img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 26%;
-  border:1px solid var(--line);
-  filter:grayscale(1) contrast(1.04);transition:filter .5s ease}
-.portrait:hover img{filter:none}
+  border:1px solid var(--line)}
 .portrait figcaption{margin-top:9px}
 @media(max-width:700px){.portrait{margin-inline:auto;text-align:center}}
 

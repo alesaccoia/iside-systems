@@ -466,6 +466,7 @@ L_IT = dict(
           "all'AI entro un mese. Se quello che serve è un'agenzia o una software house, lo dico.",
     cta_link="Chi sono, CV e contatti →",
     foot_pages="Pagine", foot_caps="Cosa faccio", foot_studio="Iside Systems SRLS",
+    foot_sdi="Codice destinatario",
     foot_colophon="Iside Systems SRLS — P.IVA 14733480967",
     # ---- projects page
     p_title="Progetti — Iside Systems",
@@ -839,6 +840,7 @@ L_EN = dict(
           "month. If what you need is an agency or a development shop, I will say so.",
     cta_link="About, CV and contact →",
     foot_pages="Pages", foot_caps="What I do", foot_studio="Iside Systems SRLS",
+    foot_sdi="e-invoicing code",
     foot_colophon="Iside Systems SRLS — VAT 14733480967",
     p_title="Projects — Iside Systems",
     p_desc="Project index: AI systems, analytics and growth, research and strategy. Iside Systems, Alessandro Saccoia.",
@@ -1234,7 +1236,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {{"@type":"ProfessionalService","@id":"{SITE}/#studio","name":"Iside Systems SRLS",
  "url":"{SITE}/","email":"alessandro@iside.systems","vatID":"IT14733480967",
  "image":"{img}","description":"{desc}",
- "address":{{"@type":"PostalAddress","addressLocality":"Milano","addressCountry":"IT"}},
+ "address":{{"@type":"PostalAddress","streetAddress":"Via Tortona 12","postalCode":"20144",
+   "addressLocality":"Milano","addressCountry":"IT"}},
  "areaServed":"Europe","founder":{{"@id":"{SITE}/#alessandro"}},
  "knowsLanguage":["it","en","fr"]}},
 {{"@type":"Person","@id":"{SITE}/#alessandro","name":"Alessandro Saccoia",
@@ -1302,8 +1305,11 @@ def footer(L, home, projects, about, asset):
     return f"""<footer class="site">
   <div class="col">
     <b>{L['foot_studio']}</b>
-    <a href="{about}">Milano</a>
-    <a href="{about}">P.IVA 14733480967</a>
+    <span>Via Tortona 12<br>20144 Milano</span>
+    <a href="mailto:alessandro@iside.systems">alessandro@iside.systems</a>
+    <a href="mailto:iside.systems.srls@pec.it">iside.systems.srls@pec.it</a>
+    <span>P.IVA 14733480967</span>
+    <span>{L['foot_sdi']} KRRH6B9</span>
   </div>
   <div class="col">
     <b>{L['foot_pages']}</b>
@@ -1666,7 +1672,9 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
       <p class="dim" style="margin-top:20px">{L['a_contact_p']}</p>
       <div style="margin-top:30px">
         <p class="meta">{L['a_studio']}</p>
-        <p style="margin-top:6px">Iside Systems SRLS<br>Milano<br>P.IVA 14733480967</p>
+        <p style="margin-top:6px">Iside Systems SRLS<br>Via Tortona 12, 20144 Milano<br>
+          P.IVA 14733480967<br>{L['foot_sdi']} KRRH6B9<br>
+          <a href="mailto:iside.systems.srls@pec.it">iside.systems.srls@pec.it</a></p>
       </div>
       <div style="margin-top:24px">
         <p class="meta">{L['a_direct']}</p>
