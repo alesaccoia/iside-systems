@@ -26,6 +26,9 @@ export class TrackManager {
     track.setSteps(this.steps);
     this.tracks.push(track);
     this.containerEl.appendChild(track.render());
+    // a euclid spec passed at creation was stored but never applied, so a track
+    // asked for 5-in-8 started empty and only the stochastic fills were heard
+    if (euclid && track.applyEuclid) track.applyEuclid();
     this.notifyChanged();
     return track;
   }
