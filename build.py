@@ -1124,7 +1124,8 @@ def chips(items):
 
 SITE = "https://www.isidesystems.com"          # cambia qui se cambia il dominio
 GTM  = "GTM-584NQHC3"
-PATHS = {"home":      ("", "en/"),
+# no trailing slash: vercel.json sets trailingSlash false, so "/en/" answers 308
+PATHS = {"home":      ("", "en"),
          "cases":     ("case-study.html", "en/case-studies.html"),
          "case-ai-adoption": ("case-ai-adoption.html", "en/case-ai-adoption.html"),
          "case-james":       ("case-james.html", "en/case-james.html"),
