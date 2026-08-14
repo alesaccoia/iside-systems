@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moire AV Synth</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas id="visual-canvas"></canvas>
+
+    <div id="ui">
+      <div class="group">
+        <div class="row">
+          <label for="pattern">Pattern</label>
+          <select id="pattern">
+            <option value="lines">Lines</option>
+            <option value="grid">Grid</option>
+            <option value="circles">Circles</option>
+            <option value="radial">Radial</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="density">Density</label>
+          <input id="density" type="range" min="10" max="600" step="1" value="200" />
+          <span data-out="density"></span>
+        </div>
+        <div class="row">
+          <label for="angleDelta">Angle Δ</label>
+          <input id="angleDelta" type="range" min="-10" max="10" step="0.1" value="2" />
+          <span data-out="angleDelta"></span>
+        </div>
+        <div class="row">
+          <label for="scaleDelta">Scale Δ</label>
+          <input id="scaleDelta" type="range" min="-0.1" max="0.1" step="0.001" value="0.01" />
+          <span data-out="scaleDelta"></span>
+        </div>
+        <div class="row">
+          <label for="rotationSpeed">Rotation</label>
+          <input id="rotationSpeed" type="range" min="-2" max="2" step="0.01" value="0.2" />
+          <span data-out="rotationSpeed"></span>
+        </div>
+        <div class="row">
+          <label for="invert">Invert</label>
+          <input id="invert" type="checkbox" />
+        </div>
+        <div class="row">
+          <label for="animate">Animate</label>
+          <input id="animate" type="checkbox" checked />
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="row">
+          <label for="carrierFreq">Carrier (Hz)</label>
+          <input id="carrierFreq" type="range" min="40" max="1200" step="1" value="220" />
+          <span data-out="carrierFreq"></span>
+        </div>
+        <div class="row">
+          <label for="modIndex">Index</label>
+          <input id="modIndex" type="range" min="0" max="2000" step="1" value="300" />
+          <span data-out="modIndex"></span>
+        </div>
+        <div class="row">
+          <label for="sync">Sync AV</label>
+          <input id="sync" type="checkbox" checked />
+        </div>
+        <div class="row">
+          <label for="mute">Mute</label>
+          <input id="mute" type="checkbox" />
+        </div>
+      </div>
+
+      <div class="group">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="snapshot">Snapshot</button>
+        <button id="fullscreen">Fullscreen</button>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+  </html>
+
