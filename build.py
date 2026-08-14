@@ -536,14 +536,14 @@ L_IT = dict(
     f_done_again="Invia un altro messaggio",
     elsewhere="Altrove",
     cs_title="Case study — Iside Systems",
-    cs_desc="Due percorsi reali, raccontati senza nominare i clienti: adozione dell'AI dentro le "
-            "business unit di una società di consulenza, e James, la piattaforma di marketing "
-            "operations costruita per una società di servizi educativi.",
+    cs_desc="Tre esperienze recenti: adozione dell'AI dentro le business unit di una società di "
+            "consulenza, James — la piattaforma di marketing operations per una società di servizi "
+            "educativi — e la messa in sicurezza dell'infrastruttura di una startup.",
     cs_kicker="Case study",
-    cs_h1="Due modi di far entrare i dati e l'AI in un'organizzazione.",
-    cs_lede="I clienti non sono nominati: quello che conta è il metodo, non il logo. Il primo caso "
-            "parte dalle persone e dai loro processi, il secondo dagli strumenti — e finiscono "
-            "nello stesso posto.",
+    cs_h1="I miei modi di far entrare i dati e l'AI in un'organizzazione.",
+    cs_lede="Tre esperienze recenti in cui ho aiutato altrettanti clienti: la prima parte dalle "
+            "persone e dai loro processi, la seconda dagli strumenti di misurazione, la terza "
+            "dall'infrastruttura che regge tutto il resto.",
     mini_cta=["Un problema simile sul tavolo? Scrivimi →",
               "Se il pezzo che manca è questo, scrivimi →",
               "Prima conversazione senza impegno — scrivimi →",
@@ -552,17 +552,16 @@ L_IT = dict(
     cs_home_lbl="04 — Case study",
     cs_home_h2="Tre modi diversi<br>di entrare.",
     cs_home_p="Formazione che finisce dentro i processi, misurazione che tiene insieme quattro "
-              "piattaforme, infrastruttura che regge la crescita. Clienti non nominati, metodo "
-              "raccontato per intero.",
+              "piattaforme, infrastruttura che regge la crescita. Tre esperienze recenti, "
+              "raccontate per intero.",
     cs_home_more="Tutti i case study →",
     cs_back="Torna ai case study",
     cs_other="Gli altri case study",
     cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM|REFERRAL",
-    cs_cta_h2="Uno dei due somiglia<br>al vostro problema?",
-    cs_cta_p="I due percorsi partono da estremi opposti — le persone da una parte, gli strumenti "
-             "dall'altra — e si incontrano nello stesso punto: decisioni prese sugli stessi numeri, "
-             "da tutti. Il primo passo è capire da quale lato conviene entrare.",
+    cs_cta_h2="Uno dei tre somiglia<br>al vostro problema?",
+    cs_cta_p="Sono tre punti d'ingresso diversi: le persone, la misurazione, l'infrastruttura. "
+             "Il primo passo è capire quale dei tre corrisponde al problema che avete adesso.",
     cs_cta_link="Scrivimi →",
     cs_cases=[dict(
         slug="ai-adoption",
@@ -907,14 +906,14 @@ L_EN = dict(
     f_done_again="Send another message",
     elsewhere="Elsewhere",
     cs_title="Case studies — Iside Systems",
-    cs_desc="Two real engagements, told without naming the clients: AI adoption inside the business "
-            "units of a consulting firm, and James, the marketing operations platform built for an "
-            "online education company.",
+    cs_desc="Three recent engagements: AI adoption inside the business units of a consulting firm, "
+            "James — the marketing operations platform for an online education company — and "
+            "putting a startup's infrastructure on solid ground.",
     cs_kicker="Case studies",
-    cs_h1="Two ways to get data and AI inside an organisation.",
-    cs_lede="Clients are not named: the method is the point, not the logo. The first case starts "
-            "from people and their processes, the second from tooling — and they end up in the "
-            "same place.",
+    cs_h1="My ways of getting data and AI inside an organisation.",
+    cs_lede="Three recent engagements, one client each: the first starts from people and their "
+            "processes, the second from measurement tooling, the third from the infrastructure "
+            "holding everything else up.",
     mini_cta=["Something similar on your desk? Get in touch →",
               "If this is the piece you are missing, get in touch →",
               "First conversation, no commitment — get in touch →",
@@ -923,16 +922,16 @@ L_EN = dict(
     cs_home_lbl="04 — Case studies",
     cs_home_h2="Three different<br>ways in.",
     cs_home_p="Training that ends up inside the processes, measurement that holds four platforms "
-              "together, infrastructure that absorbs growth. Clients unnamed, method told in full.",
+              "together, infrastructure that absorbs growth. Three recent engagements, told in "
+              "full.",
     cs_home_more="All case studies →",
     cs_back="Back to case studies",
     cs_other="The other case studies",
     cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL|REFERRAL",
-    cs_cta_h2="Does one of these<br>look like your problem?",
-    cs_cta_p="The two engagements start from opposite ends — people on one side, tooling on the "
-             "other — and meet at the same point: decisions taken on the same numbers, by everyone. "
-             "The first step is working out which side to come in from.",
+    cs_cta_h2="Does one of the three<br>look like your problem?",
+    cs_cta_p="Three different ways in: people, measurement, infrastructure. The first step is "
+             "working out which of the three matches the problem you have right now.",
     cs_cta_link="Get in touch →",
     cs_cases=[dict(
         slug="ai-adoption",
