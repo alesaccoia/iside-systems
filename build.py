@@ -528,6 +528,11 @@ L_IT = dict(
     f_sending="Invio in corso…",
     f_fallback="Invio diretto non disponibile: apro il tuo client di posta con il messaggio pronto.",
     f_hp="Lascia vuoto questo campo",
+    f_done_title="Messaggio inviato.",
+    f_done_lead="Ti rispondo entro pochi giorni, di solito prima. Se nel frattempo vuoi aggiungere "
+                "qualcosa, scrivi direttamente ad {mail}.",
+    f_done_reply="Risponderò a",
+    f_done_again="Invia un altro messaggio",
     elsewhere="Altrove",
     cs_title="Case study — Iside Systems",
     cs_desc="Due percorsi reali, raccontati senza nominare i clienti: adozione dell'AI dentro le "
@@ -893,6 +898,11 @@ L_EN = dict(
     f_sending="Sending…",
     f_fallback="Direct sending unavailable: opening your mail client with the message ready.",
     f_hp="Leave this field empty",
+    f_done_title="Message sent.",
+    f_done_lead="I will reply within a few days, usually sooner. If you want to add anything in the "
+                "meantime, write directly to {mail}.",
+    f_done_reply="I will reply to",
+    f_done_again="Send another message",
     elsewhere="Elsewhere",
     cs_title="Case studies — Iside Systems",
     cs_desc="Two real engagements, told without naming the clients: AI adoption inside the business "
@@ -1604,17 +1614,15 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 <section class="pad" style="padding-top:clamp(46px,7vh,90px);padding-bottom:clamp(46px,8vh,90px)">
   <p class="meta">{L['a_kicker']}</p>
   <h1 style="margin-top:16px;max-width:17ch">{L['a_h1']}</h1>
-  <div class="cols2" style="margin-top:36px">
-    <div class="rv">
-      <figure class="portrait">
-        <img src="{asset}{L['portrait_file']}" alt="{L['portrait_alt']}" width="480" height="640" loading="lazy">
-        <figcaption class="meta">{L['portrait_cap']}</figcaption>
-      </figure>
-      <p class="lede dim">{L['a_lede']}</p>
-    </div>
-    <div class="rv">
+  <div class="aboutintro rv">
+    <figure class="portrait">
+      <img src="{asset}{L['portrait_file']}" alt="{L['portrait_alt']}" width="480" height="640" loading="lazy">
+      <figcaption class="meta">{L['portrait_cap']}</figcaption>
+    </figure>
+    <div class="abouttext">
+      <p class="lede">{L['a_lede']}</p>
       <p class="dim">{L['a_p'][0]}</p>
-      <p class="dim" style="margin-top:1.2em">{L['a_p'][1]}</p>
+      <p class="dim">{L['a_p'][1]}</p>
     </div>
   </div>
 </section>
@@ -1688,6 +1696,11 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
       <button type="submit">{L['f_send']}</button>
       <p class="formnote"></p>
     </form>
+    <div class="formdone" hidden
+         data-title="{L['f_done_title']}" data-lead="{L['f_done_lead']}"
+         data-again="{L['f_done_again']}" data-reply="{L['f_done_reply']}"
+         data-l-name="{L['f_name']}" data-l-email="{L['f_email']}"
+         data-l-org="{L['f_org']}" data-l-topic="{L['f_topic']}" data-l-msg="{L['f_msg']}"></div>
   </div>
 </section>
 
@@ -1733,7 +1746,8 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
 
 def mini_cta(L, about, i=0):
     """A quiet one-line prompt, dropped between sections."""
-    return (f'<p class="minicta rv"><a href="{about}#contact">{L["mini_cta"][i]}</a></p>')
+    return ('<div class="minicta rv"><a href="%s#contact">%s<span class="go">\u2192</span></a></div>'
+            % (about, L["mini_cta"][i].replace(" →", "")))
 
 
 def case_next(L, cases):

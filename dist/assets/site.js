@@ -435,14 +435,65 @@ readPal();
   if (!form) return;
   const note = form.querySelector(".formnote");
   const button = form.querySelector("button[type=submit]");
+  const done = document.querySelector(".formdone");
+  const mail = form.dataset.mailto || "alessandro@iside.systems";
   const msg = k => form.dataset[k] || "";
+
+  function esc(v){
+    return String(v ?? "").replace(/[&<>"]/g, c =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  }
+
+  function shorten(text, max){
+    const t = String(text || "").trim();
+    return t.length > max ? t.slice(0, max).replace(/\s+\S*$/, "") + "…" : t;
+  }
 
   function mailtoFallback(d){
     const body = [d.get("message"), "", "—", d.get("name"),
                   d.get("organisation") || "", d.get("email")].filter(Boolean).join("\n");
-    window.location.href = "mailto:" + (form.dataset.mailto || "alessandro@iside.systems")
+    window.location.href = "mailto:" + mail
       + "?subject=" + encodeURIComponent(d.get("topic") || "")
       + "&body=" + encodeURIComponent(body);
+  }
+
+  /* Replace the form with a recap of what was sent: reassuring, and it lets
+     the sender check the address they typed. */
+  function showDone(d){
+    if (!done) return;
+    const row = (label, value) => value
+      ? `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>` : "";
+    done.innerHTML =
+      '<div class="tick"></div>' +
+      `<h3>${esc(done.dataset.title)}</h3>` +
+      `<p class="lead">${esc(done.dataset.lead).replace("{mail}", `<a href="mailto:${mail}">${mail}</a>`)}</p>` +
+      "<dl>" +
+        row(done.dataset.lName, d.get("name")) +
+        row(done.dataset.lOrg, d.get("organisation")) +
+        row(done.dataset.lEmail, d.get("email")) +
+        row(done.dataset.lTopic, d.get("topic")) +
+        row(done.dataset.lMsg, shorten(d.get("message"), 220)) +
+      "</dl>" +
+      `<button type="button" class="again">${esc(done.dataset.again)}</button>`;
+
+    const h = form.getBoundingClientRect().height;
+    form.style.height = h + "px";                 // hold the space, then release
+    form.classList.add("sent");
+    done.hidden = false;
+    requestAnimationFrame(() => done.classList.add("in"));
+    done.scrollIntoView({ block: "center", behavior: "smooth" });
+
+    done.querySelector(".again").addEventListener("click", () => {
+      done.classList.remove("in");
+      setTimeout(() => {
+        done.hidden = true;
+        form.classList.remove("sent");
+        form.style.height = "";
+        note.textContent = "";
+        note.classList.remove("ok");
+        form.querySelector("#f-name").focus();
+      }, 450);
+    });
   }
 
   form.addEventListener("submit", async e => {
@@ -470,13 +521,11 @@ readPal();
         }),
       });
       if (r.ok){
-        form.reset();
-        note.textContent = msg("msgOk");
-        note.classList.add("ok");
+        note.textContent = "";
         (window.dataLayer = window.dataLayer || []).push({ event: "contact_sent" });
+        showDone(d);
+        form.reset();
       } else {
-        // 503 means the endpoint is there but has no credentials yet — either
-        // way the message must not be lost, so hand it to the mail client
         note.textContent = msg("msgFallback");
         mailtoFallback(d);
       }
