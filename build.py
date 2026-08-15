@@ -1262,7 +1262,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  "knowsLanguage":["it","en","fr"],
  "address":{{"@type":"PostalAddress","addressLocality":"Milano","addressCountry":"IT"}},
  "alumniOf":"Universita degli Studi di Milano",
- "sameAs":["https://www.alessandrosaccoia.com/","https://github.com/alesaccoia"]}},
+ "sameAs":["https://www.alessandrosaccoia.com/","https://github.com/alesaccoia",
+   "https://www.linkedin.com/in/alesaccoia/"]}},
 {{"@type":"WebSite","@id":"{SITE}/#site","url":"{SITE}/","name":"Iside Systems",
  "inLanguage":"{lang}","publisher":{{"@id":"{SITE}/#studio"}}}}
 ]}}
@@ -1324,6 +1325,7 @@ def footer(L, home, projects, about, asset):
     <span>Via Tortona 12<br>20144 Milano</span>
     <a href="mailto:alessandro@iside.systems">alessandro@iside.systems</a>
     <a href="mailto:iside.systems.srls@pec.it">iside.systems.srls@pec.it</a>
+    <a href="https://www.linkedin.com/in/alesaccoia/" rel="me noopener" target="_blank">LinkedIn</a>
     <span>P.IVA 14733480967</span>
     <span>{L['foot_sdi']} KRRH6B9</span>
   </div>
@@ -1694,7 +1696,8 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
       </div>
       <div style="margin-top:24px">
         <p class="meta">{L['a_direct']}</p>
-        <p style="margin-top:6px"><a href="mailto:alessandro@iside.systems">alessandro@iside.systems</a></p>
+        <p style="margin-top:6px"><a href="mailto:alessandro@iside.systems">alessandro@iside.systems</a><br>
+          <a href="https://www.linkedin.com/in/alesaccoia/" rel="me noopener" target="_blank">linkedin.com/in/alesaccoia</a></p>
       </div>
     </div>
 
