@@ -348,7 +348,7 @@ L_IT = dict(
           ("Apr — Mag 2026", "Tre seminari «Agenti AI e strumenti di Intelligenza Artificiale per la produttività aziendale» con Microsoft e Camera di commercio di Milano — primo appuntamento 4 maggio, Microsoft House"),
           ("2026", "Disponibile per conferenze, keynote e lezioni su AI Adoption, strategia dei dati e crescita"),
           ("A.A. 2025/26", "Corsi attivi: IULM e Università Cattolica")],
-    title="Iside Systems — Data e AI Strategy, Adoption, Growth Science",
+    title="Iside Systems — AI Enablement, Data e Marketing Strategy",
     desc="Strategia e scienza dei dati, AI Adoption, operations di marketing e crescita. "
          "Costruisco la base su cui i team decidono. Alessandro Saccoia, Milano.",
     hero_meta="Iside Systems SRLS — Milano",
@@ -723,7 +723,7 @@ L_EN = dict(
           ("Apr — May 2026", "Three seminars, “AI agents and AI tools for business productivity”, with Microsoft and the Milan Chamber of Commerce — first date 4 May, Microsoft House"),
           ("2026", "Available for conferences, keynotes and lectures on AI adoption, data strategy and growth"),
           ("2025/26", "Teaching at IULM and Università Cattolica")],
-    title="Iside Systems — Data &amp; AI Strategy, Adoption, Growth Science",
+    title="Iside Systems — AI Enablement, Data and Marketing Strategy",
     desc="Data strategy and science, AI adoption, and the marketing and growth operations that make "
          "both real. Alessandro Saccoia, Milan.",
     hero_meta="Iside Systems SRLS — Milan",
