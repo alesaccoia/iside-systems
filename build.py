@@ -19,13 +19,14 @@ PROJECTS = [
     dict(seed=3,  cat="ai product",           year="2024 →",
          featured=True,
          it=("Thembi", "Co-fondatore · prodotto, backend, sistemi AI",
-             "Piattaforma di policy intelligence europea. Ingestione e retrieval su corpora "
-             "legislativi che cambiano ogni settimana, ricerca semantica e stesura assistita "
-             "della corrispondenza.",
+             "Piattaforma di policy intelligence europea. Knowledge Representation, Information "
+             "Extraction, Ingestione e retrieval su corpora legislativi che cambiano ogni "
+             "settimana, ricerca semantica e stesura assistita dei documenti.",
              ["Retrieval", "Ricerca semantica", "Prodotto"]),
          en=("Thembi", "Co-founder · product, backend, AI systems",
-             "EU policy intelligence platform. Ingestion and retrieval over legislative corpora "
-             "that change weekly, semantic search, and correspondence drafting on top.",
+             "EU policy intelligence platform. Knowledge representation, information extraction, "
+             "ingestion and retrieval over legislative corpora that change weekly, semantic "
+             "search, and assisted drafting of documents.",
              ["Retrieval", "Semantic search", "Product"])),
     dict(seed=6,  cat="analytics ai",         year="2026 →",
          featured=True,
@@ -351,18 +352,18 @@ L_IT = dict(
     desc="Strategia e scienza dei dati, AI Adoption, operations di marketing e crescita. "
          "Costruisco la base su cui i team decidono. Alessandro Saccoia, Milano.",
     hero_meta="Iside Systems SRLS — Milano",
-    h1="Data &amp; AI Strategy e Adoption. Marketing e Growth Science.",
-    lede="Costruisco la base su cui un team prende decisioni data driven, guido le organizzazioni "
-         "nell'AI Adoption, e curo le operations di marketing e growth — strumenti, automazioni, "
-         "misurazione — trasformando entrambe in pratica quotidiana. Né un'agenzia né una software "
-         "house.",
+    h1="AI Enablement, Data e Marketing Strategy.",
+    lede="Costruisco la base agentica su cui un team prende decisioni data driven, guido le "
+         "organizzazioni nell'AI Adoption e curo le operations di marketing e growth — strumenti, "
+         "automazioni, misurazione — trasformando entrambe in pratica quotidiana. Affianco i team "
+         "con percorsi di formazione e supporto strategico continuativo, anche in modalità "
+         "fractional. Né un'agenzia né una software house.",
     chips=["Strategia e Data Sciences", "AI Adoption", "Operations marketing e crescita", "Advisory e docenza"],
     pos_lbl="01 — Il punto",
     pos_h2="Ai team non manca<br>la strategia. Mancano<br>numeri di cui fidarsi.",
     pos_p=["Quasi tutti sanno già, a grandi linee, cosa dovrebbero fare. Quello che li blocca è che i "
-           "numeri non concordano fra loro, gli strumenti non si parlano, e metà settimana se ne va a "
-           "montare report a mano. Fare strategia su quella base è tirare a indovinare con slide "
-           "migliori.",
+           "numeri non parlano fra loro, gli strumenti non si comunicano, e metà settimana se ne va "
+           "a montare report a mano e a analizzarli, togliendo tempo prezioso al team.",
            "<mark>Il mio lavoro è informato dalla strategia ma parte dalla base: decidere cosa "
            "misurare e cosa modellare, far arrivare i dati dove servono senza che nessuno li "
            "ricopi, costruire i modelli che trasformano quei numeri in una decisione, e quando "
@@ -375,10 +376,11 @@ L_IT = dict(
     caps=[("Strategia e<br>Data Science",
            "Cosa misurare e cosa modellare, prima ancora di quale strumento comprare. Modelli "
            "statistici, data mining e machine learning sui dati che avete già: previsioni, "
-           "segmentazione, esperimenti, e una lettura onesta dei risultati.",
+           "segmentazione, esperimenti, e una lettura intuitiva dei risultati.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
-           "Guidare l'adozione, non consegnare un pilota e sparire. Casi d'uso che pagano davvero, "
+           "Guidare l'adozione aziendale - non consegnare un pilota e sparire. Casi d'uso che pagano "
+           "davvero, "
            "costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI Act obbliga a "
            "documentare. Certificato in AI &amp; Law e AI Governance.",
            ["Selezione casi d'uso", "Pilota → produzione", "Governance", "AI Act", "Formazione", "Change"]),
@@ -394,20 +396,18 @@ L_IT = dict(
            ["Fattibilità", "Build vs buy", "Scelta fornitori", "Due diligence", "Assunzioni", "Retainer o equity"])],
     sect_lbl="03 — Dove si applica",
     sect_h2="Qualunque campo<br>con dati da scavare.",
-    sect_p="Marketing e crescita. Policy e monitoraggio regolatorio. Formazione. Operations e "
-           "conoscenza interna. Dati scientifici e di ricerca — elaborazione del segnale, machine "
-           "listening e dataset sperimentali sono il punto di partenza, all'IRCAM, e restano "
-           "pienamente in perimetro. Il metodo si sposta fra i domini; la competenza di dominio "
-           "resta al vostro team, dove deve stare.",
+    sect_p="Marketing e crescita. Formazione. Operations e conoscenza interna. Dati scientifici e "
+           "di ricerca — elaborazione del segnale, machine listening e dataset sperimentali sono il "
+           "punto di partenza, all'IRCAM, e restano pienamente in perimetro.",
     sect_chips=["Marketing e crescita", "Policy e regolazione", "Formazione", "Operations", "Ricerca scientifica", "Media e audio"],
     proj_lbl="04 — Progetti selezionati",
     proj_more="Vedi l'indice completo dei progetti →",
     fig_lbl="05 — Misurazione omnichannel",
     fig_h2="Un solo modello,<br>tutte le piattaforme.",
-    fig_p1="Imposto un framework di misurazione omnichannel — Google Ads, Meta, LinkedIn Ads, TikTok "
-           "— con definizioni condivise e dati che confluiscono in un unico modello, invece di "
-           "quattro dashboard che raccontano quattro storie diverse.",
-    fig_p2="Sopra ci gira un tool custom, software proprietario, che genera piani editoriali "
+    fig_p1="Imposto un framework di misurazione omnichannel e multitouch, con definizioni condivise "
+           "e dati che confluiscono in un unico modello, invece di mille dashboard che raccontano "
+           "storie diverse.",
+    fig_p2="Un software proprietario, che genera piani editoriali "
            "coerenti con le esigenze di costruzione del funnel di vendita: ogni contenuto e ogni "
            "investimento risponde a uno stadio preciso, e la misurazione torna indietro sullo stesso "
            "schema.",
@@ -444,7 +444,7 @@ L_IT = dict(
                  "Sessioni private per team di leadership, su richiesta.")],
     speak_cta="Richieste per conferenze e docenza →",
     eng_lbl="07 — Come si lavora insieme",
-    engs=[("Sprint di setup", "Quattro / otto settimane",
+    engs=[("Sprint di setup", "Quattro / sei settimane",
            "Strumentare, collegare, automatizzare. Alla fine il team ha un unico insieme di numeri "
            "condivisi, i report arrivano da soli, e le prime due o tre automazioni sono attive e "
            "documentate."),
@@ -489,15 +489,13 @@ L_IT = dict(
     portrait_cap="Alessandro Saccoia — Milano",
     a_kicker="Chi sono",
     a_h1="Iside Systems è lo studio di Alessandro Saccoia.",
-    a_lede="Tecnologo, professore a contratto, co-fondatore. Esperienza costruita sulla macchina "
-           "che sta dietro alle decisioni — misurazione, dati, strumenti e automazione — fra "
-           "istituti di ricerca, ad-tech, telco, misurazione dei media e oggi le mie stesse "
-           "aziende.",
+    a_lede="Tecnologo, professore a contratto, co-founder. Anni di esperienza in misurazione, "
+           "dati, strumenti e automazione — fra istituti di ricerca, ad-tech, telco, misurazione "
+           "dei media e oggi le mie stesse aziende.",
     a_p=["Iside Systems è il modo in cui questo lavoro viene venduto: strategia e scienza dei dati, "
          "AI Adoption, e le operations di marketing e crescita che le tengono insieme. Né "
          "agenzia né software house. Costruisco e prototipo quello che serve allo strato "
-         "operativo; quando qualcosa cresce oltre, spetta al vostro team o a un partner — e lo dico "
-         "prima, invece di diventare in silenzio il vostro reparto sviluppo.",
+         "operativo; quando qualcosa cresce oltre, spetta al vostro team o a un partner.",
          "Attualmente co-fondatore di Thembi, piattaforma di policy intelligence europea; alla guida "
          "del marketing di Mentor Ripetizioni, dove l'infrastruttura è costruita in casa; e "
          "professore a contratto alla IULM."],
@@ -551,7 +549,7 @@ L_IT = dict(
     cs_card_cta="Leggi il caso",
     cs_home_lbl="04 — Case study",
     cs_home_h2="Tre modi diversi<br>di entrare.",
-    cs_home_p="Formazione che finisce dentro i processi, misurazione che tiene insieme quattro "
+    cs_home_p="Formazione che finisce dentro i processi, misurazione che tiene insieme le varie "
               "piattaforme, infrastruttura che regge la crescita. Tre esperienze recenti, "
               "raccontate per intero.",
     cs_home_more="Tutti i case study →",
@@ -621,7 +619,7 @@ L_IT = dict(
              "in un unico posto: il piano editoriale nasce dagli stadi del funnel invece di essere "
              "scritto a parte.",
         date="10 agosto 2026",
-        h2="Quattro piattaforme,<br>una sola versione<br>dei numeri.",
+        h2="Tante piattaforme di marketing,<br>una sola versione<br>dei numeri.",
         ctx=["Meta, Google, il sito, il CRM: ogni piattaforma con la sua dashboard e la sua "
              "definizione di conversione. Il piano editoriale viveva su un foglio, il budget su un "
              "altro, e nessuno dei due parlava con la spesa reale.",
@@ -729,16 +727,18 @@ L_EN = dict(
     desc="Data strategy and science, AI adoption, and the marketing and growth operations that make "
          "both real. Alessandro Saccoia, Milan.",
     hero_meta="Iside Systems SRLS — Milan",
-    h1="Data and AI strategy and adoption. Marketing and growth science.",
-    lede="I build the foundation a team makes data-driven decisions on, guide organisations through "
-         "AI adoption, and run the marketing and growth operations — tooling, automation, "
-         "measurement — turning both into daily practice. Neither an agency nor a software house.",
+    h1="AI Enablement, Data and Marketing Strategy.",
+    lede="I build the agentic foundation a team makes data-driven decisions on, guide organisations "
+         "through AI adoption, and run the marketing and growth operations — tooling, automation, "
+         "measurement — turning both into daily practice. I work alongside teams through training "
+         "programmes and continuing strategic support, fractional where that fits. Neither an "
+         "agency nor a software house.",
     chips=["Data strategy &amp; data sciences", "AI adoption", "Marketing &amp; growth operations", "Advisory &amp; speaking"],
     pos_lbl="01 — The point",
     pos_h2="Teams rarely lack<br>strategy. They lack<br>working numbers.",
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
-           "disagree with each other, the tools do not talk, and half the week goes to assembling "
-           "reports by hand. Strategy on that foundation is guesswork with better slides.",
+           "do not speak to each other, the tools do not communicate, and half the week goes to "
+           "assembling reports by hand and reading them — time the team does not get back.",
            "<mark>My work is informed by strategy but starts at the foundation: deciding what to "
            "measure and what to model, getting the data where it is needed without anyone copying "
            "it, building the models that turn those numbers into a decision, and — where it helps — "
@@ -750,10 +750,11 @@ L_EN = dict(
     caps=[("Data strategy<br>&amp; data science",
            "What to measure and what to model, before the question of which tool to buy. Statistical "
            "modelling, data mining and machine learning on the data you already hold: forecasting, "
-           "segmentation, experiments, and an honest reading of the result.",
+           "segmentation, experiments, and an intuitive reading of the result.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
           ("AI <br>Adoption",
-           "Driving adoption, not delivering a pilot and leaving. The use cases that actually pay, "
+           "Driving adoption across the organisation - not delivering a pilot and leaving. The use cases "
+           "that actually pay, "
            "the real cost of running them, who has to change how they work, what the AI Act obliges "
            "you to document. Certified in AI &amp; Law and AI Governance.",
            ["Use-case selection", "Pilot → production", "Governance", "EU AI Act", "Training", "Change"]),
@@ -770,19 +771,18 @@ L_EN = dict(
            ["Feasibility", "Build vs buy", "Vendor selection", "Due diligence", "Hiring", "Retainer or equity"])],
     sect_lbl="03 — Where it applies",
     sect_h2="Any field with<br>data worth mining.",
-    sect_p="Marketing and growth. Policy and regulatory monitoring. Education. Operations and internal "
-           "knowledge. Scientific and research data — signal processing, machine listening and "
-           "experimental datasets are where I started, at IRCAM, and remain fully in scope. The method "
-           "transfers across domains; the domain expertise stays with your team, where it belongs.",
+    sect_p="Marketing and growth. Education. Operations and internal knowledge. Scientific and "
+           "research data — signal processing, machine listening and experimental datasets are "
+           "where I started, at IRCAM, and remain fully in scope.",
     sect_chips=["Marketing &amp; growth", "Policy &amp; regulation", "Education", "Operations", "Scientific research", "Media &amp; audio"],
     proj_lbl="04 — Selected projects",
     proj_more="View the full project index →",
     fig_lbl="05 — Omnichannel measurement",
     fig_h2="One model,<br>every platform.",
-    fig_p1="I set up an omnichannel measurement framework — Google Ads, Meta, LinkedIn Ads, TikTok — "
-           "with shared definitions and data flowing into a single model, instead of four dashboards "
-           "telling four different stories.",
-    fig_p2="On top of it runs a custom tool, proprietary software, that produces editorial plans "
+    fig_p1="I set up an omnichannel, multitouch measurement framework, with shared definitions and "
+           "data flowing into a single model, instead of a thousand dashboards telling different "
+           "stories.",
+    fig_p2="Proprietary software produces editorial plans "
            "matched to what the sales funnel actually needs built: every piece of content and every "
            "euro answers to a specific stage, and measurement comes back on the same scheme.",
     fig_legend="planned weight per stage",
@@ -817,7 +817,7 @@ L_EN = dict(
                  "Private sessions for leadership teams, on request.")],
     speak_cta="Speaking and teaching enquiries →",
     eng_lbl="07 — Working together",
-    engs=[("Set-up sprint", "Four to eight weeks",
+    engs=[("Set-up sprint", "Four to six weeks",
            "Instrument, connect, automate. At the end the team has one agreed set of numbers, the "
            "reports arrive on their own, and the first two or three automations are live and "
            "documented."),
@@ -860,14 +860,13 @@ L_EN = dict(
     portrait_cap="Alessandro Saccoia — Milan",
     a_kicker="About",
     a_h1="Iside Systems is the practice of Alessandro Saccoia.",
-    a_lede="Computer scientist, contract professor, co-founder. Experience built on the machinery "
-           "behind decisions — measurement, data, tooling and automation — in research institutes, "
-           "ad-tech, telecoms, media measurement, and now in my own companies.",
+    a_lede="Technologist, contract professor, co-founder. Years of experience in measurement, data, "
+           "tooling and automation — across research institutes, ad-tech, telecoms, media "
+           "measurement, and now my own companies.",
     a_p=["Iside Systems is how that work is sold: data strategy and science, AI adoption, and the "
          "marketing and growth operations that hold both together. Neither an agency nor a software "
          "house. I build and prototype what the operations layer needs, and when something outgrows "
-         "that, it belongs with your team or a partner — I say so early rather than quietly become "
-         "your development department.",
+         "that, it belongs with your team or a partner.",
          "Currently co-founder of Thembi, an EU policy intelligence platform; running marketing at "
          "Mentor Ripetizioni, where the infrastructure is built in-house; and contract professor at "
          "IULM."],
@@ -921,7 +920,7 @@ L_EN = dict(
     cs_card_cta="Read the case",
     cs_home_lbl="04 — Case studies",
     cs_home_h2="Three different<br>ways in.",
-    cs_home_p="Training that ends up inside the processes, measurement that holds four platforms "
+    cs_home_p="Training that ends up inside the processes, measurement that holds the various platforms "
               "together, infrastructure that absorbs growth. Three recent engagements, told in "
               "full.",
     cs_home_more="All case studies →",
@@ -989,7 +988,7 @@ L_EN = dict(
              "ingestion, the funnel model, planning and measurement in one place: the editorial "
              "plan comes out of the funnel stages instead of being written separately.",
         date="10 August 2026",
-        h2="Four platforms,<br>one version<br>of the numbers.",
+        h2="Many marketing platforms,<br>one version<br>of the numbers.",
         ctx=["Meta, Google, the site, the CRM: every platform with its own dashboard and its own "
              "definition of a conversion. The editorial plan lived in one spreadsheet, the budget "
              "in another, and neither talked to actual spend.",
@@ -1369,7 +1368,6 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div><h3>{h3}</h3></div>
     <div>
       <p>{body}</p>
-      <div class="tags">{chips(tags)}</div>
     </div>
   </article>
 """
@@ -1410,10 +1408,8 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
 <section class="hero">
   <div class="inner">
     <div>
-      <p class="meta">{L['hero_meta']}</p>
       <h1 style="margin-top:18px">{L['h1']}</h1>
       <p class="lede sub dim">{L['lede']}</p>
-      <div class="facts">{chips(L['chips'])}</div>
     </div>
     <div class="figwrap"><canvas id="figure"></canvas></div>
   </div>
@@ -1439,7 +1435,6 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div class="rv"><h2>{L['sect_h2']}</h2></div>
     <div class="rv">
       <p class="dim">{L['sect_p']}</p>
-      <div class="facts" style="margin-top:22px">{chips(L['sect_chips'])}</div>
     </div>
   </div>
 </section>
@@ -1778,6 +1773,10 @@ def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.h
 
 def mini_cta(L, about, i=0):
     """A quiet one-line prompt, dropped between sections."""
+    if i == 1:
+        return ('<p style="margin-top:26px"><a class="meta" href="%s#contact" '
+                'style="color:var(--acc);text-decoration:none">%s</a></p>'
+                % (about, L["mini_cta"][i]))
     return ('<div class="minicta rv"><a href="%s#contact">%s<span class="go">\u2192</span></a></div>'
             % (about, L["mini_cta"][i].replace(" →", "")))
 

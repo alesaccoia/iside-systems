@@ -276,11 +276,11 @@ footer.site .col a:hover{color:var(--ink)}
   .lbl{justify-content:center;text-align:center}
   .lbl::before{display:none}
 
-  h1,h2{text-align:center}
+  h1,h2{text-align:center;margin-inline:auto}
+  section>.meta{text-align:center}
   .hero .inner{text-align:center;justify-items:center}
-  .hero h1,.hero .lede{margin-inline:auto}
+  .hero .lede{margin-inline:auto}
   .hero .facts,.facts{justify-content:center}
-  .hero .meta{text-align:center}
 
   .cols2>div>.lede{margin-inline:auto}
   .cap{text-align:center}
