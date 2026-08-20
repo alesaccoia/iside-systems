@@ -9,7 +9,7 @@ python3 build.py
 rm -rf dist
 mkdir -p dist/en dist/assets/img
 
-cp index.html progetti.html chi-sono.html case-study.html \
+cp index.html progetti.html chi-sono.html ai-maturity.html case-study.html \
    case-ai-adoption.html case-james.html case-cloud-scale.html \
    moire.html algosynth.html \
    robots.txt sitemap.xml dist/
@@ -17,7 +17,7 @@ cp en/index.html en/projects.html en/about.html \
    en/moire.html en/algosynth.html en/case-studies.html \
    en/case-ai-adoption.html en/case-james.html \
    en/case-cloud-scale.html                                     dist/en/
-cp assets/site.css assets/site.js                               dist/assets/
+cp assets/site.css assets/site.js assets/ai-maturity.css assets/ai-maturity.js dist/assets/
 cp assets/img/mark.svg assets/img/favicon-32.png \
    assets/img/apple-touch-icon.png assets/img/og-image.png \
    assets/img/alessandro.jpg assets/img/moire.jpg \
