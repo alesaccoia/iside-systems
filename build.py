@@ -340,7 +340,7 @@ PROJECTS = [
 
 # ---------------------------------------------------------------- copy
 L_IT = dict(
-    lang="it", other_label="EN", brand_sub="AI e Marketing Science",
+    lang="it", other_label="EN", brand_sub="Data, AI e Marketing",
     nav=("Studio", "Progetti", "Chi sono", "Case study"),
     nav_open="Apri il menu",
     news_label="In evidenza",
@@ -719,7 +719,7 @@ L_IT = dict(
 )
 
 L_EN = dict(
-    lang="en", other_label="IT", brand_sub="AI and marketing science",
+    lang="en", other_label="IT", brand_sub="Data, AI and marketing",
     nav=("Practice", "Projects", "About", "Case studies"),
     nav_open="Open the menu",
     news_label="Latest",
