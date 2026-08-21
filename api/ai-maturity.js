@@ -10,7 +10,12 @@ export default async function handler(req,res) {
   const instruction="Sei un advisor AI pragmatico di Iside Systems. Rispondi in italiano per una PMI. Non promettere risultati certi. Dai priorità a processi reali, dati, adozione e governance. wins contiene esattamente 3 quick win realizzabili nei prossimi 90 giorni; ogni body massimo 230 caratteri.";
   try {
     const upstream=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+process.env.OPENAI_API_KEY},body:JSON.stringify({model:process.env.OPENAI_MODEL||"gpt-4.1-mini",store:false,max_output_tokens:900,input:instruction+"\nPUNTEGGI: "+JSON.stringify(scores)+"\nRISPOSTE: "+JSON.stringify(answers),text:{format:{type:"json_schema",name:"ai_maturity_report",strict:true,schema}}})});
-    if(!upstream.ok)return res.status(502).json({error:"model_failed"});
-    const payload=await upstream.json();return res.status(200).json(JSON.parse(payload.output_text));
+    if(!upstream.ok){console.error("ai-maturity upstream",upstream.status,(await upstream.text()).slice(0,300));return res.status(502).json({error:"model_failed"});}
+    const payload=await upstream.json();
+    // output_text is an SDK convenience field; the REST payload only carries the
+    // message items, so read the text out of those
+    const text=(payload.output||[]).filter(o=>o.type==="message").flatMap(o=>o.content||[]).filter(c=>c.type==="output_text").map(c=>c.text).join("");
+    if(!text){console.error("ai-maturity empty output",payload.status,JSON.stringify(payload.incomplete_details||{}));return res.status(502).json({error:"model_failed"});}
+    return res.status(200).json(JSON.parse(text));
   } catch(error) { console.error("ai-maturity",error.message);return res.status(502).json({error:"model_failed"}); }
 }
