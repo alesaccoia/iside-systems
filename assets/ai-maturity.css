@@ -56,11 +56,9 @@ body.running header{margin-top:34px}
 
 /* ---------- flow ---------- */
 .flowgrid{display:block}
-.progress-meta{display:flex;justify-content:space-between;margin-bottom:12px}
-.progress{height:2px;background:var(--soft);margin-bottom:clamp(38px,8vh,74px);overflow:hidden}
-.progress i{display:block;height:100%;width:0;background:var(--acc);
-  transition:width .55s var(--ease)}
-.question h2{max-width:14ch;margin-top:10px;font-size:clamp(30px,7.6vw,50px)}
+.progress-meta{display:flex;justify-content:space-between;
+  margin-bottom:clamp(30px,6vh,58px);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.question h2{max-width:14ch;margin-top:0;font-size:clamp(30px,7.6vw,50px)}
 .help{font-size:17px;color:var(--dim);max-width:38ch}
 
 /* every step arrives, it does not cut */
@@ -101,7 +99,7 @@ textarea:focus{outline:0;border-color:var(--acc)}
 .rail{display:none}
 .rail li{list-style:none;margin:0 0 16px;font:600 10px var(--mono);letter-spacing:.14em;
   color:var(--dim);transition:color .3s}
-.rail li.on{color:var(--ink)}
+.rail li.on{color:var(--ink);font-weight:700}
 .rail .track{height:2px;background:var(--soft);margin-top:7px}
 .rail .track i{display:block;height:100%;width:0;background:var(--acc);
   transition:width .6s var(--ease)}
@@ -181,6 +179,7 @@ canvas{display:block;margin-inline:auto;max-width:100%}
   #result{padding-top:104px}
   .flowgrid{display:grid;grid-template-columns:190px minmax(0,1fr);gap:56px;align-items:start}
   .rail{display:block;position:sticky;top:110px;padding:0;margin:0}
+  #dimension{display:none}          /* the rail already names it */
   .rail ul{padding:0;margin:0}
 
   /* the report is the deliverable: give it the whole width.

@@ -116,10 +116,8 @@ function render(dir){
   $("#step").textContent=("0"+(state.i+1)).slice(-2)+" / "+QS.length;
   $("#dimension").textContent=q[1];
   var pct=Math.round((state.i+1)*100/QS.length);
-  $("#bar").style.width=pct+"%";
   $("#topfill").style.width=pct+"%";
   $("#topnum").textContent=pct+"% completato";
-  $("#kicker").textContent=q[1];
   $("#title").textContent=q[2];
   $("#help").textContent=q[3];
   $("#back").hidden=state.i===0;
