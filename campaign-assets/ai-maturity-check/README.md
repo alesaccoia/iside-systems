@@ -18,6 +18,10 @@ Card order and what each one carries:
 4. Quick win — type only, no figure
 5. Check — type only: the call, and the ninety-day plan
 
+`copy.csv` holds the Demand Gen text — headlines (40), long headlines (90),
+descriptions (90) and the business name (25) — with the character count of each
+line, all inside Google's limits.
+
 Final URL: https://www.isidesystems.com/ai-maturity
 
 ## Rebuild
