@@ -1419,9 +1419,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
   <span class="sub">{L['am_p']}</span>
   <span class="go">{L['am_cta']} →</span>
 </a>
-"""
-            + newsbar(L, about)
-            + f"""
+
 <section class="hero">
   <div class="inner">
     <div>
@@ -1431,6 +1429,9 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div class="figwrap"><canvas id="figure"></canvas></div>
   </div>
 </section>
+"""
+            + newsbar(L, about)
+            + f"""
 
 <section class="pad" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
   <div class="lbl">{L['pos_lbl']}</div>

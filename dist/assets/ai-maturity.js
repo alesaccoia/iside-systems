@@ -86,6 +86,11 @@ var QS=[
   ["Regole informali","Ci sono cautele, non condivise né documentate."],
   ["Un responsabile","Qualcuno valuta dati, rischi e strumenti prima dell’uso."],
   ["Un modo di lavorare","Policy, responsabilità e verifiche dentro il processo."]],{governance:3},{}],
+["norme","NORMATIVA","Quanto conoscete le regole che vi riguardano?","AI Act, GDPR, mercato unico digitale: non serve essere giuristi, serve sapere cosa vi tocca.",
+ [["Ne abbiamo sentito parlare","Sappiamo che esistono, non cosa comportano per noi."],
+  ["Conosciamo il GDPR","Privacy presidiata; sull’AI Act siamo scoperti."],
+  ["Stiamo mappando gli obblighi","Qualcuno sta guardando classificazione dei sistemi e adempimenti."],
+  ["Presidio strutturato","Ruoli, registro dei sistemi e verifiche periodiche, con supporto legale."]],{governance:3},{}],
 ["ripetizione","PROCESSI","Quale attività si ripete davvero?","Facoltativa, ma è la domanda che rende la diagnosi specifica.",
  null,{processi:2},{free:true,optional:true}]
 ];
@@ -109,7 +114,10 @@ function render(dir){
   var q=QS[state.i],a=state.a[q[0]],opt=q[6]||{},box=$("#answers"),card=$("#card");
   $("#step").textContent=("0"+(state.i+1)).slice(-2)+" / "+QS.length;
   $("#dimension").textContent=q[1];
-  $("#bar").style.width=((state.i+1)*100/QS.length)+"%";
+  var pct=Math.round((state.i+1)*100/QS.length);
+  $("#bar").style.width=pct+"%";
+  $("#topfill").style.width=pct+"%";
+  $("#topnum").textContent=pct+"% completato";
   $("#kicker").textContent=q[1];
   $("#title").textContent=q[2];
   $("#help").textContent=q[3];
@@ -273,6 +281,7 @@ function list(target,items,mark){
 function show(s,r){
   state.report=r;state.scores=s;
   $("#loading").hidden=true;$("#result").hidden=false;
+  $("#topbar").hidden=true;document.body.classList.remove("running");
   $("#result-title").textContent=r.title;
   $("#summary").textContent=r.summary;
   $("#advice").textContent=r.advice;
@@ -291,6 +300,7 @@ function show(s,r){
 function done(){
   var s=score(),f=fallback(s);
   $("#flow").hidden=true;$("#loading").hidden=false;
+  $("#topfill").style.width="100%";$("#topnum").textContent="100% completato";
   $("#loading").scrollIntoView({block:"start"});
   fetch("/api/ai-maturity",{method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify({answers:state.a,scores:s})})
@@ -362,6 +372,7 @@ function lead(e){
 $("#start").onclick=function(){
   state.started=Date.now();
   $("#intro").hidden=true;$("#flow").hidden=false;
+  $("#topbar").hidden=false;document.body.classList.add("running");
   push("ai_maturity_start",{ai_domande:QS.length});
   render(true);
 };

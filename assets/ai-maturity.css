@@ -43,6 +43,16 @@ h1,h2{font-size:clamp(40px,10.5vw,74px);line-height:.98;letter-spacing:-.055em;
 button{font:inherit}
 small{display:block;color:var(--dim);font:12px var(--mono);margin-top:18px}
 
+/* ---------- completion bar, pinned for the whole flow ---------- */
+#topbar{position:fixed;inset:0 0 auto 0;height:34px;z-index:20;background:rgba(14,14,17,.92);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;align-items:center}
+#topbar[hidden]{display:none}
+#topbar i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,74,43,.22);
+  border-right:2px solid var(--acc);transition:width .55s var(--ease)}
+#topbar span{position:relative;margin-left:auto;margin-right:clamp(14px,4vw,52px);
+  font:600 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
+body.running header{margin-top:34px}
+
 /* ---------- flow ---------- */
 .flowgrid{display:block}
 .progress-meta{display:flex;justify-content:space-between;margin-bottom:12px}
@@ -128,7 +138,8 @@ canvas{display:block;margin-inline:auto;max-width:100%}
 .cta{border-top:1px solid var(--line);padding-top:40px;margin-top:44px}
 .cta h2{font-size:clamp(29px,7.4vw,46px);max-width:14ch}
 .cta>p:not(.eyebrow){font-size:18px;color:var(--dim);max-width:34ch}
-.cta #restart{display:block;margin-top:22px}
+.cta #restart{display:block;margin-top:26px}
+.cta small{margin-top:20px}
 
 /* ---------- lead form ---------- */
 .fields{display:grid;gap:14px;margin:26px 0 22px}
