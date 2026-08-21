@@ -13,6 +13,8 @@
  * Never commit those values: this file only reads them at run time.
  */
 
+const SENDER = "Alessandro — Iside Systems";
+
 const LIMITS = { name: 120, email: 160, organisation: 160, topic: 120, message: 6000 };
 
 function clean(value, max) {
@@ -260,10 +262,11 @@ export default async function handler(req, res) {
   const report = body.report && typeof body.report === "object" ? body.report : null;
 
   const messages = [{
-    From: { Email: from, Name: "isidesystems.com" },
+    From: { Email: from, Name: SENDER },
     To: [{ Email: to }],
     ReplyTo: { Email: email, Name: name },
-    Subject: `isidesystems.com — ${topic || "richiesta"} — ${name}`,
+    Subject: report ? `AI Maturity Check — ${name}`
+                    : `isidesystems.com — ${topic || "richiesta"} — ${name}`,
     TextPart: report ? `${lines.join("\n")}\n\n${reportText(report, true)}` : lines.join("\n"),
     ...(report ? { HTMLPart: reportHtml(report, { name, forOwner: true,
                                                   contact: { email, page: clean(body.page, 300) } }) } : {}),
@@ -272,10 +275,10 @@ export default async function handler(req, res) {
   // and the person who filled it in gets their own copy
   if (report) {
     messages.push({
-      From: { Email: from, Name: "Alessandro Saccoia — Iside Systems" },
+      From: { Email: from, Name: SENDER },
       To: [{ Email: email, Name: name }],
       ReplyTo: { Email: to },
-      Subject: "La tua mappa di maturità AI",
+      Subject: "AI Maturity Check — Iside Systems",
       TextPart: `${reportText(report)}\n\nTi scrivo io a breve, di persona.`,
       HTMLPart: reportHtml(report, { name, forOwner: false }),
     });
