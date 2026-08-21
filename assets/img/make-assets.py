@@ -5,6 +5,7 @@ Renders the raster assets the SVG favicon cannot cover:
     apple-touch-icon.png   180x180   iOS home screen
     favicon-32.png          32x32    fallback for old browsers
     og-image.png          1200x630   Open Graph / Twitter card
+    og-ai-maturity.png    1200x630   card for the AI Maturity Check
 
 Run after changing the mark or the strapline:
 
@@ -77,6 +78,62 @@ def og(path):
     d.text((x, 462 * S), "ALESSANDRO SACCOIA — MILANO", font=f_meta, fill=DIM_D)
     d.text((x, 493 * S), "ISIDESYSTEMS.COM", font=f_meta, fill=DIM_D)
 
+    im.resize((W, H), Image.LANCZOS).save(path, quality=92)
+    print("wrote", os.path.relpath(path, HERE))
+
+
+
+def og_maturity(path):
+    """Social card for the AI Maturity Check: the pentagon it ends on."""
+    import math
+    W, H, S = 1200, 630, 2
+    im = Image.new("RGB", (W * S, H * S), NIGHT)
+    layer = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+
+    f_title = font(HELV, 66 * S, 1)
+    f_sub   = font(HELV, 30 * S, 0)
+    f_meta  = font(MONO, 19 * S)
+
+    x = 80 * S
+    d.text((x, 150 * S), "AI Maturity", font=f_title, fill=LIGHT)
+    d.text((x, 222 * S), "Check", font=f_title, fill=LIGHT)
+    d.text((x, 330 * S), "A che punto è la tua azienda", font=f_sub, fill=LIGHT)
+    d.text((x, 372 * S), "16 domande, 5 minuti, gratis", font=f_sub, fill=DIM_D)
+    d.line([x, 436 * S, x + 96 * S, 436 * S], fill=ACC_D, width=3 * S)
+    d.text((x, 466 * S), "PIANO OPERATIVO A 90 GIORNI", font=f_meta, fill=DIM_D)
+    d.text((x, 497 * S), "ISIDESYSTEMS.COM/AI-MATURITY", font=f_meta, fill=DIM_D)
+    mark(d, x + 22 * S, 570 * S, 44 * S, w=int(3.4 * S), ink=LIGHT, acc=ACC_D)
+    d.text((x + 62 * S, 562 * S), "ISIDE SYSTEMS", font=f_meta, fill=LIGHT)
+
+    # the five axes, with a profile drawn on them
+    axes = ["DATI", "PROCESSI", "MARKETING", "COMPETENZE", "GOVERNANCE"]
+    shape = [0.78, 0.52, 0.63, 0.40, 0.55]
+    cx, cy, r = 900 * S, 300 * S, 168 * S
+    ang = lambda i: -math.pi / 2 + i * 2 * math.pi / 5
+    line = (236, 234, 228, 40)
+    for ring in (0.4, 0.7, 1.0):
+        pts = [(cx + math.cos(ang(i)) * r * ring, cy + math.sin(ang(i)) * r * ring) for i in range(5)]
+        d.line(pts + [pts[0]], fill=line, width=S)
+    for i in range(5):
+        d.line((cx, cy, cx + math.cos(ang(i)) * r, cy + math.sin(ang(i)) * r), fill=line, width=S)
+    pts = [(cx + math.cos(ang(i)) * r * shape[i], cy + math.sin(ang(i)) * r * shape[i])
+           for i in range(5)]
+    d.polygon(pts, fill=(255, 74, 43, 52))
+    d.line(pts + [pts[0]], fill=ACC_D, width=3 * S)
+    for i, (px, py) in enumerate(pts):
+        q = 7 * S
+        d.ellipse((px - q, py - q, px + q, py + q), fill=ACC_D if i == 0 else (90, 169, 255))
+    f_axis = font(MONO, 15 * S)
+    for i, name in enumerate(axes):
+        lx = cx + math.cos(ang(i)) * r * 1.30
+        ly = cy + math.sin(ang(i)) * r * 1.30
+        w = f_axis.getlength(name)
+        # nothing may leave the card: pull the outermost labels back in
+        px = min(max(lx - w / 2, 8 * S), W * S - w - 8 * S)
+        d.text((px, ly - f_axis.size / 2), name, font=f_axis, fill=DIM_D)
+
+    im.paste(layer, (0, 0), layer)
     im.resize((W, H), Image.LANCZOS).save(path, quality=92)
     print("wrote", os.path.relpath(path, HERE))
 
@@ -174,4 +231,5 @@ if __name__ == "__main__":
     icon(32, os.path.join(HERE, "favicon-32.png"))
     og(os.path.join(HERE, "og-image.png"))
     og_priors(os.path.join(HERE, "og-priors.png"))
+    og_maturity(os.path.join(HERE, "og-ai-maturity.png"))
     og_algosynth(os.path.join(HERE, "og-algosynth.png"))
