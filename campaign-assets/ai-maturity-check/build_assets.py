@@ -40,7 +40,7 @@ MONO = pick(("/System/Library/Fonts/Menlo.ttc", 1),
 # scrolling past, or nothing at all — the last two live on type alone.
 CARDS = [
     ("01 / DIAGNOSI", "A che punto è la tua azienda con l’AI?", "radar", 0),
-    ("02 / DOMANDE", "Sedici domande sul lavoro com’è davvero.", "questions", 1),
+    ("02 / DOMANDE", "Sedici domande su come lavorate davvero.", "questions", 1),
     ("03 / MAPPA", "Un punteggio su cinque assi, non una pagella.", "radar", 2),
     ("04 / QUICK WIN", "Formazione, workshop, ROI, due agenti in produzione.", "none", 3),
     ("05 / CHECK", "Fai il check. Esci con un piano a 90 giorni.", "cta", 4),
