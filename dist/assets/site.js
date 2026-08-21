@@ -73,27 +73,53 @@ readPal();
   const x = c.getContext("2d");
   let W = 0, H = 0, drawn = false;
 
+  /* A left-to-right lattice: signals enter, get combined, come out as a
+     decision. The previous figure put five nodes on a circle and joined them,
+     which drew a pentagram — not the association this page wants. */
   function geometry(){
     const r = rng(20260813);
     const S = Math.min(W, H);
-    const cx = W * 0.5, cy = H * 0.5;
-    const R = S * 0.36;
+    // leave room under the frame for the scale, or it lands on the canvas edge
+    const box = { x: (W - S * .86) / 2, y: (H - S * .70) / 2 - S * .05, w: S * .86, h: S * .70 };
+    const layers = [4, 5, 4, 2];
     const nodes = [];
-    // 9 nodes on two concentric rings — fixed angles, no jitter
-    for (let i = 0; i < 5; i++){
-      const a = -Math.PI/2 + i * (Math.PI * 2 / 5);
-      nodes.push({ x: cx + Math.cos(a) * R, y: cy + Math.sin(a) * R, r: 4.5, lab: "N" + i });
-    }
-    for (let i = 0; i < 4; i++){
-      const a = -Math.PI/2 + Math.PI/4 + i * (Math.PI * 2 / 4);
-      nodes.push({ x: cx + Math.cos(a) * R * 0.52, y: cy + Math.sin(a) * R * 0.52, r: 3.2, lab: "" });
-    }
-    // deterministic edge set
+    layers.forEach((count, li) => {
+      const lx = box.x + box.w * (li / (layers.length - 1));
+      for (let i = 0; i < count; i++){
+        const t = count === 1 ? .5 : i / (count - 1);
+        const pad = box.h * (li === layers.length - 1 ? .26 : .06);
+        nodes.push({
+          x: lx,
+          y: box.y + pad + (box.h - pad * 2) * t,
+          r: li === layers.length - 1 ? 5 : 3.6,
+          layer: li,
+        });
+      }
+    });
+    // every edge goes forward one layer, so the figure reads as a flow
     const edges = [];
-    for (let i = 0; i < nodes.length; i++)
-      for (let j = i + 1; j < nodes.length; j++)
-        if (r() < 0.42) edges.push([i, j]);
-    return { cx, cy, R, S, nodes, edges };
+    for (let li = 0; li < layers.length - 1; li++){
+      const from = nodes.filter(n => n.layer === li);
+      const to = nodes.filter(n => n.layer === li + 1);
+      from.forEach((a, ai) => {
+        to.forEach((b, bi) => {
+          const near = Math.abs(ai / Math.max(1, from.length - 1) - bi / Math.max(1, to.length - 1));
+          if (near < .27 || r() < .12) edges.push([a, b]);
+        });
+      });
+    }
+    // one path lit end to end: the decision this whole apparatus is for
+    const path = [];
+    let cur = nodes.filter(n => n.layer === 0)[1];
+    path.push(cur);
+    for (let li = 0; li < layers.length - 1; li++){
+      const outs = edges.filter(e => e[0] === cur);
+      const pick = outs[Math.floor(r() * outs.length)] || outs[0];
+      if (!pick) break;
+      cur = pick[1];
+      path.push(cur);
+    }
+    return { box, nodes, edges, path, S };
   }
 
   function paint(p){                       // p = wipe progress 0..1
@@ -103,7 +129,7 @@ readPal();
     x.save();
     x.beginPath(); x.rect(0, 0, W * p, H); x.clip();
 
-    // 1. base module grid
+    // 1. module grid, the quiet ground everything sits on
     const step = g.S / 16;
     x.strokeStyle = `rgba(${PAL.inkRgb},.07)`;
     x.lineWidth = 1;
@@ -113,59 +139,61 @@ readPal();
       x.beginPath(); x.moveTo((W - g.S) / 2, o2); x.lineTo((W + g.S) / 2, o2); x.stroke();
     }
 
-    // 2. outer square + inscribed circle + rotated square
+    // 2. the frame and the layer rules
+    x.strokeStyle = `rgba(${PAL.inkRgb},.28)`;
+    x.strokeRect(g.box.x, g.box.y, g.box.w, g.box.h);
+    x.setLineDash([2, 5]);
+    x.strokeStyle = `rgba(${PAL.inkRgb},.18)`;
+    for (let li = 1; li < 3; li++){
+      const lx = g.box.x + g.box.w * (li / 3);
+      x.beginPath(); x.moveTo(lx, g.box.y); x.lineTo(lx, g.box.y + g.box.h); x.stroke();
+    }
+    x.setLineDash([]);
+
+    // 3. edges
     x.strokeStyle = `rgba(${PAL.inkRgb},.30)`;
-    x.strokeRect((W - g.S * .84) / 2, (H - g.S * .84) / 2, g.S * .84, g.S * .84);
-    x.beginPath(); x.arc(g.cx, g.cy, g.R, 0, Math.PI * 2); x.stroke();
-    x.beginPath();
-    for (let i = 0; i < 4; i++){
-      const a = -Math.PI / 2 + i * Math.PI / 2;
-      const px = g.cx + Math.cos(a) * g.R, py = g.cy + Math.sin(a) * g.R;
-      i ? x.lineTo(px, py) : x.moveTo(px, py);
-    }
-    x.closePath(); x.stroke();
-
-    // 3. tick ring
-    x.strokeStyle = `rgba(${PAL.inkRgb},.35)`;
-    for (let d = 0; d < 360; d += 5){
-      const a = d * Math.PI / 180;
-      const len = d % 45 === 0 ? 11 : 5;
+    g.edges.forEach(([a, b]) => {
       x.beginPath();
-      x.moveTo(g.cx + Math.cos(a) * (g.R + 6), g.cy + Math.sin(a) * (g.R + 6));
-      x.lineTo(g.cx + Math.cos(a) * (g.R + 6 + len), g.cy + Math.sin(a) * (g.R + 6 + len));
-      x.stroke();
-    }
-
-    // 4. graph edges
-    x.strokeStyle = `rgba(${PAL.inkRgb},.42)`;
-    g.edges.forEach(([i, j]) => {
-      x.beginPath();
-      x.moveTo(g.nodes[i].x, g.nodes[i].y);
-      x.lineTo(g.nodes[j].x, g.nodes[j].y);
+      x.moveTo(a.x, a.y);
+      x.bezierCurveTo((a.x + b.x) / 2, a.y, (a.x + b.x) / 2, b.y, b.x, b.y);
       x.stroke();
     });
+
+    // 4. the lit path
+    x.strokeStyle = PAL.acc;
+    x.lineWidth = 1.6;
+    for (let i = 0; i < g.path.length - 1; i++){
+      const a = g.path[i], b = g.path[i + 1];
+      x.beginPath();
+      x.moveTo(a.x, a.y);
+      x.bezierCurveTo((a.x + b.x) / 2, a.y, (a.x + b.x) / 2, b.y, b.x, b.y);
+      x.stroke();
+    }
+    x.lineWidth = 1;
 
     // 5. nodes
-    g.nodes.forEach((n, i) => {
-      x.fillStyle = i === 0 ? PAL.acc : PAL.ink;
+    g.nodes.forEach(n => {
+      const lit = g.path.indexOf(n) >= 0;
+      x.fillStyle = lit ? PAL.acc : PAL.ink;
+      x.globalAlpha = lit ? 1 : .75;
       x.beginPath(); x.arc(n.x, n.y, n.r, 0, Math.PI * 2); x.fill();
-      if (n.lab){
-        x.fillStyle = PAL.dim;
-        x.font = `10px ${getComputedStyle(document.body).getPropertyValue("--mono")}`;
-        x.textAlign = "center"; x.textBaseline = "middle";
-        x.fillText(n.lab, n.x, n.y - 14);
-      }
+      x.globalAlpha = 1;
     });
 
-    // 6. axes + corner marks
-    x.strokeStyle = PAL.acc; x.lineWidth = 1;
+    // 6. the scale under it: this is a measured thing, not a mood board
+    const baseY = g.box.y + g.box.h + Math.max(14, g.S * .045);
+    x.strokeStyle = `rgba(${PAL.inkRgb},.35)`;
+    x.beginPath(); x.moveTo(g.box.x, baseY); x.lineTo(g.box.x + g.box.w, baseY); x.stroke();
+    for (let i = 0; i <= 24; i++){
+      const tx = g.box.x + g.box.w * (i / 24);
+      const len = i % 6 === 0 ? 9 : 4;
+      x.beginPath(); x.moveTo(tx, baseY); x.lineTo(tx, baseY - len); x.stroke();
+    }
+    x.strokeStyle = PAL.acc;
     x.beginPath();
-    x.moveTo((W - g.S * .84) / 2, g.cy); x.lineTo((W + g.S * .84) / 2, g.cy);
+    x.moveTo(g.box.x, baseY);
+    x.lineTo(g.box.x + g.box.w * .34, baseY);
     x.stroke();
-    x.setLineDash([2, 4]);
-    x.strokeStyle = `rgba(${PAL.inkRgb},.28)`;
-    x.beginPath(); x.moveTo(g.cx, (H - g.S * .84) / 2); x.lineTo(g.cx, (H + g.S * .84) / 2); x.stroke();
-    x.setLineDash([]);
     x.restore();
   }
 
