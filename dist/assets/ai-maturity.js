@@ -20,16 +20,16 @@ var QS=[
   ["Retail ed e-commerce","Vendita, catalogo, assistenza clienti."],["Sanità e farma","Cura, compliance, dati sensibili."],
   ["Finanza e assicurazioni","Rischio, istruttorie, normativa."],["Education e formazione","Didattica, studenti, contenuti."],
   ["PA e non profit","Servizi al pubblico, bandi, rendicontazione."],["Altro","Nessuna delle precedenti."]],{},{cols:2}],
-["market","MERCATO","Vendete soprattutto a imprese o a persone?","Cambia il funnel, i canali e la misurazione.",
+["market","MERCATO","Vendete soprattutto a imprese o a persone?","",
  [["B2B","Clienti aziendali, cicli lunghi, poche trattative di valore."],
   ["B2C","Consumatori finali, volumi alti, decisione rapida."],
   ["Entrambi","Due motori diversi che convivono."]],{},{}],
-["goal","OBIETTIVI","Quali risultati vuoi sbloccare per primi?","Puoi sceglierne più di uno: sono le pressioni dei prossimi 90 giorni.",
+["goal","OBIETTIVI","Quali risultati vuoi sbloccare per primi?","Puoi sceglierne più di uno.",
  [["Più tempo","Ridurre lavoro manuale e passaggi ripetitivi."],
   ["Più qualità","Meno errori, risposte più coerenti, decisioni migliori."],
   ["Più crescita","Generare, qualificare o seguire meglio domanda e clienti."],
   ["Più controllo","Rendere informazioni e processi osservabili."]],{processi:2,adozione:1},{multi:true,cols:2}],
-["funzione","FUNZIONI","Quali funzioni sono più sotto pressione?","Seleziona tutte quelle che senti. Da qui esce la formazione mirata, non quella generica.",
+["funzione","FUNZIONI","Quali funzioni sono più sotto pressione?","Seleziona tutte quelle che senti: da qui escono gli agenti AI e la formazione su misura.",
  [["Marketing e vendite","Contenuti, campagne, offerte, follow-up."],
   ["Operations e delivery","Produzione del servizio o del prodotto."],
   ["Amministrazione e finanza","Documenti, controllo, adempimenti."],
@@ -54,26 +54,27 @@ var QS=[
   ["Sito e social organici","Presenza digitale, senza spesa in media."],
   ["Campagne a pagamento","Google, Meta, LinkedIn o TikTok attivi."],
   ["Mix strutturato","Digitale a pagamento e organico, con un piano."]],{marketing:3},{}],
-["lineari","MARKETING","Usate anche canali offline o lineari?","Fiere, stampa, radio, TV, affissioni.",
+["lineari","MARKETING","Usate anche canali offline o lineari?","Se fate marketing: fiere, stampa, radio, TV, affissioni.",
  [["No, solo digitale","Tutto passa da canali online."],
   ["Fiere ed eventi","Presenza fisica sul mercato di riferimento."],
   ["Stampa o radio locale","Copertura territoriale."],
-  ["TV, radio o affissioni","Campagne offline continuative."]],{marketing:1},{}],
-["social","MARKETING","Presidiate i social?","Non conta essere ovunque: conta la costanza.",
+  ["TV, radio o affissioni","Campagne offline continuative."],
+  ["Non facciamo marketing","Nessuna attività strutturata, né online né offline."]],{marketing:1},{cols:2}],
+["social","MARKETING","Presidiate i social?","",
  [["No","Nessun presidio attivo."],
   ["Sì, saltuariamente","Si pubblica quando capita."],
   ["Piano editoriale regolare","C’è un calendario e qualcuno che lo tiene."],
-  ["Team o agenzia dedicata","Produzione continua e misurata."]],{marketing:2},{}],
+  ["Team o agenzia dedicata","Produzione continua e misurata."]],{marketing:2},{onlyMarketing:true}],
 ["misurazione","MISURAZIONE","Quali strumenti di misurazione avete?","È la differenza fra decidere e indovinare.",
  [["Nessuno","Guardiamo i risultati commerciali e basta."],
   ["Analytics di base","GA4 o simili, installato ma poco usato."],
   ["Analytics e tag manager","Eventi e conversioni definiti, CRM collegato in parte."],
-  ["Modello unificato","Definizioni condivise, dashboard e attribuzione."]],{marketing:2,dati:2},{}],
+  ["Modello unificato","Definizioni condivise, dashboard e attribuzione."]],{marketing:2,dati:2},{onlyMarketing:true}],
 ["agenzia","PARTNER","Vi appoggiate a un’agenzia esterna?","Serve a capire dove stanno dati e competenze.",
  [["No, tutto interno","Il team fa da sé."],
   ["Sì, per creatività e contenuti","Produzione affidata fuori."],
   ["Sì, per media buying","Le campagne le gestisce l’agenzia."],
-  ["Sì, full service","Strategia, creatività e media fuori casa."]],{competenze:1},{}],
+  ["Sì, full service","Strategia, creatività e media fuori casa."]],{competenze:1},{onlyMarketing:true}],
 ["formazione","COMPETENZE","Che formazione avete fatto sull’AI?","Non è un test di competenza tecnica.",
  [["Nessuna","Chi sa, ha imparato da solo."],
   ["Sessioni introduttive","Una tantum, uguale per tutti."],
@@ -100,10 +101,27 @@ var AXES={dati:"DATI",processi:"PROCESSI",marketing:"MARKETING",competenze:"COMP
 var RADAR=["dati","processi","marketing","competenze","governance"];
 var state={i:0,a:{},started:0,sent:false};
 
+/* Someone who says they do no marketing should not be asked three more
+   questions about it — and should not be sold it back in the report. */
+function doesMarketing(){
+  var a=state.a.lineari;
+  return !(a && a.text === "Non facciamo marketing");
+}
+/* No marketing means no marketing axis: scoring it from the one question they
+   did answer would have rewarded "non facciamo marketing" with a full mark. */
+function axes(){
+  return doesMarketing() ? RADAR : RADAR.filter(function(k){ return k !== "marketing" });
+}
+function asked(q){
+  var opt=q[6]||{};
+  return !(opt.onlyMarketing && !doesMarketing());
+}
+function activeQS(){ return QS.filter(asked); }
+
 /* ---------------- rail ---------------- */
 function rail(){
   var s=score(),html="<ul>";
-  RADAR.forEach(function(k){
+  axes().forEach(function(k){
     var on=(QS[state.i][5]||{})[k]?" on":"";
     html+='<li class="'+on.trim()+'">'+AXES[k]+'<span class="track"><i style="width:'+s[k]+'%"></i></span></li>';
   });
@@ -122,13 +140,14 @@ function toTop(){
 /* ---------------- one step ---------------- */
 function render(dir){
   var q=QS[state.i],a=state.a[q[0]],opt=q[6]||{},box=$("#answers"),card=$("#card");
-  var pct=Math.round((state.i+1)*100/QS.length);
+  var list=activeQS(),seen=list.indexOf(q)+1;
+  var pct=Math.round(seen*100/list.length);
   $("#topfill").style.width=pct+"%";
   $("#topnum").textContent=pct+"% completato";
   $("#title").textContent=q[2];
   $("#help").textContent=q[3];
   $("#back").hidden=state.i===0;
-  $("#next").innerHTML=(state.i===QS.length-1?"Genera la mappa":"Continua")+" <em>→</em>";
+  $("#next").innerHTML=(seen===list.length?"Genera la mappa":"Continua")+" <em>→</em>";
   box.innerHTML="";
   var oldHint=$("#multi-hint");if(oldHint)oldHint.remove();
   $("#free-wrap").hidden=!opt.free;
@@ -188,17 +207,24 @@ function render(dir){
 function step(delta){
   var card=$("#card");
   card.classList.remove("in");card.classList.add("out");
-  setTimeout(function(){state.i+=delta;render(true)},170);
+  setTimeout(function(){
+    var i=state.i+delta;
+    while(QS[i] && !asked(QS[i])) i+=delta;      // walk past what does not apply
+    state.i=Math.max(0,Math.min(QS.length-1,i));
+    render(true);
+  },170);
 }
 
 /* ---------------- scoring ---------------- */
 function score(){
-  var raw={},max={};
-  RADAR.forEach(function(k){raw[k]=0;max[k]=0});
+  var raw={},max={},live=axes();
+  live.forEach(function(k){raw[k]=0;max[k]=0});
   raw.adozione=0;max.adozione=0;
   QS.forEach(function(q){
+    if(!asked(q))return;
     var w=q[5]||{},opt=q[6]||{},a=state.a[q[0]];
     Object.keys(w).forEach(function(k){
+      if(live.indexOf(k)<0&&k!=="adozione")return;
       max[k]+=w[k]*3;
       if(!a) return;
       raw[k]+=opt.free?(a.text&&a.text.trim()?w[k]*2:0):a.n*w[k];
@@ -209,15 +235,16 @@ function score(){
   return out;
 }
 function overall(s){
-  var t=0;RADAR.forEach(function(k){t+=s[k]});
-  return Math.round(t/RADAR.length);
+  var live=axes(),t=0;
+  live.forEach(function(k){t+=s[k]||0});
+  return Math.round(t/live.length);
 }
 
 /* ---------------- the plan ----------------
-   The sequence is deliberate and nearly the same for everyone: training when
-   it is missing, then workshops with the business units, then what to build
-   and what it is worth, then two agents in production. Only two blocks are
-   conditional — marketing data, and how far the aggregation promise can go. */
+   The order is deliberate and close to the same for everyone. It opens with a
+   conversation, not with a course and not with a tool: what is sold here is
+   strategy, so the first move is understanding the business. Training appears
+   where the answers say it is missing, not automatically at the top. */
 function plan(s){
   var fn=(state.a.funzione||{}).text||"le funzioni sotto pressione",
       canali=(state.a.canali||{}).n||0,
@@ -227,11 +254,9 @@ function plan(s){
       agenzia=(state.a.agenzia||{}).n||0,
       wins=[];
 
-  if(s.competenze<60)
-    wins.push({title:"Formazione prima di tutto",
-      body:"Senza una base comune ogni strumento resta un esperimento personale. Mezza giornata "+
-           "per tutti, poi un modulo per "+fn.toLowerCase()+"."});
-
+  wins.push({title:"Un incontro per capire le esigenze",
+    body:"Un’ora con chi decide: obiettivi, vincoli, cosa è già stato provato. Prima di qualsiasi "+
+         "strumento serve sapere che problema stiamo risolvendo."});
   wins.push({title:"Workshop interni con le business unit",
     body:"Due o tre sessioni con chi fa il lavoro: si mappano i passaggi reali, non quelli del "+
          "manuale. È qui che si vede dove l’AI toglie tempo e dove non serve."});
@@ -241,19 +266,27 @@ function plan(s){
   wins.push({title:"ROI stimato per ogni iniziativa",
     body:"Ore risparmiate, errori evitati, ricavi sbloccati, costo di esercizio: ogni iniziativa "+
          "ha un numero prima di partire, così la priorità non è un’opinione."});
+
+  if(s.competenze<60)
+    wins.push({title:"Formazione dove manca la base",
+      body:"Le risposte dicono che la competenza è ancora personale: mezza giornata comune, poi un "+
+           "modulo per "+fn.toLowerCase()+", agganciato ai casi d’uso scelti."});
+
   wins.push({title:"Due agenti in produzione nei 90 giorni",
     body:"Non un pilota da dimostrazione: due agenti sui processi scelti, usati ogni giorno, con "+
          "criteri di qualità e un responsabile."});
 
-  // marketing: only promise what their setup can actually deliver
-  var attivi=(canali>=2?1:0)+(social>=2?1:0)+(lineari>=1?1:0);
-  if(attivi>=2||misura>=1){
-    wins.push({title:"Aggregazione dei dati di marketing",
-      body:agenzia===0
-        ? "Investite su più canali senza un partner che tenga insieme i numeri: si parte da "+
-          "definizioni condivise e da un’unica base dati, un canale alla volta."
-        : "Definizioni condivise e una sola base dati fra i canali e chi li gestisce, così i "+
-          "numeri dell’agenzia e i vostri raccontano la stessa storia."});
+  // marketing only for those who actually do it
+  if(doesMarketing()){
+    var attivi=(canali>=2?1:0)+(social>=2?1:0)+(lineari>=1?1:0);
+    if(attivi>=2||misura>=1){
+      wins.push({title:"Aggregazione dei dati di marketing",
+        body:agenzia===0
+          ? "Investite su più canali senza un partner che tenga insieme i numeri: si parte da "+
+            "definizioni condivise e da un’unica base dati, un canale alla volta."
+          : "Definizioni condivise e una sola base dati fra i canali e chi li gestisce, così i "+
+            "numeri dell’agenzia e i vostri raccontano la stessa storia."});
+    }
   }
 
   wins.push({title:"Codice di condotta AI e posizionamento normativo",
@@ -263,7 +296,7 @@ function plan(s){
 }
 
 function fallback(s){
-  var low=RADAR.slice().sort(function(a,b){return s[a]-s[b]}),
+  var low=axes().slice().sort(function(a,b){return s[a]-s[b]}),
       fn=(state.a.funzione||{}).text||"il team",
       sector=(state.a.sector||{}).text||"il vostro settore";
   return {
@@ -279,12 +312,14 @@ function fallback(s){
       {title:"Formazione mirata su "+fn.toLowerCase(),
        body:"Casi reali delle funzioni più sotto pressione in "+sector.toLowerCase()+", con i "+
             "prompt e i controlli di qualità del vostro processo."}],
-    advice:"Evita progetti troppo ampi. Un AI Opportunity Sprint mette in fila workshop, scelta "+
-      "delle tecnologie, ROI e i primi due agenti, con la formazione che li rende usabili."};
+    advice:"Si parte da un incontro, non da uno strumento: un’ora per capire obiettivi e vincoli, "+
+      "poi i workshop con le business unit. L’AI Opportunity Sprint mette in fila quello che ne "+
+      "esce — tecnologie, ROI e i primi due agenti."};
 }
 
 /* ---------------- radar ---------------- */
 function radar(s,t){
+  var LIVE=axes();
   var c=$("#radar"),r=(c.parentNode||c).getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);  // measure the container: the canvas own width is whatever we last set
   var z=Math.max(280,Math.min(r.width||320,620)),x=z/2,y=z/2,ctx=c.getContext("2d");
   var fs=Math.max(9,z*.023),pad=fs*3.4,R=(z/2-pad)*.92;
@@ -292,15 +327,15 @@ function radar(s,t){
   // at 640: that is the softness. Pin both to the same size.
   c.width=z*d;c.height=z*d;c.style.width=z+"px";c.style.height=z+"px";
   ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,z,z);
-  var ang=function(i){return -Math.PI/2+i*Math.PI*2/RADAR.length};
+  var ang=function(i){return -Math.PI/2+i*Math.PI*2/LIVE.length};
   for(var n=1;n<5;n++){
     ctx.beginPath();
-    RADAR.forEach(function(k,i){var q=R*n/4;
+    LIVE.forEach(function(k,i){var q=R*n/4;
       var X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});
     ctx.closePath();ctx.strokeStyle="rgba(236,234,228,.14)";ctx.lineWidth=1;ctx.stroke();
   }
   ctx.font="600 "+fs+"px "+"SFMono-Regular,Menlo,monospace";
-  RADAR.forEach(function(k,i){
+  LIVE.forEach(function(k,i){
     ctx.beginPath();ctx.moveTo(x,y);
     ctx.lineTo(x+Math.cos(ang(i))*R,y+Math.sin(ang(i))*R);
     ctx.strokeStyle="rgba(236,234,228,.14)";ctx.stroke();
@@ -313,12 +348,12 @@ function radar(s,t){
     ctx.fillStyle="#a6a3a9";ctx.fillText(AXES[k],lx,ly);
   });
   ctx.beginPath();
-  RADAR.forEach(function(k,i){var q=R*(s[k]/100)*t;
+  LIVE.forEach(function(k,i){var q=R*(s[k]/100)*t;
     var X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});
   ctx.closePath();
   ctx.fillStyle="rgba(255,74,43,.2)";ctx.fill();
   ctx.strokeStyle="#ff4a2b";ctx.lineWidth=2;ctx.stroke();
-  RADAR.forEach(function(k,i){var q=R*(s[k]/100)*t;
+  LIVE.forEach(function(k,i){var q=R*(s[k]/100)*t;
     ctx.beginPath();ctx.arc(x+Math.cos(ang(i))*q,y+Math.sin(ang(i))*q,3,0,7);
     ctx.fillStyle="#ff4a2b";ctx.fill()});
 }
@@ -365,7 +400,8 @@ function show(s,r){
   countTo(overall(s));
   requestAnimationFrame(function(){radarIn(s)});
   push("ai_maturity_complete",{ai_score:overall(s),ai_dati:s.dati,ai_processi:s.processi,
-    ai_marketing:s.marketing,ai_competenze:s.competenze,ai_governance:s.governance,
+    ai_marketing:s.marketing===undefined?"n/a":s.marketing,
+    ai_competenze:s.competenze,ai_governance:s.governance,
     ai_settore:(state.a.sector||{}).text||"",ai_dimensione:(state.a.size||{}).text||"",
     ai_mercato:(state.a.market||{}).text||"",
     ai_durata_sec:Math.round((Date.now()-state.started)/1000)});
@@ -376,7 +412,7 @@ function done(){
   $("#topfill").style.width="100%";$("#topnum").textContent="100% completato";
   $("#loading").scrollIntoView({block:"start"});
   fetch("/api/ai-maturity",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({answers:state.a,scores:s})})
+    body:JSON.stringify({answers:state.a,scores:s,marketing:doesMarketing()})})
     .then(function(x){return x.ok?x.json():f})
     .then(function(x){show(s,x&&x.summary?x:f)})
     .catch(function(){show(s,f)});
@@ -386,7 +422,7 @@ function done(){
 function transcript(){
   var s=state.scores||score(),rows=["Richiesta dalla pagina AI Maturity Check.","",
     "PUNTEGGIO COMPLESSIVO: "+overall(s)+"/100"];
-  RADAR.forEach(function(k){rows.push("  "+AXES[k]+": "+s[k])});
+  axes().forEach(function(k){rows.push("  "+AXES[k]+": "+s[k])});
   rows.push("","RISPOSTE:");
   QS.forEach(function(q){
     var a=state.a[q[0]];
@@ -440,7 +476,7 @@ function lead(e){
       rep=state.report||fallback(sc),
       payload={
         score:overall(sc),
-        axes:RADAR.map(function(k){return {name:AXES[k],value:sc[k]}}),
+        axes:axes().map(function(k){return {name:AXES[k],value:sc[k]}}),
         title:rep.title,summary:rep.summary,advice:rep.advice,
         wins:plan(sc),
         answers:QS.map(function(q){
@@ -483,7 +519,10 @@ $("#start").onclick=function(){
   push("ai_maturity_start",{ai_domande:QS.length});
   render(true);
 };
-$("#next").onclick=function(){if(state.i===QS.length-1)done();else step(1)};
+$("#next").onclick=function(){
+  var list=activeQS();
+  if(list.indexOf(QS[state.i])===list.length-1)done();else step(1);
+};
 $("#back").onclick=function(){if(state.i>0)step(-1)};
 $("#free").oninput=function(e){
   state.a[QS[state.i][0]]={text:e.target.value};
