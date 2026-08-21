@@ -1,0 +1,5 @@
+file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-opportunity-sprint/source-slides/ai-opportunity-sprint-16x9-15s.mp4-1.mp4'
+file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-opportunity-sprint/source-slides/ai-opportunity-sprint-16x9-15s.mp4-2.mp4'
+file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-opportunity-sprint/source-slides/ai-opportunity-sprint-16x9-15s.mp4-3.mp4'
+file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-opportunity-sprint/source-slides/ai-opportunity-sprint-16x9-15s.mp4-4.mp4'
+file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-opportunity-sprint/source-slides/ai-opportunity-sprint-16x9-15s.mp4-5.mp4'
