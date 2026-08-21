@@ -397,6 +397,26 @@ function transcript(){
   }
   return rows.join("\n");
 }
+function sent(address){
+  var form=$("#lead-form");
+  form.classList.remove("sending");
+  var box=document.createElement("div");
+  box.className="sent";
+  box.innerHTML='<svg viewBox="0 0 40 40" aria-hidden="true">'+
+    '<circle cx="20" cy="20" r="18"/><path d="M12 20.5l5.5 5.5L28 15"/></svg>'+
+    '<div><b>Mappa inviata.</b>'+
+    '<p>È partita a <span class="to"></span>. Ti scrivo io a breve, di persona, '+
+    'per dirti da dove partirei nel tuo caso.</p></div>';
+  box.querySelector(".to").textContent=address;
+  var section=form.parentNode;
+  section.replaceChild(box,form);
+  $("#l-msg")&&$("#l-msg").remove();
+  // the "name, surname and email" line has nothing left to explain
+  var note=section.querySelector("small");
+  if(note)note.remove();
+  box.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
 function lead(e){
   e.preventDefault();
   var first=$("#l-first"),last=$("#l-last"),mail=$("#l-email"),msg=$("#l-msg");
@@ -423,14 +443,14 @@ function lead(e){
         training:(rep.training&&rep.training.length?rep.training:fallback(sc).training)
       };
   msg.textContent="Invio in corso…";msg.className="formmsg";
+  $("#lead-form").classList.add("sending");
   $("#l-send").disabled=true;
   fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify({name:name,email:mail.value.trim(),topic:"AI Maturity Check",
       message:body,report:payload,website:$("#l-site").value,page:location.pathname})})
    .then(function(r){
      if(r.ok){
-       msg.textContent="Ricevuto. Ti rispondo io, di persona, entro un giorno lavorativo.";
-       msg.className="formmsg ok";
+       sent(mail.value.trim());
        if(!state.sent){state.sent=true;push("ai_maturity_lead",{ai_score:overall(state.scores||score())})}
        return;
      }
@@ -438,13 +458,14 @@ function lead(e){
    })
    .catch(function(){
      // no mail credentials on the server: hand the whole thing to a mail client
+     $("#lead-form").classList.remove("sending");
      msg.textContent="Apro il tuo client di posta con il riepilogo già dentro.";
      msg.className="formmsg ok";
      if(!state.sent){state.sent=true;push("ai_maturity_lead",{ai_score:overall(state.scores||score()),ai_invio:"mailto"})}
      location.href="mailto:alessandro@iside.systems?subject="+
        encodeURIComponent("AI Maturity Check — "+name)+"&body="+encodeURIComponent(body);
    })
-   .then(function(){$("#l-send").disabled=false});
+   .then(function(){$("#l-send").disabled=false;$("#lead-form").classList.remove("sending")});
 }
 
 /* ---------------- wiring ---------------- */
