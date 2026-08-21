@@ -18,7 +18,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);
 
 header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;
   justify-content:space-between}
-header>span,.eyebrow,.progress-meta{font:600 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
+header>span,.eyebrow{font:600 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
 header>span{display:none}
 .lockup{color:var(--ink);text-decoration:none;font:700 12px var(--mono);letter-spacing:.13em;
   display:flex;align-items:center;gap:12px}
@@ -50,14 +50,16 @@ small{display:block;color:var(--dim);font:12px var(--mono);margin-top:18px}
 #topbar[hidden]{display:none}
 #topbar i{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,74,43,.22);
   border-right:2px solid var(--acc);transition:width .55s var(--ease)}
+.topmark{position:relative;display:flex;align-items:center;margin-left:clamp(14px,4vw,52px);
+  width:16px;height:16px;border:1.5px solid var(--ink)}
+.topmark b{position:absolute;inset:3px;border:1.5px solid var(--acc)}
 #topbar span{position:relative;margin-left:auto;margin-right:clamp(14px,4vw,52px);
   font:600 10px var(--mono);letter-spacing:.16em;color:var(--dim)}
 body.running header{margin-top:34px}
 
 /* ---------- flow ---------- */
 .flowgrid{display:block}
-.progress-meta{display:flex;justify-content:space-between;
-  margin-bottom:clamp(30px,6vh,58px);padding-bottom:10px;border-bottom:1px solid var(--line)}
+
 .question h2{max-width:14ch;margin-top:0;font-size:clamp(30px,7.6vw,50px)}
 .help{font-size:17px;color:var(--dim);max-width:38ch}
 
@@ -179,7 +181,6 @@ canvas{display:block;margin-inline:auto;max-width:100%}
   #result{padding-top:104px}
   .flowgrid{display:grid;grid-template-columns:190px minmax(0,1fr);gap:56px;align-items:start}
   .rail{display:block;position:sticky;top:110px;padding:0;margin:0}
-  #dimension{display:none}          /* the rail already names it */
   .rail ul{padding:0;margin:0}
 
   /* the report is the deliverable: give it the whole width.

@@ -113,8 +113,6 @@ function rail(){
 /* ---------------- one step ---------------- */
 function render(dir){
   var q=QS[state.i],a=state.a[q[0]],opt=q[6]||{},box=$("#answers"),card=$("#card");
-  $("#step").textContent=("0"+(state.i+1)).slice(-2)+" / "+QS.length;
-  $("#dimension").textContent=q[1];
   var pct=Math.round((state.i+1)*100/QS.length);
   $("#topfill").style.width=pct+"%";
   $("#topnum").textContent=pct+"% completato";
