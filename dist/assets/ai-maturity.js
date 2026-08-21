@@ -24,18 +24,20 @@ var QS=[
  [["B2B","Clienti aziendali, cicli lunghi, poche trattative di valore."],
   ["B2C","Consumatori finali, volumi alti, decisione rapida."],
   ["Entrambi","Due motori diversi che convivono."]],{},{}],
-["goal","OBIETTIVO","Quale risultato vuoi sbloccare per primo?","Scegli la pressione più concreta per i prossimi 90 giorni.",
+["goal","OBIETTIVI","Quali risultati vuoi sbloccare per primi?","Puoi sceglierne più di uno: sono le pressioni dei prossimi 90 giorni.",
  [["Più tempo","Ridurre lavoro manuale e passaggi ripetitivi."],
   ["Più qualità","Meno errori, risposte più coerenti, decisioni migliori."],
   ["Più crescita","Generare, qualificare o seguire meglio domanda e clienti."],
-  ["Più controllo","Rendere informazioni e processi osservabili."]],{processi:2,adozione:1},{}],
-["funzione","FUNZIONE","Quale funzione è più sotto pressione?","Da qui esce la formazione mirata, non quella generica.",
+  ["Più controllo","Rendere informazioni e processi osservabili."]],{processi:2,adozione:1},{multi:true,cols:2}],
+["funzione","FUNZIONI","Quali funzioni sono più sotto pressione?","Seleziona tutte quelle che senti. Da qui esce la formazione mirata, non quella generica.",
  [["Marketing e vendite","Contenuti, campagne, offerte, follow-up."],
   ["Operations e delivery","Produzione del servizio o del prodotto."],
   ["Amministrazione e finanza","Documenti, controllo, adempimenti."],
   ["Customer service","Richieste, assistenza, post-vendita."],
   ["Tecnologia e prodotto","Sviluppo, dati, sistemi."],
-  ["Tutta l’azienda","La pressione è distribuita."]],{},{cols:2}],
+  ["Management e direzione","Decisioni, riunioni, reportistica."],
+  ["HR e personale","Selezione, onboarding, formazione, amministrazione del personale."],
+  ["Tutta l’azienda","La pressione è distribuita."]],{},{multi:true,cols:2}],
 ["dati","DATI","Quanto sono disponibili i dati che servono?","Pensa a clienti, vendite, operazioni e performance.",
  [["Bisogna cercarli","Sparsi, poco affidabili o in ritardo."],
   ["Ci sono, ma manuali","Esportazioni e fogli aiutano, ma costano lavoro."],
@@ -45,7 +47,8 @@ var QS=[
  [["In testa alle persone","Passaggi informali, tra mail, chat e memoria."],
   ["In fogli e documenti","Soprattutto Excel, Drive, PDF, presentazioni."],
   ["In software separati","CRM, ERP o verticali che non dialogano."],
-  ["In un flusso connesso","I sistemi principali sono integrati o pronti a esserlo."]],{dati:1,processi:2},{}],
+  ["In un flusso connesso","I sistemi principali sono integrati o pronti a esserlo."],
+  ["Dipende dalla business unit","Reparti diversi lavorano in modi diversi, con strumenti diversi."]],{dati:1,processi:2},{cols:2}],
 ["canali","MARKETING","Come vi fate trovare oggi?","Il canale decide quali dati esistono.",
  [["Passaparola e rete personale","Poca presenza costruita."],
   ["Sito e social organici","Presenza digitale, senza spesa in media."],
@@ -90,9 +93,7 @@ var QS=[
  [["Ne abbiamo sentito parlare","Sappiamo che esistono, non cosa comportano per noi."],
   ["Conosciamo il GDPR","Privacy presidiata; sull’AI Act siamo scoperti."],
   ["Stiamo mappando gli obblighi","Qualcuno sta guardando classificazione dei sistemi e adempimenti."],
-  ["Presidio strutturato","Ruoli, registro dei sistemi e verifiche periodiche, con supporto legale."]],{governance:3},{}],
-["ripetizione","PROCESSI","Quale attività si ripete davvero?","Facoltativa, ma è la domanda che rende la diagnosi specifica.",
- null,{processi:2},{free:true,optional:true}]
+  ["Presidio strutturato","Ruoli, registro dei sistemi e verifiche periodiche, con supporto legale."]],{governance:3},{}]
 ];
 
 var AXES={dati:"DATI",processi:"PROCESSI",marketing:"MARKETING",competenze:"COMPETENZE",governance:"GOVERNANCE",adozione:"ADOZIONE"};
@@ -124,6 +125,7 @@ function render(dir){
   $("#back").hidden=state.i===0;
   $("#next").innerHTML=(state.i===QS.length-1?"Genera la mappa":"Continua")+" <em>→</em>";
   box.innerHTML="";
+  var oldHint=$("#multi-hint");if(oldHint)oldHint.remove();
   $("#free-wrap").hidden=!opt.free;
 
   if(opt.free){
@@ -131,23 +133,42 @@ function render(dir){
     $("#count").textContent=$("#free").value.length;
     $("#next").disabled=false;                   // free text is optional
   }else{
-    box.className="answers-grid"+(opt.cols===2?" cols2":"");
+    box.className="answers-grid"+(opt.cols===2?" cols2":"")+(opt.multi?" multi":"");
+    var picked=(a&&a.ns)||[];
     q[4].forEach(function(o,n){
       var b=document.createElement("button");
       b.type="button";
-      b.className="answer"+(a&&a.n===n?" selected":"");
+      b.className="answer"+(opt.multi?(picked.indexOf(n)>=0?" selected":""):(a&&a.n===n?" selected":""));
       b.style.setProperty("--i",n);
-      b.innerHTML="<b>0"+(n+1)+"</b>"+o[0]+"<small>"+o[1]+"</small>";
+      b.innerHTML="<b>"+(opt.multi?"+":"0"+(n+1))+"</b>"+o[0]+"<small>"+o[1]+"</small>";
       b.onclick=function(){
-        state.a[q[0]]={n:n,text:o[0],detail:o[1]};
-        [].forEach.call(box.children,function(c){c.classList.remove("selected")});
-        b.classList.add("selected");
+        if(opt.multi){
+          var at=picked.indexOf(n);
+          if(at>=0)picked.splice(at,1);else picked.push(n);
+          picked.sort(function(x,y){return x-y});
+          b.classList.toggle("selected",picked.indexOf(n)>=0);
+          if(!picked.length){delete state.a[q[0]];$("#next").disabled=true;rail();return}
+          state.a[q[0]]={
+            ns:picked,
+            n:Math.round(picked.reduce(function(t,k){return t+k},0)/picked.length),
+            text:picked.map(function(k){return q[4][k][0]}).join(", "),
+            detail:picked.map(function(k){return q[4][k][1]}).join(" ")};
+        }else{
+          state.a[q[0]]={n:n,text:o[0],detail:o[1]};
+          [].forEach.call(box.children,function(c){c.classList.remove("selected")});
+          b.classList.add("selected");
+        }
         $("#next").disabled=false;
         rail();
       };
       box.appendChild(b);
     });
     $("#next").disabled=!a;
+    if(opt.multi&&!$("#multi-hint")){
+      var hint=document.createElement("small");
+      hint.id="multi-hint";hint.textContent="Scelta multipla — seleziona tutte quelle che valgono.";
+      box.parentNode.insertBefore(hint,box);
+    }
   }
   card.classList.remove("out");
   card.classList.remove("in");
@@ -185,29 +206,74 @@ function overall(s){
   return Math.round(t/RADAR.length);
 }
 
-/* ---------------- offline fallback report ---------------- */
+/* ---------------- the plan ----------------
+   The sequence is deliberate and nearly the same for everyone: training when
+   it is missing, then workshops with the business units, then what to build
+   and what it is worth, then two agents in production. Only two blocks are
+   conditional — marketing data, and how far the aggregation promise can go. */
+function plan(s){
+  var fn=(state.a.funzione||{}).text||"le funzioni sotto pressione",
+      canali=(state.a.canali||{}).n||0,
+      social=(state.a.social||{}).n||0,
+      misura=(state.a.misurazione||{}).n||0,
+      lineari=(state.a.lineari||{}).n||0,
+      agenzia=(state.a.agenzia||{}).n||0,
+      wins=[];
+
+  if(s.competenze<60)
+    wins.push({title:"Formazione prima di tutto",
+      body:"Senza una base comune ogni strumento resta un esperimento personale. Mezza giornata "+
+           "per tutti, poi un modulo per "+fn.toLowerCase()+"."});
+
+  wins.push({title:"Workshop interni con le business unit",
+    body:"Due o tre sessioni con chi fa il lavoro: si mappano i passaggi reali, non quelli del "+
+         "manuale. È qui che si vede dove l’AI toglie tempo e dove non serve."});
+  wins.push({title:"Tecnologie e colli di bottiglia",
+    body:"Dai workshop esce la lista: quali strumenti avete già, quali servono davvero, e i punti "+
+         "in cui il lavoro si ferma. Si sceglie a ragion veduta, non per moda."});
+  wins.push({title:"ROI stimato per ogni iniziativa",
+    body:"Ore risparmiate, errori evitati, ricavi sbloccati, costo di esercizio: ogni iniziativa "+
+         "ha un numero prima di partire, così la priorità non è un’opinione."});
+  wins.push({title:"Due agenti in produzione nei 90 giorni",
+    body:"Non un pilota da dimostrazione: due agenti sui processi scelti, usati ogni giorno, con "+
+         "criteri di qualità e un responsabile."});
+
+  // marketing: only promise what their setup can actually deliver
+  var attivi=(canali>=2?1:0)+(social>=2?1:0)+(lineari>=1?1:0);
+  if(attivi>=2||misura>=1){
+    wins.push({title:"Aggregazione dei dati di marketing",
+      body:agenzia===0
+        ? "Investite su più canali senza un partner che tenga insieme i numeri: si parte da "+
+          "definizioni condivise e da un’unica base dati, un canale alla volta."
+        : "Definizioni condivise e una sola base dati fra i canali e chi li gestisce, così i "+
+          "numeri dell’agenzia e i vostri raccontano la stessa storia."});
+  }
+
+  wins.push({title:"Codice di condotta AI e posizionamento normativo",
+    body:"Una pagina su cosa si può fare con quali dati, più la posizione su AI Act, GDPR e "+
+         "Digital Services Act: serve a decidere in fretta, non a rallentare."});
+  return wins;
+}
+
 function fallback(s){
   var low=RADAR.slice().sort(function(a,b){return s[a]-s[b]}),
       fn=(state.a.funzione||{}).text||"il team",
       sector=(state.a.sector||{}).text||"il vostro settore";
   return {
-    title:overall(s)<55?"Le fondamenta vengono prima dell’automazione.":"C’è spazio per quick win, con una sequenza precisa.",
-    summary:"Il punto non è aggiungere strumenti, è scegliere una sequenza: prima ciò che rende i dati "+
-      "affidabili, poi i processi che si ripetono, poi l’adozione vera nelle persone.",
-    wins:[
-      {title:"Un workflow ripetitivo, non un chatbot generico",
-       body:"Parti dall’attività più frequente: mappa input, decisioni e output, poi prototipa un passaggio assistito."},
-      {title:"Rafforza "+AXES[low[0]].toLowerCase(),
-       body:"Un proprietario, una fonte di verità e un criterio semplice per misurare il miglioramento."},
-      {title:"Una squadra pilota per 30 giorni",
-       body:"Coinvolgi chi svolge il processo ogni giorno e chi può rimuovere i blocchi."}],
+    title:overall(s)<55?"Le fondamenta vengono prima dell’automazione.":"C’è spazio per costruire, con una sequenza precisa.",
+    summary:"Il punto non è aggiungere strumenti, è seguire una sequenza: capire il lavoro com’è "+
+      "davvero, scegliere dove l’AI paga, misurarlo, e mettere in produzione poche cose che "+
+      "funzionano. L’anello più debole oggi è "+AXES[low[0]].toLowerCase()+".",
+    wins:plan(s),
     training:[
-      {title:"Alfabetizzazione AI per tutti",
-       body:"Mezza giornata comune: cosa sa e cosa non sa fare un modello, dati che non si incollano, come si verifica un output."},
+      {title:"Alfabetizzazione AI per tutta l’azienda",
+       body:"Mezza giornata comune: cosa sa e cosa non sa fare un modello, dati che non si "+
+            "incollano, come si verifica un output."},
       {title:"Formazione mirata su "+fn.toLowerCase(),
-       body:"Casi reali della funzione più sotto pressione in "+sector.toLowerCase()+", con i prompt e i controlli di qualità del vostro processo."}],
-    advice:"Evita progetti troppo ampi. Un AI Opportunity Sprint trasforma le aree più deboli in tre "+
-      "casi d’uso con effort, stack e roadmap."};
+       body:"Casi reali delle funzioni più sotto pressione in "+sector.toLowerCase()+", con i "+
+            "prompt e i controlli di qualità del vostro processo."}],
+    advice:"Evita progetti troppo ampi. Un AI Opportunity Sprint mette in fila workshop, scelta "+
+      "delle tecnologie, ROI e i primi due agenti, con la formazione che li rende usabili."};
 }
 
 /* ---------------- radar ---------------- */
@@ -285,7 +351,7 @@ function show(s,r){
   $("#result-title").textContent=r.title;
   $("#summary").textContent=r.summary;
   $("#advice").textContent=r.advice;
-  list("#win-list",r.wins||[],"");
+  list("#win-list",plan(s),"");
   var tr=(r.training&&r.training.length?r.training:fallback(s).training);
   list("#training-list",tr,"");
   $("#result").scrollIntoView({behavior:"smooth",block:"start"});
@@ -305,7 +371,7 @@ function done(){
   fetch("/api/ai-maturity",{method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify({answers:state.a,scores:s})})
     .then(function(x){return x.ok?x.json():f})
-    .then(function(x){show(s,x&&x.wins?x:f)})
+    .then(function(x){show(s,x&&x.summary?x:f)})
     .catch(function(){show(s,f)});
 }
 
@@ -342,12 +408,21 @@ function lead(e){
     msg.textContent="Servono nome, cognome e un indirizzo email valido.";msg.className="formmsg";
     return;
   }
-  var name=first.value.trim()+" "+last.value.trim(),body=transcript();
+  var name=first.value.trim()+" "+last.value.trim(),body=transcript(),
+      sc=state.scores||score(),
+      rep=state.report||fallback(sc),
+      payload={
+        score:overall(sc),
+        axes:RADAR.map(function(k){return {name:AXES[k],value:sc[k]}}),
+        title:rep.title,summary:rep.summary,advice:rep.advice,
+        wins:plan(sc),
+        training:(rep.training&&rep.training.length?rep.training:fallback(sc).training)
+      };
   msg.textContent="Invio in corso…";msg.className="formmsg";
   $("#l-send").disabled=true;
   fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},
     body:JSON.stringify({name:name,email:mail.value.trim(),topic:"AI Maturity Check",
-      message:body,website:$("#l-site").value,page:location.pathname})})
+      message:body,report:payload,website:$("#l-site").value,page:location.pathname})})
    .then(function(r){
      if(r.ok){
        msg.textContent="Ricevuto. Ti rispondo io, di persona, entro un giorno lavorativo.";
