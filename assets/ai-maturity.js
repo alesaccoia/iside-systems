@@ -110,6 +110,15 @@ function rail(){
   $("#rail").innerHTML=html+"</ul>";
 }
 
+function toTop(){
+  var flow=$("#flow"),bar=$("#topbar");
+  if(!flow)return;
+  var y=flow.getBoundingClientRect().top+(window.pageYOffset||0)
+        -((bar&&!bar.hidden?bar.offsetHeight:0)+12);
+  var smooth=!matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(window.scrollTo)window.scrollTo(smooth?{top:Math.max(0,y),behavior:"smooth"}:0,smooth?undefined:Math.max(0,y));
+}
+
 /* ---------------- one step ---------------- */
 function render(dir){
   var q=QS[state.i],a=state.a[q[0]],opt=q[6]||{},box=$("#answers"),card=$("#card");
@@ -171,7 +180,9 @@ function render(dir){
   void card.offsetWidth;                          // restart the animation
   card.classList.add("in");
   rail();
-  if(dir) card.scrollIntoView({block:"nearest"});
+  // a long list of answers leaves you far down the page: the next question has
+  // to start from its own top, not wherever the previous one ended
+  if(dir) toTop();
 }
 
 function step(delta){
