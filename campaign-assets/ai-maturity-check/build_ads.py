@@ -17,7 +17,7 @@ BOLD=pick("/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
 MONO=pick("/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf",
           "/System/Library/Fonts/Supplemental/Courier New Bold.ttf",
           "/System/Library/Fonts/Menlo.ttc")
-FORMATS={"ai-maturity-check-1200x628":(1200,628),"ai-maturity-check-1200x1200":(1200,1200),"ai-maturity-check-960x1200":(960,1200),"ai-maturity-check-1080x1920":(1080,1920),"ai-maturity-check-300x250":(300,250),"ai-maturity-check-336x280":(336,280),"ai-maturity-check-728x90":(728,90),"ai-maturity-check-970x90":(970,90),"ai-maturity-check-160x600":(160,600),"ai-maturity-check-300x600":(300,600),"ai-maturity-check-320x50":(320,50)}
+FORMATS={"ai-maturity-check-1200x628":(1200,628),"ai-maturity-check-1200x1200":(1200,1200),"ai-maturity-check-960x1200":(960,1200),"ai-maturity-check-1080x1920":(1080,1920),"ai-maturity-check-300x250":(300,250),"ai-maturity-check-336x280":(336,280),"ai-maturity-check-728x90":(728,90),"ai-maturity-check-970x90":(970,90),"ai-maturity-check-160x600":(160,600),"ai-maturity-check-300x600":(300,600),"ai-maturity-check-320x50":(320,50),"ai-maturity-check-300x60":(300,60)}
 def ft(p,n):return ImageFont.truetype(p,max(1,round(n)))
 def wrap(t,f,w):
   rows=[];line=""

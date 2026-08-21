@@ -4,9 +4,10 @@ Everything for the campaign that points at the AI Maturity Check. Layouts are
 measured with real font metrics at final pixel size: no text box is estimated,
 and nothing is scaled up after the fact.
 
-- `static/` — 11 Google Ads formats
+- `static/` — 12 Google Ads formats
   - Demand Gen: 1200x628, 1200x1200, 960x1200, 1080x1920
   - Display: 300x250, 336x280, 728x90, 970x90, 160x600, 300x600, 320x50
+  - YouTube companion banner: 300x60
 - `carousel/` — five cards in 1:1, 1.91:1 and 4:5, as PNG and as editable SVG
 - `video/` — silent 15s H.264 in 16:9, 1:1 and 9:16
 
