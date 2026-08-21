@@ -1,21 +1,386 @@
+/* ============================================================
+   AI MATURITY CHECK
+   Sixteen questions across five axes. Context questions (size,
+   sector, market, function) carry no score: they shape the advice.
+   ============================================================ */
 (function(){
 var $=function(s){return document.querySelector(s)};
-var qs=[
-["goal","OBIETTIVO","Quale risultato vuoi sbloccare per primo?","Scegli la pressione più concreta per i prossimi 90 giorni.",[["Più tempo","Ridurre lavoro manuale e passaggi ripetitivi."],["Più qualità","Meno errori, risposte più coerenti, decisioni migliori."],["Più crescita","Generare, qualificare o seguire meglio domanda e clienti."],["Più controllo","Rendere informazioni e processi osservabili."]],{process:2,execution:1}],
-["systems","SISTEMI","Dove vive oggi il lavoro?","Non cercare la risposta ideale: scegli quella più vera.",[["In testa alle persone","Molti passaggi sono informali, tra mail, chat e memoria."],["In fogli e documenti","Il team usa soprattutto Excel, Drive, PDF e presentazioni."],["In software separati","CRM, ERP o strumenti verticali non dialogano bene."],["In un flusso connesso","I sistemi principali sono integrati o pronti a esserlo."]],{data:1,process:2}],
-["data","DATI","Quanto sono disponibili i dati che servono?","Pensa a clienti, vendite, operazioni e performance.",[["Bisogna cercarli","Sono sparsi, poco affidabili o arrivano tardi."],["Ci sono, ma manuali","Esportazioni e fogli aiutano, ma richiedono molto lavoro."],["Abbastanza accessibili","Esistono database, dashboard o API per i dati principali."],["Già utilizzabili","Dati definiti, aggiornati e con responsabilità chiare."]],{data:3}],
-["customers","SEGNALI","Come raccogliete i segnali dal mercato?","Clienti e presenza digitale sono materia prima per le priorità AI.",[["Poco o per intuizione","Non c’è una vista unica di clienti, prospect o richieste."],["Canali scollegati","Social, sito o newsletter generano segnali non unificati."],["CRM o analytics","C’è traccia di interazioni e performance, con qualche vuoto."],["Segnali connessi","Marketing, vendite e assistenza condividono contesto e dati."]],{customer:3}],
-["repetition","PROCESSI","Quale attività si ripete davvero?","Descrivi una mansione, un collo di bottiglia o una richiesta ricorrente.",null,{process:3}],
-["technology","TECNOLOGIA","Qual è il vostro rapporto con gli strumenti AI?","Non è un test di competenza tecnica.",[["Sperimentazione individuale","Qualcuno usa ChatGPT o Copilot, senza un metodo comune."],["Team curioso","Ci sono prove, ma nessun caso d’uso è entrato nel processo."],["Primi workflow","Esistono automazioni o assistenti usati in modo regolare."],["Capacità interna","Il team sa valutare, integrare e governare strumenti e API."]],{execution:3}],
-["governance","GOVERNANCE","Chi decide cosa può fare l’AI con dati e processi?","Questa è una domanda di fiducia, non di burocrazia.",[["Nessuno in particolare","Non abbiamo regole o responsabilità definite."],["Regole informali","Ci sono cautele, ma non sono condivise o documentate."],["Un responsabile","Qualcuno valuta dati, rischi e strumenti prima dell’uso."],["Un modo di lavorare","Policy, responsabilità e verifiche sono parte del processo."]],{execution:2,data:1}],
-["momentum","CAPACITÀ","Quanto spazio c’è per cambiare davvero?","La risposta serve a scegliere un primo passo sostenibile.",[["Solo urgenze","Il team è saturo: serve un win piccolo e visibile."],["Una squadra pilota","Possiamo coinvolgere 2–4 persone su un caso concreto."],["Sponsor e team","C’è chi decide e un team che può sperimentare."],["Pronti a costruire","Possiamo investire su workflow, dati e adozione."]],{execution:2,process:1}]
-],state={i:0,a:{}},labs={data:"Dati",process:"Processi",customer:"Segnali cliente",execution:"Capacità di esecuzione"};
-function render(){var q=qs[state.i],a=state.a[q[0]],box=$("#answers");$("#step").textContent=("0"+(state.i+1)).slice(-2)+" / "+qs.length;$("#dimension").textContent=q[1];$("#bar").style.width=((state.i+1)*100/qs.length)+"%";$("#kicker").textContent=q[1];$("#title").textContent=q[2];$("#help").textContent=q[3];box.innerHTML="";$("#free-wrap").hidden=!!q[4];$("#back").hidden=state.i===0;$("#next").textContent=state.i===qs.length-1?"Genera la mappa →":"Continua →";
-if(!q[4]){$("#free").value=a?a.text:"";$("#count").textContent=$("#free").value.length;$("#next").disabled=!$("#free").value.trim()}else{q[4].forEach(function(o,n){var b=document.createElement("button");b.className="answer"+(a&&a.n===n?" selected":"");b.innerHTML="<b>0"+(n+1)+"</b>"+o[0]+"<small>"+o[1]+"</small>";b.onclick=function(){state.a[q[0]]={n:n,text:o[0],detail:o[1]};render()};box.appendChild(b)});$("#next").disabled=!a}}
-function score(){var raw={data:0,process:0,customer:0,execution:0},max={data:0,process:0,customer:0,execution:0};qs.forEach(function(q){Object.keys(q[5]).forEach(function(k){var w=q[5][k];max[k]+=w*3;raw[k]+=(q[4]?((state.a[q[0]]||{}).n||0)*w:(state.a[q[0]]&&state.a[q[0]].text.trim()?w*2:w))})});Object.keys(raw).forEach(function(k){raw[k]=Math.round(25+75*raw[k]/max[k])});return raw}
-function report(s){var low=Object.keys(s).sort(function(a,b){return s[a]-s[b]});return{title:(s.data+s.process+s.customer+s.execution)/4<55?"Le fondamenta vengono prima dell’automazione.":"C’è spazio per quick win, con una sequenza precisa.",summary:"Il punto non è aggiungere strumenti: è scegliere una sequenza che faccia emergere valore e fiducia.",wins:[{title:"Un workflow ripetitivo, non un chatbot generico",body:"Parti dall’attività indicata: mappa input, decisioni e output; poi prototipa un passaggio assistito."},{title:"Rafforza "+labs[low[0]].toLowerCase(),body:"Definisci un proprietario, una fonte di verità e un criterio semplice per misurare il miglioramento."},{title:"Una squadra pilota per 30 giorni",body:"Coinvolgi chi svolge il processo ogni giorno e chi può rimuovere i blocchi."}],advice:"La priorità è evitare progetti troppo ampi. Un AI Opportunity Sprint trasforma le aree più deboli in tre use case con effort, stack e roadmap."}}
-function radar(s){var c=$("#radar"),r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),z=Math.min(r.width,640),x=z/2,y=z/2,R=z*.32,ctx=c.getContext("2d"),ks=Object.keys(labs),ang=function(i){return-Math.PI/2+i*Math.PI*2/ks.length};c.width=z*d;c.height=z*d;ctx.scale(d,d);for(var n=1;n<5;n++){ctx.beginPath();ks.forEach(function(k,i){var q=R*n/4,X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.closePath();ctx.strokeStyle="rgba(236,234,228,.16)";ctx.stroke()}ks.forEach(function(k,i){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+Math.cos(ang(i))*R,y+Math.sin(ang(i))*R);ctx.strokeStyle="rgba(236,234,228,.16)";ctx.stroke();ctx.fillStyle="#a6a3a9";ctx.font=Math.max(10,z*.026)+"px monospace";ctx.textAlign="center";ctx.fillText(labs[k].toUpperCase(),x+Math.cos(ang(i))*R*1.22,y+Math.sin(ang(i))*R*1.22+4)});ctx.beginPath();ks.forEach(function(k,i){var q=R*s[k]/100,X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.closePath();ctx.fillStyle="rgba(255,74,43,.2)";ctx.fill();ctx.strokeStyle="#ff4a2b";ctx.lineWidth=2;ctx.stroke()}
-function show(s,r){$("#loading").hidden=true;$("#result").hidden=false;$("#result-title").textContent=r.title;$("#summary").textContent=r.summary;$("#advice").textContent=r.advice;$("#score").textContent=Math.round((s.data+s.process+s.customer+s.execution)/4);$("#win-list").innerHTML="";r.wins.forEach(function(w,i){var e=document.createElement("article");e.className="win";e.innerHTML="<span>0"+(i+1)+"</span><strong></strong><p></p>";e.querySelector("strong").textContent=w.title;e.querySelector("p").textContent=w.body;$("#win-list").appendChild(e)});radar(s);$("#result").scrollIntoView({behavior:"smooth"})}
-function done(){var s=score(),f=report(s);$("#flow").hidden=true;$("#loading").hidden=false;fetch("/api/ai-maturity",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:state.a,scores:s})}).then(function(x){return x.ok?x.json():f}).then(function(x){show(s,x)}).catch(function(){show(s,f)})}
-$("#start").onclick=function(){$("#intro").hidden=true;$("#flow").hidden=false;render()};$("#next").onclick=function(){if(state.i===qs.length-1)done();else{state.i++;render()}};$("#back").onclick=function(){state.i--;render()};$("#free").oninput=function(e){state.a[qs[state.i][0]]={text:e.target.value};$("#count").textContent=e.target.value.length;$("#next").disabled=!e.target.value.trim()};$("#restart").onclick=function(){location.reload()};addEventListener("resize",function(){if(!$("#result").hidden)radar(score())});
+var push=function(name,data){
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push(Object.assign({event:name},data||{}));
+};
+
+/* id, axis label, question, help, options|null, weights, {free, optional, cols} */
+var QS=[
+["size","AZIENDA","Quante persone siete?","Serve a calibrare cosa è realistico nei prossimi 90 giorni.",
+ [["1–9","Micro impresa o studio professionale."],["10–49","Piccola impresa strutturata."],
+  ["50–249","Media impresa con funzioni distinte."],["250+","Grande organizzazione o gruppo."]],{},{cols:2}],
+["sector","SETTORE","In che settore lavorate?","Il settore cambia i casi d’uso che pagano davvero.",
+ [["Servizi B2B e consulenza","Progetti, ore, proposte, delivery."],["Manifattura e industria","Produzione, supply chain, qualità."],
+  ["Retail ed e-commerce","Vendita, catalogo, assistenza clienti."],["Sanità e farma","Cura, compliance, dati sensibili."],
+  ["Finanza e assicurazioni","Rischio, istruttorie, normativa."],["Education e formazione","Didattica, studenti, contenuti."],
+  ["PA e non profit","Servizi al pubblico, bandi, rendicontazione."],["Altro","Nessuna delle precedenti."]],{},{cols:2}],
+["market","MERCATO","Vendete soprattutto a imprese o a persone?","Cambia il funnel, i canali e la misurazione.",
+ [["B2B","Clienti aziendali, cicli lunghi, poche trattative di valore."],
+  ["B2C","Consumatori finali, volumi alti, decisione rapida."],
+  ["Entrambi","Due motori diversi che convivono."]],{},{}],
+["goal","OBIETTIVO","Quale risultato vuoi sbloccare per primo?","Scegli la pressione più concreta per i prossimi 90 giorni.",
+ [["Più tempo","Ridurre lavoro manuale e passaggi ripetitivi."],
+  ["Più qualità","Meno errori, risposte più coerenti, decisioni migliori."],
+  ["Più crescita","Generare, qualificare o seguire meglio domanda e clienti."],
+  ["Più controllo","Rendere informazioni e processi osservabili."]],{processi:2,adozione:1},{}],
+["funzione","FUNZIONE","Quale funzione è più sotto pressione?","Da qui esce la formazione mirata, non quella generica.",
+ [["Marketing e vendite","Contenuti, campagne, offerte, follow-up."],
+  ["Operations e delivery","Produzione del servizio o del prodotto."],
+  ["Amministrazione e finanza","Documenti, controllo, adempimenti."],
+  ["Customer service","Richieste, assistenza, post-vendita."],
+  ["Tecnologia e prodotto","Sviluppo, dati, sistemi."],
+  ["Tutta l’azienda","La pressione è distribuita."]],{},{cols:2}],
+["dati","DATI","Quanto sono disponibili i dati che servono?","Pensa a clienti, vendite, operazioni e performance.",
+ [["Bisogna cercarli","Sparsi, poco affidabili o in ritardo."],
+  ["Ci sono, ma manuali","Esportazioni e fogli aiutano, ma costano lavoro."],
+  ["Abbastanza accessibili","Database, dashboard o API per i dati principali."],
+  ["Già utilizzabili","Dati definiti, aggiornati, con responsabilità chiare."]],{dati:3},{}],
+["sistemi","SISTEMI","Dove vive oggi il lavoro?","Non cercare la risposta ideale: scegli quella più vera.",
+ [["In testa alle persone","Passaggi informali, tra mail, chat e memoria."],
+  ["In fogli e documenti","Soprattutto Excel, Drive, PDF, presentazioni."],
+  ["In software separati","CRM, ERP o verticali che non dialogano."],
+  ["In un flusso connesso","I sistemi principali sono integrati o pronti a esserlo."]],{dati:1,processi:2},{}],
+["canali","MARKETING","Come vi fate trovare oggi?","Il canale decide quali dati esistono.",
+ [["Passaparola e rete personale","Poca presenza costruita."],
+  ["Sito e social organici","Presenza digitale, senza spesa in media."],
+  ["Campagne a pagamento","Google, Meta, LinkedIn o TikTok attivi."],
+  ["Mix strutturato","Digitale a pagamento e organico, con un piano."]],{marketing:3},{}],
+["lineari","MARKETING","Usate anche canali offline o lineari?","Fiere, stampa, radio, TV, affissioni.",
+ [["No, solo digitale","Tutto passa da canali online."],
+  ["Fiere ed eventi","Presenza fisica sul mercato di riferimento."],
+  ["Stampa o radio locale","Copertura territoriale."],
+  ["TV, radio o affissioni","Campagne offline continuative."]],{marketing:1},{}],
+["social","MARKETING","Presidiate i social?","Non conta essere ovunque: conta la costanza.",
+ [["No","Nessun presidio attivo."],
+  ["Sì, saltuariamente","Si pubblica quando capita."],
+  ["Piano editoriale regolare","C’è un calendario e qualcuno che lo tiene."],
+  ["Team o agenzia dedicata","Produzione continua e misurata."]],{marketing:2},{}],
+["misurazione","MISURAZIONE","Quali strumenti di misurazione avete?","È la differenza fra decidere e indovinare.",
+ [["Nessuno","Guardiamo i risultati commerciali e basta."],
+  ["Analytics di base","GA4 o simili, installato ma poco usato."],
+  ["Analytics e tag manager","Eventi e conversioni definiti, CRM collegato in parte."],
+  ["Modello unificato","Definizioni condivise, dashboard e attribuzione."]],{marketing:2,dati:2},{}],
+["agenzia","PARTNER","Vi appoggiate a un’agenzia esterna?","Serve a capire dove stanno dati e competenze.",
+ [["No, tutto interno","Il team fa da sé."],
+  ["Sì, per creatività e contenuti","Produzione affidata fuori."],
+  ["Sì, per media buying","Le campagne le gestisce l’agenzia."],
+  ["Sì, full service","Strategia, creatività e media fuori casa."]],{competenze:1},{}],
+["formazione","COMPETENZE","Che formazione avete fatto sull’AI?","Non è un test di competenza tecnica.",
+ [["Nessuna","Chi sa, ha imparato da solo."],
+  ["Sessioni introduttive","Una tantum, uguale per tutti."],
+  ["Formazione per alcune funzioni","Percorsi mirati su qualche team."],
+  ["Percorsi continui","Formazione ricorrente, legata ai processi reali."]],{competenze:3},{}],
+["tecnologia","TECNOLOGIA","Qual è il vostro rapporto con gli strumenti AI?","Conta l’uso reale, non le licenze attive.",
+ [["Sperimentazione individuale","Qualcuno usa ChatGPT o Copilot, senza metodo comune."],
+  ["Team curioso","Ci sono prove, ma nessun caso d’uso è entrato nel processo."],
+  ["Primi workflow","Automazioni o assistenti usati in modo regolare."],
+  ["Capacità interna","Il team sa valutare, integrare e governare strumenti e API."]],{competenze:2,adozione:2},{}],
+["governance","GOVERNANCE","Chi decide cosa può fare l’AI con dati e processi?","Questa è una domanda di fiducia, non di burocrazia.",
+ [["Nessuno in particolare","Non abbiamo regole o responsabilità definite."],
+  ["Regole informali","Ci sono cautele, non condivise né documentate."],
+  ["Un responsabile","Qualcuno valuta dati, rischi e strumenti prima dell’uso."],
+  ["Un modo di lavorare","Policy, responsabilità e verifiche dentro il processo."]],{governance:3},{}],
+["ripetizione","PROCESSI","Quale attività si ripete davvero?","Facoltativa, ma è la domanda che rende la diagnosi specifica.",
+ null,{processi:2},{free:true,optional:true}]
+];
+
+var AXES={dati:"DATI",processi:"PROCESSI",marketing:"MARKETING",competenze:"COMPETENZE",governance:"GOVERNANCE",adozione:"ADOZIONE"};
+var RADAR=["dati","processi","marketing","competenze","governance"];
+var state={i:0,a:{},started:0,sent:false};
+
+/* ---------------- rail ---------------- */
+function rail(){
+  var s=score(),html="<ul>";
+  RADAR.forEach(function(k){
+    var on=(QS[state.i][5]||{})[k]?" on":"";
+    html+='<li class="'+on.trim()+'">'+AXES[k]+'<span class="track"><i style="width:'+s[k]+'%"></i></span></li>';
+  });
+  $("#rail").innerHTML=html+"</ul>";
+}
+
+/* ---------------- one step ---------------- */
+function render(dir){
+  var q=QS[state.i],a=state.a[q[0]],opt=q[6]||{},box=$("#answers"),card=$("#card");
+  $("#step").textContent=("0"+(state.i+1)).slice(-2)+" / "+QS.length;
+  $("#dimension").textContent=q[1];
+  $("#bar").style.width=((state.i+1)*100/QS.length)+"%";
+  $("#kicker").textContent=q[1];
+  $("#title").textContent=q[2];
+  $("#help").textContent=q[3];
+  $("#back").hidden=state.i===0;
+  $("#next").innerHTML=(state.i===QS.length-1?"Genera la mappa":"Continua")+" <em>→</em>";
+  box.innerHTML="";
+  $("#free-wrap").hidden=!opt.free;
+
+  if(opt.free){
+    $("#free").value=a?a.text:"";
+    $("#count").textContent=$("#free").value.length;
+    $("#next").disabled=false;                   // free text is optional
+  }else{
+    box.className="answers-grid"+(opt.cols===2?" cols2":"");
+    q[4].forEach(function(o,n){
+      var b=document.createElement("button");
+      b.type="button";
+      b.className="answer"+(a&&a.n===n?" selected":"");
+      b.style.setProperty("--i",n);
+      b.innerHTML="<b>0"+(n+1)+"</b>"+o[0]+"<small>"+o[1]+"</small>";
+      b.onclick=function(){
+        state.a[q[0]]={n:n,text:o[0],detail:o[1]};
+        [].forEach.call(box.children,function(c){c.classList.remove("selected")});
+        b.classList.add("selected");
+        $("#next").disabled=false;
+        rail();
+      };
+      box.appendChild(b);
+    });
+    $("#next").disabled=!a;
+  }
+  card.classList.remove("out");
+  card.classList.remove("in");
+  void card.offsetWidth;                          // restart the animation
+  card.classList.add("in");
+  rail();
+  if(dir) card.scrollIntoView({block:"nearest"});
+}
+
+function step(delta){
+  var card=$("#card");
+  card.classList.remove("in");card.classList.add("out");
+  setTimeout(function(){state.i+=delta;render(true)},170);
+}
+
+/* ---------------- scoring ---------------- */
+function score(){
+  var raw={},max={};
+  RADAR.forEach(function(k){raw[k]=0;max[k]=0});
+  raw.adozione=0;max.adozione=0;
+  QS.forEach(function(q){
+    var w=q[5]||{},opt=q[6]||{},a=state.a[q[0]];
+    Object.keys(w).forEach(function(k){
+      max[k]+=w[k]*3;
+      if(!a) return;
+      raw[k]+=opt.free?(a.text&&a.text.trim()?w[k]*2:0):a.n*w[k];
+    });
+  });
+  var out={};
+  Object.keys(raw).forEach(function(k){out[k]=max[k]?Math.round(20+80*raw[k]/max[k]):50});
+  return out;
+}
+function overall(s){
+  var t=0;RADAR.forEach(function(k){t+=s[k]});
+  return Math.round(t/RADAR.length);
+}
+
+/* ---------------- offline fallback report ---------------- */
+function fallback(s){
+  var low=RADAR.slice().sort(function(a,b){return s[a]-s[b]}),
+      fn=(state.a.funzione||{}).text||"il team",
+      sector=(state.a.sector||{}).text||"il vostro settore";
+  return {
+    title:overall(s)<55?"Le fondamenta vengono prima dell’automazione.":"C’è spazio per quick win, con una sequenza precisa.",
+    summary:"Il punto non è aggiungere strumenti, è scegliere una sequenza: prima ciò che rende i dati "+
+      "affidabili, poi i processi che si ripetono, poi l’adozione vera nelle persone.",
+    wins:[
+      {title:"Un workflow ripetitivo, non un chatbot generico",
+       body:"Parti dall’attività più frequente: mappa input, decisioni e output, poi prototipa un passaggio assistito."},
+      {title:"Rafforza "+AXES[low[0]].toLowerCase(),
+       body:"Un proprietario, una fonte di verità e un criterio semplice per misurare il miglioramento."},
+      {title:"Una squadra pilota per 30 giorni",
+       body:"Coinvolgi chi svolge il processo ogni giorno e chi può rimuovere i blocchi."}],
+    training:[
+      {title:"Alfabetizzazione AI per tutti",
+       body:"Mezza giornata comune: cosa sa e cosa non sa fare un modello, dati che non si incollano, come si verifica un output."},
+      {title:"Formazione mirata su "+fn.toLowerCase(),
+       body:"Casi reali della funzione più sotto pressione in "+sector.toLowerCase()+", con i prompt e i controlli di qualità del vostro processo."}],
+    advice:"Evita progetti troppo ampi. Un AI Opportunity Sprint trasforma le aree più deboli in tre "+
+      "casi d’uso con effort, stack e roadmap."};
+}
+
+/* ---------------- radar ---------------- */
+function radar(s,t){
+  var c=$("#radar"),r=(c.parentNode||c).getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);  // measure the container: the canvas own width is whatever we last set
+  var z=Math.max(280,Math.min(r.width||320,620)),x=z/2,y=z/2,ctx=c.getContext("2d");
+  var fs=Math.max(9,z*.023),pad=fs*3.4,R=(z/2-pad)*.92;
+  // the element used to stretch to the container while the backing store stayed
+  // at 640: that is the softness. Pin both to the same size.
+  c.width=z*d;c.height=z*d;c.style.width=z+"px";c.style.height=z+"px";
+  ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,z,z);
+  var ang=function(i){return -Math.PI/2+i*Math.PI*2/RADAR.length};
+  for(var n=1;n<5;n++){
+    ctx.beginPath();
+    RADAR.forEach(function(k,i){var q=R*n/4;
+      var X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});
+    ctx.closePath();ctx.strokeStyle="rgba(236,234,228,.14)";ctx.lineWidth=1;ctx.stroke();
+  }
+  ctx.font="600 "+fs+"px "+"SFMono-Regular,Menlo,monospace";
+  RADAR.forEach(function(k,i){
+    ctx.beginPath();ctx.moveTo(x,y);
+    ctx.lineTo(x+Math.cos(ang(i))*R,y+Math.sin(ang(i))*R);
+    ctx.strokeStyle="rgba(236,234,228,.14)";ctx.stroke();
+    // labels used to run past the canvas edge; keep them inside by measuring
+    var lx=x+Math.cos(ang(i))*(R+fs*1.5),ly=y+Math.sin(ang(i))*(R+fs*1.5)+fs*.36;
+    var w=ctx.measureText(AXES[k]).width,half=w/2;
+    ctx.textAlign="center";
+    if(lx-half<4){ctx.textAlign="left";lx=4}
+    else if(lx+half>z-4){ctx.textAlign="right";lx=z-4}
+    ctx.fillStyle="#a6a3a9";ctx.fillText(AXES[k],lx,ly);
+  });
+  ctx.beginPath();
+  RADAR.forEach(function(k,i){var q=R*(s[k]/100)*t;
+    var X=x+Math.cos(ang(i))*q,Y=y+Math.sin(ang(i))*q;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});
+  ctx.closePath();
+  ctx.fillStyle="rgba(255,74,43,.2)";ctx.fill();
+  ctx.strokeStyle="#ff4a2b";ctx.lineWidth=2;ctx.stroke();
+  RADAR.forEach(function(k,i){var q=R*(s[k]/100)*t;
+    ctx.beginPath();ctx.arc(x+Math.cos(ang(i))*q,y+Math.sin(ang(i))*q,3,0,7);
+    ctx.fillStyle="#ff4a2b";ctx.fill()});
+}
+function radarIn(s){
+  var t0=performance.now(),dur=900;
+  (function frame(now){
+    var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);
+    radar(s,e);
+    if(p<1)requestAnimationFrame(frame);
+  })(t0);
+}
+function countTo(v){
+  var el=$("#score"),t0=performance.now(),dur=900;
+  (function frame(now){
+    var p=Math.min(1,(now-t0)/dur);
+    el.textContent=Math.round(v*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(frame);
+  })(t0);
+}
+
+/* ---------------- result ---------------- */
+function list(target,items,mark){
+  var box=$(target);box.innerHTML="";
+  items.forEach(function(w,i){
+    var e=document.createElement("article");
+    e.className="win";
+    e.innerHTML="<span>"+mark+("0"+(i+1)).slice(-2)+"</span><strong></strong><p></p>";
+    e.querySelector("strong").textContent=w.title;
+    e.querySelector("p").textContent=w.body;
+    box.appendChild(e);
+  });
+}
+function show(s,r){
+  state.report=r;state.scores=s;
+  $("#loading").hidden=true;$("#result").hidden=false;
+  $("#result-title").textContent=r.title;
+  $("#summary").textContent=r.summary;
+  $("#advice").textContent=r.advice;
+  list("#win-list",r.wins||[],"");
+  var tr=(r.training&&r.training.length?r.training:fallback(s).training);
+  list("#training-list",tr,"");
+  $("#result").scrollIntoView({behavior:"smooth",block:"start"});
+  countTo(overall(s));
+  requestAnimationFrame(function(){radarIn(s)});
+  push("ai_maturity_complete",{ai_score:overall(s),ai_dati:s.dati,ai_processi:s.processi,
+    ai_marketing:s.marketing,ai_competenze:s.competenze,ai_governance:s.governance,
+    ai_settore:(state.a.sector||{}).text||"",ai_dimensione:(state.a.size||{}).text||"",
+    ai_mercato:(state.a.market||{}).text||"",
+    ai_durata_sec:Math.round((Date.now()-state.started)/1000)});
+}
+function done(){
+  var s=score(),f=fallback(s);
+  $("#flow").hidden=true;$("#loading").hidden=false;
+  $("#loading").scrollIntoView({block:"start"});
+  fetch("/api/ai-maturity",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({answers:state.a,scores:s})})
+    .then(function(x){return x.ok?x.json():f})
+    .then(function(x){show(s,x&&x.wins?x:f)})
+    .catch(function(){show(s,f)});
+}
+
+/* ---------------- lead ---------------- */
+function transcript(){
+  var s=state.scores||score(),rows=["Richiesta dalla pagina AI Maturity Check.","",
+    "PUNTEGGIO COMPLESSIVO: "+overall(s)+"/100"];
+  RADAR.forEach(function(k){rows.push("  "+AXES[k]+": "+s[k])});
+  rows.push("","RISPOSTE:");
+  QS.forEach(function(q){
+    var a=state.a[q[0]];
+    if(!a||!a.text)return;
+    rows.push("  "+q[2]+" → "+a.text+(a.detail?" ("+a.detail+")":""));
+  });
+  if(state.report){
+    rows.push("","SINTESI: "+state.report.title,state.report.summary,"","QUICK WIN:");
+    (state.report.wins||[]).forEach(function(w){rows.push("  - "+w.title+": "+w.body)});
+    if(state.report.training&&state.report.training.length){
+      rows.push("","FORMAZIONE:");
+      state.report.training.forEach(function(w){rows.push("  - "+w.title+": "+w.body)});
+    }
+    rows.push("","PRIMO PASSO: "+state.report.advice);
+  }
+  return rows.join("\n");
+}
+function lead(e){
+  e.preventDefault();
+  var first=$("#l-first"),last=$("#l-last"),mail=$("#l-email"),msg=$("#l-msg");
+  [first,last,mail].forEach(function(f){f.classList.remove("bad")});
+  var ok=first.value.trim()&&last.value.trim()&&/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(mail.value.trim());
+  if(!ok){
+    [first,last].forEach(function(f){if(!f.value.trim())f.classList.add("bad")});
+    if(!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(mail.value.trim()))mail.classList.add("bad");
+    msg.textContent="Servono nome, cognome e un indirizzo email valido.";msg.className="formmsg";
+    return;
+  }
+  var name=first.value.trim()+" "+last.value.trim(),body=transcript();
+  msg.textContent="Invio in corso…";msg.className="formmsg";
+  $("#l-send").disabled=true;
+  fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({name:name,email:mail.value.trim(),topic:"AI Maturity Check",
+      message:body,website:$("#l-site").value,page:location.pathname})})
+   .then(function(r){
+     if(r.ok){
+       msg.textContent="Ricevuto. Ti rispondo io, di persona, entro un giorno lavorativo.";
+       msg.className="formmsg ok";
+       if(!state.sent){state.sent=true;push("ai_maturity_lead",{ai_score:overall(state.scores||score())})}
+       return;
+     }
+     throw new Error("fallback");
+   })
+   .catch(function(){
+     // no mail credentials on the server: hand the whole thing to a mail client
+     msg.textContent="Apro il tuo client di posta con il riepilogo già dentro.";
+     msg.className="formmsg ok";
+     if(!state.sent){state.sent=true;push("ai_maturity_lead",{ai_score:overall(state.scores||score()),ai_invio:"mailto"})}
+     location.href="mailto:alessandro@iside.systems?subject="+
+       encodeURIComponent("AI Maturity Check — "+name)+"&body="+encodeURIComponent(body);
+   })
+   .then(function(){$("#l-send").disabled=false});
+}
+
+/* ---------------- wiring ---------------- */
+$("#start").onclick=function(){
+  state.started=Date.now();
+  $("#intro").hidden=true;$("#flow").hidden=false;
+  push("ai_maturity_start",{ai_domande:QS.length});
+  render(true);
+};
+$("#next").onclick=function(){if(state.i===QS.length-1)done();else step(1)};
+$("#back").onclick=function(){if(state.i>0)step(-1)};
+$("#free").oninput=function(e){
+  state.a[QS[state.i][0]]={text:e.target.value};
+  $("#count").textContent=e.target.value.length;
+};
+$("#lead-form").addEventListener("submit",lead);
+$("#restart").onclick=function(){location.reload()};
+addEventListener("keydown",function(e){
+  if($("#flow").hidden)return;
+  var q=QS[state.i],opt=q[6]||{};
+  if(!opt.free&&e.key>="1"&&e.key<="9"){
+    var b=$("#answers").children[+e.key-1];
+    if(b){b.click();e.preventDefault()}
+  }
+  if(e.key==="Enter"&&!$("#next").disabled&&document.activeElement.tagName!=="TEXTAREA")$("#next").click();
+});
+addEventListener("resize",function(){if(!$("#result").hidden)radar(state.scores||score(),1)});
 })();

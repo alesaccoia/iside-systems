@@ -5,8 +5,18 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT=Path(__file__).parent/"static"
 BG,INK,DIM,ACC,BLUE="#0e0e11","#eceae4","#a6a3a9","#ff4a2b","#5aa9ff"
-BOLD="/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf"
-MONO="/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf"
+# The kit is built on more than one machine: resolve the first font that exists
+# instead of pinning a distribution path.
+def pick(*paths):
+  for p in paths:
+    if Path(p).exists():return p
+  raise SystemExit("no font found among: "+", ".join(paths))
+BOLD=pick("/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf",
+          "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+          "/Library/Fonts/Arial Bold.ttf")
+MONO=pick("/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf",
+          "/System/Library/Fonts/Supplemental/Courier New Bold.ttf",
+          "/System/Library/Fonts/Menlo.ttc")
 FORMATS={"ai-maturity-check-1200x628":(1200,628),"ai-maturity-check-1200x1200":(1200,1200),"ai-maturity-check-960x1200":(960,1200),"ai-maturity-check-1080x1920":(1080,1920),"ai-maturity-check-300x250":(300,250),"ai-maturity-check-336x280":(336,280),"ai-maturity-check-728x90":(728,90),"ai-maturity-check-970x90":(970,90),"ai-maturity-check-160x600":(160,600),"ai-maturity-check-300x600":(300,600),"ai-maturity-check-320x50":(320,50)}
 def ft(p,n):return ImageFont.truetype(p,max(1,round(n)))
 def wrap(t,f,w):
@@ -26,9 +36,6 @@ def mark(d,x,y,s):
   z=max(1,round(s*.075));d.rectangle((x,y,x+s,y+s),outline=INK,width=z);i=s*.28;d.rectangle((x+i,y+i,x+s-i,y+s-i),outline=ACC,width=z)
 def lockup(d,x,y,u):
   s=max(16,u*.95);mark(d,x,y,s);f=ft(MONO,max(8,u*.32));l,t,r,b=f.getbbox("ISIDE SYSTEMS");d.text((x+s+u*.35,y+s/2-(t+b)/2),"ISIDE SYSTEMS",font=f,fill=INK)
-def grid(d,w,h,m):
-  for x in(m,w*.34,w*.66,w-m):d.line((x,0,x,h),fill=(236,234,228,20))
-  for y in(m,h*.28,h*.58,h-m):d.line((0,y,w,y),fill=(236,234,228,20))
 def diagram(d,cx,cy,r,v):
   nodes=[(cx-r*.95,cy-r*.62),(cx+r*1.02,cy-r*.39),(cx+r*.78,cy+r*.8),(cx-r*.88,cy+r*.76)]
   for x,y in nodes:d.line((cx,cy,x,y),fill=(236,234,228,32))
@@ -36,8 +43,8 @@ def diagram(d,cx,cy,r,v):
   for i,(x,y) in enumerate(nodes):q=max(3,round(r*.065));d.ellipse((x-q,y-q,x+q,y+q),fill=ACC if i==v%4 else BLUE)
   q=r*.25;d.rectangle((cx-q,cy-q,cx+q,cy+q),outline=INK,width=2)
 def render(n,w,h):
-  im=Image.new("RGB",(w,h),BG);d=ImageDraw.Draw(im);m=max(10,round(min(w,h)*.065));grid(d,w,h,m);ratio=w/h
-  title="La tua azienda è pronta a far lavorare l’AI?";sub="4 minuti. 3 quick win."
+  im=Image.new("RGB",(w,h),BG);d=ImageDraw.Draw(im);m=max(10,round(min(w,h)*.065));ratio=w/h
+  title="La tua azienda è pronta a far lavorare l’AI?";sub="5 minuti. 3 quick win."
   if min(w,h)<100:
     title="AI: a che punto sei?";sub="→";lockup(d,m,round((h-max(16,h*.38))/2),max(14,h*.42));f,rows=fit(title,w*.43,max(12,h*.26),9,1);d.text((w*.48,h/2),rows[0],font=f,fill=INK,anchor="lm");d.text((w-m,h/2),sub,font=ft(MONO,max(9,h*.19)),fill=ACC,anchor="rm")
   elif ratio>4:

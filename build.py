@@ -359,6 +359,13 @@ L_IT = dict(
          "con percorsi di formazione e supporto strategico continuativo, anche in modalità "
          "fractional. Né un'agenzia né una software house.",
     chips=["Strategia e Data Sciences", "AI Adoption", "Operations marketing e crescita", "Advisory e docenza"],
+    am_lbl="AI Maturity Check",
+    am_h2="A che punto è<br>la tua azienda?",
+    am_p="Cinque minuti, sedici domande su dati, processi, marketing e competenze. Alla fine hai un "
+         "punteggio, tre quick win per i prossimi 90 giorni e la formazione che serve davvero — "
+         "generica e sulla funzione più sotto pressione.",
+    am_cta="Fai il check",
+    am_note="Gratuito. Nessuna registrazione per vedere il risultato.",
     pos_lbl="01 — Il punto",
     pos_h2="Ai team non manca<br>la strategia. Mancano<br>numeri di cui fidarsi.",
     pos_p=["Quasi tutti sanno già, a grandi linee, cosa dovrebbero fare. Quello che li blocca è che i "
@@ -734,6 +741,13 @@ L_EN = dict(
          "programmes and continuing strategic support, fractional where that fits. Neither an "
          "agency nor a software house.",
     chips=["Data strategy &amp; data sciences", "AI adoption", "Marketing &amp; growth operations", "Advisory &amp; speaking"],
+    am_lbl="AI Maturity Check",
+    am_h2="Where does your<br>company stand?",
+    am_p="Five minutes, sixteen questions on data, processes, marketing and skills. You get a score, "
+         "three quick wins for the next 90 days, and the training that actually helps — general, and "
+         "for the function under most pressure. The check itself is in Italian.",
+    am_cta="Take the check",
+    am_note="Free. No sign-up to see the result.",
     pos_lbl="01 — The point",
     pos_h2="Teams rarely lack<br>strategy. They lack<br>working numbers.",
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
@@ -1360,6 +1374,8 @@ def footer(L, home, projects, about, asset):
 
 # ---------------------------------------------------------------- pages
 def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"):
+    # the English home sits one level down, so root-level pages need the hop
+    root = "../" if asset.startswith("../") else ""
     caps_html = ""
     for i, (h3, body, tags) in enumerate(L["caps"], 1):
         caps_html += f"""
@@ -1412,6 +1428,20 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
       <p class="lede sub dim">{L['lede']}</p>
     </div>
     <div class="figwrap"><canvas id="figure"></canvas></div>
+  </div>
+</section>
+
+<section class="ambar rv">
+  <div class="inner">
+    <div>
+      <div class="lbl">{L['am_lbl']}</div>
+      <h2>{L['am_h2']}</h2>
+    </div>
+    <div>
+      <p class="dim">{L['am_p']}</p>
+      <p style="margin-top:24px"><a class="ambtn" href="{root}ai-maturity.html">{L['am_cta']}<span class="go">→</span></a></p>
+      <p class="meta" style="margin-top:14px">{L['am_note']}</p>
+    </div>
   </div>
 </section>
 

@@ -9,7 +9,7 @@ editable source of truth.
 
 | Folder | Purpose | Main deliverables |
 | --- | --- | --- |
-| ai-maturity-check | Traffic to the AI Maturity Check at /ai-maturity.html | 11 static Google Ads PNG formats |
+| ai-maturity-check | Traffic to the AI Maturity Check at /ai-maturity.html | 11 static Google Ads formats; 5-card carousel in three crops; 16:9, 1:1 and 9:16 videos |
 | ai-advisory | AI Advisory narrative | 5-card carousel in three crops; 16:9, 1:1 and 9:16 videos |
 | ai-opportunity-sprint | Paid AI Opportunity Sprint | Display banners, carousel, and three videos |
 
@@ -21,8 +21,8 @@ Run the script from the relevant campaign folder:
     python3 build.py
     python3 build_assets.py
 
-The Maturity Check script requires Pillow. The Advisory and Sprint scripts
-require Pillow, rsvg-convert and ffmpeg. Do not edit the exported PNG/MP4
+The Maturity Check scripts require Pillow, and ffmpeg for the videos. The
+Advisory and Sprint scripts also require rsvg-convert. Do not edit the exported PNG/MP4
 directly; change the matching build script and rebuild.
 
 ## Google Ads final URLs

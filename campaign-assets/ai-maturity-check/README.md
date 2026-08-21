@@ -1,11 +1,26 @@
-# AI Maturity Check — Google Ads kit
+# AI Maturity Check — creative kit
 
-Static, native-resolution PNG ads for the AI Maturity Check. The generator uses
-real font metrics at the final pixel dimensions: no estimated text boxes.
+Everything for the campaign that points at the AI Maturity Check. Layouts are
+measured with real font metrics at final pixel size: no text box is estimated,
+and nothing is scaled up after the fact.
 
-- Demand Gen: 1200x628, 1200x1200, 960x1200, 1080x1920
-- Display: 300x250, 336x280, 728x90, 970x90, 160x600, 300x600, 320x50
+- `static/` — 11 Google Ads formats
+  - Demand Gen: 1200x628, 1200x1200, 960x1200, 1080x1920
+  - Display: 300x250, 336x280, 728x90, 970x90, 160x600, 300x600, 320x50
+- `carousel/` — five cards in 1:1, 1.91:1 and 4:5, as PNG and as editable SVG
+- `video/` — silent 15s H.264 in 16:9, 1:1 and 9:16
+
+Card order: Diagnosi, Percorso, Mappa, Quick win, Check. The visual is the same
+five-axis pentagon the tool draws at the end of the assessment, so the ad shows
+what the click actually leads to.
 
 Final URL: https://www.isidesystems.com/ai-maturity.html
 
-Rebuild with: python3 build_ads.py
+## Rebuild
+
+    python3 build_ads.py       # the static formats — needs Pillow
+    python3 build_assets.py    # carousel and video — needs Pillow and ffmpeg
+
+Do not edit the exported PNG, SVG or MP4: change the script and rebuild. Fonts
+resolve to the first that exists on the machine (Helvetica Neue and Menlo on
+macOS, Noto on Linux), so both build hosts produce the same layout.
