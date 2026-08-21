@@ -26,6 +26,13 @@ def wrap(t,f,w):
     if line and f.getlength(v)>w:rows.append(line);line=word
     else:line=v
   return rows+[line]
+def fit_line(t,path,high,low,w):
+  """Shrink a single line until it actually fits the column."""
+  while high>low:
+    f=ft(path,high)
+    if f.getlength(t)<=w:return f
+    high-=1
+  return ft(path,low)
 def fit(t,w,high,low,limit):
   while high>=low:
     f=ft(BOLD,high);r=wrap(t,f,w)
@@ -36,6 +43,7 @@ def mark(d,x,y,s):
   z=max(1,round(s*.075));d.rectangle((x,y,x+s,y+s),outline=INK,width=z);i=s*.28;d.rectangle((x+i,y+i,x+s-i,y+s-i),outline=ACC,width=z)
 def lockup(d,x,y,u):
   s=max(16,u*.95);mark(d,x,y,s);f=ft(MONO,max(8,u*.32));l,t,r,b=f.getbbox("ISIDE SYSTEMS");d.text((x+s+u*.35,y+s/2-(t+b)/2),"ISIDE SYSTEMS",font=f,fill=INK)
+from build_assets import pentagon      # same figure as the carousel and the tool
 def diagram(d,cx,cy,r,v):
   nodes=[(cx-r*.95,cy-r*.62),(cx+r*1.02,cy-r*.39),(cx+r*.78,cy+r*.8),(cx-r*.88,cy+r*.76)]
   for x,y in nodes:d.line((cx,cy,x,y),fill=(236,234,228,32))
@@ -52,11 +60,13 @@ def render(n,w,h):
   elif ratio<.7:
     lockup(d,m,m,max(22,min(w,h)*.07));f,rows=fit(title,w-2*m,min(w,h)*.105,min(w,h)*.07,4);y=h*.36
     for row in rows:d.text((m,y),row,font=f,fill=INK);y+=f.size*1.07
-    d.text((m,y+min(w,h)*.055),sub,font=ft(MONO,max(12,min(w,h)*.033)),fill=ACC);diagram(d,w*.5,h*.78,min(w,h)*.19,1)
+    d.text((m,y+min(w,h)*.055),sub,font=fit_line(sub,MONO,max(12,min(w,h)*.033),8,w-2*m),fill=ACC)
+    pentagon(d,w*.5,h*.78,min(w,h)*.17,1,labels=False,bounds=(m*.5,w-m*.5))
   else:
     lockup(d,m,m,max(24,min(w,h)*.065));f,rows=fit(title,w*.52,min(w,h)*.10,min(w,h)*.06,3);y=h*.40
     for row in rows:d.text((m,y),row,font=f,fill=INK);y+=f.size*1.07
-    d.text((m,y+min(w,h)*.05),sub,font=ft(MONO,max(12,min(w,h)*.030)),fill=ACC);diagram(d,w*.77,h*.56,min(w,h)*.20,0)
+    d.text((m,y+min(w,h)*.05),sub,font=fit_line(sub,MONO,max(12,min(w,h)*.030),8,w*.55),fill=ACC)
+    pentagon(d,w*.77,h*.56,min(w,h)*.19,0,labels=False,bounds=(m*.5,w-m*.5))
   im.save(OUT/(n+".png"),optimize=True)
 def main():
   OUT.mkdir(parents=True,exist_ok=True)

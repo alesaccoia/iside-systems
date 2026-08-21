@@ -1413,7 +1413,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
 
     return (head(L, L["title"], L["desc"], asset, alt_href, "home")
             + header(L, asset, home, projects, about, "home", alt_href, cases)
-            + f"""<a class="amstrip" href="{root}ai-maturity.html">
+            + f"""<a class="amstrip" href="/ai-maturity">
   <span class="tag">{L['am_lbl']}</span>
   <span class="say">{L['am_h2']}</span>
   <span class="sub">{L['am_p']}</span>

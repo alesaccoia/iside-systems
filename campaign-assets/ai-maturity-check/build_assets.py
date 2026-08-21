@@ -36,17 +36,36 @@ MONO = pick(("/System/Library/Fonts/Menlo.ttc", 1),
             ("/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf", 0),
             ("/System/Library/Fonts/Supplemental/Courier New Bold.ttf", 0))
 
-# The five beats of the campaign. Kicker, headline, and the axis that lights up.
+# The five beats. `art` says what the slide carries: the radar, the questions
+# scrolling past, or nothing at all — the last two live on type alone.
 CARDS = [
-    ("01 / DIAGNOSI", "A che punto è la tua azienda con l’AI?", 0),
-    ("02 / PERCORSO", "Sedici domande. Cinque minuti.", 1),
-    ("03 / MAPPA", "Un punteggio su dati, processi, marketing e competenze.", 2),
-    ("04 / QUICK WIN", "Tre azioni per i prossimi 90 giorni.", 3),
-    ("05 / CHECK", "Fai il check. È gratuito.", 4),
+    ("01 / DIAGNOSI", "A che punto è la tua azienda con l’AI?", "radar", 0),
+    ("02 / DOMANDE", "Sedici domande sul lavoro com’è davvero.", "questions", 1),
+    ("03 / MAPPA", "Un punteggio su cinque assi, non una pagella.", "radar", 2),
+    ("04 / QUICK WIN", "Formazione, workshop, ROI, due agenti in produzione.", "none", 3),
+    ("05 / CHECK", "Fai il check. Esci con un piano a 90 giorni.", "cta", 4),
 ]
 AXES = ["DATI", "PROCESSI", "MARKETING", "COMPETENZE", "GOVERNANCE"]
 SHAPE = [0.78, 0.52, 0.63, 0.40, 0.55]      # the profile the pentagon draws
-URL = "isidesystems.com/ai-maturity.html"
+QUESTIONS = [
+    "Quante persone siete?",
+    "In che settore lavorate?",
+    "Vendete a imprese o a persone?",
+    "Quali risultati vuoi sbloccare per primi?",
+    "Quali funzioni sono più sotto pressione?",
+    "Quanto sono disponibili i dati che servono?",
+    "Dove vive oggi il lavoro?",
+    "Come vi fate trovare oggi?",
+    "Usate anche canali offline o lineari?",
+    "Presidiate i social?",
+    "Quali strumenti di misurazione avete?",
+    "Vi appoggiate a un’agenzia esterna?",
+    "Che formazione avete fatto sull’AI?",
+    "Qual è il vostro rapporto con gli strumenti AI?",
+    "Chi decide cosa può fare l’AI con i dati?",
+    "Quanto conoscete AI Act, GDPR e DSA?",
+]
+URL = "isidesystems.com/ai-maturity"
 
 
 def ft(font, size):
@@ -104,11 +123,13 @@ def pentagon(d, cx, cy, r, lit, grow=1.0, labels=True, bounds=None):
         d.line((cx, cy, cx + math.cos(ang(i)) * r, cy + math.sin(ang(i)) * r), fill=LINE)
     pts = [(cx + math.cos(ang(i)) * r * SHAPE[i] * grow,
             cy + math.sin(ang(i)) * r * SHAPE[i] * grow) for i in range(5)]
+    tiny = r < 70                      # in a 160px banner the fill turns to mush
     if grow > 0.02:
-        d.polygon(pts, fill=(255, 74, 43, 46))
-        d.line(pts + [pts[0]], fill=ACC, width=max(2, round(r * .012)))
+        if not tiny:
+            d.polygon(pts, fill=(255, 74, 43, 46))
+        d.line(pts + [pts[0]], fill=ACC, width=max(1, round(r * .018 if tiny else r * .012)))
     for i, (x, y) in enumerate(pts):
-        q = max(3, round(r * .035))
+        q = max(2, round(r * (.028 if tiny else .035)))
         d.ellipse((x - q, y - q, x + q, y + q), fill=ACC if i == lit % 5 else BLUE)
     if labels and r > 90:
         f = ft(MONO, max(9, r * .085))
@@ -125,37 +146,85 @@ def pentagon(d, cx, cy, r, lit, grow=1.0, labels=True, bounds=None):
 def layout(w, h, i):
     """Geometry shared by the PNG and the SVG, so the two cannot drift apart.
 
-    Only genuinely wide formats put the headline beside the pentagon; square and
-    portrait ones stack it above. Either way the type is sized to the room that
-    is actually left once the diagram, its labels and the URL have taken theirs.
+    Slides that carry art keep the headline in its own column; slides without
+    art give the type the whole frame, which is the point of having them.
     """
-    kicker, title, lit = CARDS[i]
+    kicker, title, art, lit = CARDS[i]
     m = max(14, round(min(w, h) * .062))
     side = w / h > 1.35
     kick = max(11, min(w, h) * .029)
     url = max(10, min(w, h) * .024)
     lockup_h = max(22, min(w, h) * .062) * .95
+    box = None
 
-    if side:
+    if art == "none" or art == "cta":
+        # no diagram: the words get the room, and get bigger
+        text_w = w * (.86 if side else 1.0) - 2 * m
+        limit = 3 if side else 4
+        f, rows = fit(title, text_w, min(w, h) * (.15 if side else .125), min(w, h) * .06,
+                      limit, h * .5)
+        y0 = h * .5 - len(rows) * f.size * 1.08 / 2
+        r = cx = cy = 0
+    elif side:
         r = min(h * .29, w * .16)
         cx, cy = w - m - r * 1.32, h * .50
-        text_w = max(140, cx - r * 1.34 - m - min(w, h) * .04)
+        # the axis labels stick out past the pentagon: the headline column has to
+        # stop before the widest of them, not before the shape
+        lf = ft(MONO, max(9, r * .085))
+        reach = r * 1.28 + max(lf.getlength(a) for a in AXES) / 2
+        text_w = max(140, cx - reach - m - min(w, h) * .045)
         f, rows = fit(title, text_w, min(w, h) * .115, min(w, h) * .05, 3, h * .46)
         y0 = h * .5 - len(rows) * f.size * 1.08 / 2
+        box = (cx - r * 1.34, m + lockup_h * 1.6, r * 2.68, h - m * 2.2 - lockup_h * 1.6)
+        if art == "questions":
+            # the question column has no labels to dodge, so it can start earlier
+            text_w = max(140, cx - r * 1.34 - m - min(w, h) * .04)
+            f, rows = fit(title, text_w, min(w, h) * .115, min(w, h) * .05, 3, h * .46)
+            y0 = h * .5 - len(rows) * f.size * 1.08 / 2
     else:
         r = min(w * .24, h * .175)
         cx = w / 2
         label_pad = max(9, r * .085) * 2.2
-        block_h = r * 1.28 * 2 + label_pad          # diagram plus its labels
-        bottom = h - m - min(w, h) * .085           # URL and progress rule live here
+        block_h = r * 1.28 * 2 + label_pad
+        bottom = h - m - min(w, h) * .085
         cy = bottom - block_h / 2
         top = m + lockup_h + min(w, h) * .07 + kick * 1.6
         text_w = w - 2 * m
         f, rows = fit(title, text_w, min(w, h) * .092, min(w, h) * .042, 4,
                       (cy - block_h / 2) - top - min(w, h) * .03)
         y0 = top
-    return dict(m=m, kicker=kicker, lit=lit, font=f, rows=rows, y0=y0,
-                cx=cx, cy=cy, r=r, kick=kick, url=url)
+        box = (m, cy - block_h / 2, w - 2 * m, block_h)
+    return dict(m=m, kicker=kicker, art=art, lit=lit, font=f, rows=rows, y0=y0,
+                cx=cx, cy=cy, r=r, kick=kick, url=url, box=box)
+
+
+def questions_art(d, x, y, w, h, offset=0.0, dim_edges=True):
+    """A column of the real questions, drifting upward. Deliberately small:
+    it should read as a stack of work, not as a headline."""
+    f = ft(MONO, max(9, min(w, h) * .034))
+    step = f.size * 2.05
+    total = len(QUESTIONS) * step
+    start = -((offset * total) % total)
+    n = int(h / step) + 3
+    for k in range(n + len(QUESTIONS)):
+        qy = y + start + k * step
+        if qy < y - step or qy > y + h:
+            continue
+        text = QUESTIONS[k % len(QUESTIONS)]
+        rows = wrap(text, f, w)
+        # fade the ends of the column so the drift has no hard edge
+        t = (qy - y) / max(1, h)
+        alpha = 255
+        if dim_edges:
+            edge = min(t, 1 - t)
+            alpha = int(255 * max(0.0, min(1.0, edge / .22)))
+        if alpha <= 4:
+            continue
+        col = (166, 163, 169, alpha)
+        d.line((x, qy + f.size * .55, x + max(6, w * .012), qy + f.size * .55),
+               fill=(255, 74, 43, alpha))
+        for i, row in enumerate(rows[:2]):
+            d.text((x + max(14, w * .028), qy + i * f.size * 1.15), row, font=f, fill=col)
 
 
 def frame(w, h, i, t=1.0, motion=False):
@@ -176,8 +245,19 @@ def frame(w, h, i, t=1.0, motion=False):
     for row in L["rows"]:
         d.text((m, y), row, font=L["font"], fill=INK)
         y += L["font"].size * 1.08
-    pentagon(d, L["cx"], L["cy"], L["r"], L["lit"],
-             grow=1.0 if not motion else ease, bounds=(m * .5, w - m * .5))
+    if L["art"] == "radar":
+        pentagon(d, L["cx"], L["cy"], L["r"], L["lit"],
+                 grow=1.0 if not motion else ease, bounds=(m * .5, w - m * .5))
+    elif L["art"] == "questions" and L["box"]:
+        bx, by, bw_, bh_ = L["box"]
+        questions_art(d, bx, by, bw_, bh_, offset=(t * .16 if motion else 0.0))
+    elif L["art"] == "cta":
+        # the only slide that ends on an instruction gets a rule under it
+        rule_y = L["y0"] + len(L["rows"]) * L["font"].size * 1.08 + min(w, h) * .045
+        d.line((m, rule_y, m + (w - 2 * m) * (ease if motion else 1) * .34, rule_y),
+               fill=ACC, width=max(2, round(min(w, h) * .006)))
+        d.text((m, rule_y + min(w, h) * .035), "GRATIS · SENZA REGISTRAZIONE",
+               font=ft(MONO, max(11, min(w, h) * .030)), fill=DIM)
     d.text((m, h - m - min(w, h) * .040), URL, font=ft(MONO, L["url"]), fill=DIM)
 
     # progress rule: how far along the five beats we are
@@ -206,29 +286,62 @@ def tx(x, y, text, size, fill, weight=400, family="Helvetica Neue,Arial,sans-ser
 def svg(w, h, i):
     L = layout(w, h, i)
     m, r, cx, cy, f = L["m"], L["r"], L["cx"], L["cy"], L["font"]
-    ang = lambda k: -math.pi / 2 + k * 2 * math.pi / 5
-    rings = "".join(
-        '<polygon points="' + " ".join(
-            f"{cx+math.cos(ang(k))*r*ring:.1f},{cy+math.sin(ang(k))*r*ring:.1f}" for k in range(5)) +
-        '" fill="none" stroke="#eceae4" stroke-opacity=".15"/>' for ring in (.4, .7, 1))
-    spokes = "".join(
-        f'<path d="M{cx:.1f} {cy:.1f}L{cx+math.cos(ang(k))*r:.1f} {cy+math.sin(ang(k))*r:.1f}" '
-        'stroke="#eceae4" stroke-opacity=".15"/>' for k in range(5))
-    pts = " ".join(f"{cx+math.cos(ang(k))*r*SHAPE[k]:.1f},{cy+math.sin(ang(k))*r*SHAPE[k]:.1f}"
-                   for k in range(5))
-    dots = "".join(
-        f'<circle cx="{cx+math.cos(ang(k))*r*SHAPE[k]:.1f}" cy="{cy+math.sin(ang(k))*r*SHAPE[k]:.1f}" '
-        f'r="{max(3,r*.035):.1f}" fill="{ACC if k==L["lit"]%5 else BLUE}"/>' for k in range(5))
-    labels = ""
-    if r > 90:
-        lf = ft(MONO, max(9, r * .085))
-        for k, name in enumerate(AXES):
-            tw = lf.getlength(name)
-            lx = cx + math.cos(ang(k)) * r * 1.28
-            lx = min(max(lx - tw / 2, m * .5), w - m * .5 - tw) + tw / 2
-            ly = cy + math.sin(ang(k)) * r * 1.28 + lf.size * .34
-            labels += tx(lx, ly, name, lf.size, DIM, 600, "Menlo,Courier New,monospace",
-                         length=tw, anchor="middle")
+    art = ""
+    if L["art"] == "radar":
+        ang = lambda k: -math.pi / 2 + k * 2 * math.pi / 5
+        rings = "".join(
+            '<polygon points="' + " ".join(
+                f"{cx+math.cos(ang(k))*r*ring:.1f},{cy+math.sin(ang(k))*r*ring:.1f}" for k in range(5)) +
+            '" fill="none" stroke="#eceae4" stroke-opacity=".15"/>' for ring in (.4, .7, 1))
+        spokes = "".join(
+            f'<path d="M{cx:.1f} {cy:.1f}L{cx+math.cos(ang(k))*r:.1f} {cy+math.sin(ang(k))*r:.1f}" '
+            'stroke="#eceae4" stroke-opacity=".15"/>' for k in range(5))
+        pts = " ".join(f"{cx+math.cos(ang(k))*r*SHAPE[k]:.1f},{cy+math.sin(ang(k))*r*SHAPE[k]:.1f}"
+                       for k in range(5))
+        dots = "".join(
+            f'<circle cx="{cx+math.cos(ang(k))*r*SHAPE[k]:.1f}" cy="{cy+math.sin(ang(k))*r*SHAPE[k]:.1f}" '
+            f'r="{max(3,r*.035):.1f}" fill="{ACC if k==L["lit"]%5 else BLUE}"/>' for k in range(5))
+        labels = ""
+        if r > 90:
+            lf = ft(MONO, max(9, r * .085))
+            for k, name in enumerate(AXES):
+                tw = lf.getlength(name)
+                lx = cx + math.cos(ang(k)) * r * 1.28
+                lx = min(max(lx - tw / 2, m * .5), w - m * .5 - tw) + tw / 2
+                ly = cy + math.sin(ang(k)) * r * 1.28 + lf.size * .34
+                labels += tx(lx, ly, name, lf.size, DIM, 600, "Menlo,Courier New,monospace",
+                             length=tw, anchor="middle")
+        art = (f'<g>{rings}{spokes}'
+               f'<polygon points="{pts}" fill="rgba(255,74,43,.18)" stroke="{ACC}" '
+               f'stroke-width="{max(2,r*.012):.1f}"/>{dots}{labels}</g>')
+    elif L["art"] == "questions" and L["box"]:
+        bx, by, bw_, bh_ = L["box"]
+        qf = ft(MONO, max(9, min(w, h) * .034))
+        step = qf.size * 2.05
+        rows = []
+        k = 0
+        while (k + 1) * step < bh_ and k < len(QUESTIONS):
+            qy = by + k * step
+            text = QUESTIONS[k % len(QUESTIONS)]
+            line = wrap(text, qf, bw_)[0]
+            edge = min((qy - by) / bh_, 1 - (qy - by) / bh_)
+            op = max(0.0, min(1.0, edge / .22))
+            rows.append(f'<path d="M{bx:.1f} {qy+qf.size*.55:.1f}h{max(6,bw_*.012):.1f}" '
+                        f'stroke="{ACC}" stroke-opacity="{op:.2f}"/>')
+            rows.append(tx(bx + max(14, bw_ * .028), qy + qf.size * .82, line, qf.size, DIM, 400,
+                           "Menlo,Courier New,monospace", length=qf.getlength(line)) 
+                        .replace("<text ", f'<text opacity="{op:.2f}" '))
+            k += 1
+        art = "<g>" + "".join(rows) + "</g>"
+    elif L["art"] == "cta":
+        rule_y = L["y0"] + len(L["rows"]) * f.size * 1.08 + min(w, h) * .045
+        sf = ft(MONO, max(11, min(w, h) * .030))
+        art = (f'<path d="M{m} {rule_y:.1f}h{(w-2*m)*.34:.1f}" stroke="{ACC}" '
+               f'stroke-width="{max(2,round(min(w,h)*.006))}"/>'
+               + tx(m, rule_y + min(w, h) * .035 + sf.size * .82, "GRATIS · SENZA REGISTRAZIONE",
+                    sf.size, DIM, 600, "Menlo,Courier New,monospace",
+                    length=sf.getlength("GRATIS · SENZA REGISTRAZIONE")))
+
     body = "".join(tx(m, L["y0"] + n * f.size * 1.08 + f.size * .82, row, f.size, INK, 700,
                       length=f.getlength(row))
                    for n, row in enumerate(L["rows"]))
@@ -245,9 +358,7 @@ def svg(w, h, i):
                  "Menlo,Courier New,monospace")
             + tx(m, L["y0"] - L["kick"] * 1.25, L["kicker"], L["kick"], ACC, 600,
                  "Menlo,Courier New,monospace", length=kf.getlength(L["kicker"]))
-            + body + f'<g>{rings}{spokes}'
-            + f'<polygon points="{pts}" fill="rgba(255,74,43,.18)" stroke="{ACC}" stroke-width="{max(2,r*.012):.1f}"/>'
-            + dots + labels + "</g>"
+            + body + art
             + tx(m, h - m - min(w, h) * .040 + uf.size * .82, URL, L["url"], DIM, 600,
                  "Menlo,Courier New,monospace", length=uf.getlength(URL))
             + f'<path d="M{m} {h-m*.42:.1f}H{w-m}" stroke="#eceae4" stroke-opacity=".15"/>'

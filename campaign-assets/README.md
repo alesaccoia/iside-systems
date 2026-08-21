@@ -9,7 +9,7 @@ editable source of truth.
 
 | Folder | Purpose | Main deliverables |
 | --- | --- | --- |
-| ai-maturity-check | Traffic to the AI Maturity Check at /ai-maturity.html | 11 static Google Ads formats; 5-card carousel in three crops; 16:9, 1:1 and 9:16 videos |
+| ai-maturity-check | Traffic to the AI Maturity Check at /ai-maturity | 11 static Google Ads formats; 5-card carousel in three crops; 16:9, 1:1 and 9:16 videos |
 | ai-advisory | AI Advisory narrative | 5-card carousel in three crops; 16:9, 1:1 and 9:16 videos |
 | ai-opportunity-sprint | Paid AI Opportunity Sprint | Display banners, carousel, and three videos |
 
@@ -27,5 +27,5 @@ directly; change the matching build script and rebuild.
 
 ## Google Ads final URLs
 
-- AI Maturity Check: https://www.isidesystems.com/ai-maturity.html
+- AI Maturity Check: https://www.isidesystems.com/ai-maturity
 - Advisory and Opportunity Sprint: https://www.isidesystems.com/chi-sono.html#contact

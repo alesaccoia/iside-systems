@@ -416,6 +416,10 @@ function lead(e){
         axes:RADAR.map(function(k){return {name:AXES[k],value:sc[k]}}),
         title:rep.title,summary:rep.summary,advice:rep.advice,
         wins:plan(sc),
+        answers:QS.map(function(q){
+          var a=state.a[q[0]];
+          return a&&a.text?{q:q[2],a:a.text,detail:a.detail||""}:null;
+        }).filter(Boolean),
         training:(rep.training&&rep.training.length?rep.training:fallback(sc).training)
       };
   msg.textContent="Invio in corso…";msg.className="formmsg";

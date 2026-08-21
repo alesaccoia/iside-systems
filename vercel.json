@@ -4,5 +4,12 @@
   "buildCommand": null,
   "outputDirectory": "dist",
   "trailingSlash": false,
-  "cleanUrls": false
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/ai-maturity.html",
+      "destination": "/ai-maturity",
+      "permanent": true
+    }
+  ]
 }

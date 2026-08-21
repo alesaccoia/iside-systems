@@ -10,11 +10,15 @@ and nothing is scaled up after the fact.
 - `carousel/` — five cards in 1:1, 1.91:1 and 4:5, as PNG and as editable SVG
 - `video/` — silent 15s H.264 in 16:9, 1:1 and 9:16
 
-Card order: Diagnosi, Percorso, Mappa, Quick win, Check. The visual is the same
-five-axis pentagon the tool draws at the end of the assessment, so the ad shows
-what the click actually leads to.
+Card order and what each one carries:
 
-Final URL: https://www.isidesystems.com/ai-maturity.html
+1. Diagnosi — the five-axis pentagon, the same figure the tool ends on
+2. Domande — the real questions, small, drifting upward (they scroll in the video)
+3. Mappa — the pentagon again, now as the result
+4. Quick win — type only, no figure
+5. Check — type only: the call, and the ninety-day plan
+
+Final URL: https://www.isidesystems.com/ai-maturity
 
 ## Rebuild
 

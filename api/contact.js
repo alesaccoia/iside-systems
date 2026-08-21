@@ -74,7 +74,18 @@ function axesRows(axes) {
   }).join("");
 }
 
-function reportHtml(report, { name, forOwner }) {
+
+function answerRows(answers) {
+  return (Array.isArray(answers) ? answers : []).slice(0, 30).map(row => `
+      <tr><td style="padding:11px 0;border-bottom:1px solid ${LINE}">
+        <div style="font:13px/1.5 Helvetica,Arial,sans-serif;color:${DIM}">
+          ${esc(clean(row && row.q, 200))}</div>
+        <div style="font:500 15px/1.5 Helvetica,Arial,sans-serif;color:${INK};margin-top:3px">
+          ${esc(clean(row && row.a, 400))}</div>
+      </td></tr>`).join("");
+}
+
+function reportHtml(report, { name, forOwner, contact }) {
   const score = Math.max(0, Math.min(100, Number(report.score) || 0));
   const hello = forOwner
     ? `Nuova richiesta dall’AI Maturity Check.`
@@ -151,6 +162,25 @@ function reportHtml(report, { name, forOwner }) {
           </div>
         </td></tr>
 
+        ${forOwner ? `
+        <tr><td style="padding:34px 0 0">
+          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
+                      padding-bottom:6px">TUTTE LE RISPOSTE</div>
+          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
+            ${answerRows(report.answers)}
+          </table>
+        </td></tr>
+        <tr><td style="padding:26px 0 0">
+          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
+                      padding-bottom:8px">CONTATTO</div>
+          <div style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
+            ${esc(name)}<br>
+            <a href="mailto:${esc(contact && contact.email)}" style="color:${ACC};text-decoration:none">
+              ${esc(contact && contact.email)}</a><br>
+            <span style="color:${DIM}">${esc(clean(contact && contact.page, 200))}</span>
+          </div>
+        </td></tr>` : ""}
+
         <tr><td style="padding:34px 0 0;border-top:1px solid ${LINE}">
           <p style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:22px 0 0">
             ${closing}</p>
@@ -166,7 +196,7 @@ function reportHtml(report, { name, forOwner }) {
   </table></body></html>`;
 }
 
-function reportText(report) {
+function reportText(report, withAnswers) {
   const rows = [clean(report.title, 200), "", clean(report.summary, 1200), "",
     `Prontezza: ${Math.round(Number(report.score) || 0)}/100`];
   (report.axes || []).forEach(a => rows.push(`  ${clean(a.name, 40)}: ${Math.round(Number(a.value) || 0)}`));
@@ -175,6 +205,10 @@ function reportText(report) {
   rows.push("", "FORMAZIONE");
   (report.training || []).forEach(w => rows.push(`  - ${clean(w.title, 160)} — ${clean(w.body, 400)}`));
   rows.push("", `IL PRIMO PASSO: ${clean(report.advice, 600)}`);
+  if (withAnswers && Array.isArray(report.answers)) {
+    rows.push("", "TUTTE LE RISPOSTE");
+    report.answers.forEach(a => rows.push(`  ${clean(a.q, 200)} -> ${clean(a.a, 400)}`));
+  }
   return rows.join("\n");
 }
 
@@ -230,8 +264,9 @@ export default async function handler(req, res) {
     To: [{ Email: to }],
     ReplyTo: { Email: email, Name: name },
     Subject: `isidesystems.com — ${topic || "richiesta"} — ${name}`,
-    TextPart: report ? `${lines.join("\n")}\n\n${reportText(report)}` : lines.join("\n"),
-    ...(report ? { HTMLPart: reportHtml(report, { name, forOwner: true }) } : {}),
+    TextPart: report ? `${lines.join("\n")}\n\n${reportText(report, true)}` : lines.join("\n"),
+    ...(report ? { HTMLPart: reportHtml(report, { name, forOwner: true,
+                                                  contact: { email, page: clean(body.page, 300) } }) } : {}),
   }];
 
   // and the person who filled it in gets their own copy
