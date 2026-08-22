@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.isidesystems.com/</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/"/>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/"/>
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/case-study.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-study.html"/>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/case-studies.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-study.html"/>
@@ -39,7 +39,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/case-ai-adoption.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-ai-adoption.html"/>
@@ -48,7 +48,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/case-ai-adoption.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-ai-adoption.html"/>
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/case-james.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-james.html"/>
@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/case-james.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-james.html"/>
@@ -75,7 +75,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/case-cloud-scale.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-cloud-scale.html"/>
@@ -84,7 +84,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/case-cloud-scale.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/case-cloud-scale.html"/>
@@ -93,7 +93,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/progetti.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/progetti.html"/>
@@ -102,7 +102,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/projects.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/progetti.html"/>
@@ -111,7 +111,7 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/chi-sono.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/chi-sono.html"/>
@@ -120,11 +120,29 @@
   </url>
   <url>
     <loc>https://www.isidesystems.com/en/about.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/chi-sono.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/about.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/chi-sono.html"/>
+  </url>
+  <url>
+    <loc>https://www.isidesystems.com/privacy.html</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://www.isidesystems.com/en/privacy.html</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/privacy.html"/>
   </url>
 </urlset>

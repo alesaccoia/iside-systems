@@ -493,6 +493,8 @@ L_IT = dict(
     portrait_cap="Alessandro Saccoia — Milano",
     a_kicker="Chi sono",
     a_h1="Iside Systems è lo studio di Alessandro Saccoia.",
+    privacy_link="Privacy policy",
+    privacy_updated="Ultimo aggiornamento",
     a_lede="Tecnologo, professore a contratto, co-founder. Anni di esperienza in misurazione, "
            "dati, strumenti e automazione — fra istituti di ricerca, ad-tech, telco, misurazione "
            "dei media e oggi le mie stesse aziende.",
@@ -868,6 +870,8 @@ L_EN = dict(
     portrait_cap="Alessandro Saccoia — Milan",
     a_kicker="About",
     a_h1="Iside Systems is the practice of Alessandro Saccoia.",
+    privacy_link="Privacy policy",
+    privacy_updated="Last updated",
     a_lede="Technologist, contract professor, co-founder. Years of experience in measurement, data, "
            "tooling and automation — across research institutes, ad-tech, telecoms, media "
            "measurement, and now my own companies.",
@@ -1168,7 +1172,8 @@ PATHS = {"home":      ("", "en"),
          "projects":  ("progetti.html", "en/projects.html"),
          "about":     ("chi-sono.html", "en/about.html"),
          "moire":     ("moire.html", "en/moire.html"),
-         "algosynth": ("algosynth.html", "en/algosynth.html")}
+         "algosynth": ("algosynth.html", "en/algosynth.html"),
+         "privacy":   ("privacy.html", "en/privacy.html")}
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1323,6 +1328,8 @@ def newsbar(L, about):
     return f'<div class="newsbar"><span class="tag">{L["news_label"]}</span>{items}</div>\n'
 
 def footer(L, home, projects, about, asset):
+    # privacy.html resolves inside the current folder, so the English pages
+    # reach en/privacy.html and the Italian ones the root file
     n = L["nav"]
     caps = [c[0].replace("<br>", " ") for c in L["caps"]]
     caplinks = "".join(f'<a href="{home}#capabilities">{c}</a>' for c in caps)
@@ -1349,6 +1356,7 @@ def footer(L, home, projects, about, asset):
   </div>
   <div class="colophon">
     <span>{L['foot_colophon']}</span>
+    <a href="privacy.html">{L['privacy_link']}</a>
     <span>IT · EN · FR</span>
   </div>
 </footer>
@@ -1747,6 +1755,250 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 """ + footer(L, home, projects, about, asset))
 
 
+# ---------------------------------------------------------------- privacy
+# Dated by hand: it marks when the text changed, not when the site was built.
+PRIVACY_DATE = {"it": "21 agosto 2026", "en": "21 August 2026"}
+
+PRIVACY = {
+"it": dict(
+  title="Privacy policy",
+  desc="Come Iside Systems SRLS tratta i dati personali di chi visita il sito, scrive dallo studio o usa l’AI Maturity Check.",
+  lede="Questa pagina spiega quali dati raccogliamo, perché, a chi li comunichiamo e come puoi "
+       "esercitare i tuoi diritti. È scritta per essere letta, non per essere archiviata.",
+  sections=[
+   ("Titolare del trattamento", [
+     "Iside Systems SRLS, Via Tortona 12, 20144 Milano (Italia). P.IVA 14733480967.",
+     "Per qualsiasi questione relativa ai dati personali scrivi a "
+     "<a href=\"mailto:alessandro@iside.systems\">alessandro@iside.systems</a> oppure, via PEC, a "
+     "<a href=\"mailto:iside.systems.srls@pec.it\">iside.systems.srls@pec.it</a>.",
+     "Non abbiamo nominato un responsabile della protezione dei dati (DPO): non ricorre nessuno dei "
+     "casi previsti dall’art. 37 del Regolamento (UE) 2016/679 (GDPR)."]),
+
+   ("Navigazione del sito", [
+     "Il sito è ospitato da Vercel Inc. I server registrano, per il tempo tecnicamente necessario, "
+     "informazioni che i browser trasmettono per loro natura: indirizzo IP, data e ora della "
+     "richiesta, pagina richiesta, tipo di browser e sistema operativo. Questi dati servono a "
+     "erogare il sito, a diagnosticare malfunzionamenti e a difenderlo da abusi.",
+     "Base giuridica: legittimo interesse del titolare a far funzionare e proteggere il sito "
+     "(art. 6.1.f GDPR)."]),
+
+   ("Modulo di contatto", [
+     "Se ci scrivi dal modulo nella pagina “Chi sono” raccogliamo il nome, l’indirizzo email e "
+     "quello che scegli di scrivere nel messaggio, insieme all’eventuale organizzazione e "
+     "all’argomento. Li usiamo per risponderti e, se il contatto diventa un progetto, per gestire "
+     "il rapporto che ne nasce.",
+     "Il messaggio viene recapitato tramite Mailjet (Sinch Email, con sede nell’Unione europea), "
+     "che agisce come responsabile del trattamento.",
+     "Base giuridica: riscontro a una tua richiesta ed esecuzione di misure precontrattuali "
+     "(art. 6.1.b GDPR)."]),
+
+   ("AI Maturity Check", [
+     "Il check si può fare senza registrarsi e senza lasciare alcun dato personale. Le risposte "
+     "riguardano l’organizzazione — dimensione, settore, processi, strumenti — non la persona che "
+     "le fornisce.",
+     "Per costruire la sintesi finale le risposte e i punteggi vengono inviati a OpenAI, L.L.C. "
+     "attraverso la sua API, senza nome, cognome o email: quelli te li chiediamo solo dopo, e solo "
+     "se vuoi ricevere il report. Le richieste sono inviate con l’opzione di non conservazione e, "
+     "secondo le condizioni per le API di OpenAI, non vengono usate per addestrare modelli.",
+     "Se al termine compili il modulo, raccogliamo nome, cognome ed email e ti inviamo via email la "
+     "mappa con il report; una copia dello stesso report, insieme alle risposte che hai dato, "
+     "arriva a noi per poterti rispondere nel merito. Nulla di tutto questo viene salvato in una "
+     "banca dati: resta nelle caselle di posta.",
+     "Il report è una lettura indicativa costruita a partire dalle tue risposte. Non è una "
+     "decisione automatizzata che produce effetti giuridici o incide in modo analogo sulla tua "
+     "persona ai sensi dell’art. 22 GDPR.",
+     "Base giuridica: esecuzione del servizio che hai richiesto e misure precontrattuali "
+     "(art. 6.1.b GDPR)."]),
+
+   ("Misurazione e cookie", [
+     "Il sito usa Google Tag Manager e Google Analytics 4 per capire quante persone lo visitano e "
+     "quali pagine leggono. Questi strumenti scrivono cookie sul tuo dispositivo.",
+     "I cookie tecnici, necessari a far funzionare il sito e a ricordare la tua scelta sui cookie, "
+     "vengono usati senza consenso perché senza di essi il sito non funziona. I cookie di "
+     "misurazione e quelli pubblicitari vengono attivati solo dopo il tuo consenso, che ti "
+     "chiediamo con il banner alla prima visita e che puoi negare o revocare in qualsiasi momento.",
+     "Finché non acconsenti, il consenso è impostato su “negato” per tutte le finalità che lo "
+     "richiedono (Consent Mode di Google): le richieste che partono verso Google non usano "
+     "identificatori pubblicitari.",
+     "La tua scelta è conservata nel browser (memoria locale, chiave <code>iside-consent</code>) e "
+     "non viene trasmessa a noi. Per revocarla puoi cancellare i dati del sito dalle impostazioni "
+     "del browser: alla visita successiva il banner ricomparirà.",
+     "Base giuridica: consenso per la misurazione e la pubblicità (art. 6.1.a GDPR e art. 122 del "
+     "Codice privacy); legittimo interesse per i cookie tecnici."]),
+
+   ("Campagne pubblicitarie", [
+     "Quando promuoviamo una pagina su Google o LinkedIn, il link può contenere parametri che ci "
+     "dicono da quale campagna arriva la visita. Sono informazioni sulla campagna, non su di te.",
+     "Se hai acconsentito ai cookie pubblicitari, Google e LinkedIn possono usare i propri "
+     "identificatori per misurare i risultati delle campagne secondo le rispettive informative."]),
+
+   ("A chi comunichiamo i dati", [
+     "I dati sono trattati dal titolare e dai fornitori che rendono possibile il servizio, "
+     "nominati responsabili del trattamento ai sensi dell’art. 28 GDPR: Vercel Inc. (hosting), "
+     "Sinch Email / Mailjet (invio delle email), Google Ireland Ltd. (misurazione e pubblicità), "
+     "OpenAI, L.L.C. (generazione della sintesi dell’AI Maturity Check), LinkedIn Ireland "
+     "Unlimited Company (pubblicità, se attiva).",
+     "Non vendiamo e non cediamo i dati a terzi per finalità loro. Possono essere comunicati ad "
+     "autorità pubbliche quando la legge lo impone."]),
+
+   ("Trasferimenti fuori dall’Unione europea", [
+     "Alcuni fornitori hanno sede negli Stati Uniti. I trasferimenti avvengono sulla base delle "
+     "decisioni di adeguatezza applicabili — fra cui l’EU-U.S. Data Privacy Framework, per i "
+     "fornitori che vi aderiscono — oppure delle clausole contrattuali standard adottate dalla "
+     "Commissione europea, insieme alle misure supplementari previste dai rispettivi contratti."]),
+
+   ("Per quanto tempo li conserviamo", [
+     "La corrispondenza e i dati di contatto restano nelle nostre caselle per il tempo necessario a "
+     "gestire la richiesta e l’eventuale rapporto che ne segue, e comunque non oltre 24 mesi "
+     "dall’ultimo contatto, salvo obblighi di legge (per esempio quelli fiscali) che impongono "
+     "termini più lunghi.",
+     "I dati di misurazione sono conservati da Google Analytics secondo l’impostazione del "
+     "servizio, in forma aggregata nei rapporti.",
+     "I log tecnici del server sono conservati per il tempo previsto dal fornitore di hosting."]),
+
+   ("I tuoi diritti", [
+     "Puoi chiedere in qualsiasi momento l’accesso ai tuoi dati, la loro rettifica o cancellazione, "
+     "la limitazione del trattamento, la portabilità, e puoi opporti al trattamento fondato sul "
+     "legittimo interesse (artt. 15-22 GDPR). Se il trattamento si basa sul consenso, puoi "
+     "revocarlo in ogni momento, senza che ciò pregiudichi quanto fatto prima della revoca.",
+     "Per esercitarli scrivi a <a href=\"mailto:alessandro@iside.systems\">alessandro@iside.systems</a>. "
+     "Rispondiamo entro un mese.",
+     "Se ritieni che il trattamento violi il Regolamento puoi proporre reclamo al Garante per la "
+     "protezione dei dati personali (<a href=\"https://www.garanteprivacy.it\" rel=\"noopener\" "
+     "target=\"_blank\">garanteprivacy.it</a>) o all’autorità dello Stato in cui risiedi."]),
+
+   ("Modifiche", [
+     "Se cambiano gli strumenti che usiamo, questa pagina cambia con loro. La data qui sotto dice "
+     "quando è stata aggiornata l’ultima volta."]),
+  ]),
+
+"en": dict(
+  title="Privacy policy",
+  desc="How Iside Systems SRLS handles the personal data of people who visit the site, write to the practice, or use the AI Maturity Check.",
+  lede="This page sets out what we collect, why, who we share it with, and how you can exercise "
+       "your rights. It is written to be read, not filed.",
+  sections=[
+   ("Controller", [
+     "Iside Systems SRLS, Via Tortona 12, 20144 Milan, Italy. VAT IT14733480967.",
+     "For anything concerning personal data, write to "
+     "<a href=\"mailto:alessandro@iside.systems\">alessandro@iside.systems</a>.",
+     "We have not appointed a Data Protection Officer: none of the cases in Article 37 of "
+     "Regulation (EU) 2016/679 (GDPR) applies."]),
+
+   ("Browsing the site", [
+     "The site is hosted by Vercel Inc. Its servers record, for as long as technically necessary, "
+     "the information browsers send by their nature: IP address, date and time of the request, the "
+     "page requested, browser type and operating system. This is used to serve the site, diagnose "
+     "faults and defend it from abuse.",
+     "Legal basis: our legitimate interest in running and protecting the site (Art. 6.1.f GDPR)."]),
+
+   ("Contact form", [
+     "If you write from the form on the About page we collect your name, email address and whatever "
+     "you choose to put in the message, along with any organisation and topic. We use it to answer "
+     "you and, if the enquiry becomes a project, to manage the engagement that follows.",
+     "The message is delivered through Mailjet (Sinch Email, based in the European Union), acting "
+     "as a processor.",
+     "Legal basis: answering your request and pre-contractual steps (Art. 6.1.b GDPR)."]),
+
+   ("AI Maturity Check", [
+     "The check can be taken without signing up and without leaving any personal data. The answers "
+     "describe the organisation — size, sector, processes, tools — not the person giving them.",
+     "To produce the closing summary, the answers and the scores are sent to OpenAI, L.L.C. through "
+     "its API, without your name or email: we ask for those afterwards, and only if you want the "
+     "report. Requests are sent with storage disabled and, under OpenAI's API terms, are not used "
+     "to train models.",
+     "If you fill in the form at the end, we collect your first name, last name and email and send "
+     "you the report by email; a copy of the same report, together with the answers you gave, "
+     "reaches us so we can reply on the substance. None of it is written to a database: it stays in "
+     "the mailboxes.",
+     "The report is an indicative reading built from your answers. It is not an automated decision "
+     "producing legal effects or similarly significantly affecting you under Art. 22 GDPR.",
+     "Legal basis: providing the service you asked for and pre-contractual steps (Art. 6.1.b GDPR)."]),
+
+   ("Measurement and cookies", [
+     "The site uses Google Tag Manager and Google Analytics 4 to understand how many people visit "
+     "and which pages they read. These tools write cookies on your device.",
+     "Technical cookies, needed to run the site and to remember your cookie choice, are used "
+     "without consent because the site does not work without them. Measurement and advertising "
+     "cookies are only switched on after you consent, which we ask for with the banner on your "
+     "first visit and which you can refuse or withdraw at any time.",
+     "Until you consent, consent is set to \"denied\" for every purpose that requires it (Google "
+     "Consent Mode): requests to Google carry no advertising identifiers.",
+     "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and is "
+     "not sent to us. To withdraw it, clear the site data in your browser settings: the banner will "
+     "appear again on your next visit.",
+     "Legal basis: consent for measurement and advertising (Art. 6.1.a GDPR and Art. 122 of the "
+     "Italian Privacy Code); legitimate interest for technical cookies."]),
+
+   ("Advertising campaigns", [
+     "When we promote a page on Google or LinkedIn, the link may carry parameters telling us which "
+     "campaign the visit came from. That is information about the campaign, not about you.",
+     "If you have consented to advertising cookies, Google and LinkedIn may use their own "
+     "identifiers to measure campaign results under their own privacy notices."]),
+
+   ("Who we share it with", [
+     "Data is handled by the controller and by the suppliers that make the service possible, "
+     "appointed as processors under Art. 28 GDPR: Vercel Inc. (hosting), Sinch Email / Mailjet "
+     "(email delivery), Google Ireland Ltd. (measurement and advertising), OpenAI, L.L.C. "
+     "(generating the AI Maturity Check summary), LinkedIn Ireland Unlimited Company (advertising, "
+     "where running).",
+     "We do not sell or hand data to third parties for their own purposes. It may be disclosed to "
+     "public authorities where the law requires it."]),
+
+   ("Transfers outside the European Union", [
+     "Some suppliers are based in the United States. Transfers rely on the applicable adequacy "
+     "decisions — including the EU-U.S. Data Privacy Framework for suppliers certified under it — "
+     "or on the standard contractual clauses adopted by the European Commission, together with the "
+     "supplementary measures set out in the respective agreements."]),
+
+   ("How long we keep it", [
+     "Correspondence and contact details stay in our mailboxes for as long as it takes to handle "
+     "the request and any engagement that follows, and in any case no longer than 24 months from "
+     "the last contact, save for legal obligations (tax rules, for instance) that impose longer "
+     "terms.",
+     "Measurement data is retained by Google Analytics according to the service settings, and "
+     "appears in reports in aggregate form.",
+     "Server logs are kept for the period set by the hosting provider."]),
+
+   ("Your rights", [
+     "You may at any time request access to your data, its rectification or erasure, restriction of "
+     "processing, portability, and you may object to processing based on legitimate interest "
+     "(Arts. 15-22 GDPR). Where processing is based on consent, you may withdraw it at any time, "
+     "without affecting what was done before the withdrawal.",
+     "To exercise them, write to <a href=\"mailto:alessandro@iside.systems\">alessandro@iside.systems</a>. "
+     "We answer within one month.",
+     "If you believe the processing infringes the Regulation you may lodge a complaint with the "
+     "Italian data protection authority (<a href=\"https://www.garanteprivacy.it\" rel=\"noopener\" "
+     "target=\"_blank\">garanteprivacy.it</a>) or with the authority of the country where you live."]),
+
+   ("Changes", [
+     "If the tools we use change, this page changes with them. The date below says when it was "
+     "last updated."]),
+  ]),
+}
+
+
+def page_privacy(L, asset, home, projects, about, alt_href, cases="case-study.html"):
+    t = PRIVACY[L["lang"]]
+    body = ""
+    for n, (heading, paragraphs) in enumerate(t["sections"], 1):
+        body += (f'  <section class="legal-block rv">\n'
+                 f'    <div class="n">/{n:02d}</div>\n'
+                 f'    <div><h2>{heading}</h2>'
+                 + "".join(f"<p>{para}</p>" for para in paragraphs)
+                 + "</div>\n  </section>\n")
+    return (head(L, f'{t["title"]} — Iside Systems', t["desc"], asset, alt_href, "privacy")
+            + header(L, asset, home, projects, about, "", alt_href, cases)
+            + f"""
+<section class="pad legal">
+  <div class="lbl">{t["title"]}</div>
+  <h1>{t["title"]}</h1>
+  <p class="lede dim">{t["lede"]}</p>
+{body}  <p class="meta legal-date">{L["privacy_updated"]}: {PRIVACY_DATE[L["lang"]]}</p>
+</section>
+"""
+            + footer(L, home, projects, about, asset))
+
 def page_lab(L, asset, home, projects, about, alt_href, key, cases="case-study.html"):
     lab = LABS[key]
     t = lab[L["lang"]]
@@ -1912,13 +2164,14 @@ def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
     for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
-                "projects", "about"):
+                "projects", "about", "privacy"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
                 f'\n    <xhtml:link rel="alternate" hreflang="{h}" href="{SITE}/{p}"/>'
                 for h, p in (("it", it_path), ("en", en_path), ("x-default", it_path)))
-            prio = "1.0" if key == "home" and lang == "it" else "0.8" if key == "home" else "0.7"
+            prio = ("1.0" if key == "home" and lang == "it" else "0.8" if key == "home"
+                    else "0.3" if key == "privacy" else "0.7")
             rows.append(
                 f'  <url>\n    <loc>{SITE}/{path}</loc>\n    <lastmod>{today}</lastmod>'
                 f'\n    <changefreq>monthly</changefreq>\n    <priority>{prio}</priority>'
@@ -1952,6 +2205,7 @@ for _slug in ("ai-adoption", "james", "cloud-scale"):
 write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/index.html"))
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
+write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
@@ -1963,5 +2217,6 @@ for key in ("moire", "algosynth"):
 write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../index.html", "case-studies.html"))
 write("en/projects.html", page_projects(L_EN, "../assets/", "index.html", "projects.html", "about.html", "../progetti.html", "case-studies.html"))
 write("en/about.html",    page_about   (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../chi-sono.html", "case-studies.html"))
+write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
 
 write_seo()
