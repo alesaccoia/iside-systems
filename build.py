@@ -1980,13 +1980,15 @@ PRIVACY = {
 
 def page_privacy(L, asset, home, projects, about, alt_href, cases="case-study.html"):
     t = PRIVACY[L["lang"]]
-    body = ""
-    for n, (heading, paragraphs) in enumerate(t["sections"], 1):
-        body += (f'  <section class="legal-block rv">\n'
-                 f'    <div class="n">/{n:02d}</div>\n'
-                 f'    <div><h2>{heading}</h2>'
-                 + "".join(f"<p>{para}</p>" for para in paragraphs)
-                 + "</div>\n  </section>\n")
+    # same two-column rhythm as the case studies: the heading on the left,
+    # the text on the right, across the full width of the page
+    body = '  <div class="cssteps legal-steps">\n'
+    for heading, paragraphs in t["sections"]:
+        body += ('    <section class="csstep rv">'
+                 f'<div class="k">{heading}</div>'
+                 + "<div>" + "".join(f"<p>{para}</p>" for para in paragraphs) + "</div>"
+                 + "</section>\n")
+    body += "  </div>\n"
     return (head(L, f'{t["title"]} — Iside Systems', t["desc"], asset, alt_href, "privacy")
             + header(L, asset, home, projects, about, "", alt_href, cases)
             + f"""
