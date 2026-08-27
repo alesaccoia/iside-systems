@@ -12,11 +12,21 @@ mkdir -p dist/en dist/assets/img
 cp index.html progetti.html chi-sono.html privacy.html case-study.html \
    case-ai-adoption.html case-james.html case-cloud-scale.html \
    moire.html algosynth.html \
-   robots.txt sitemap.xml dist/
+   robots.txt sitemap.xml feed.xml dist/
 cp en/index.html en/projects.html en/about.html en/privacy.html \
    en/moire.html en/algosynth.html en/case-studies.html \
    en/case-ai-adoption.html en/case-james.html \
    en/case-cloud-scale.html                                     dist/en/
+# the blog ships as folders so the URLs stay clean
+mkdir -p dist/blog dist/en/blog
+cp blog/index.html                                              dist/blog/
+cp en/blog/index.html                                           dist/en/blog/
+for post in blog/*/ ; do
+  slug=$(basename "$post")
+  mkdir -p "dist/blog/$slug"
+  cp "blog/$slug/index.html" "dist/blog/$slug/"
+done
+
 cp assets/site.css assets/site.js assets/ai-maturity.css assets/ai-maturity.js dist/assets/
 # the check is served at /ai-maturity, so it ships as a folder index
 mkdir -p dist/ai-maturity

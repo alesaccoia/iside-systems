@@ -8,7 +8,8 @@ Builds the Iside Systems site in two languages.
 Copy lives in the L_IT / L_EN dictionaries below — edit there, then re-run:
     python3 build.py
 """
-import os, html, datetime
+import os
+import blog as B, html, datetime, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -341,7 +342,7 @@ PROJECTS = [
 # ---------------------------------------------------------------- copy
 L_IT = dict(
     lang="it", other_label="EN", brand_sub="Data, AI e Marketing",
-    nav=("Studio", "Progetti", "Chi sono", "Case study"),
+    nav=("Studio", "Progetti", "Chi sono", "Case study", "Blog"),
     nav_open="Apri il menu",
     news_label="In evidenza",
     news=[("10 agosto 2026", "Nuovo case study — James: misurazione omnichannel e piano editoriale per una società di servizi educativi", "case-james.html"),
@@ -359,6 +360,9 @@ L_IT = dict(
          "con percorsi di formazione e supporto strategico continuativo, anche in modalità "
          "fractional. Né un'agenzia né una software house.",
     chips=["Strategia e Data Sciences", "AI Adoption", "Operations marketing e crescita", "Advisory e docenza"],
+    blog_lbl="Dal blog",
+    blog_h2="Scrivo quello<br>che imparo.",
+    blog_more="Tutti gli articoli",
     am_lbl="AI Maturity Check",
     am_h2="A che punto è la tua azienda con l’AI?",
     am_p="16 domande, 5 minuti, gratis.",
@@ -722,7 +726,7 @@ L_IT = dict(
 
 L_EN = dict(
     lang="en", other_label="IT", brand_sub="Data, AI and marketing",
-    nav=("Practice", "Projects", "About", "Case studies"),
+    nav=("Practice", "Projects", "About", "Case studies", "Blog"),
     nav_open="Open the menu",
     news_label="Latest",
     news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
@@ -740,6 +744,9 @@ L_EN = dict(
          "programmes and continuing strategic support, fractional where that fits. Neither an "
          "agency nor a software house.",
     chips=["Data strategy &amp; data sciences", "AI adoption", "Marketing &amp; growth operations", "Advisory &amp; speaking"],
+    blog_lbl="From the blog",
+    blog_h2="I write down<br>what I learn.",
+    blog_more="All posts",
     am_lbl="AI Maturity Check",
     am_h2="Where does your company stand on AI?",
     am_p="16 questions, 5 minutes, free — in Italian.",
@@ -1173,7 +1180,10 @@ PATHS = {"home":      ("", "en"),
          "about":     ("chi-sono.html", "en/about.html"),
          "moire":     ("moire.html", "en/moire.html"),
          "algosynth": ("algosynth.html", "en/algosynth.html"),
-         "privacy":   ("privacy.html", "en/privacy.html")}
+         "privacy":   ("privacy.html", "en/privacy.html"),
+         "blog":      ("blog", "en/blog")}
+PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
+              for p in B.POSTS})
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1228,6 +1238,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="description" content="{desc}">
 <meta name="author" content="Alessandro Saccoia">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="alternate" type="application/rss+xml" title="Iside Systems — Blog" href="{SITE}/feed.xml">
 <link rel="canonical" href="{url}">
 <link rel="alternate" hreflang="it" href="{SITE}/{it_path}">
 <link rel="alternate" hreflang="en" href="{SITE}/{en_path}">
@@ -1293,6 +1304,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
+    # the blog lives at /blog for both languages; depth decides the hop
+    depth = asset.count("../")
+    blog_href = ("../" * depth) + "blog" if depth else "blog"
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1309,6 +1323,7 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
       {a(home, n[0], 'home')}
       {a(cases, n[3], 'cases')}
       {a(projects, n[1], 'projects')}
+      {a(blog_href, n[4], 'blog')}
       {a(about, n[2], 'about')}
       <span class="langsw"><a href="#" aria-current="true">{L['lang'].upper()}</a>/<a href="{alt_href}">{L['other_label']}</a></span>
       <button id="themeBtn" type="button">Dark</button>
@@ -1378,6 +1393,12 @@ def footer(L, home, projects, about, asset):
 def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"):
     # the English home sits one level down, so root-level pages need the hop
     root = "../" if asset.startswith("../") else ""
+    blog_rows = "".join(
+        f'<a class="bpost" href="{root}blog/{p["slug"]}">'
+        f'<span class="d">{p["human_date"]}</span>'
+        f'<span class="t">{p["title"]}</span>'
+        f'<span class="k">{p["tags"][0]}</span>'
+        f'<span class="go">\u2192</span></a>' for p in B.POSTS[:3])
     caps_html = ""
     for i, (h3, body, tags) in enumerate(L["caps"], 1):
         caps_html += f"""
@@ -1473,6 +1494,15 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
   </div>
   <div class="csrows rv">{case_rows(L)}</div>
   <p style="margin-top:26px"><a class="meta" href="{cases}" style="color:var(--acc);text-decoration:none">{L['cs_home_more']}</a></p>
+</section>
+
+<section class="pad rule blogband" style="padding-top:clamp(50px,8vh,96px);padding-bottom:clamp(50px,8vh,96px)">
+  <div class="lbl">{L['blog_lbl']}</div>
+  <div class="cols2" style="align-items:end">
+    <div class="rv"><h2>{L['blog_h2']}</h2></div>
+    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{root}blog">{L['blog_more']}<span class="go">→</span></a></p></div>
+  </div>
+  <div class="bposts rv">{blog_rows}</div>
 </section>
 
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
@@ -1978,6 +2008,74 @@ PRIVACY = {
 }
 
 
+
+
+# ---------------------------------------------------------------- blog
+def page_blog(L, asset, home, projects, about, alt_href, cases):
+    t = B.BLOG_LABELS[L["lang"]]
+    rows = ""
+    for post in B.POSTS:
+        rows += f"""    <a class="bcard rv" href="{post['slug']}">
+      <div class="meta">{post['human_date']} · {post['read']} {t['read']}</div>
+      <h2>{post['title']}</h2>
+      <p>{post['dek']}</p>
+      <div class="tags">{B.chips(post['tags'])}</div>
+      <span class="go">{t['more']} →</span>
+    </a>
+"""
+    note = f'<p class="meta" style="margin-top:22px">{t["note"]}</p>' if L["lang"] == "en" else ""
+    return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "blog")
+            + header(L, asset, home, projects, about, "blog", alt_href, cases)
+            + f"""
+<section class="pad blogindex">
+  <div class="lbl">{t['kicker']}</div>
+  <h1>{t['title']}</h1>
+  <p class="lede dim">{t['lede']}</p>
+  {note}
+  <div class="bcards">
+{rows}  </div>
+</section>
+"""
+            + footer(L, home, projects, about, asset))
+
+
+def page_post(L, asset, home, projects, about, alt_href, cases, post):
+    t = B.BLOG_LABELS[L["lang"]]
+    url = f"{SITE}/blog/{post['slug']}"
+    ld = ('<script type="application/ld+json">'
+          '{"@context":"https://schema.org","@type":"BlogPosting",'
+          f'"headline":{json.dumps(post["title"], ensure_ascii=False)},'
+          f'"description":{json.dumps(post["dek"], ensure_ascii=False)},'
+          f'"datePublished":"{post["date"]}","inLanguage":"it",'
+          f'"keywords":{json.dumps(", ".join(post["tags"]), ensure_ascii=False)},'
+          f'"mainEntityOfPage":"{url}",'
+          '"author":{"@type":"Person","name":"Alessandro Saccoia"},'
+          '"publisher":{"@type":"Organization","name":"Iside Systems SRLS"}}'
+          "</script>")
+    return (head(L, f'{post["title"]} — Iside Systems', post["dek"], asset, alt_href,
+                 f"post-{post['slug']}")
+            + ld
+            + header(L, asset, home, projects, about, "blog", alt_href, cases)
+            + f"""
+<article class="pad post">
+  <div class="lbl">{t['kicker']}</div>
+  <h1>{post['title']}</h1>
+  <p class="lede dim">{post['dek']}</p>
+  <div class="postmeta">
+    <span>{t['updated']} {post['human_date']}</span><span>{post['read']} {t['read']}</span>
+    <span class="tags">{B.chips(post['tags'])}</span>
+  </div>
+  <nav class="ptoc"><span>{t['toc']}</span>{B.toc(post['body'])}</nav>
+  <div class="pbody">
+{B.render_blocks(post['body'])}
+  </div>
+  <p class="pback"><a href="../blog">{t['back']}</a></p>
+</article>
+"""
+            + footer(L, home, projects, about, asset))
+
+
+
 def page_privacy(L, asset, home, projects, about, alt_href, cases="case-study.html"):
     t = PRIVACY[L["lang"]]
     # same two-column rhythm as the case studies: the heading on the left,
@@ -2166,7 +2264,7 @@ def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
     for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
-                "projects", "about", "privacy"):
+                "projects", "about", "privacy", "blog"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -2182,7 +2280,30 @@ def write_seo():
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
                '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
                + "\n".join(rows) + "\n</urlset>\n")
+    # posts are Italian only: one entry each, no alternates
+    posts = "".join(
+        f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n    <lastmod>{p["date"]}</lastmod>'
+        f'\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
+        for p in B.POSTS)
+    sitemap = sitemap.replace("</urlset>", posts + "</urlset>")
     write("sitemap.xml", sitemap)
+
+    # a feed, because a blog without one is a newsletter you cannot leave
+    items = "".join(
+        f"  <item>\n    <title>{html.escape(p['title'])}</title>\n"
+        f"    <link>{SITE}/blog/{p['slug']}</link>\n"
+        f"    <guid>{SITE}/blog/{p['slug']}</guid>\n"
+        f"    <pubDate>{p['date']}</pubDate>\n"
+        + "".join(f"    <category>{html.escape(t)}</category>\n" for t in p["tags"])
+        + f"    <description>{html.escape(p['dek'])}</description>\n  </item>\n"
+        for p in B.POSTS)
+    write("feed.xml",
+          '<?xml version="1.0" encoding="UTF-8"?>\n'
+          '<rss version="2.0"><channel>\n'
+          f"  <title>Iside Systems — Blog</title>\n  <link>{SITE}/blog</link>\n"
+          f"  <language>it</language>\n"
+          f"  <description>{html.escape(B.BLOG_LABELS['it']['lede'])}</description>\n"
+          + items + "</channel></rss>\n")
 
     write("robots.txt",
           "User-agent: *\n"
@@ -2208,6 +2329,12 @@ write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.h
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
+write("blog/index.html", page_blog(L_IT, "../assets/", "../index.html", "../progetti.html",
+                                   "../chi-sono.html", "../en/blog", "../case-study.html"))
+for _post in B.POSTS:
+    write(f"blog/{_post['slug']}/index.html",
+          page_post(L_IT, "../../assets/", "../../index.html", "../../progetti.html",
+                    "../../chi-sono.html", "../../en/blog", "../../case-study.html", _post))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
@@ -2220,5 +2347,7 @@ write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "proje
 write("en/projects.html", page_projects(L_EN, "../assets/", "index.html", "projects.html", "about.html", "../progetti.html", "case-studies.html"))
 write("en/about.html",    page_about   (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../chi-sono.html", "case-studies.html"))
 write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
+write("en/blog/index.html", page_blog(L_EN, "../../assets/", "../index.html", "../projects.html",
+                                      "../about.html", "../../blog", "../case-studies.html"))
 
 write_seo()

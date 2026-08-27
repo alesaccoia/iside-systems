@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>Iside Systems — Blog</title>
+  <link>https://www.isidesystems.com/blog</link>
+  <language>it</language>
+  <description>Quello che imparo mettendo l’AI dentro le organizzazioni: cosa si compra davvero, come si governa, e dove i progetti si incagliano.</description>
+  <item>
+    <title>Comprare AI in azienda: cosa stai acquistando davvero</title>
+    <link>https://www.isidesystems.com/blog/cosa-si-compra-davvero</link>
+    <guid>https://www.isidesystems.com/blog/cosa-si-compra-davvero</guid>
+    <pubDate>2026-08-26</pubDate>
+    <category>AI adoption</category>
+    <category>Enterprise</category>
+    <category>Governance</category>
+    <description>Le licenze si confrontano in mezz’ora. Quello che decide se il progetto reggerà sono quattro cose che nessuno guarda in fase di acquisto: dove stanno i dati, chi sono gli utenti, come entra la conoscenza, e chi risponde quando qualcosa va storto.</description>
+  </item>
+  <item>
+    <title>Un ecosistema, non un abbonamento</title>
+    <link>https://www.isidesystems.com/blog/ecosistema-non-abbonamento</link>
+    <guid>https://www.isidesystems.com/blog/ecosistema-non-abbonamento</guid>
+    <pubDate>2026-08-26</pubDate>
+    <category>Architettura</category>
+    <category>Skill</category>
+    <category>Knowledge</category>
+    <description>Istruzioni di organizzazione, procedure versionate, contesto di progetto e una convenzione documentale che dice all’AI dove guardare. Come si costruisce lo strato aziendale sopra una piattaforma che non hai scritto tu.</description>
+  </item>
+  <item>
+    <title>Undici cose da sistemare prima di accendere l’AI in azienda</title>
+    <link>https://www.isidesystems.com/blog/prima-di-accendere</link>
+    <guid>https://www.isidesystems.com/blog/prima-di-accendere</guid>
+    <pubDate>2026-08-26</pubDate>
+    <category>Governance</category>
+    <category>Sicurezza</category>
+    <category>Checklist</category>
+    <description>Una lista corta, in ordine di quanto fa male sbagliarla. Serve a evitare che il primo mese di adozione diventi il primo mese di incidenti.</description>
+  </item>
+</channel></rss>
