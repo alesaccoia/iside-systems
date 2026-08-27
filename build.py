@@ -1304,9 +1304,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
-    # the blog lives at /blog for both languages; depth decides the hop
-    depth = asset.count("../")
-    blog_href = ("../" * depth) + "blog" if depth else "blog"
+    # /blog and /blog/<slug> are served without a trailing slash, so relative
+    # links there resolve against the root: those pages ask for absolute paths
+    if asset.startswith("/"):
+        blog_href = "/en/blog" if L["lang"] == "en" else "/blog"
+    else:
+        depth = asset.count("../")
+        blog_href = ("../" * depth) + "blog" if depth else "blog"
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1344,7 +1348,13 @@ def newsbar(L, about):
 
 def footer(L, home, projects, about, asset):
     # privacy.html resolves inside the current folder, so the English pages
-    # reach en/privacy.html and the Italian ones the root file
+    # reach en/privacy.html and the Italian ones the root file — except where
+    # the page is served without a trailing slash and needs absolute paths
+    privacy_href = "privacy.html"
+    cases_href = "case-study.html" if L["lang"] == "it" else "case-studies.html"
+    if asset.startswith("/"):
+        privacy_href = "/en/privacy.html" if L["lang"] == "en" else "/privacy.html"
+        cases_href = "/case-study.html" if L["lang"] == "it" else "/en/case-studies.html"
     n = L["nav"]
     caps = [c[0].replace("<br>", " ") for c in L["caps"]]
     caplinks = "".join(f'<a href="{home}#capabilities">{c}</a>' for c in caps)
@@ -1363,7 +1373,7 @@ def footer(L, home, projects, about, asset):
     <a href="{home}">{n[0]}</a>
     <a href="{projects}">{n[1]}</a>
     <a href="{about}">{n[2]}</a>
-    <a href="{'case-study.html' if L['lang'] == 'it' else 'case-studies.html'}">{n[3]}</a>
+    <a href="{cases_href}">{n[3]}</a>
   </div>
   <div class="col">
     <b>{L['foot_caps']}</b>
@@ -1371,7 +1381,7 @@ def footer(L, home, projects, about, asset):
   </div>
   <div class="colophon">
     <span>{L['foot_colophon']}</span>
-    <a href="privacy.html">{L['privacy_link']}</a>
+    <a href="{privacy_href}">{L['privacy_link']}</a>
     <span>IT · EN · FR</span>
   </div>
 </footer>
@@ -2015,7 +2025,7 @@ def page_blog(L, asset, home, projects, about, alt_href, cases):
     t = B.BLOG_LABELS[L["lang"]]
     rows = ""
     for post in B.POSTS:
-        rows += f"""    <a class="bcard rv" href="{post['slug']}">
+        rows += f"""    <a class="bcard rv" href="/blog/{post['slug']}">
       <div class="meta">{post['human_date']} · {post['read']} {t['read']}</div>
       <h2>{post['title']}</h2>
       <p>{post['dek']}</p>
@@ -2069,7 +2079,7 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
   <div class="pbody">
 {B.render_blocks(post['body'])}
   </div>
-  <p class="pback"><a href="../blog">{t['back']}</a></p>
+  <p class="pback"><a href="/blog">{t['back']}</a></p>
 </article>
 """
             + footer(L, home, projects, about, asset))
@@ -2329,12 +2339,12 @@ write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.h
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
-write("blog/index.html", page_blog(L_IT, "../assets/", "../index.html", "../progetti.html",
-                                   "../chi-sono.html", "../en/blog", "../case-study.html"))
+write("blog/index.html", page_blog(L_IT, "/assets/", "/", "/progetti.html",
+                                   "/chi-sono.html", "/en/blog", "/case-study.html"))
 for _post in B.POSTS:
     write(f"blog/{_post['slug']}/index.html",
-          page_post(L_IT, "../../assets/", "../../index.html", "../../progetti.html",
-                    "../../chi-sono.html", "../../en/blog", "../../case-study.html", _post))
+          page_post(L_IT, "/assets/", "/", "/progetti.html",
+                    "/chi-sono.html", "/en/blog", "/case-study.html", _post))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
@@ -2347,7 +2357,7 @@ write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "proje
 write("en/projects.html", page_projects(L_EN, "../assets/", "index.html", "projects.html", "about.html", "../progetti.html", "case-studies.html"))
 write("en/about.html",    page_about   (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../chi-sono.html", "case-studies.html"))
 write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
-write("en/blog/index.html", page_blog(L_EN, "../../assets/", "../index.html", "../projects.html",
-                                      "../about.html", "../../blog", "../case-studies.html"))
+write("en/blog/index.html", page_blog(L_EN, "/assets/", "/en", "/en/projects.html",
+                                      "/en/about.html", "/blog", "/en/case-studies.html"))
 
 write_seo()
