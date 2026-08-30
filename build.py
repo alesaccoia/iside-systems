@@ -52,7 +52,9 @@ PROJECTS = [
              ["Applied research", "Prototypes"])),
     dict(seed=5,  cat="analytics strategy",   year="2022 — 23",
          it=("Nielsen", "Senior manager, marketing effectiveness",
-             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari. Da qui viene la disciplina di misurazione e attribuzione cross-canale che regge oggi il lavoro di operations.",
+             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari. Da "
+             "qui viene la disciplina di misurazione e attribuzione cross-canale che regge oggi il "
+             "lavoro di operations.",
              ["Misurazione media", "Attribuzione"]),
          en=("Nielsen", "Senior manager, marketing effectiveness",
              "Marketing effectiveness and media measurement for large advertisers — where the "
@@ -155,7 +157,9 @@ PROJECTS = [
     # ---- recovered from the previous site (mindmaker_www) ----
     dict(seed=15, cat="ai strategy", year="2023",
          it=("Mai Dire AI", "Formato divulgativo · con Angela, Christelle, Sara, Cristian",
-             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile. Prende per mano chi guarda e lo accompagna dentro un mondo affascinante e complicato, senza gergo e senza mal di testa.",
+             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile. Prende per "
+             "mano chi guarda e lo accompagna dentro un mondo affascinante e complicato, senza gergo e "
+             "senza mal di testa.",
              ["Divulgazione", "Formato", "AI"]),
          en=("Mai Dire AI", "Explainer format · with Angela, Christelle, Sara, Cristian",
              "An AI format that makes artificial intelligence accessible and understandable — like "
@@ -1789,7 +1793,10 @@ PRIVACY = {
      "Finché non acconsenti, il consenso è impostato su “negato” per tutte le finalità che lo "
      "richiedono (Consent Mode di Google): le richieste che partono verso Google non usano "
      "identificatori pubblicitari.",
-     "La tua scelta è conservata nel browser (memoria locale, chiave <code>iside-consent</code>) e non viene trasmessa a noi. Per revocarla puoi cancellare i dati del sito dalle impostazioni del browser, e alla visita successiva il banner ricomparirà.",
+     "La tua scelta è conservata nel browser (memoria locale, chiave "
+     "<code>iside-consent</code>) e non viene trasmessa a noi. Per revocarla puoi cancellare i "
+     "dati del sito dalle impostazioni del browser, e alla visita successiva il banner "
+     "ricomparirà.",
      "Base giuridica: consenso per la misurazione e la pubblicità (art. 6.1.a GDPR e art. 122 del "
      "Codice privacy); legittimo interesse per i cookie tecnici."]),
 
@@ -1891,7 +1898,9 @@ PRIVACY = {
      "first visit and which you can refuse or withdraw at any time.",
      "Until you consent, consent is set to \"denied\" for every purpose that requires it (Google "
      "Consent Mode): requests to Google carry no advertising identifiers.",
-     "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and is not sent to us. To withdraw it, clear the site data in your browser settings, and the banner will appear again on your next visit.",
+     "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and "
+     "is not sent to us. To withdraw it, clear the site data in your browser settings, and the "
+     "banner will appear again on your next visit.",
      "Legal basis: consent for measurement and advertising (Art. 6.1.a GDPR and Art. 122 of the "
      "Italian Privacy Code); legitimate interest for technical cookies."]),
 
