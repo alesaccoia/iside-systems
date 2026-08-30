@@ -9,7 +9,7 @@ python3 build.py
 rm -rf dist
 mkdir -p dist/en dist/assets/img
 
-cp index.html progetti.html chi-sono.html privacy.html case-study.html \
+cp index.html progetti.html chi-sono.html privacy.html metodologia.html case-study.html \
    case-ai-adoption.html case-james.html case-cloud-scale.html \
    moire.html algosynth.html \
    robots.txt sitemap.xml dist/

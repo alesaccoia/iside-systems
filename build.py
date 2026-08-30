@@ -8,7 +8,7 @@ Builds the Iside Systems site in two languages.
 Copy lives in the L_IT / L_EN dictionaries below — edit there, then re-run:
     python3 build.py
 """
-import os, html, datetime
+import os, metodo as M, html, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -341,7 +341,7 @@ PROJECTS = [
 # ---------------------------------------------------------------- copy
 L_IT = dict(
     lang="it", other_label="EN", brand_sub="Data, AI e Marketing",
-    nav=("Studio", "Progetti", "Chi sono", "Case study"),
+    nav=("Studio", "Progetti", "Chi sono", "Case study", "", "Metodologia"),
     nav_open="Apri il menu",
     news_label="In evidenza",
     news=[("10 agosto 2026", "Nuovo case study — James: misurazione omnichannel e piano editoriale per una società di servizi educativi", "case-james.html"),
@@ -359,6 +359,15 @@ L_IT = dict(
          "con percorsi di formazione e supporto strategico continuativo, anche in modalità "
          "fractional. Né un'agenzia né una software house.",
     chips=["Strategia e Data Sciences", "AI Adoption", "Operations marketing e crescita", "Advisory e docenza"],
+    m_lbl="Metodologia",
+    m_h2="L’AI in azienda è<br>sviluppo organizzativo<br>prima che modelli.",
+    m_p="Un whitepaper in nove sezioni: dove entra la tecnologia nei processi, come si legge la "
+        "cultura, come si diagnostica un problema prima di scegliere lo strumento, come si "
+        "sviluppano le persone, come si allocano i compiti fra umano e sistema, e con quali "
+        "indicatori si valuta il risultato.",
+    m_steps=["Diagnosi", "Cultura", "Sviluppo delle persone", "Allocazione dei compiti",
+             "Progettazione", "Valutazione"],
+    m_cta="Leggi il whitepaper",
     am_lbl="AI Maturity Check",
     am_h2="A che punto è la tua azienda con l’AI?",
     am_p="16 domande, 5 minuti, gratis.",
@@ -713,7 +722,7 @@ L_IT = dict(
 
 L_EN = dict(
     lang="en", other_label="IT", brand_sub="Data, AI and marketing",
-    nav=("Practice", "Projects", "About", "Case studies"),
+    nav=("Practice", "Projects", "About", "Case studies", "", "Metodologia"),
     nav_open="Open the menu",
     news_label="Latest",
     news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
@@ -731,6 +740,15 @@ L_EN = dict(
          "programmes and continuing strategic support, fractional where that fits. Neither an "
          "agency nor a software house.",
     chips=["Data strategy &amp; data sciences", "AI adoption", "Marketing &amp; growth operations", "Advisory &amp; speaking"],
+    m_lbl="Method",
+    m_h2="AI in a company is<br>organisational development<br>before it is models.",
+    m_p="A whitepaper in nine sections, in Italian: where the technology enters the processes, how "
+        "to read the culture, how to diagnose a problem before choosing a tool, how people are "
+        "developed, how tasks are allocated between human and system, and which indicators tell "
+        "you whether it worked.",
+    m_steps=["Diagnosis", "Culture", "Developing people", "Task allocation",
+             "Design", "Evaluation"],
+    m_cta="Read the whitepaper",
     am_lbl="AI Maturity Check",
     am_h2="Where does your company stand on AI?",
     am_p="16 questions, 5 minutes, free — in Italian.",
@@ -1146,7 +1164,8 @@ PATHS = {"home":      ("", "en"),
          "about":     ("chi-sono.html", "en/about.html"),
          "moire":     ("moire.html", "en/moire.html"),
          "algosynth": ("algosynth.html", "en/algosynth.html"),
-         "privacy":   ("privacy.html", "en/privacy.html")}
+         "privacy":   ("privacy.html", "en/privacy.html"),
+         "metodo":    ("metodologia.html", "metodologia.html")}
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1266,6 +1285,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
+    depth = asset.count("../")
+    metodo_href = ("../" * depth) + "metodologia.html"
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1281,6 +1302,7 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
     <nav class="main" id="mainnav">
       {a(home, n[0], 'home')}
       {a(cases, n[3], 'cases')}
+      {a(metodo_href, n[5], 'metodo')}
       {a(projects, n[1], 'projects')}
       {a(about, n[2], 'about')}
       <span class="langsw"><a href="#" aria-current="true">{L['lang'].upper()}</a>/<a href="{alt_href}">{L['other_label']}</a></span>
@@ -1421,6 +1443,20 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div class="rv">{pos_ps}</div>
   </div>
   {mini_cta(L, about, 0)}
+</section>
+
+<section class="mband rv">
+  <div class="inner">
+    <div>
+      <div class="lbl">{L['m_lbl']}</div>
+      <h2>{L['m_h2']}</h2>
+    </div>
+    <div>
+      <p>{L['m_p']}</p>
+      <div class="steps">{"".join(f"<span>{x}</span>" for x in L["m_steps"])}</div>
+      <p style="margin-top:24px"><a class="ambtn" href="{root}metodologia.html">{L['m_cta']}<span class="go">\u2192</span></a></p>
+    </div>
+  </div>
 </section>
 
 <section class="caps rule" id="capabilities">
@@ -1726,6 +1762,31 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 </section>
 
 """ + footer(L, home, projects, about, asset))
+
+
+
+
+# ---------------------------------------------------------------- metodologia
+def page_metodo(L, asset, home, projects, about, alt_href, cases):
+    t = M.LABELS
+    return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "metodo")
+            + header(L, asset, home, projects, about, "metodo", alt_href, cases)
+            + f"""
+<article class="pad metodo">
+  <header class="mtop">
+    <div class="lbl">{t['kicker']}</div>
+    <h1>{t['title']}</h1>
+    <p class="msubtitle">{t['sub']}</p>
+    <p class="lede dim">{t['lede']}</p>
+    <p class="mstrap">{t['strap']}</p>
+    <p class="meta">{t['meta']}</p>
+  </header>
+  <nav class="mtoc"><span>{t['toc']}</span>{M.toc(M.SECTIONS)}</nav>
+{M.render(M.SECTIONS)}
+</article>
+"""
+            + footer(L, home, projects, about, asset))
+
 
 
 # ---------------------------------------------------------------- privacy
@@ -2140,7 +2201,7 @@ def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
     for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
-                "projects", "about", "privacy"):
+                "projects", "about", "privacy", "metodo"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -2181,6 +2242,8 @@ for _slug in ("ai-adoption", "james", "cloud-scale"):
 write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/index.html"))
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
+write("metodologia.html", page_metodo(L_IT, "assets/", "index.html", "progetti.html",
+                                     "chi-sono.html", "metodologia.html", "case-study.html"))
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
 
 for key in ("moire", "algosynth"):
