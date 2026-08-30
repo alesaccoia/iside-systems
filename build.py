@@ -8,7 +8,8 @@ Builds the Iside Systems site in two languages.
 Copy lives in the L_IT / L_EN dictionaries below — edit there, then re-run:
     python3 build.py
 """
-import os, metodo as M, html, datetime, json
+import os
+import blog as B, metodo as M, html, datetime, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -52,9 +53,9 @@ PROJECTS = [
              ["Applied research", "Prototypes"])),
     dict(seed=5,  cat="analytics strategy",   year="2022 — 23",
          it=("Nielsen", "Senior manager, marketing effectiveness",
-             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari. Da "
-             "qui viene la disciplina di misurazione e attribuzione cross-canale che regge oggi il "
-             "lavoro di operations.",
+             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari. "
+             "Da qui viene la disciplina di misurazione e attribuzione cross-canale che "
+             "regge oggi il lavoro di operations.",
              ["Misurazione media", "Attribuzione"]),
          en=("Nielsen", "Senior manager, marketing effectiveness",
              "Marketing effectiveness and media measurement for large advertisers — where the "
@@ -157,9 +158,9 @@ PROJECTS = [
     # ---- recovered from the previous site (mindmaker_www) ----
     dict(seed=15, cat="ai strategy", year="2023",
          it=("Mai Dire AI", "Formato divulgativo · con Angela, Christelle, Sara, Cristian",
-             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile. Prende per "
-             "mano chi guarda e lo accompagna dentro un mondo affascinante e complicato, senza gergo e "
-             "senza mal di testa.",
+             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile. Prende "
+             "per mano chi guarda e lo accompagna dentro un mondo affascinante e complicato, senza "
+             "gergo e senza mal di testa.",
              ["Divulgazione", "Formato", "AI"]),
          en=("Mai Dire AI", "Explainer format · with Angela, Christelle, Sara, Cristian",
              "An AI format that makes artificial intelligence accessible and understandable — like "
@@ -341,7 +342,7 @@ PROJECTS = [
 # ---------------------------------------------------------------- copy
 L_IT = dict(
     lang="it", other_label="EN", brand_sub="Data, AI e Marketing",
-    nav=("Studio", "Progetti", "Chi sono", "Case study", "", "Metodologia"),
+    nav=("Studio", "Progetti", "Chi sono", "Case study", "Blog", "Metodologia"),
     nav_open="Apri il menu",
     news_label="In evidenza",
     news=[("10 agosto 2026", "Nuovo case study — James: misurazione omnichannel e piano editoriale per una società di servizi educativi", "case-james.html"),
@@ -368,6 +369,9 @@ L_IT = dict(
     m_steps=["Diagnosi", "Cultura", "Sviluppo delle persone", "Allocazione dei compiti",
              "Progettazione", "Valutazione"],
     m_cta="Leggi il whitepaper",
+    blog_lbl="Dal blog",
+    blog_h2="Scrivo quello<br>che imparo.",
+    blog_more="Tutti gli articoli",
     am_lbl="AI Maturity Check",
     am_h2="A che punto è la tua azienda con l’AI?",
     am_p="16 domande, 5 minuti, gratis.",
@@ -392,8 +396,8 @@ L_IT = dict(
            "segmentazione, esperimenti, e una lettura intuitiva dei risultati.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
-           "Portare l'adozione fino al punto in cui l'organizzazione va avanti da sola. Casi d'uso che pagano "
-           "davvero, "
+           "Portare l'adozione fino al punto in cui l'organizzazione va avanti da sola. Casi d'uso "
+           "che pagano davvero, "
            "costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI Act obbliga a "
            "documentare. Certificato in AI &amp; Law e AI Governance.",
            ["Selezione casi d'uso", "Pilota → produzione", "Governance", "AI Act", "Formazione", "Change"]),
@@ -541,7 +545,7 @@ L_IT = dict(
     f_req="Nome, email e messaggio sono obbligatori.",
     f_ok="Messaggio inviato. Ti rispondo entro pochi giorni.",
     f_sending="Invio in corso…",
-    f_fallback="Invio diretto non disponibile: apro il tuo client di posta con il messaggio pronto.",
+    f_fallback="Invio diretto non disponibile. Apro il tuo client di posta con il messaggio pronto.",
     f_hp="Lascia vuoto questo campo",
     f_done_title="Messaggio inviato.",
     f_done_lead="Ti rispondo entro pochi giorni, di solito prima. Se nel frattempo vuoi aggiungere "
@@ -585,7 +589,10 @@ L_IT = dict(
              "mappare il lavoro reale, individuare i low hanging fruit e disegnare agenti che "
              "rispettino i metodi già in uso.",
         h2="Dall'aula<br>dentro i processi.",
-        ctx=["L'AI era già entrata in azienda dalla porta di servizio. Ognuno usava lo strumento che preferiva, con criteri propri, senza una risposta condivisa alle due domande che bloccano tutti — dove finiscono i nostri dati, e di chi è la responsabilità sull'output.",
+        ctx=["L'AI era già entrata in azienda dalla porta di servizio. Ognuno usava lo strumento "
+             "che preferiva, con criteri propri, senza una risposta condivisa alle due domande "
+             "che bloccano tutti — dove finiscono i nostri dati, e di chi è la responsabilità "
+             "sull'output.",
              "I rischi erano organizzativi. Competenze che divergono, know-how che esce senza che "
              "nessuno se ne accorga, e un uso che resta confinato alla curiosità personale invece "
              "di diventare capacità dell'organizzazione."],
@@ -640,7 +647,9 @@ L_IT = dict(
              "indipendente dal cliente e riutilizzabile."],
         fig="james",
         steps=[("Ingestione", "Un solo magazzino",
-                "I dati arrivano dalle piattaforme pubblicitarie e analytics e vengono raccolti in un unico posto, deduplicati per chiave naturale, così le sincronizzazioni ripetute non creano doppioni."),
+                "I dati arrivano dalle piattaforme pubblicitarie e analytics e vengono raccolti in "
+                "un unico posto, deduplicati per chiave naturale, così le sincronizzazioni "
+                "ripetute non creano doppioni."),
                ("Modello", "Funnel configurabile",
                 "Stadi e KPI si definiscono dall'interfaccia: metrica di origine, aggregazione, "
                 "rapporti fra metriche, moltiplicatori, livello di entità. Ogni stadio può essere "
@@ -695,7 +704,8 @@ L_IT = dict(
                 "di applicazione, database, accessi, backup e deployment. L'obiettivo è "
                 "assorbire la crescita senza riprogettare il sistema a ogni salto di utilizzo."),
                ("Osservabilità", "Monitoraggio dal primo giorno",
-                "Strumenti di monitoraggio impostati prima del primo incidente. Sapere come sta il sistema fa parte dell'infrastruttura quanto i server."),
+                "Strumenti di monitoraggio impostati prima del primo incidente. Sapere come sta "
+                "il sistema fa parte dell'infrastruttura quanto i server."),
                ("Processo", "Sviluppo più rapido e più controllato",
                 "Organizzazione dell'ambiente e del processo di sviluppo — repository, revisione, "
                 "assistenti di codice — per andare più veloci lungo un percorso documentato e "
@@ -715,14 +725,16 @@ L_IT = dict(
         chips=["Migrazione cloud", "Backup e deployment", "Monitoraggio", "Processo di sviluppo",
                "GDPR e AI Act", "Termini d'uso"])],
     cookie_title="Cookie.",
-    cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. Niente pubblicità, niente profilazione rivenduta a terzi. Se rifiuti, il sito funziona esattamente allo stesso modo.",
+    cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. "
+                "Niente pubblicità, niente profilazione rivenduta a terzi. Se rifiuti, il sito "
+                "funziona esattamente allo stesso modo.",
     cookie_accept="Accetto",
     cookie_reject="Rifiuto",
 )
 
 L_EN = dict(
     lang="en", other_label="IT", brand_sub="Data, AI and marketing",
-    nav=("Practice", "Projects", "About", "Case studies", "", "Methodology"),
+    nav=("Practice", "Projects", "About", "Case studies", "Blog", "Methodology"),
     nav_open="Open the menu",
     news_label="Latest",
     news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
@@ -749,6 +761,9 @@ L_EN = dict(
     m_steps=["Diagnosis", "Culture", "Developing people", "Task allocation",
              "Design", "Evaluation"],
     m_cta="Read the whitepaper",
+    blog_lbl="From the blog",
+    blog_h2="I write down<br>what I learn.",
+    blog_more="All posts",
     am_lbl="AI Maturity Check",
     am_h2="Where does your company stand on AI?",
     am_p="16 questions, 5 minutes, free — in Italian.",
@@ -772,8 +787,8 @@ L_EN = dict(
            "segmentation, experiments, and an intuitive reading of the result.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
           ("AI <br>Adoption",
-           "Driving adoption to the point where the organisation carries it on its own. The use cases "
-           "that actually pay, "
+           "Driving adoption to the point where the organisation carries it on its own. The use "
+           "cases that actually pay, "
            "the real cost of running them, who has to change how they work, what the AI Act obliges "
            "you to document. Certified in AI &amp; Law and AI Governance.",
            ["Use-case selection", "Pilot → production", "Governance", "EU AI Act", "Training", "Change"]),
@@ -918,7 +933,7 @@ L_EN = dict(
     f_req="Name, email and message are required.",
     f_ok="Message sent. I will reply within a few days.",
     f_sending="Sending…",
-    f_fallback="Direct sending unavailable: opening your mail client with the message ready.",
+    f_fallback="Direct sending unavailable. Opening your mail client with the message ready.",
     f_hp="Leave this field empty",
     f_done_title="Message sent.",
     f_done_lead="I will reply within a few days, usually sooner. If you want to add anything in the "
@@ -963,7 +978,10 @@ L_EN = dict(
              "work, find the low-hanging fruit, and design agents that respect the methods already "
              "in use.",
         h2="From the classroom<br>into the processes.",
-        ctx=["AI was already inside the company, through the back door. Everyone used whatever tool they preferred, on their own terms, with no shared answer to the two questions that stop everybody — where does our data end up, and who is responsible for the output.",
+        ctx=["AI was already inside the company, through the back door. Everyone used whatever "
+             "tool they preferred, on their own terms, with no shared answer to the "
+             "two questions that stop everybody — where does our data end up, and who is "
+             "responsible for the output.",
              "The risks were organisational. Skills drifting apart, know-how leaving without "
              "anyone noticing, and usage staying at the level of personal curiosity instead of "
              "becoming organisational capability."],
@@ -986,7 +1004,9 @@ L_EN = dict(
                 "low-hanging fruit falls out of that — what can be improved immediately, without "
                 "rewriting how people work."),
                ("Design", "Agents shaped around existing methods",
-                "The agents come out of the mapping and follow the methods the organisation already has, instead of asking it to adapt to them. A tool built that way gets adopted; one that imposes its own gets worked around inside a month."),
+                "The agents come out of the mapping and follow the methods the organisation "
+                "already has, instead of asking it to adapt to them. A tool built that way gets "
+                "adopted; one that imposes its own gets worked around inside a month."),
                ("Over time", "Short recurring briefs",
                 "Brief, regular pieces built on seminar feedback and on observed usage: summarising "
                 "long documents, extracting structured data, deep research, regulatory updates.")],
@@ -1088,7 +1108,8 @@ L_EN = dict(
         chips=["Cloud migration", "Backups and deployment", "Monitoring", "Development process",
                "GDPR and the AI Act", "Terms of use"])],
     cookie_title="Cookies.",
-    cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no profiling sold on to anyone. If you refuse, the site works exactly the same.",
+    cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no "
+                "profiling sold on to anyone. If you refuse, the site works exactly the same.",
     cookie_accept="Accept",
     cookie_reject="Refuse",
 )
@@ -1100,9 +1121,14 @@ LABS = {
 "moire": dict(
     shot="img/moire.jpg", demo="lab/moire/index.html",
     it=dict(kicker="Lab", title="Moire",
-        lede="Generatore di pattern moiré con sintesi audio-video sincronizzata. Le figure che vedete e quello che sentite sono guidati dagli stessi parametri.",
-        body=["Quattro famiglie di pattern — linee, griglia, cerchi, radiale — sovrapposte con uno sfasamento d'angolo regolabile, da cui nasce l'interferenza moiré. Densità, angolo, scala e velocità si controllano in tempo reale.",
-              "La parte audio è una sintesi FM agganciata agli stessi controlli, quindi cambiare la densità visiva sposta il timbro. Non è una sonificazione aggiunta dopo, i due motori condividono lo stato."],
+        lede="Generatore di pattern moiré con sintesi audio-video sincronizzata. Le figure che "
+             "vedete e quello che sentite sono guidati dagli stessi parametri.",
+        body=["Quattro famiglie di pattern — linee, griglia, cerchi, radiale — sovrapposte con uno "
+              "sfasamento d'angolo regolabile, da cui nasce l'interferenza moiré. Densità, "
+              "angolo, scala e velocità si controllano in tempo reale.",
+              "La parte audio è una sintesi FM agganciata agli stessi controlli, quindi cambiare la "
+              "densità visiva sposta il timbro. Non è una sonificazione aggiunta dopo, i due "
+              "motori condividono lo stato."],
         cols=[("Interazione", ["Pattern: linee, griglia, cerchi, radiale", "Densità e sfasamento angolare",
                                "Scala e velocità", "Tutto in tempo reale"]),
               ("Tecnica", ["Canvas 2D", "Web Audio API, sintesi FM", "Moduli ES, nessuna dipendenza",
@@ -1110,11 +1136,14 @@ LABS = {
         cta="Apri lo strumento", note="Meglio con l'audio acceso. Su mobile serve un tocco per avviare il suono.",
         back="Torna ai progetti"),
     en=dict(kicker="Lab", title="Moire",
-        lede="A moiré pattern generator with synchronised audio-visual synthesis. What you see and what you hear are driven by the same parameters.",
+        lede="A moiré pattern generator with synchronised audio-visual synthesis. What you see and "
+             "what you hear are driven by the same parameters.",
         body=["Four pattern families — lines, grid, circles, radial — overlaid with an adjustable "
               "angular offset, which is where the moiré interference comes from. Density, angle, "
               "scale and speed are all live controls.",
-              "The audio side is FM synthesis wired to those same controls, so changing the visual density moves the timbre. It is not sonification bolted on afterwards, since both engines share one state."],
+              "The audio side is FM synthesis wired to those same controls, so changing the visual "
+              "density moves the timbre. It is not sonification bolted on afterwards, since both "
+              "engines share one state."],
         cols=[("Interaction", ["Patterns: lines, grid, circles, radial", "Density and angular offset",
                                "Scale and speed", "Everything live"]),
               ("Technical", ["Canvas 2D", "Web Audio API, FM synthesis", "ES modules, no dependencies",
@@ -1124,10 +1153,12 @@ LABS = {
 "algosynth": dict(
     shot="img/algosynth.jpg", demo={"it": "/algosynth", "en": "/algosynth/en"},
     it=dict(kicker="Lab", title="AlgoSynth",
-        lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre. I pattern non si disegnano nota per nota, si generano e poi si piegano.",
+        lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre. I pattern non si "
+             "disegnano nota per nota, si generano e poi si piegano.",
         body=["Generazione di pattern ritmici e melodici con controllo dello swing, song mode "
               "multitraccia e uscita MIDI via Web MIDI verso qualunque strumento collegato.",
-              "L'idea presa da Acroyear è che il materiale nasca da regole invece che dalla mano. Si imposta un processo, lo si ascolta, si interviene sui parametri mentre suona."],
+              "L'idea presa da Acroyear è che il materiale nasca da regole invece che dalla mano. "
+              "Si imposta un processo, lo si ascolta, si interviene sui parametri mentre suona."],
         cols=[("Interazione", ["Generazione algoritmica dei pattern", "Controllo dello swing",
                                "Song mode multitraccia", "Parametri modificabili durante l'esecuzione"]),
               ("Tecnica", ["Web MIDI API", "Uscita verso hardware esterno", "Interamente nel browser"])],
@@ -1135,10 +1166,12 @@ LABS = {
         "per far partire l'audio.",
         back="Torna ai progetti"),
     en=dict(kicker="Lab", title="AlgoSynth",
-        lede="An algorithmic sequencer inspired by Autechre's Acroyear. Patterns are not drawn note by note, they are generated and then bent.",
+        lede="An algorithmic sequencer inspired by Autechre's Acroyear. Patterns are not drawn note "
+             "by note, they are generated and then bent.",
         body=["Rhythmic and melodic pattern generation with swing control, multi-track song mode, "
               "and MIDI output over Web MIDI to any connected instrument.",
-              "The idea taken from Acroyear is that the material comes from rules rather than the hand. You set a process running, listen, and work the parameters while it plays."],
+              "The idea taken from Acroyear is that the material comes from rules rather than the "
+              "hand. You set a process running, listen, and work the parameters while it plays."],
         cols=[("Interaction", ["Algorithmic pattern generation", "Swing control", "Multi-track song mode",
                                "Parameters editable while playing"]),
               ("Technical", ["Web MIDI API", "Output to external hardware", "Entirely in the browser"])],
@@ -1165,7 +1198,10 @@ PATHS = {"home":      ("", "en"),
          "moire":     ("moire.html", "en/moire.html"),
          "algosynth": ("algosynth.html", "en/algosynth.html"),
          "privacy":   ("privacy.html", "en/privacy.html"),
+         "blog":      ("blog", "en/blog"),
          "metodo":    ("metodologia.html", "en/methodology.html")}
+PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
+              for p in B.published()})
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1220,6 +1256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="description" content="{desc}">
 <meta name="author" content="Alessandro Saccoia">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="alternate" type="application/rss+xml" title="Iside Systems — Blog" href="{SITE}/feed.xml">
 <link rel="canonical" href="{url}">
 <link rel="alternate" hreflang="it" href="{SITE}/{it_path}">
 <link rel="alternate" hreflang="en" href="{SITE}/{en_path}">
@@ -1285,10 +1322,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
-    depth = asset.count("../")
-    # la pagina inglese ha un percorso suo, non è la stessa dell'italiana
-    metodo_href = ("methodology.html" if L["lang"] == "en"
-                   else ("../" * depth) + "metodologia.html")
+    # /blog and /blog/<slug> are served without a trailing slash, so relative
+    # links there resolve against the root: those pages ask for absolute paths
+    if asset.startswith("/"):
+        blog_href = "/en/blog" if L["lang"] == "en" else "/blog"
+        metodo_href = "/en/methodology.html" if L["lang"] == "en" else "/metodologia.html"
+    else:
+        depth = asset.count("../")
+        blog_href = ("../" * depth) + "blog" if depth else "blog"
+        metodo_href = ("methodology.html" if L["lang"] == "en"
+                       else ("../" * depth) + "metodologia.html")
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1306,6 +1349,7 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
       {a(cases, n[3], 'cases')}
       {a(metodo_href, n[5], 'metodo')}
       {a(projects, n[1], 'projects')}
+      {a(blog_href, n[4], 'blog')}
       {a(about, n[2], 'about')}
       <span class="langsw"><a href="#" aria-current="true">{L['lang'].upper()}</a>/<a href="{alt_href}">{L['other_label']}</a></span>
       <button id="themeBtn" type="button">Dark</button>
@@ -1326,7 +1370,13 @@ def newsbar(L, about):
 
 def footer(L, home, projects, about, asset):
     # privacy.html resolves inside the current folder, so the English pages
-    # reach en/privacy.html and the Italian ones the root file
+    # reach en/privacy.html and the Italian ones the root file — except where
+    # the page is served without a trailing slash and needs absolute paths
+    privacy_href = "privacy.html"
+    cases_href = "case-study.html" if L["lang"] == "it" else "case-studies.html"
+    if asset.startswith("/"):
+        privacy_href = "/en/privacy.html" if L["lang"] == "en" else "/privacy.html"
+        cases_href = "/case-study.html" if L["lang"] == "it" else "/en/case-studies.html"
     n = L["nav"]
     caps = [c[0].replace("<br>", " ") for c in L["caps"]]
     caplinks = "".join(f'<a href="{home}#capabilities">{c}</a>' for c in caps)
@@ -1345,7 +1395,7 @@ def footer(L, home, projects, about, asset):
     <a href="{home}">{n[0]}</a>
     <a href="{projects}">{n[1]}</a>
     <a href="{about}">{n[2]}</a>
-    <a href="{'case-study.html' if L['lang'] == 'it' else 'case-studies.html'}">{n[3]}</a>
+    <a href="{cases_href}">{n[3]}</a>
   </div>
   <div class="col">
     <b>{L['foot_caps']}</b>
@@ -1353,7 +1403,7 @@ def footer(L, home, projects, about, asset):
   </div>
   <div class="colophon">
     <span>{L['foot_colophon']}</span>
-    <a href="privacy.html">{L['privacy_link']}</a>
+    <a href="{privacy_href}">{L['privacy_link']}</a>
     <span>IT · EN · FR</span>
   </div>
 </footer>
@@ -1376,6 +1426,25 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     # the English home sits one level down, so root-level pages need the hop
     root = "../" if asset.startswith("../") else ""
     metodo_href = "methodology.html" if L["lang"] == "en" else "metodologia.html"
+    blog_band = ""
+    blog_rows = "".join(
+        f'<a class="bpost" href="{root}blog/{p["slug"]}">'
+        f'<span class="d">{p["human_date"]}</span>'
+        f'<span class="t">{p["title"]}</span>'
+        f'<span class="k">{p["tags"][0]}</span>'
+        f'<span class="go">\u2192</span></a>' for p in B.published()[:3])
+    if blog_rows:
+        # with nothing published the band would be a heading over a void
+        blog_band = f"""
+<section class="pad rule blogband" style="padding-top:clamp(50px,8vh,96px);padding-bottom:clamp(50px,8vh,96px)">
+  <div class="lbl">{L['blog_lbl']}</div>
+  <div class="cols2" style="align-items:end">
+    <div class="rv"><h2>{L['blog_h2']}</h2></div>
+    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{root}blog">{L['blog_more']}<span class="go">\u2192</span></a></p></div>
+  </div>
+  <div class="bposts rv">{blog_rows}</div>
+</section>
+"""
     caps_html = ""
     for i, (h3, body, tags) in enumerate(L["caps"], 1):
         caps_html += f"""
@@ -1486,7 +1555,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
   <div class="csrows rv">{case_rows(L)}</div>
   <p style="margin-top:26px"><a class="meta" href="{cases}" style="color:var(--acc);text-decoration:none">{L['cs_home_more']}</a></p>
 </section>
-
+{blog_band}
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
   <div class="lbl">{L['proj_lbl']}</div>
   <div class="grid3 rv" data-cols="3">
@@ -1917,10 +1986,9 @@ PRIVACY = {
      "Finché non acconsenti, il consenso è impostato su “negato” per tutte le finalità che lo "
      "richiedono (Consent Mode di Google): le richieste che partono verso Google non usano "
      "identificatori pubblicitari.",
-     "La tua scelta è conservata nel browser (memoria locale, chiave "
-     "<code>iside-consent</code>) e non viene trasmessa a noi. Per revocarla puoi cancellare i "
-     "dati del sito dalle impostazioni del browser, e alla visita successiva il banner "
-     "ricomparirà.",
+     "La tua scelta è conservata nel browser (memoria locale, chiave <code>iside-consent</code>) e "
+     "non viene trasmessa a noi. Per revocarla puoi cancellare i dati del sito dalle impostazioni "
+     "del browser, e alla visita successiva il banner ricomparirà.",
      "Base giuridica: consenso per la misurazione e la pubblicità (art. 6.1.a GDPR e art. 122 del "
      "Codice privacy); legittimo interesse per i cookie tecnici."]),
 
@@ -2033,9 +2101,9 @@ PRIVACY = {
      "first visit and which you can refuse or withdraw at any time.",
      "Until you consent, consent is set to \"denied\" for every purpose that requires it (Google "
      "Consent Mode): requests to Google carry no advertising identifiers.",
-     "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and "
-     "is not sent to us. To withdraw it, clear the site data in your browser settings, and the "
-     "banner will appear again on your next visit.",
+     "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and is "
+     "not sent to us. To withdraw it, clear the site data in your browser settings, and the banner will "
+     "appear again on your next visit.",
      "Legal basis: consent for measurement and advertising (Art. 6.1.a GDPR and Art. 122 of the "
      "Italian Privacy Code); legitimate interest for technical cookies."]),
 
@@ -2085,6 +2153,79 @@ PRIVACY = {
      "last updated."]),
   ]),
 }
+
+
+
+
+# ---------------------------------------------------------------- blog
+def page_blog(L, asset, home, projects, about, alt_href, cases):
+    t = B.BLOG_LABELS[L["lang"]]
+    rows = ""
+    for post in B.published():
+        rows += f"""    <a class="bcard rv" href="/blog/{post['slug']}">
+      <div class="meta">{post['human_date']} · {post['read']} {t['read']}</div>
+      <h2>{post['title']}</h2>
+      <p>{post['dek']}</p>
+      <div class="tags">{B.chips(post['tags'])}</div>
+      <span class="go">{t['more']} →</span>
+    </a>
+"""
+    note = f'<p class="meta" style="margin-top:22px">{t["note"]}</p>' if L["lang"] == "en" else ""
+    if not rows:
+        # nothing published yet: say so plainly instead of showing an empty list
+        rows = (f'    <div class="bempty rv"><h2>{t["empty_h"]}</h2>'
+                f'<p>{t["empty_p"]}</p></div>\n')
+        note = ""
+    return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "blog")
+            + header(L, asset, home, projects, about, "blog", alt_href, cases)
+            + f"""
+<section class="pad blogindex">
+  <div class="lbl">{t['kicker']}</div>
+  <h1>{t['title']}</h1>
+  <p class="lede dim">{t['lede']}</p>
+  {note}
+  <div class="bcards">
+{rows}  </div>
+</section>
+"""
+            + footer(L, home, projects, about, asset))
+
+
+def page_post(L, asset, home, projects, about, alt_href, cases, post):
+    t = B.BLOG_LABELS[L["lang"]]
+    url = f"{SITE}/blog/{post['slug']}"
+    ld = ('<script type="application/ld+json">'
+          '{"@context":"https://schema.org","@type":"BlogPosting",'
+          f'"headline":{json.dumps(post["title"], ensure_ascii=False)},'
+          f'"description":{json.dumps(post["dek"], ensure_ascii=False)},'
+          f'"datePublished":"{post["date"]}","inLanguage":"it",'
+          f'"keywords":{json.dumps(", ".join(post["tags"]), ensure_ascii=False)},'
+          f'"mainEntityOfPage":"{url}",'
+          '"author":{"@type":"Person","name":"Alessandro Saccoia"},'
+          '"publisher":{"@type":"Organization","name":"Iside Systems SRLS"}}'
+          "</script>")
+    return (head(L, f'{post["title"]} — Iside Systems', post["dek"], asset, alt_href,
+                 f"post-{post['slug']}")
+            + ld
+            + header(L, asset, home, projects, about, "blog", alt_href, cases)
+            + f"""
+<article class="pad post">
+  <div class="lbl">{t['kicker']}</div>
+  <h1>{post['title']}</h1>
+  <p class="lede dim">{post['dek']}</p>
+  <div class="postmeta">
+    <span>{t['updated']} {post['human_date']}</span><span>{post['read']} {t['read']}</span>
+    <span class="tags">{B.chips(post['tags'])}</span>
+  </div>
+  <nav class="ptoc"><span>{t['toc']}</span>{B.toc(post['body'])}</nav>
+  <div class="pbody">
+{B.render_blocks(post['body'])}
+  </div>
+  <p class="pback"><a href="/blog">{t['back']}</a></p>
+</article>
+"""
+            + footer(L, home, projects, about, asset))
+
 
 
 def page_privacy(L, asset, home, projects, about, alt_href, cases="case-study.html"):
@@ -2275,7 +2416,7 @@ def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
     for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
-                "projects", "about", "privacy", "metodo"):
+                "projects", "about", "privacy", "blog", "metodo"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -2291,7 +2432,30 @@ def write_seo():
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
                '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
                + "\n".join(rows) + "\n</urlset>\n")
+    # posts are Italian only: one entry each, no alternates
+    posts = "".join(
+        f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n    <lastmod>{p["date"]}</lastmod>'
+        f'\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
+        for p in B.published())
+    sitemap = sitemap.replace("</urlset>", posts + "</urlset>")
     write("sitemap.xml", sitemap)
+
+    # a feed, because a blog without one is a newsletter you cannot leave
+    items = "".join(
+        f"  <item>\n    <title>{html.escape(p['title'])}</title>\n"
+        f"    <link>{SITE}/blog/{p['slug']}</link>\n"
+        f"    <guid>{SITE}/blog/{p['slug']}</guid>\n"
+        f"    <pubDate>{p['date']}</pubDate>\n"
+        + "".join(f"    <category>{html.escape(t)}</category>\n" for t in p["tags"])
+        + f"    <description>{html.escape(p['dek'])}</description>\n  </item>\n"
+        for p in B.published())
+    write("feed.xml",
+          '<?xml version="1.0" encoding="UTF-8"?>\n'
+          '<rss version="2.0"><channel>\n'
+          f"  <title>Iside Systems — Blog</title>\n  <link>{SITE}/blog</link>\n"
+          f"  <language>it</language>\n"
+          f"  <description>{html.escape(B.BLOG_LABELS['it']['lede'])}</description>\n"
+          + items + "</channel></rss>\n")
 
     write("robots.txt",
           "User-agent: *\n"
@@ -2316,9 +2480,26 @@ for _slug in ("ai-adoption", "james", "cloud-scale"):
 write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/index.html"))
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
+write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
 write("metodologia.html", page_metodo(L_IT, "assets/", "index.html", "progetti.html",
                                      "chi-sono.html", "en/methodology.html", "case-study.html"))
-write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
+write("blog/index.html", page_blog(L_IT, "/assets/", "/", "/progetti.html",
+                                   "/chi-sono.html", "/en/blog", "/case-study.html"))
+# a post that goes back to draft must stop existing as a page, not linger
+import shutil as _shutil
+_live = {p["slug"] for p in B.published()}
+_blogdir = os.path.join(HERE, "blog")
+if os.path.isdir(_blogdir):
+    for _name in os.listdir(_blogdir):
+        _path = os.path.join(_blogdir, _name)
+        if os.path.isdir(_path) and _name not in _live:
+            _shutil.rmtree(_path)
+            print("removed stale", f"blog/{_name}")
+
+for _post in B.published():
+    write(f"blog/{_post['slug']}/index.html",
+          page_post(L_IT, "/assets/", "/", "/progetti.html",
+                    "/chi-sono.html", "/en/blog", "/case-study.html", _post))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",
@@ -2330,8 +2511,10 @@ for key in ("moire", "algosynth"):
 write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../index.html", "case-studies.html"))
 write("en/projects.html", page_projects(L_EN, "../assets/", "index.html", "projects.html", "about.html", "../progetti.html", "case-studies.html"))
 write("en/about.html",    page_about   (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../chi-sono.html", "case-studies.html"))
+write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
 write("en/methodology.html", page_metodo(L_EN, "../assets/", "index.html", "projects.html",
                                         "about.html", "../metodologia.html", "case-studies.html"))
-write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
+write("en/blog/index.html", page_blog(L_EN, "/assets/", "/en", "/en/projects.html",
+                                      "/en/about.html", "/blog", "/en/case-studies.html"))
 
 write_seo()
