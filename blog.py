@@ -12,7 +12,7 @@ BLOG_LABELS = {
                read="min di lettura", back="← Tutti gli articoli", updated="Pubblicato",
                toc="In questa pagina", more="Continua a leggere",
                note="Gli articoli sono in italiano.",
-               empty_h="Il primo articolo sta arrivando.",
+               empty_h="Non ci sono articoli al momento.",
                empty_p="Sto scrivendo. Qui finiranno note su acquisto, governance e adozione "
                        "dell’AI in azienda — quello che imparo sul campo, non quello che si "
                        "legge ovunque."),
@@ -22,7 +22,7 @@ BLOG_LABELS = {
                read="min read", back="← All posts", updated="Published",
                toc="On this page", more="Keep reading",
                note="The posts are written in Italian.",
-               empty_h="The first post is on its way.",
+               empty_h="No posts yet.",
                empty_p="Notes on buying, governing and adopting AI inside companies will land "
                        "here — what I learn on the job, not what is written everywhere else."),
 }

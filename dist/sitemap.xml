@@ -163,4 +163,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/blog"/>
   </url>
+  <url>
+    <loc>https://www.isidesystems.com/metodologia.html</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/metodologia.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/metodologia.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/metodologia.html"/>
+  </url>
+  <url>
+    <loc>https://www.isidesystems.com/metodologia.html</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.isidesystems.com/metodologia.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.isidesystems.com/metodologia.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/metodologia.html"/>
+  </url>
 </urlset>

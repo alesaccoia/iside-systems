@@ -9,7 +9,7 @@ Copy lives in the L_IT / L_EN dictionaries below — edit there, then re-run:
     python3 build.py
 """
 import os
-import blog as B, html, datetime, json
+import blog as B, metodo as M, html, datetime, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -342,7 +342,7 @@ PROJECTS = [
 # ---------------------------------------------------------------- copy
 L_IT = dict(
     lang="it", other_label="EN", brand_sub="Data, AI e Marketing",
-    nav=("Studio", "Progetti", "Chi sono", "Case study", "Blog"),
+    nav=("Studio", "Progetti", "Chi sono", "Case study", "Blog", "Metodologia"),
     nav_open="Apri il menu",
     news_label="In evidenza",
     news=[("10 agosto 2026", "Nuovo case study — James: misurazione omnichannel e piano editoriale per una società di servizi educativi", "case-james.html"),
@@ -360,6 +360,15 @@ L_IT = dict(
          "con percorsi di formazione e supporto strategico continuativo, anche in modalità "
          "fractional. Né un'agenzia né una software house.",
     chips=["Strategia e Data Sciences", "AI Adoption", "Operations marketing e crescita", "Advisory e docenza"],
+    m_lbl="Metodologia",
+    m_h2="L’AI in azienda è<br>sviluppo organizzativo<br>prima che modelli.",
+    m_p="Un whitepaper in nove sezioni: dove entra la tecnologia nei processi, come si legge la "
+        "cultura, come si diagnostica un problema prima di scegliere lo strumento, come si "
+        "sviluppano le persone, come si allocano i compiti fra umano e sistema, e con quali "
+        "indicatori si valuta il risultato.",
+    m_steps=["Diagnosi", "Cultura", "Sviluppo delle persone", "Allocazione dei compiti",
+             "Progettazione", "Valutazione"],
+    m_cta="Leggi il whitepaper",
     blog_lbl="Dal blog",
     blog_h2="Scrivo quello<br>che imparo.",
     blog_more="Tutti gli articoli",
@@ -725,7 +734,7 @@ L_IT = dict(
 
 L_EN = dict(
     lang="en", other_label="IT", brand_sub="Data, AI and marketing",
-    nav=("Practice", "Projects", "About", "Case studies", "Blog"),
+    nav=("Practice", "Projects", "About", "Case studies", "Blog", "Metodologia"),
     nav_open="Open the menu",
     news_label="Latest",
     news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
@@ -743,6 +752,15 @@ L_EN = dict(
          "programmes and continuing strategic support, fractional where that fits. Neither an "
          "agency nor a software house.",
     chips=["Data strategy &amp; data sciences", "AI adoption", "Marketing &amp; growth operations", "Advisory &amp; speaking"],
+    m_lbl="Method",
+    m_h2="AI in a company is<br>organisational development<br>before it is models.",
+    m_p="A whitepaper in nine sections, in Italian: where the technology enters the processes, how "
+        "to read the culture, how to diagnose a problem before choosing a tool, how people are "
+        "developed, how tasks are allocated between human and system, and which indicators tell "
+        "you whether it worked.",
+    m_steps=["Diagnosis", "Culture", "Developing people", "Task allocation",
+             "Design", "Evaluation"],
+    m_cta="Read the whitepaper",
     blog_lbl="From the blog",
     blog_h2="I write down<br>what I learn.",
     blog_more="All posts",
@@ -1180,7 +1198,8 @@ PATHS = {"home":      ("", "en"),
          "moire":     ("moire.html", "en/moire.html"),
          "algosynth": ("algosynth.html", "en/algosynth.html"),
          "privacy":   ("privacy.html", "en/privacy.html"),
-         "blog":      ("blog", "en/blog")}
+         "blog":      ("blog", "en/blog"),
+         "metodo":    ("metodologia.html", "metodologia.html")}
 PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
               for p in B.published()})
 
@@ -1307,9 +1326,11 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
     # links there resolve against the root: those pages ask for absolute paths
     if asset.startswith("/"):
         blog_href = "/en/blog" if L["lang"] == "en" else "/blog"
+        metodo_href = "/metodologia.html"
     else:
         depth = asset.count("../")
         blog_href = ("../" * depth) + "blog" if depth else "blog"
+        metodo_href = ("../" * depth) + "metodologia.html"
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1325,6 +1346,7 @@ def header(L, asset, home, projects, about, current, alt_href, cases="case-study
     <nav class="main" id="mainnav">
       {a(home, n[0], 'home')}
       {a(cases, n[3], 'cases')}
+      {a(metodo_href, n[5], 'metodo')}
       {a(projects, n[1], 'projects')}
       {a(blog_href, n[4], 'blog')}
       {a(about, n[2], 'about')}
@@ -1491,6 +1513,20 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div class="rv">{pos_ps}</div>
   </div>
   {mini_cta(L, about, 0)}
+</section>
+
+<section class="mband rv">
+  <div class="inner">
+    <div>
+      <div class="lbl">{L['m_lbl']}</div>
+      <h2>{L['m_h2']}</h2>
+    </div>
+    <div>
+      <p>{L['m_p']}</p>
+      <div class="steps">{"".join(f"<span>{x}</span>" for x in L["m_steps"])}</div>
+      <p style="margin-top:24px"><a class="ambtn" href="{root}metodologia.html">{L['m_cta']}<span class="go">\u2192</span></a></p>
+    </div>
+  </div>
 </section>
 
 <section class="caps rule" id="capabilities">
@@ -1796,6 +1832,31 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 </section>
 
 """ + footer(L, home, projects, about, asset))
+
+
+
+
+# ---------------------------------------------------------------- metodologia
+def page_metodo(L, asset, home, projects, about, alt_href, cases):
+    t = M.LABELS
+    return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "metodo")
+            + header(L, asset, home, projects, about, "metodo", alt_href, cases)
+            + f"""
+<article class="pad metodo">
+  <header class="mtop">
+    <div class="lbl">{t['kicker']}</div>
+    <h1>{t['title']}</h1>
+    <p class="msubtitle">{t['sub']}</p>
+    <p class="lede dim">{t['lede']}</p>
+    <p class="mstrap">{t['strap']}</p>
+    <p class="meta">{t['meta']}</p>
+  </header>
+  <nav class="mtoc"><span>{t['toc']}</span>{M.toc(M.SECTIONS)}</nav>
+{M.render(M.SECTIONS)}
+</article>
+"""
+            + footer(L, home, projects, about, asset))
+
 
 
 # ---------------------------------------------------------------- privacy
@@ -2282,7 +2343,7 @@ def write_seo():
     today = datetime.date.today().isoformat()
     rows = []
     for key in ("home", "cases", "case-ai-adoption", "case-james", "case-cloud-scale",
-                "projects", "about", "privacy", "blog"):
+                "projects", "about", "privacy", "blog", "metodo"):
         it_path, en_path = PATHS[key]
         for path, lang in ((it_path, "it"), (en_path, "en")):
             alts = "".join(
@@ -2347,6 +2408,8 @@ write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.h
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
+write("metodologia.html", page_metodo(L_IT, "assets/", "index.html", "progetti.html",
+                                     "chi-sono.html", "metodologia.html", "case-study.html"))
 write("blog/index.html", page_blog(L_IT, "/assets/", "/", "/progetti.html",
                                    "/chi-sono.html", "/en/blog", "/case-study.html"))
 # a post that goes back to draft must stop existing as a page, not linger
