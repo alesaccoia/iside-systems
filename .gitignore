@@ -1,0 +1,22 @@
+.DS_Store
+.env
+.env.local
+.vercel
+__pycache__/
+
+# build output: the source is build.py, the published copy is dist/
+index.html
+progetti.html
+chi-sono.html
+privacy.html
+case-study.html
+case-ai-adoption.html
+case-james.html
+case-cloud-scale.html
+moire.html
+algosynth.html
+sitemap.xml
+feed.xml
+robots.txt
+/en/
+/blog/

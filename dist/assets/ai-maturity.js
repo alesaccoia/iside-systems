@@ -258,8 +258,8 @@ function plan(s){
     body:"Un’ora con chi decide: obiettivi, vincoli, cosa è già stato provato. Prima di qualsiasi "+
          "strumento serve sapere che problema stiamo risolvendo."});
   wins.push({title:"Workshop interni con le business unit",
-    body:"Due o tre sessioni con chi fa il lavoro: si mappano i passaggi reali, non quelli del "+
-         "manuale. È qui che si vede dove l’AI toglie tempo e dove non serve."});
+    body:"Due o tre sessioni con chi fa il lavoro, per mappare i passaggi reali invece di quelli "+
+         "del manuale. Da lì escono i punti in cui l’AI toglie tempo e quelli in cui non serve."});
   wins.push({title:"Tecnologie e colli di bottiglia",
     body:"Dai workshop esce la lista: quali strumenti avete già, quali servono davvero, e i punti "+
          "in cui il lavoro si ferma. Si sceglie a ragion veduta, non per moda."});
@@ -273,8 +273,8 @@ function plan(s){
            "modulo per "+fn.toLowerCase()+", agganciato ai casi d’uso scelti."});
 
   wins.push({title:"Due agenti in produzione nei 90 giorni",
-    body:"Non un pilota da dimostrazione: due agenti sui processi scelti, usati ogni giorno, con "+
-         "criteri di qualità e un responsabile."});
+    body:"Due agenti sui processi scelti, usati ogni giorno da chi quei processi li fa, con "+
+         "criteri di qualità scritti e un responsabile con nome e cognome."});
 
   // marketing only for those who actually do it
   if(doesMarketing()){
@@ -291,7 +291,7 @@ function plan(s){
 
   wins.push({title:"Codice di condotta AI e posizionamento normativo",
     body:"Una pagina su cosa si può fare con quali dati, più la posizione su AI Act, GDPR e "+
-         "Digital Services Act: serve a decidere in fretta, non a rallentare."});
+         "Digital Services Act. Serve a far decidere in fretta chi deve decidere."});
   return wins;
 }
 

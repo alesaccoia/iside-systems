@@ -162,14 +162,14 @@ dict(
          "somigliano molto su ciò che si vede: chattano bene, leggono documenti, eseguono compiti "
          "in autonomia, hanno un pannello di amministrazione. Si somigliano molto meno su ciò che "
          "non si vede in demo."),
-   ("p", "Quello che stai comprando non è un assistente. È un <mark>piano di controllo</mark> che "
-         "si appoggia ai tuoi sistemi di identità, ai tuoi documenti e ai tuoi processi. Se quel "
-         "piano è coerente, l’assistente diventa utile in poche settimane. Se non lo è, hai "
-         "comprato centoventi abbonamenti che le persone useranno per riscrivere le email."),
+   ("p", "Stai comprando un <mark>piano di controllo</mark> che si appoggia ai tuoi sistemi di "
+         "identità, ai tuoi documenti e ai tuoi processi. Se quel piano è coerente, l’assistente "
+         "diventa utile in poche settimane. Se non lo è, hai comprato centoventi abbonamenti che "
+         "le persone useranno per riscrivere le email."),
 
    ("h2", "Le quattro domande che decidono l’acquisto"),
-   ("p", "In un capitolato le metterei prima di ogni funzionalità. Sono l’unica parte davvero "
-         "difficile da cambiare dopo."),
+   ("p", "In un capitolato le metterei prima di ogni funzionalità: una funzione mancante si "
+         "aggiunge, una scelta su dove vivono i dati si cambia solo rifacendo il progetto."),
    ("ol", ["<b>Dove vivono i dati, e dove avviene l’inferenza.</b> Sono due cose diverse: una "
            "piattaforma può conservare le conversazioni in Europa e calcolarle altrove. Se sei "
            "in un settore regolato, o se il tuo ufficio legale ha già sofferto su questo, è la "
@@ -223,8 +223,8 @@ dict(
    ("p", "In ogni organizzazione esistono documenti che una persona <i>potrebbe</i> tecnicamente "
          "aprire ma che non ha mai aperto, perché nessuno sa che esistono e la ricerca interna "
          "non li ha mai restituiti. L’AI li trova in tre secondi, e li cita."),
-   ("p", "Non è una falla dello strumento: è il rispetto letterale dei permessi che avevi già. "
-         "Ma il giorno in cui accende l’assistente, l’azienda scopre in fretta quanti "
+   ("p", "È il rispetto letterale dei permessi che avevi già, non una falla dello strumento. "
+         "Il giorno in cui accende l’assistente, però, l’azienda scopre quanti "
          "<b>ereditati per sbaglio</b> ci sono nel repository. Per questo un progetto di adozione "
          "serio contiene sempre una revisione dei permessi <i>prima</i> del rilascio, non dopo il "
          "primo incidente."),
@@ -241,14 +241,15 @@ dict(
          "è: uno strato costituzionale corto e stabile in cima, il metodo di reparto in mezzo, il "
          "contesto di progetto sotto, le preferenze personali in fondo."),
    ("fig", "layers"),
-   ("p", "La regola pratica che uso: <mark>in cima solo ciò che vale per tutti e cambia raramente</mark>. "
+   ("p", "<mark>In cima va solo ciò che vale per tutti e cambia raramente.</mark> "
          "Le istruzioni di organizzazione hanno un limite di caratteri stretto — poche migliaia — "
          "ed è un bene: obbliga a scrivere principi, non manuali. Il metodo dettagliato sta nel "
          "livello sotto, dove può essere versionato e assegnato a chi serve."),
 
    ("h2", "Come si compra, in pratica"),
    ("p", "Una matrice decisionale con pesi espliciti è noiosa e funziona. La compilo con il "
-         "cliente prima di vedere qualsiasi demo, così la demo non decide al posto nostro."),
+         "cliente prima di vedere qualsiasi demo: dopo una demo ben fatta i pesi cambiano da "
+         "soli, e non per ragioni difendibili."),
    ("table", dict(head=["Criterio", "Peso", "La domanda vera"],
      rows=[["Residenza e trattamento dei dati", "15%", "Dove stanno, dove si calcola, chi può accedervi"],
            ["Integrazione con il repository esistente", "15%", "Ambito selezionabile o solo permessi utente?"],
@@ -286,12 +287,12 @@ dict(
            "<b>Misurare l’adozione con il numero di licenze attive.</b> Misura invece quanti "
            "processi sono cambiati: è un numero più piccolo e molto più vero."]),
 
-   ("h2", "In sintesi"),
-   ("p", "Compra un piano di controllo, non un abbonamento. Tieni una sola fonte di verità e "
-         "considera gli assistenti come superfici intercambiabili sopra di essa. Governa il "
-         "comportamento a livelli, con poche regole in cima e il metodo versionato sotto. E "
-         "prima di accendere qualsiasi cosa, guarda i permessi: è lì che il progetto si gioca "
-         "la reputazione nella prima settimana."),
+   ("h2", "Da dove partire lunedì"),
+   ("p", "Prima di ogni altra cosa, apri il repository e guarda i permessi: cartelle con "
+         "ereditarietà interrotta, link pubblici mai scaduti, gruppi con dentro chi ha lasciato "
+         "l’azienda. È una settimana di lavoro noioso e mette al riparo dall’unico incidente che "
+         "in questi progetti si ricorda per anni. Poi scrivi le due pagine di istruzioni "
+         "aziendali, scegli tre processi che fanno male ogni settimana, e comincia da lì."),
   ]),
 
 dict(
@@ -304,9 +305,8 @@ dict(
       "convenzione documentale che dice all’AI dove guardare. Come si costruisce lo strato "
       "aziendale sopra una piattaforma che non hai scritto tu.",
   body=[
-   ("p", "Una licenza dà accesso a un modello. Un ecosistema è quello che rende quel modello "
-         "capace di lavorare <i>come lavora la tua azienda</i>. La differenza fra le due cose è "
-         "tutta in quattro oggetti, e nessuno dei quattro è un prompt lungo."),
+   ("p", "Una licenza dà accesso a un modello. Perché quel modello lavori <i>come lavora la tua "
+         "azienda</i> servono quattro oggetti, e nessuno dei quattro è un prompt lungo."),
 
    ("h2", "1. Istruzioni di organizzazione: la costituzione, non il manuale"),
    ("p", "Poche migliaia di caratteri, presenti in ogni conversazione di ogni persona. Vanno "
@@ -314,8 +314,8 @@ dict(
          "tutti. Chi siamo, come si scrive qui dentro, cosa non esce mai da qui, quando bisogna "
          "andare a leggere le fonti interne invece di rispondere a memoria, come si distingue un "
          "dato certo da una deduzione."),
-   ("p", "Quello che <b>non</b> ci va: la metodologia di un reparto, gli elenchi di template, i "
-         "casi particolari. Occupano lo spazio che serve a tutti per servire pochi."),
+   ("p", "La metodologia di un reparto, gli elenchi di template e i casi particolari stanno "
+         "altrove: occupano lo spazio di tutti per servire pochi."),
 
    ("h2", "2. Procedure versionate, assegnate a chi servono"),
    ("p", "Il metodo di lavoro sta un livello sotto, in unità che si possono scrivere, rivedere e "
@@ -323,9 +323,9 @@ dict(
          "deliverable, come si struttura una ricerca. Le piattaforme serie oggi permettono di "
          "raggrupparle e assegnarle per gruppo — richieste, preinstallate, disponibili o "
          "nascoste — e di sincronizzarle da un repository di codice."),
-   ("p", "Questo è il punto che cambia la scala del progetto: se le procedure vivono in un "
-         "repository, hanno una storia, una revisione e un rilascio. Se vivono in un documento "
-         "condiviso, dopo tre mesi ne esistono quattro versioni e due sono sbagliate."),
+   ("p", "Se le procedure vivono in un repository hanno una storia, una revisione e un rilascio. "
+         "Se vivono in un documento condiviso, dopo tre mesi ne esistono quattro versioni e due "
+         "sono sbagliate."),
    ("note", "Assegnare per gruppo è distribuzione, non sicurezza. Serve a far trovare la cosa "
             "giusta alla persona giusta; non impedisce a nessuno di leggere ciò che i permessi "
             "del repository gli consentono già."),
@@ -338,9 +338,10 @@ dict(
          "quando serve."),
 
    ("h2", "4. Una convenzione che dice all’AI dove guardare"),
-   ("p", "È la parte che consiglio più spesso e che costa meno. In ogni spazio documentale "
-         "importante — reparto, programma, cliente — un file breve con lo stesso nome ovunque, "
-         "che non contiene la conoscenza ma la <b>mappa</b>."),
+   ("p", "In ogni spazio documentale importante, che sia un reparto, un programma o un cliente, "
+         "un file breve con lo stesso nome ovunque, che non contiene la conoscenza ma la "
+         "<b>mappa</b>. Costa mezza giornata e cambia la qualità delle risposte più di qualsiasi "
+         "altra cosa in questo elenco."),
    ("ul", ["di cosa si occupa questo spazio, in tre righe;",
            "quali sono le fonti autorevoli e quali invece sono bozze da ignorare;",
            "il glossario dei termini e degli acronimi che qui significano qualcosa di preciso;",
@@ -358,10 +359,9 @@ dict(
          "leggermente diverse e nessuna che si possa aggiornare. Tienilo povero apposta."),
 
    ("h2", "Cosa ne esce"),
-   ("p", "Un’architettura in cui la conoscenza sta in un posto, il comportamento in un altro, e "
-         "l’assistente è la superficie che li mette insieme. Il vantaggio non è elegante, è "
-         "pratico: quando fra un anno cambierai idea sul fornitore — e probabilmente la "
-         "cambierai — riscriverai le procedure, non l’azienda."),
+   ("p", "La conoscenza sta in un posto, il comportamento in un altro, e l’assistente è la "
+         "superficie che li mette insieme. Quando fra un anno cambierai idea sul fornitore, e "
+         "probabilmente la cambierai, riscriverai le procedure e non l’azienda."),
   ]),
 
 dict(

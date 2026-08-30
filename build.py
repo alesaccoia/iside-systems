@@ -368,10 +368,10 @@ L_IT = dict(
     am_p="16 domande, 5 minuti, gratis.",
     am_cta="Fai il check",
     pos_lbl="01 — Il punto",
-    pos_h2="Ai team non manca<br>la strategia. Mancano<br>numeri di cui fidarsi.",
+    pos_h2="La strategia c'è.<br>Mancano numeri<br>di cui fidarsi.",
     pos_p=["Quasi tutti sanno già, a grandi linee, cosa dovrebbero fare. Quello che li blocca è che i "
            "numeri non parlano fra loro, gli strumenti non si comunicano, e metà settimana se ne va "
-           "a montare report a mano e a analizzarli, togliendo tempo prezioso al team.",
+           "a montare report a mano e a analizzarli, togliendo tempo al team.",
            "<mark>Il mio lavoro è informato dalla strategia ma parte dalla base: decidere cosa "
            "misurare e cosa modellare, far arrivare i dati dove servono senza che nessuno li "
            "ricopi, costruire i modelli che trasformano quei numeri in una decisione, e quando "
@@ -461,8 +461,9 @@ L_IT = dict(
            "reggere la cadenza di misurazione e integrare l'AI nei flussi man mano che il team è "
            "pronto."),
           ("Advisory", "Mensile o equity",
-           "Impegno più leggero per founder e leadership: sessioni regolari, decisioni riviste, "
-           "affermazioni tecniche verificate, fattibilità letta prima di spendere. A retainer o, "
+           "Impegno più leggero per founder e leadership. Sessioni regolari in cui rivediamo le "
+           "decisioni prese, verifico le affermazioni tecniche dei fornitori e stimo la "
+           "fattibilità prima che partano i costi. A retainer o, "
            "in early stage, in parte in equity."),
           ("Collaborazione tecnica", "Da valutare insieme",
            "Per qualunque progetto che valga la pena costruire. Se l'idea è interessante e c'è "
@@ -612,9 +613,8 @@ L_IT = dict(
                 "Contenuti brevi e ricorrenti costruiti sui feedback dei seminari e sull'uso "
                 "osservato: riassumere documenti lunghi, estrarre dati strutturati, deep research, "
                 "aggiornamenti normativi.")],
-        out="Il punto di arrivo non è «l'azienda usa l'AI», ma un aumento misurabile della capacità "
-            "individuale e di gruppo: le persone fanno le stesse cose meglio e più in fretta, e "
-            "l'organizzazione guadagna capacità che prima non aveva. I seminari costruiscono il "
+        out="Il punto di arrivo si misura in capacità: le persone fanno le stesse cose meglio e "
+            "più in fretta, e l'organizzazione ne guadagna di nuove. I seminari costruiscono il "
             "linguaggio comune, i workshop con le business unit trovano dove intervenire davvero, "
             "gli agenti consolidano il guadagno, le pillole impediscono che tutto si spenga dopo "
             "un mese.",
@@ -752,7 +752,7 @@ L_EN = dict(
     am_p="16 questions, 5 minutes, free — in Italian.",
     am_cta="Take the check",
     pos_lbl="01 — The point",
-    pos_h2="Teams rarely lack<br>strategy. They lack<br>working numbers.",
+    pos_h2="The strategy exists.<br>The working<br>numbers do not.",
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
            "do not speak to each other, the tools do not communicate, and half the week goes to "
            "assembling reports by hand and reading them — time the team does not get back.",
@@ -843,8 +843,9 @@ L_EN = dict(
            "automations, running the measurement cadence, and driving AI into workflows as the team "
            "becomes ready for it."),
           ("Advisory", "Monthly or equity",
-           "Lighter-touch work for founders and leadership: regular sessions, decisions reviewed, "
-           "technical claims checked, feasibility read before spending. Retainer or, early-stage, "
+           "Lighter-touch work for founders and leadership. Regular sessions where we revisit the "
+           "decisions made, I check what vendors claim, and I cost the feasibility before the "
+           "spending starts. Retainer or, early-stage, "
            "partly equity."),
           ("Technical collaboration", "Shape to be agreed",
            "For any project worth building. If the idea is interesting and there is room to do it "
@@ -992,9 +993,9 @@ L_EN = dict(
                ("Over time", "Short recurring briefs",
                 "Brief, regular pieces built on seminar feedback and on observed usage: summarising "
                 "long documents, extracting structured data, deep research, regulatory updates.")],
-        out="The destination is not “the company uses AI” but a measurable increase in individual "
-            "and group capability: people do the same things better and faster, and the "
-            "organisation gains capacity it did not have. The seminars build the shared language, "
+        out="The destination is measured in capability: people do the same things better and "
+            "faster, and the organisation gains some it did not have. The seminars build the "
+            "shared language, "
             "the business-unit workshops find where to actually intervene, the agents consolidate "
             "the gain, and the recurring briefs stop the whole thing fading after a month.",
         chips=["Progressive seminars", "Workshops per business unit", "Process mapping",
@@ -1807,8 +1808,8 @@ PRIVACY = {
 "it": dict(
   title="Privacy policy",
   desc="Come Iside Systems SRLS tratta i dati personali di chi visita il sito, scrive dallo studio o usa l’AI Maturity Check.",
-  lede="Questa pagina spiega quali dati raccogliamo, perché, a chi li comunichiamo e come puoi "
-       "esercitare i tuoi diritti. È scritta per essere letta, non per essere archiviata.",
+  lede="Quali dati raccogliamo, perché, a chi li comunichiamo e come puoi esercitare i tuoi "
+       "diritti. Ogni sezione dice anche su quale base giuridica ci appoggiamo.",
   sections=[
    ("Titolare del trattamento", [
      "Iside Systems SRLS, Via Tortona 12, 20144 Milano (Italia). P.IVA 14733480967.",
@@ -1919,8 +1920,8 @@ PRIVACY = {
 "en": dict(
   title="Privacy policy",
   desc="How Iside Systems SRLS handles the personal data of people who visit the site, write to the practice, or use the AI Maturity Check.",
-  lede="This page sets out what we collect, why, who we share it with, and how you can exercise "
-       "your rights. It is written to be read, not filed.",
+  lede="What we collect, why, who we share it with, and how you can exercise your rights. Each "
+       "section also names the legal basis we rely on.",
   sections=[
    ("Controller", [
      "Iside Systems SRLS, Via Tortona 12, 20144 Milan, Italy. VAT IT14733480967.",
