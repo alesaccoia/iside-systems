@@ -14,7 +14,6 @@ LABELS = dict(
          "prima che tecnico.",
     meta="Whitepaper · 2026 · Alessandro Saccoia",
     strap="Cultura, diagnosi, sviluppo delle persone e design critico dei sistemi intelligenti.",
-    toc="Le nove sezioni",
 )
 
 SECTIONS = [
@@ -41,10 +40,7 @@ dict(n="01", title="Executive summary",
   ("p", "L’AI in azienda è una questione di sviluppo organizzativo prima che di modelli. "
         "L’accuratezza è necessaria ma non sufficiente, perché il significato di un sistema "
         "dipende da come ridefinisce scopi, ruoli, coordinamento, regole, valutazione e identità."),
-  ("h3", "Come leggere questo documento"),
-  ("p", "Le nove pagine seguono quattro passaggi. Si legge l’organizzazione e la sua cultura, si "
-        "diagnostica con metodo, si sviluppano le persone, si progetta e si valuta un sistema di AI."),
- ]),
+]),
 
 dict(n="02", title="Dove entra la tecnologia",
      sub="Sei processi organizzativi da esaminare prima di progettare un sistema.",
@@ -320,7 +316,6 @@ LABELS_EN = dict(
          "Designing it is therefore an organisational problem before it is a technical one.",
     meta="Whitepaper · 2026 · Alessandro Saccoia",
     strap="Culture, diagnosis, developing people and critical design of intelligent systems.",
-    toc="The nine sections",
 )
 
 SECTIONS_EN = [
@@ -347,10 +342,7 @@ dict(n="01", title="Executive summary",
   ("p", "AI inside a company is a matter of organisational development before it is a matter of "
         "models. Accuracy is necessary but not sufficient, because the meaning of a system depends "
         "on how it redefines purposes, roles, coordination, rules, assessment and identity."),
-  ("h3", "How to read this document"),
-  ("p", "The nine pages follow four moves. You read the organisation and its culture, you diagnose "
-        "with method, you develop the people, and you design and evaluate an AI system."),
- ]),
+]),
 
 dict(n="02", title="Where the technology enters",
      sub="Six organisational processes to examine before designing a system.",
@@ -613,19 +605,237 @@ dict(n="09", title="Evaluating in order to govern",
 ]
 
 
+
+# ---------------------------------------------------------------- figure
+# Stessa grammatica dei case study: linee sottili, mono per le etichette,
+# accento solo dove serve leggere per primo.
+def _t(it, en, lang):
+    return it if lang == "it" else en
+
+
+def fig_processes(lang):
+    """I sei processi che il sistema attraversa."""
+    boxes = [_t("SCOPO", "PURPOSE", lang), _t("DIFFERENZIAZIONE", "DIFFERENTIATION", lang),
+             _t("INTEGRAZIONE", "INTEGRATION", lang), _t("FORMALIZZAZIONE", "FORMALISATION", lang),
+             _t("VALUTAZIONE", "ASSESSMENT", lang), _t("IDENTIFICAZIONE", "IDENTIFICATION", lang)]
+    out = [f'<svg viewBox="0 0 900 360" class="mfig" role="img" aria-label="'
+           f'{_t("I sei processi organizzativi", "The six organisational processes", lang)}">']
+    xs, ys = [60, 340, 620], [30, 220]
+    i = 0
+    for y in ys:
+        for x in xs:
+            out.append(f'<rect x="{x}" y="{y}" width="220" height="62" fill="none" '
+                       f'stroke="currentColor" stroke-opacity=".25"/>')
+            out.append(f'<text x="{x+16}" y="{y+38}" font-family="var(--mono)" font-size="12" '
+                       f'letter-spacing="1.3" fill="currentColor">{boxes[i]}</text>')
+            i += 1
+    out.append('<rect x="340" y="128" width="220" height="62" fill="none" stroke="var(--acc)"/>')
+    out.append(f'<text x="450" y="166" text-anchor="middle" font-family="var(--mono)" '
+               f'font-size="12" letter-spacing="1.4" fill="var(--acc)">'
+               f'{_t("SISTEMA DI AI", "THE AI SYSTEM", lang)}</text>')
+    out.append('<g fill="none" stroke="currentColor" stroke-opacity=".3">'
+               '<path d="M170 92v36h170"/><path d="M450 92v36"/><path d="M730 92v36H560"/>'
+               '<path d="M170 282v-92h170"/><path d="M450 220v-30"/><path d="M730 282v-92H560"/></g>')
+    out.append(f'<text x="450" y="340" text-anchor="middle" font-family="var(--sans)" '
+               f'font-size="13" fill="currentColor" fill-opacity=".6">'
+               f'{_t("il sistema non tocca un processo alla volta, li attraversa tutti",
+                     "the system does not touch one process at a time, it crosses all of them", lang)}'
+               f'</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def fig_culture(lang):
+    """I tre livelli, con la linea di galleggiamento."""
+    rows = [(_t("ARTEFATTI", "ARTEFACTS", lang),
+             _t("spazi, dashboard, riunioni, procedure", "spaces, dashboards, meetings, procedures", lang)),
+            (_t("VALORI DICHIARATI", "ESPOUSED VALUES", lang),
+             _t("innovazione, autonomia, qualità", "innovation, autonomy, quality", lang)),
+            (_t("ASSUNTI DI BASE", "BASIC ASSUMPTIONS", lang),
+             _t("«i dati sono più affidabili delle persone»", "«data is more reliable than people»", lang))]
+    out = [f'<svg viewBox="0 0 900 330" class="mfig" role="img" aria-label="'
+           f'{_t("I tre livelli della cultura", "The three levels of culture", lang)}">']
+    y = 24
+    for i, (title, sub) in enumerate(rows):
+        acc = ' stroke="var(--acc)"' if i == 2 else ' stroke="currentColor" stroke-opacity=".25"'
+        out.append(f'<rect x="150" y="{y}" width="600" height="64" fill="none"{acc}/>')
+        out.append(f'<text x="176" y="{y+28}" font-family="var(--mono)" font-size="12" '
+                   f'letter-spacing="1.3" fill="{"var(--acc)" if i == 2 else "currentColor"}">{title}</text>')
+        out.append(f'<text x="176" y="{y+50}" font-family="var(--sans)" font-size="13.5" '
+                   f'fill="currentColor" fill-opacity=".6">{sub}</text>')
+        y += 92
+    out.append('<path d="M40 200h820" stroke="currentColor" stroke-opacity=".45" '
+               'stroke-dasharray="5 6"/>')
+    out.append(f'<text x="40" y="192" font-family="var(--mono)" font-size="11" letter-spacing="1.3" '
+               f'fill="currentColor" fill-opacity=".55">{_t("VISIBILE", "VISIBLE", lang)}</text>')
+    out.append(f'<text x="40" y="222" font-family="var(--mono)" font-size="11" letter-spacing="1.3" '
+               f'fill="currentColor" fill-opacity=".55">{_t("SOMMERSO", "SUBMERGED", lang)}</text>')
+    out.append(f'<text x="450" y="316" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+               f'fill="currentColor" fill-opacity=".6">'
+               f'{_t("un progetto di AI viene giudicato al terzo livello, dove nessuno scrive niente",
+                     "an AI project is judged at the third level, where nothing is written down", lang)}'
+               f'</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def fig_agency(lang):
+    """Dallo stesso sistema, due esiti opposti."""
+    left = _t("COLLEGA ALGORITMICO", "ALGORITHMIC COLLEAGUE", lang)
+    right = _t("GABBIA ALGORITMICA", "ALGORITHMIC CAGE", lang)
+    rows = [(_t("Contesto", "Context", lang), _t("abilita la decisione", "enables the decision", lang),
+             _t("esercita controllo", "exercises control", lang)),
+            (_t("Agency", "Agency", lang), _t("resta a chi decide", "stays with the decider", lang),
+             _t("erode senza decisione", "erodes with no decision", lang)),
+            (_t("Interazione", "Interaction", lang), _t("aumento e ingaggio", "augmentation and engagement", lang),
+             _t("automazione e accettazione", "automation and acceptance", lang)),
+            (_t("Esiti", "Outcomes", lang), _t("apprendimento", "learning", lang),
+             _t("giustificazione", "justification", lang))]
+    out = [f'<svg viewBox="0 0 900 380" class="mfig" role="img" aria-label="'
+           f'{_t("Collega algoritmico contro gabbia algoritmica",
+                 "Algorithmic colleague versus algorithmic cage", lang)}">']
+    out.append('<rect x="60" y="24" width="340" height="46" fill="none" stroke="var(--acc)"/>')
+    out.append('<rect x="500" y="24" width="340" height="46" fill="none" stroke="currentColor" stroke-opacity=".35"/>')
+    out.append(f'<text x="230" y="53" text-anchor="middle" font-family="var(--mono)" font-size="12" '
+               f'letter-spacing="1.4" fill="var(--acc)">{left}</text>')
+    out.append(f'<text x="670" y="53" text-anchor="middle" font-family="var(--mono)" font-size="12" '
+               f'letter-spacing="1.4" fill="currentColor">{right}</text>')
+    out.append('<path d="M450 24v300" stroke="currentColor" stroke-opacity=".2"/>')
+    y = 120
+    for label, a, b in rows:
+        out.append(f'<text x="450" y="{y-16}" text-anchor="middle" font-family="var(--mono)" '
+                   f'font-size="10.5" letter-spacing="1.6" fill="currentColor" '
+                   f'fill-opacity=".5">{label.upper()}</text>')
+        out.append(f'<text x="400" y="{y+8}" text-anchor="end" font-family="var(--sans)" font-size="14" '
+                   f'fill="currentColor">{a}</text>')
+        out.append(f'<text x="500" y="{y+8}" font-family="var(--sans)" font-size="14" '
+                   f'fill="currentColor" fill-opacity=".6">{b}</text>')
+        y += 66
+    out.append(f'<text x="450" y="368" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+               f'fill="currentColor" fill-opacity=".6">'
+               f'{_t("è la stessa tecnologia: cambia il contesto in cui la si installa",
+                     "the technology is the same, what changes is the context it lands in", lang)}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def fig_allocation(lang):
+    """Chi prende quale caso."""
+    cols = [(_t("CASI FACILI", "EASY CASES", lang), _t("automazione selettiva", "selective automation", lang),
+             _t("con audit e campionamento", "with audits and sampling", lang)),
+            (_t("CASI INTERMEDI", "INTERMEDIATE CASES", lang), _t("aumento", "augmentation", lang),
+             _t("override praticabile, non formale", "a real override, not a formal one", lang)),
+            (_t("CASI DIFFICILI", "HARD CASES", lang), _t("squadre umane", "human teams", lang),
+             _t("multidisciplinari", "multidisciplinary", lang))]
+    out = [f'<svg viewBox="0 0 900 300" class="mfig" role="img" aria-label="'
+           f'{_t("Allocazione dei casi", "How the cases are allocated", lang)}">']
+    out.append('<path d="M60 60h780" stroke="currentColor" stroke-opacity=".3"/>')
+    out.append('<path d="M60 52v16M320 52v16M580 52v16M840 52v16" stroke="currentColor" stroke-opacity=".3"/>')
+    out.append(f'<text x="60" y="40" font-family="var(--mono)" font-size="11" letter-spacing="1.4" '
+               f'fill="var(--acc)">{_t("CONFIDENZA ALTA", "HIGH CONFIDENCE", lang)}</text>')
+    out.append(f'<text x="840" y="40" text-anchor="end" font-family="var(--mono)" font-size="11" '
+               f'letter-spacing="1.4" fill="currentColor" fill-opacity=".55">'
+               f'{_t("CONFIDENZA BASSA", "LOW CONFIDENCE", lang)}</text>')
+    x = 60
+    for title, what, sub in cols:
+        out.append(f'<rect x="{x}" y="106" width="240" height="104" fill="none" '
+                   f'stroke="currentColor" stroke-opacity=".25"/>')
+        out.append(f'<text x="{x+20}" y="140" font-family="var(--mono)" font-size="11.5" '
+                   f'letter-spacing="1.3" fill="currentColor" fill-opacity=".6">{title}</text>')
+        out.append(f'<text x="{x+20}" y="168" font-family="var(--sans)" font-size="16" '
+                   f'fill="currentColor">{what}</text>')
+        out.append(f'<text x="{x+20}" y="192" font-family="var(--sans)" font-size="13" '
+                   f'fill="currentColor" fill-opacity=".55">{sub}</text>')
+        out.append(f'<path d="M{x+120} 60v46" stroke="currentColor" stroke-opacity=".3"/>')
+        x += 260
+    out.append(f'<text x="450" y="266" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+               f'fill="currentColor" fill-opacity=".6">'
+               f'{_t("togliere i casi facili alle persone toglie anche il modo in cui si impara il mestiere",
+                     "taking the easy cases away also takes away how the work is learned", lang)}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def fig_kpi(lang):
+    """Quattro famiglie di indicatori, non una sola."""
+    quads = [(_t("OUTPUT", "OUTPUT", lang), _t("il sistema gira", "the system is running", lang)),
+             (_t("MECCANISMO", "MECHANISM", lang), _t("come viene usato", "how it is used", lang)),
+             (_t("ESITI", "OUTCOME", lang), _t("effetti sul lavoro", "effects on the work", lang)),
+             (_t("RISCHI", "RISK", lang), _t("i danni che gli altri non registrano",
+                                             "the harms the others do not record", lang))]
+    out = [f'<svg viewBox="0 0 900 320" class="mfig" role="img" aria-label="'
+           f'{_t("Quattro famiglie di indicatori", "Four families of indicator", lang)}">']
+    pos = [(120, 30), (480, 30), (120, 160), (480, 160)]
+    for i, ((x, y), (title, sub)) in enumerate(zip(pos, quads)):
+        acc = ' stroke="var(--acc)"' if i == 3 else ' stroke="currentColor" stroke-opacity=".25"'
+        out.append(f'<rect x="{x}" y="{y}" width="300" height="110" fill="none"{acc}/>')
+        out.append(f'<text x="{x+22}" y="{y+42}" font-family="var(--mono)" font-size="12" '
+                   f'letter-spacing="1.4" fill="{"var(--acc)" if i == 3 else "currentColor"}">{title}</text>')
+        out.append(f'<text x="{x+22}" y="{y+72}" font-family="var(--sans)" font-size="14.5" '
+                   f'fill="currentColor" fill-opacity=".65">{sub}</text>')
+    out.append(f'<text x="450" y="292" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+               f'fill="currentColor" fill-opacity=".6">'
+               f'{_t("le prime due dicono che funziona, le altre due dicono a che prezzo",
+                     "the first two say it works, the other two say at what price", lang)}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def fig_design(lang):
+    """Le nove domande, in fila, con il ritorno."""
+    steps = [_t("CONTESTO", "CONTEXT", lang), _t("BISOGNO", "NEED", lang), _t("INPUT", "INPUT", lang),
+             _t("PROCESSO", "PROCESS", lang), _t("OUTPUT", "OUTPUT", lang),
+             _t("PRIMO PASSO", "FIRST STEP", lang), _t("VALORE", "VALUE", lang),
+             _t("PARTI UMANE", "HUMAN PARTS", lang), _t("RISCHI", "RISKS", lang)]
+    out = [f'<svg viewBox="0 0 900 260" class="mfig" role="img" aria-label="'
+           f'{_t("Le nove domande di progetto", "The nine design questions", lang)}">']
+    x, y = 40, 60
+    for i, s in enumerate(steps):
+        if i == 5:
+            x, y = 40, 150
+        acc = ' stroke="var(--acc)"' if i in (0, 8) else ' stroke="currentColor" stroke-opacity=".25"'
+        w = 156
+        out.append(f'<rect x="{x}" y="{y}" width="{w}" height="52" fill="none"{acc}/>')
+        out.append(f'<text x="{x+w/2}" y="{y+31}" text-anchor="middle" font-family="var(--mono)" '
+                   f'font-size="11" letter-spacing="1.2" '
+                   f'fill="{"var(--acc)" if i in (0, 8) else "currentColor"}">{s}</text>')
+        if i not in (4, 8):
+            out.append(f'<path d="M{x+w} {y+26}h16" stroke="currentColor" stroke-opacity=".35"/>')
+        x += w + 16
+    out.append('<path d="M40 112v20h820v-20" stroke="currentColor" stroke-opacity=".2" fill="none"/>')
+    out.append(f'<text x="450" y="236" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+               f'fill="currentColor" fill-opacity=".6">'
+               f'{_t("le domande vanno in quest’ordine: partire dall’output è come si compra la tecnologia sbagliata",
+                     "the questions run in this order, and starting from the output is how the wrong technology gets bought", lang)}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+FIGS = {"processes": fig_processes, "culture": fig_culture, "agency": fig_agency,
+        "allocation": fig_allocation, "kpi": fig_kpi, "design": fig_design}
+
+
+# Dove entra ciascun disegno: numero di sezione e indice del blocco davanti
+# al quale viene inserito.
+FIG_AT = {"02": (1, "processes"), "03": (0, "culture"), "06": (1, "agency"),
+          "07": (4, "allocation"), "08": (1, "design"), "09": (2, "kpi")}
+
 # Sulla pagina il whitepaper è un'anteprima: le tabelle e gli elenchi di
 # definizioni restano al PDF, che è il documento completo.
 PREVIEW_SKIP = {"table", "deflist"}
 
 
-def render(sections, preview=False, more=""):
+def render(sections, preview=False, more="", lang="it"):
     out = []
     for s in sections:
         out.append(f'<section class="msec rv" id="s{s["n"]}">')
         out.append(f'  <div class="mhead"><span class="n">{s["n"]}</span>'
                    f'<h2>{s["title"]}</h2><p class="msub">{s["sub"]}</p></div>')
         skipped = 0
-        for kind, payload in s["blocks"]:
+        fig = FIG_AT.get(s["n"])
+        for index, (kind, payload) in enumerate(s["blocks"]):
+            if fig and index == fig[0]:
+                out.append(f'  <figure class="mfigwrap">{FIGS[fig[1]](lang)}</figure>')
             if preview and kind in PREVIEW_SKIP:
                 skipped += 1
                 continue

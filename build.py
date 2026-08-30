@@ -1898,8 +1898,7 @@ def page_metodo(L, asset, home, projects, about, alt_href, cases):
 </section>
 
 <div class="pad mbody">
-  <nav class="mtoc"><span>{t['toc']}</span>{M.toc(sections)}</nav>
-{M.render(sections, preview=True, more=g['more'])}
+{M.render(sections, preview=True, more=g['more'], lang=lang)}
 </div>
 </article>
 {modal}

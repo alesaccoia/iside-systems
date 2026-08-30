@@ -680,16 +680,6 @@ form.contact.sent{opacity:0;transform:translateY(-10px);pointer-events:none;
 
 
 
-.mtoc{display:grid;gap:2px 26px;margin:clamp(30px,5vh,54px) 0 0;padding:22px 0;
-  border-block:1px solid var(--line);grid-template-columns:1fr}
-.mtoc>span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--acc);margin-bottom:8px}
-.mtoc a{display:block;padding:5px 0;font-size:14.5px;color:var(--dim);text-decoration:none;
-  transition:color .2s}
-.mtoc a span{font-family:var(--mono);font-size:11px;color:var(--acc);margin-right:10px}
-.mtoc a:hover{color:var(--ink)}
-@media(min-width:760px){.mtoc{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .mtoc>span{grid-column:1/-1}}
 
 .msec{padding:clamp(40px,7vh,80px) 0;border-bottom:1px solid var(--line)}
 .mhead{margin-bottom:clamp(20px,3vh,32px)}
@@ -816,6 +806,11 @@ form.contact.sent{opacity:0;transform:translateY(-10px);pointer-events:none;
 .wnote.bad{color:var(--acc2)}
 .wfine{margin:0;font-size:12px;line-height:1.6;color:var(--dim);opacity:.8}
 .wfine a{color:inherit}
+.mfigwrap{margin:clamp(30px,5vh,52px) 0;padding:clamp(14px,2.6vw,26px) 0;
+  border-block:1px solid var(--line);overflow-x:auto}
+.mfig{width:100%;min-width:560px;height:auto;display:block;color:var(--ink)}
+.mfig text{font-family:var(--mono)}
+.mfig text[font-family="var(--sans)"]{font-family:var(--sans)}
 .mmore{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--dim);margin-top:18px}
 .mmore::before{content:"";display:inline-block;width:18px;height:1px;background:var(--acc);
