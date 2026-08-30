@@ -13,11 +13,15 @@ cp index.html progetti.html chi-sono.html privacy.html metodologia.html case-stu
    case-ai-adoption.html case-james.html case-cloud-scale.html \
    moire.html algosynth.html \
    robots.txt sitemap.xml dist/
-cp en/index.html en/projects.html en/about.html en/privacy.html \
+cp en/index.html en/projects.html en/about.html en/privacy.html en/methodology.html \
    en/moire.html en/algosynth.html en/case-studies.html \
    en/case-ai-adoption.html en/case-james.html \
    en/case-cloud-scale.html                                     dist/en/
-cp assets/site.css assets/site.js assets/ai-maturity.css assets/ai-maturity.js dist/assets/
+cp assets/site.css assets/site.js assets/ai-maturity.css assets/ai-maturity.js \
+   assets/whitepaper.js                                         dist/assets/
+# the whitepaper PDF: the page is the preview, this is the document
+mkdir -p dist/assets/doc
+cp assets/doc/*.pdf                                             dist/assets/doc/
 # the check is served at /ai-maturity, so it ships as a folder index
 mkdir -p dist/ai-maturity
 cp ai-maturity.html                                             dist/ai-maturity/index.html

@@ -768,3 +768,44 @@ form.contact.sent{opacity:0;transform:translateY(-10px);pointer-events:none;
 .mband .steps span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:7px 10px}
 @media(min-width:860px){.mband .inner{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
+
+/* ---------------------------------------------------------------- whitepaper */
+/* The page is the preview; this block is where the full PDF is asked for. */
+.wgate{display:grid;gap:clamp(24px,4vw,54px);margin:clamp(30px,5vh,52px) 0 0;
+  padding:clamp(26px,3.6vw,40px);border:1px solid var(--line);background:var(--card,transparent)}
+.wgate .lbl{margin-bottom:14px}
+.wgate h2{font-size:clamp(23px,2.8vw,32px);letter-spacing:-.03em;margin:0 0 12px;max-width:20ch}
+.wcopy p{font-size:16px;line-height:1.7;color:var(--dim);max-width:46ch;margin:0}
+.wcopy .meta{margin-top:16px}
+.wform{display:grid;gap:14px;align-content:start}
+.wrow{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.wform label{display:grid;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim)}
+.wform input[type=text],.wform input[type=email],.wform input:not([type]),.wform textarea{
+  width:100%;padding:12px 13px;background:transparent;border:1px solid var(--line);
+  color:var(--ink);font:400 15px/1.5 inherit;letter-spacing:normal;text-transform:none;
+  border-radius:0}
+.wform input:focus,.wform textarea:focus{outline:none;border-color:var(--acc)}
+.wform textarea{resize:vertical;min-height:86px}
+.wform label.wcheck{grid-template-columns:auto 1fr;align-items:start;gap:10px;
+  font-family:inherit;font-size:13.5px;line-height:1.6;letter-spacing:normal;text-transform:none}
+.wform label.wcheck input{margin-top:3px;accent-color:var(--acc);width:16px;height:16px}
+.wpot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.wform button{justify-self:start;margin-top:4px;padding:13px 22px;border:1px solid var(--ink);
+  background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.wform button .go{margin-left:10px}
+.wform button:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+.wform button[disabled]{opacity:.5;cursor:default}
+.wform.sent button{background:transparent;color:var(--dim);border-color:var(--line)}
+.wnote{margin:0;font-size:13.5px;line-height:1.6;color:var(--dim);min-height:1px}
+.wnote.good{color:var(--acc)}
+.wnote.bad{color:var(--acc2)}
+.wfine{margin:0;font-size:12px;line-height:1.6;color:var(--dim);opacity:.8}
+.wfine a{color:inherit}
+.mmore{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);margin-top:18px}
+.mmore::before{content:"";display:inline-block;width:18px;height:1px;background:var(--acc);
+  vertical-align:middle;margin-right:10px}
+@media(min-width:860px){.wgate{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start}}
+@media(max-width:520px){.wrow{grid-template-columns:1fr}}

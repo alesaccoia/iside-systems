@@ -312,13 +312,323 @@ dict(n="09", title="Valutare per governare",
 ]
 
 
-def render(sections):
+LABELS_EN = dict(
+    kicker="Method",
+    title="AI &amp; Organizational Development",
+    sub="Designing the technology inside the work.",
+    lede="Introducing an AI system changes how people work, decide, learn and are assessed. "
+         "Designing it is therefore an organisational problem before it is a technical one.",
+    meta="Whitepaper · 2026 · Alessandro Saccoia",
+    strap="Culture, diagnosis, developing people and critical design of intelligent systems.",
+    toc="The nine sections",
+)
+
+SECTIONS_EN = [
+dict(n="01", title="Executive summary",
+     sub="An AI project is judged on the context it enters, the task it takes on, the effects it "
+         "produces and who bears them.",
+     blocks=[
+  ("p", "An intelligent system enters a network of interdependent activities, roles, identities "
+        "and meanings. Its organisational value depends on how it is embedded in the processes "
+        "that hold that network together."),
+  ("cards", [
+    ("01 / Diagnose", "Define the problem before the tool",
+     "A statement such as «people resist AI» is not a diagnosis. A diagnosis requires an explicit "
+     "chain, from the construct to the dimensions, the indicators, the data, their interpretation "
+     "and the way findings are given back."),
+    ("02 / Configure", "Automation and augmentation are configurations",
+     "They are not properties of the software but ways of organising work. The same system can "
+     "widen a manager's room for judgement and narrow that of a team member."),
+    ("03 / Develop", "The tool is one part of the intervention",
+     "The intervention includes co-design, training, new practices, governance and evaluation. "
+     "Without those components the organisation gets an installed piece of software and no change "
+     "in how the work is done.")]),
+  ("h3", "The argument"),
+  ("p", "AI inside a company is a matter of organisational development before it is a matter of "
+        "models. Accuracy is necessary but not sufficient, because the meaning of a system depends "
+        "on how it redefines purposes, roles, coordination, rules, assessment and identity."),
+  ("h3", "How to read this document"),
+  ("p", "The nine pages follow four moves. You read the organisation and its culture, you diagnose "
+        "with method, you develop the people, and you design and evaluate an AI system."),
+ ]),
+
+dict(n="02", title="Where the technology enters",
+     sub="Six organisational processes to examine before designing a system.",
+     blocks=[
+  ("p", "An organisation is both formal structure and <i>organizing</i>, meaning the informal "
+        "practices and tacit knowledge without which the real work does not function. A system "
+        "built on the formal representation of the work always meets that margin."),
+  ("cards", [
+    ("01 / Purpose", "Who defined the objective?",
+     "An algorithm optimised on a single indicator ends up sacrificing quality, learning or "
+     "wellbeing. It is worth asking which dimensions were left out of the objective function."),
+    ("02 / Differentiation", "Different languages",
+     "Data science, HR and the front line mean different things by performance, error and "
+     "fairness. AI puts specialisms in contact without a shared language."),
+    ("03 / Integration", "Coordination or a new divide",
+     "The system can coordinate information, or open a new divide between those who understand "
+     "the model and those who merely follow its output."),
+    ("04 / Formalisation", "What is measurable and what counts",
+     "The algorithm translates criteria of judgement into computable rules. The risk is that what "
+     "the system measures is taken for what has value."),
+    ("05 / Assessment", "Measurement changes behaviour",
+     "More frequency and precision can support learning, or produce surveillance, anxiety and "
+     "opportunistic adaptation to the indicators."),
+    ("06 / Identification", "A threat to professional identity",
+     "When AI takes on a task that is central to a profession, the resistance is about the "
+     "identity of whoever performed it rather than about ease of use.")]),
+  ("note", "Resistance often signals a <b>real loss</b> of autonomy, competence, belonging or "
+           "power, and not unfamiliarity with the technology."),
+ ]),
+
+dict(n="03", title="Organisational culture",
+     sub="Beneath the visible artefacts sit espoused values and assumptions taken for granted.",
+     blocks=[
+  ("cards", [
+    ("Level 1 — visible", "Artefacts",
+     "Spaces, technologies, dashboards, meetings, language, procedures. They show <i>what</i> "
+     "happens, not <i>why</i>. A screen with real-time performance can express transparency and "
+     "learning or control and competition, and the artefact alone does not say which."),
+    ("Level 2 — espoused", "Stated values",
+     "Innovation, autonomy, quality, inclusion. The distance between a stated value and the "
+     "practice is diagnostic data. If whoever checks an output comes out less productive in the "
+     "measurement systems, the value in practice is speed."),
+    ("Level 3 — taken for granted", "Basic assumptions",
+     "«Data is more reliable than people». «Only experience really understands this work». "
+     "«An error is a fault to hide». They are written in no policy, yet they determine the "
+     "reaction to AI. Where data is held to be superior the output becomes uncontestable, while "
+     "where expert judgement counts the same system is felt as an attack on professional "
+     "identity.")]),
+  ("h3", "Depth, pervasiveness, stability"),
+  ("p", "Culture is deep, pervasive and stable, and for that reason it gives meaning and is "
+        "defended. It does not change because new values are proclaimed, but when structures, "
+        "incentives, relationships and experiences change; if the new practices work for long "
+        "enough they become credible and finally obvious."),
+  ("h3", "Readiness belongs to a group, not to an organisation"),
+  ("p", "Professional, generational and geographical subcultures read the same project "
+        "differently. A system accepted by management can be refused by the professionals, and a "
+        "system useful to experts can overload novices. For an assessment to be useful it has to "
+        "be referred to a group, a use and precise conditions."),
+  ("note", "Culture and climate are not the same. Climate concerns shared perceptions of current "
+           "practices and priorities and changes faster, while assumptions require qualitative "
+           "methods, observation and organisational history."),
+ ]),
+
+dict(n="04", title="Diagnosis",
+     sub="An intervention fails when a vague problem becomes a solution too early.",
+     blocks=[
+  ("steps", [
+    ("01", "Construct", "Trust, readiness, psychological safety"),
+    ("02", "Dimensions", "Theoretical decomposition of the concept"),
+    ("03", "Indicators", "What is observable and can be recorded"),
+    ("04", "Questions", "Items and guides, each with a reason"),
+    ("05", "Data", "Sources triangulated across logs, voices and observation"),
+    ("06", "Interpretation", "Alternative hypotheses, not confirmations"),
+    ("07", "Giving back", "Already part of the intervention: it opens dialogue or defence")]),
+  ("h3", "«Acceptance» is not a single construct"),
+  ("p", "Mandated use, actual use, perceived usefulness, trust and willingness to depend on the "
+        "system are different constructs. A person can use it because they must and not trust it; "
+        "find it useful and unfair; trust it on standard tasks and refuse it on career decisions. "
+        "A high usage rate, where use is mandatory, does not demonstrate acceptance."),
+  ("h3", "Divergence between sources is data"),
+  ("p", "Management reads high adoption in the logs; operators describe ritual use and little "
+        "trust. Triangulation serves to explain why the sources diverge, not to make them agree. "
+        "An average of three can come from uniformly moderate answers or from half enthusiasts "
+        "and half opponents, with opposite implications."),
+  ("table", dict(head=["Faulty item", "Fault", "Rewrite"], rows=[
+     ["«My mentor is available and competent»", "Double-barrelled",
+      "Two separate items, one per construct"],
+     ["«Do you often receive useful feedback?»", "Vague frequency",
+      "«In the last four weeks, how many times…»"],
+     ["«How did you overcome your resistance?»", "Presupposition",
+      "«What effects has it had on the way you work?»"],
+     ["«I understand AI»", "Generic construct",
+      "«I know which decisions the system is allowed to make recommendations on»"]])),
+  ("note", "Anonymity and confidentiality are not synonyms. In a small department role, seniority "
+           "and unit together identify a person. Data minimisation is a methodological choice "
+           "before it is a formal one."),
+ ]),
+
+dict(n="05", title="Developing people",
+     sub="Running a course, assigning a mentor or giving feedback is not yet development.",
+     blocks=[
+  ("cards", [
+    ("Training", "Needs analysis before the course",
+     "If a person does not check the output because slowing down is punished, the problem is in "
+     "the incentives. If the system is unreliable, the problem is the system and not how prepared "
+     "the people are. <span class='mchips'>Organisational analysis · Task analysis (KSA) · Person "
+     "analysis</span> An observable training objective asks someone to recognise four categories "
+     "of risk in an output and to decide when to escalate."),
+    ("Mentoring", "Matching does not produce the relationship",
+     "Career functions give access and competence; psychosocial functions give identity and "
+     "confidence. An algorithm that pairs two people does not «do mentoring». <span "
+     "class='mchips'>Sponsorship, coaching, exposure · Acceptance, role modelling · Initiation, "
+     "cultivation, separation, redefinition</span> Using private conversations to assess the "
+     "relationship destroys the trust the programme set out to create."),
+    ("Leadership", "Leader development and leadership development",
+     "<i>Leader development</i> builds individual capability; <i>leadership development</i> builds "
+     "the collective capacity for direction, alignment and commitment. Training many individuals "
+     "does not produce the second. <span class='mchips'>Identity and self-regulation · Deliberate "
+     "practice · Assessment, challenge, support</span> An app that tells the manager who to "
+     "involve develops a leader; if only they see the data, power stays centralised.")]),
+  ("h3", "Feedback does not always improve performance"),
+  ("p", "It depends on where it directs attention. If it moves attention from the task to a self "
+        "that feels threatened, it can make performance worse. Quality, timing, source "
+        "credibility and the capacity for self-regulation count for more than frequency. An AI "
+        "coach that increases frequency does not automatically increase learning."),
+  ("h3", "Output is not outcome"),
+  ("p", "«A hundred people trained» is an output. Reaction, learning, behaviour and results are "
+        "not an automatic chain. A course people enjoy may teach nothing, and a competence "
+        "acquired does not transfer if managers, tools and incentives do not support it."),
+ ]),
+
+dict(n="06", title="Colleague or cage",
+     sub="The same technology becomes an algorithmic colleague or an algorithmic cage.",
+     blocks=[
+  ("cards", [
+    ("Algorithmic colleague", "Judgement stays with the person",
+     "In a context that values judgement and autonomy the system supports without replacing "
+     "responsibility. Divergences are discussed as a source of learning, the override remains "
+     "practicable and tacit knowledge is cultivated."),
+    ("Algorithmic cage", "Autonomy erodes without a decision",
+     "In a hierarchical context it stiffens the processes and reduces autonomy. The override "
+     "formally exists, but every deviation requires a justification, and <i>agency</i> erodes "
+     "gradually without any decision ever having revoked it.")]),
+  ("h3", "Five themes from the empirical research"),
+  ("olist", [
+    "Human-AI collaboration produces benefits where there is <i>task-technology fit</i>, trust and "
+    "the capability to use it.",
+    "The algorithm is perceived as consistent and disinterested, or as decontextualised.",
+    "Hope and fear coexist in the same person, and agency and the leader's support soften the fear.",
+    "<i>Algorithmic management</i> assigns, monitors and sanctions, and the open question is "
+    "contestability.",
+    "Some technologies replace tasks, others create new ones."]),
+  ("note", "Domain experience has non-linear effects. Experts may refuse the algorithmic advice, "
+           "beginners may not be able to judge it, and those with intermediate experience may "
+           "gain the most."),
+  ("h3", "Four dimensions of analysis"),
+  ("deflist", [
+    ("Context", "From AI that enables decisions to AI that exercises coercive control."),
+    ("Agency", "Who keeps the initiative and who sees it limited."),
+    ("Interaction", "Augmentation and engagement, or automation and acceptance."),
+    ("Outcomes", "Task performance and impact on people.")]),
+  ("p", "The manager is the <i>first party</i> using the system; the operator is also a <i>second "
+        "party</i>, because the same dashboard measures them; the customer is a <i>third party</i> "
+        "and bears the decision. Vendors and data annotators remain invisible actors."),
+  ("h3", "How it evolves over time"),
+  ("deflist", [
+    ("Institutionalisation", "Use becomes routine and norm."),
+    ("Hybridisation", "Human-algorithm configurations."),
+    ("Systematisation", "More tools connect to one another."),
+    ("Social integration", "Effects on professions and rules.")]),
+ ]),
+
+dict(n="07", title="Allocating the tasks",
+     sub="«Human + AI» on the same task is not always the best configuration.",
+     blocks=[
+  ("p", "<i>Within-task</i> complementarity justifies augmentation, because on the same task human "
+        "and system together do better than either alone. <i>Between-task</i> complementarity "
+        "instead justifies allocating tasks to whichever configuration suits each of them. In a "
+        "study on an image classification task the two logics lead to appreciably different "
+        "results."),
+  ("stats", [("Human only", 68), ("AI only", 77), ("Human with AI advice", 80),
+             ("Optimised allocation", 88)]),
+  ("caption", "Accuracy on an image classification task. The figures illustrate a design logic, "
+              "not a benchmark transferable to other processes."),
+  ("cards", [
+    ("Easy cases / high confidence", "Selective automation",
+     "With error audits and sampling. But if the simple cases disappear, new hires do not build "
+     "basic competence."),
+    ("Intermediate cases", "Augmentation",
+     "The system orders the evidence, the person adds the context. It needs a real override, not "
+     "a formal one, and explanations that can be used."),
+    ("Hard cases / low confidence", "Human teams",
+     "Multidisciplinary. Concentrating people only on the hard cases raises cognitive load and "
+     "removes chances to recover and to learn.")]),
+  ("p", "Even a system on average less accurate than a person creates value when it is "
+        "complementary or frees time for higher-value activity. Immediate performance does not "
+        "close the decision, because responsibility, switching costs, meta-knowledge, fairness and "
+        "the preservation of tacit knowledge weigh in the medium term."),
+ ]),
+
+dict(n="08", title="Designing an AI system",
+     sub="Nine questions in order, from the context of the work to the risks of the system.",
+     blocks=[
+  ("steps", [
+    ("01", "Context", "Organisation, users, process, stakeholders, subcultures involved."),
+    ("02", "Need", "Specific and supported by diagnosis, not deduced from an available technology."),
+    ("03", "Input", "Which data and knowledge, with what legitimacy and what minimisation."),
+    ("04", "Process", "How the system transforms the input and exactly where people intervene."),
+    ("05", "Output", "Evidence, alternatives and a confidence level, instead of a traffic light "
+                     "that hides the uncertainty."),
+    ("06", "First step", "A prototype on synthetic data and co-design, not ingestion of real "
+                         "conversations."),
+    ("07", "Expected value", "On quality or resources, stated in advance and verifiable against a "
+                             "baseline."),
+    ("08", "Human parts", "Choice of objectives, interpretation, relationship, decision and "
+                          "responsibility."),
+    ("09", "Risks", "Privacy, bias, drift towards assessment, dependence, misuse.")]),
+  ("table", dict(head=["Risk", "Insufficient response", "Mitigation in the design"], rows=[
+    ["Privacy", "Generic consent",
+     "Necessity, minimisation, separate access, retention, no training on personal data"],
+    ["Bias", "Declaring <i>fairness</i>",
+     "Defined groups, relevant error metrics, audits, redress procedures"],
+    ["Resistance", "A communication plan",
+     "Examining the real losses, listening to critical knowledge, contestability"],
+    ["Misuse", "A policy nobody reads",
+     "Technical limits on uses, assigned responsibilities, a stop condition defined in advance"]])),
+ ]),
+
+dict(n="09", title="Evaluating in order to govern",
+     sub="Four families of KPI.",
+     blocks=[
+  ("p", "A useful evaluation plan holds four kinds of indicator together. Outputs say the system "
+        "is running, mechanism indicators explain how it is used, outcomes measure the effects on "
+        "the work, and risk indicators pick up the harms the first three families do not record."),
+  ("cards", [
+    ("Output", "The system is running",
+     "People trained, messages generated, cases processed. Necessary but not sufficient."),
+    ("Mechanism", "How it is used",
+     "Cognitive load, comprehension, actual use of the advice, overrides and their outcome."),
+    ("Outcome", "Effects on the work",
+     "Behaviour at work, quality, timing, development outcomes, retention."),
+    ("Risk", "Harms the others do not record",
+     "Self-censorship, flattening of language, dependence, disparities between groups, incidents.")]),
+  ("h3", "A trade-off is not a failure"),
+  ("p", "If performance rises while psychological safety falls, the result is ambivalent and has "
+        "to be decided on the size, distribution and duration of the effects. A single composite "
+        "index would hide the tension."),
+  ("h3", "A measure is valid for a use"),
+  ("p", "A questionnaire useful for facilitating dialogue may be unfit for classifying people. If "
+        "the system produces the metric by which it is judged, the indicator is not independent."),
+  ("note", "<b>Methodological note.</b> This whitepaper reworks, in original form, concepts from "
+           "the literature on organisational development, organisational culture, diagnosis and "
+           "evaluation, developing people, and AI in organisations (among others Schein on the "
+           "levels of culture and on feedback; Kram on mentoring; Kirkpatrick and Quaglino on "
+           "evaluation; Kluger and DeNisi on feedback; Day on leader and leadership development; "
+           "Bankins and colleagues, Hillebrand, Raisch and Schad, Fügener, Walzner and Gupta on AI "
+           "in organisations). No teaching material is reproduced. The figures cited illustrate a "
+           "design logic and are not transferable benchmarks."),
+ ]),
+]
+
+
+# Sulla pagina il whitepaper è un'anteprima: le tabelle e gli elenchi di
+# definizioni restano al PDF, che è il documento completo.
+PREVIEW_SKIP = {"table", "deflist"}
+
+
+def render(sections, preview=False, more=""):
     out = []
     for s in sections:
         out.append(f'<section class="msec rv" id="s{s["n"]}">')
         out.append(f'  <div class="mhead"><span class="n">{s["n"]}</span>'
                    f'<h2>{s["title"]}</h2><p class="msub">{s["sub"]}</p></div>')
+        skipped = 0
         for kind, payload in s["blocks"]:
+            if preview and kind in PREVIEW_SKIP:
+                skipped += 1
+                continue
             if kind == "p":
                 out.append(f"  <p>{payload}</p>")
             elif kind == "h3":
@@ -356,9 +666,58 @@ def render(sections):
                                for r in payload["rows"])
                 out.append(f'  <div class="mtable"><table><thead><tr>{head}</tr></thead>'
                            f"<tbody>{rows}</tbody></table></div>")
+        if preview and skipped and more:
+            out.append(f'  <p class="mmore">{more}</p>')
         out.append("</section>")
     return "\n".join(out)
 
 
 def toc(sections):
     return "".join(f'<a href="#s{s["n"]}"><span>{s["n"]}</span>{s["title"]}</a>' for s in sections)
+
+
+# ---------------------------------------------------------------- il download
+# La pagina è un'anteprima; il PDF completo arriva per mail, quindi il modulo
+# chiede i contatti. Le stringhe stanno qui accanto al testo che descrivono.
+PDF = "/assets/doc/iside-systems-whitepaper-ai-organizational-development.pdf"
+
+GATE = {
+"it": dict(
+  lbl="Whitepaper completo",
+  h="Scaricalo per intero, in PDF.",
+  p="Otto pagine impaginate, con le tabelle e gli schemi che qui restano fuori. "
+    "Lascia un contatto e te lo mando via mail.",
+  meta="PDF · 8 pagine · italiano",
+  name="Nome", surname="Cognome", email="Email",
+  msg="Vuoi aggiungere qualcosa?",
+  msg_ph="Facoltativo — su cosa stai lavorando, cosa vorresti approfondire.",
+  consent="Voglio ricevere anche le comunicazioni di Iside Systems (poche, e "
+          "sempre su questi temi). Puoi disiscriverti quando vuoi.",
+  cta="Mandami il whitepaper",
+  sending="Invio…",
+  done="Fatto. Controlla la posta: il PDF è in arrivo.",
+  fail="Non è partita. Scrivimi a alessandro@iside.systems e te lo mando a mano.",
+  privacy="I dati servono a mandarti il PDF e a risponderti. Vedi la",
+  privacy_link="privacy policy",
+  more="Tabella completa nel whitepaper.",
+),
+"en": dict(
+  lbl="Full whitepaper",
+  h="Get the whole thing, as a PDF.",
+  p="Eight typeset pages, with the tables and schemes left out here. "
+    "Leave a contact and I will send it over.",
+  meta="PDF · 8 pages · Italian",
+  name="First name", surname="Last name", email="Email",
+  msg="Anything to add?",
+  msg_ph="Optional — what you are working on, what you would like to go deeper on.",
+  consent="I would also like to receive news from Iside Systems (rarely, and "
+          "always on these subjects). You can unsubscribe at any time.",
+  cta="Send me the whitepaper",
+  sending="Sending…",
+  done="Done. Check your inbox: the PDF is on its way.",
+  fail="It did not go through. Write to alessandro@iside.systems and I will send it by hand.",
+  privacy="The data is used to send you the PDF and to reply. See the",
+  privacy_link="privacy policy",
+  more="Full table in the whitepaper.",
+),
+}

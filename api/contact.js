@@ -214,6 +214,100 @@ function reportText(report, withAnswers) {
   return rows.join("\n");
 }
 
+/* ------------------------------------------------------------------
+   Whitepaper: the page is a preview, the PDF goes out by mail. The file
+   is fetched from the site itself so the function stays a single file.
+   ------------------------------------------------------------------ */
+const PDF_PATH = "/assets/doc/iside-systems-whitepaper-ai-organizational-development.pdf";
+const PDF_NAME = "Iside Systems — AI and Organizational Development.pdf";
+// SITE_URL lets a local run point the attachment at a local copy of the file
+const SITE = process.env.SITE_URL || "https://www.isidesystems.com";
+
+const WP_COPY = {
+  it: {
+    hello: (first) => `Ciao ${first}, eccolo.`,
+    title: "AI &amp; Organizational Development",
+    sub: "Progettare la tecnologia dentro il lavoro.",
+    body: "Il PDF è allegato a questa mail. Otto pagine: cultura, diagnosi, sviluppo "
+        + "delle persone e design dei sistemi intelligenti.",
+    cta: "Scarica il PDF",
+    close: "Se vuoi discuterne su un caso concreto, rispondi a questa mail: leggo io.",
+  },
+  en: {
+    hello: (first) => `Hi ${first}, here it is.`,
+    title: "AI &amp; Organizational Development",
+    sub: "Designing the technology inside the work.",
+    body: "The PDF is attached to this mail. Eight pages, in Italian: culture, diagnosis, "
+        + "developing people and the design of intelligent systems.",
+    cta: "Download the PDF",
+    close: "To go through it on a concrete case, reply to this mail and it reaches me.",
+  },
+};
+
+function whitepaperHtml(lang, first) {
+  const c = WP_COPY[lang] || WP_COPY.it;
+  const url = SITE + PDF_PATH;
+  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${c.title}</title></head>
+  <body style="margin:0;background:${BG}">
+  <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:${BG}">
+    <tr><td align="center" style="padding:32px 18px 56px">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px">
+        <tr><td style="padding-bottom:26px;border-bottom:1px solid ${LINE}">
+          <span style="display:inline-block;width:22px;height:22px;border:2px solid ${INK};
+                       vertical-align:middle"></span>
+          <span style="font:700 12px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
+                       color:${INK};padding-left:10px;vertical-align:middle">ISIDE SYSTEMS</span>
+          <span style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
+                       color:${DIM};float:right;padding-top:5px">WHITEPAPER</span>
+        </td></tr>
+        <tr><td style="padding:34px 0 0">
+          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${ACC}">
+            ${esc(c.hello(first))}</div>
+          <h1 style="font:600 29px/1.15 Helvetica,Arial,sans-serif;color:${INK};letter-spacing:-.02em;
+                     margin:14px 0 0">${c.title}</h1>
+          <p style="font:500 18px/1.5 Helvetica,Arial,sans-serif;color:${ACC};margin:10px 0 0">
+            ${c.sub}</p>
+          <p style="font:16px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:18px 0 0">
+            ${c.body}</p>
+        </td></tr>
+        <tr><td style="padding:28px 0 0">
+          <a href="${url}" style="display:inline-block;background:${INK};color:${BG};
+             font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
+             padding:14px 22px;text-decoration:none">${c.cta.toUpperCase()} &#8594;</a>
+        </td></tr>
+        <tr><td style="padding:34px 0 0;border-top:1px solid ${LINE}">
+          <p style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:22px 0 0">
+            ${esc(c.close)}</p>
+          <p style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;color:${DIM};
+                    margin:26px 0 0">
+            ALESSANDRO SACCOIA · ISIDE SYSTEMS SRLS · MILANO<br>
+            <a href="${SITE}" style="color:${ACC};text-decoration:none">isidesystems.com</a>
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table></body></html>`;
+}
+
+// Attaching the file is worth one extra request; if it fails the mail still
+// carries the link, so the person is never left without the document.
+async function pdfAttachment() {
+  try {
+    const r = await fetch(SITE + PDF_PATH);
+    if (!r.ok) throw new Error(String(r.status));
+    const buf = Buffer.from(await r.arrayBuffer());
+    if (buf.length > 12 * 1024 * 1024) throw new Error("too_large");
+    return [{ ContentType: "application/pdf", Filename: PDF_NAME,
+              Base64Content: buf.toString("base64") }];
+  } catch (err) {
+    console.error("whitepaper attachment", err);
+    return null;
+  }
+}
+
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -231,7 +325,11 @@ export default async function handler(req, res) {
   const topic = clean(body.topic, LIMITS.topic);
   const message = clean(body.message, LIMITS.message);
 
-  if (!name || !email || !message || !looksLikeEmail(email)) {
+  const whitepaper = body.whitepaper === true;
+  const lang = clean(body.lang, 4) === "en" ? "en" : "it";
+  const optin = body.optin === true;
+
+  if (!name || !email || !looksLikeEmail(email) || (!message && !whitepaper)) {
     return res.status(400).json({ ok: false, error: "invalid_input" });
   }
 
@@ -255,6 +353,7 @@ export default async function handler(req, res) {
     `Email: ${email}`,
     topic ? `Argomento: ${topic}` : null,
     `Pagina: ${clean(body.page, 300) || "—"}`,
+    whitepaper ? `Consenso comunicazioni: ${optin ? "sì" : "no"}` : null,
   ].filter(Boolean);
 
   // The maturity check sends its report as structured fields; everything else
@@ -266,6 +365,7 @@ export default async function handler(req, res) {
     To: [{ Email: to }],
     ReplyTo: { Email: email, Name: name },
     Subject: report ? `AI Maturity Check — ${name}`
+           : whitepaper ? `Whitepaper — ${name}${optin ? " (opt-in)" : ""}`
                     : `isidesystems.com — ${topic || "richiesta"} — ${name}`,
     TextPart: report ? `${lines.join("\n")}\n\n${reportText(report, true)}` : lines.join("\n"),
     ...(report ? { HTMLPart: reportHtml(report, { name, forOwner: true,
@@ -281,6 +381,24 @@ export default async function handler(req, res) {
       Subject: "AI Maturity Check — Iside Systems",
       TextPart: `${reportText(report)}\n\nTi scrivo io a breve, di persona.`,
       HTMLPart: reportHtml(report, { name, forOwner: false }),
+    });
+  }
+
+  if (whitepaper) {
+    const first = name.split(" ")[0] || name;
+    const attachments = await pdfAttachment();
+    messages.push({
+      From: { Email: from, Name: SENDER },
+      To: [{ Email: email, Name: name }],
+      ReplyTo: { Email: to },
+      Subject: lang === "en" ? "The whitepaper — AI & Organizational Development"
+                             : "Il whitepaper — AI & Organizational Development",
+      TextPart: (lang === "en"
+        ? `Hi ${first}, the whitepaper is attached, and it is also here:`
+        : `Ciao ${first}, il whitepaper è in allegato, e lo trovi anche qui:`)
+        + `\n${SITE}${PDF_PATH}\n\nAlessandro Saccoia — Iside Systems`,
+      HTMLPart: whitepaperHtml(lang, first),
+      ...(attachments ? { Attachments: attachments } : {}),
     });
   }
 

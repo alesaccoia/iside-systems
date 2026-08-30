@@ -8,7 +8,7 @@ Builds the Iside Systems site in two languages.
 Copy lives in the L_IT / L_EN dictionaries below — edit there, then re-run:
     python3 build.py
 """
-import os, metodo as M, html, datetime
+import os, metodo as M, html, datetime, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -722,7 +722,7 @@ L_IT = dict(
 
 L_EN = dict(
     lang="en", other_label="IT", brand_sub="Data, AI and marketing",
-    nav=("Practice", "Projects", "About", "Case studies", "", "Metodologia"),
+    nav=("Practice", "Projects", "About", "Case studies", "", "Methodology"),
     nav_open="Open the menu",
     news_label="Latest",
     news=[("10 August 2026", "New case study — James: omnichannel measurement and editorial planning for an online education company", "case-james.html"),
@@ -1165,7 +1165,7 @@ PATHS = {"home":      ("", "en"),
          "moire":     ("moire.html", "en/moire.html"),
          "algosynth": ("algosynth.html", "en/algosynth.html"),
          "privacy":   ("privacy.html", "en/privacy.html"),
-         "metodo":    ("metodologia.html", "metodologia.html")}
+         "metodo":    ("metodologia.html", "en/methodology.html")}
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1286,7 +1286,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
     depth = asset.count("../")
-    metodo_href = ("../" * depth) + "metodologia.html"
+    # la pagina inglese ha un percorso suo, non è la stessa dell'italiana
+    metodo_href = ("methodology.html" if L["lang"] == "en"
+                   else ("../" * depth) + "metodologia.html")
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1373,6 +1375,7 @@ def footer(L, home, projects, about, asset):
 def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"):
     # the English home sits one level down, so root-level pages need the hop
     root = "../" if asset.startswith("../") else ""
+    metodo_href = "methodology.html" if L["lang"] == "en" else "metodologia.html"
     caps_html = ""
     for i, (h3, body, tags) in enumerate(L["caps"], 1):
         caps_html += f"""
@@ -1454,7 +1457,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
     <div>
       <p>{L['m_p']}</p>
       <div class="steps">{"".join(f"<span>{x}</span>" for x in L["m_steps"])}</div>
-      <p style="margin-top:24px"><a class="ambtn" href="{root}metodologia.html">{L['m_cta']}<span class="go">\u2192</span></a></p>
+      <p style="margin-top:24px"><a class="ambtn" href="{metodo_href}">{L['m_cta']}<span class="go">\u2192</span></a></p>
     </div>
   </div>
 </section>
@@ -1768,7 +1771,36 @@ def page_about(L, asset, home, projects, about, alt_href, cases="case-study.html
 
 # ---------------------------------------------------------------- metodologia
 def page_metodo(L, asset, home, projects, about, alt_href, cases):
-    t = M.LABELS
+    lang = L["lang"]
+    t = M.LABELS if lang == "it" else M.LABELS_EN
+    sections = M.SECTIONS if lang == "it" else M.SECTIONS_EN
+    g = M.GATE[lang]
+    privacy_href = ("privacy.html" if lang == "en"
+                    else ("../" * asset.count("../")) + "privacy.html")
+    gate = f"""
+  <section class="wgate" id="whitepaper">
+    <div class="wcopy">
+      <div class="lbl">{g['lbl']}</div>
+      <h2>{g['h']}</h2>
+      <p>{g['p']}</p>
+      <p class="meta">{g['meta']}</p>
+    </div>
+    <form class="wform" id="wform" novalidate>
+      <div class="wrow">
+        <label>{g['name']}<input name="name" autocomplete="given-name" required></label>
+        <label>{g['surname']}<input name="surname" autocomplete="family-name" required></label>
+      </div>
+      <label>{g['email']}<input name="email" type="email" autocomplete="email" required></label>
+      <label>{g['msg']}<textarea name="message" rows="3" placeholder="{g['msg_ph']}"></textarea></label>
+      <label class="wcheck"><input type="checkbox" name="optin" value="1">
+        <span>{g['consent']}</span></label>
+      <input class="wpot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit">{g['cta']}<span class="go">\u2192</span></button>
+      <p class="wnote" id="wnote" role="status" aria-live="polite"></p>
+      <p class="wfine">{g['privacy']} <a href="{privacy_href}">{g['privacy_link']}</a>.</p>
+    </form>
+  </section>
+"""
     return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "metodo")
             + header(L, asset, home, projects, about, "metodo", alt_href, cases)
             + f"""
@@ -1781,9 +1813,12 @@ def page_metodo(L, asset, home, projects, about, alt_href, cases):
     <p class="mstrap">{t['strap']}</p>
     <p class="meta">{t['meta']}</p>
   </header>
-  <nav class="mtoc"><span>{t['toc']}</span>{M.toc(M.SECTIONS)}</nav>
-{M.render(M.SECTIONS)}
+{gate}
+  <nav class="mtoc"><span>{t['toc']}</span>{M.toc(sections)}</nav>
+{M.render(sections, preview=True, more=g['more'])}
 </article>
+<script>window.WPAPER={{pdf:"{M.PDF}",sending:{json.dumps(g['sending'])},done:{json.dumps(g['done'])},fail:{json.dumps(g['fail'])},cta:{json.dumps(g['cta'])},lang:"{lang}"}};</script>
+<script src="{asset}whitepaper.js" defer></script>
 """
             + footer(L, home, projects, about, asset))
 
@@ -1825,6 +1860,17 @@ PRIVACY = {
      "che agisce come responsabile del trattamento.",
      "Base giuridica: riscontro a una tua richiesta ed esecuzione di misure precontrattuali "
      "(art. 6.1.b GDPR)."]),
+
+   ("Download del whitepaper", [
+     "Per ricevere il whitepaper completo chiediamo nome, cognome e indirizzo email, più "
+     "l’eventuale messaggio che scegli di scrivere. Li usiamo per mandarti il PDF e per "
+     "risponderti; una copia della richiesta arriva a noi. Anche qui non c’è una banca dati: "
+     "la richiesta resta nelle caselle di posta.",
+     "La casella di consenso è facoltativa e riguarda solo le comunicazioni successive su questi "
+     "temi. Puoi revocarla in qualsiasi momento rispondendo a una delle email o scrivendo a "
+     "alessandro@iside.systems, senza che questo tocchi la liceità dell’invio già avvenuto.",
+     "Base giuridica: riscontro alla tua richiesta (art. 6.1.b GDPR) per l’invio del documento; "
+     "consenso (art. 6.1.a GDPR) per le comunicazioni successive."]),
 
    ("AI Maturity Check", [
      "Il check si può fare senza registrarsi e senza lasciare alcun dato personale. Le risposte "
@@ -1934,6 +1980,17 @@ PRIVACY = {
      "The message is delivered through Mailjet (Sinch Email, based in the European Union), acting "
      "as a processor.",
      "Legal basis: answering your request and pre-contractual steps (Art. 6.1.b GDPR)."]),
+
+   ("Whitepaper download", [
+     "To receive the full whitepaper we ask for a first name, a last name and an email address, "
+     "plus whatever you choose to write in the message field. We use them to send you the PDF and "
+     "to reply; a copy of the request reaches us. Here too there is no database: the request stays "
+     "in the mailboxes.",
+     "The consent box is optional and covers only later communications on these subjects. You can "
+     "withdraw it at any time by replying to one of the emails or writing to "
+     "alessandro@iside.systems, without affecting the lawfulness of what was already sent.",
+     "Legal basis: responding to your request (Art. 6.1.b GDPR) for sending the document; consent "
+     "(Art. 6.1.a GDPR) for later communications."]),
 
    ("AI Maturity Check", [
      "The check can be taken without signing up and without leaving any personal data. The answers "
@@ -2243,7 +2300,7 @@ write("index.html",     page_home    (L_IT, "assets/", "index.html", "progetti.h
 write("progetti.html",  page_projects(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/projects.html"))
 write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/about.html"))
 write("metodologia.html", page_metodo(L_IT, "assets/", "index.html", "progetti.html",
-                                     "chi-sono.html", "metodologia.html", "case-study.html"))
+                                     "chi-sono.html", "en/methodology.html", "case-study.html"))
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
 
 for key in ("moire", "algosynth"):
@@ -2256,6 +2313,8 @@ for key in ("moire", "algosynth"):
 write("en/index.html",    page_home    (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../index.html", "case-studies.html"))
 write("en/projects.html", page_projects(L_EN, "../assets/", "index.html", "projects.html", "about.html", "../progetti.html", "case-studies.html"))
 write("en/about.html",    page_about   (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../chi-sono.html", "case-studies.html"))
+write("en/methodology.html", page_metodo(L_EN, "../assets/", "index.html", "projects.html",
+                                        "about.html", "../metodologia.html", "case-studies.html"))
 write("en/privacy.html",  page_privacy (L_EN, "../assets/", "index.html", "projects.html", "about.html", "../privacy.html", "case-studies.html"))
 
 write_seo()
