@@ -228,16 +228,18 @@ const WP_COPY = {
     hello: (first) => `Ciao ${first}, eccolo.`,
     title: "AI &amp; Organizational Development",
     sub: "Progettare la tecnologia dentro il lavoro.",
-    body: "Il PDF è allegato a questa mail. Otto pagine: cultura, diagnosi, sviluppo "
-        + "delle persone e design dei sistemi intelligenti.",
+    body: "Il PDF è allegato a questa mail, e il link qui sotto funziona lo stesso se "
+        + "l'allegato non ti arriva. Otto pagine su cultura, diagnosi, sviluppo delle "
+        + "persone e design dei sistemi intelligenti.",
     cta: "Scarica il PDF",
-    close: "Se vuoi discuterne su un caso concreto, rispondi a questa mail: leggo io.",
+    close: "Se vuoi discuterne su un caso concreto, rispondi a questa mail, leggo io.",
   },
   en: {
     hello: (first) => `Hi ${first}, here it is.`,
     title: "AI &amp; Organizational Development",
     sub: "Designing the technology inside the work.",
-    body: "The PDF is attached to this mail. Eight pages, in Italian: culture, diagnosis, "
+    body: "The PDF is attached to this mail, and the link below still works if the "
+        + "attachment does not reach you. Eight pages, in Italian, on culture, diagnosis, "
         + "developing people and the design of intelligent systems.",
     cta: "Download the PDF",
     close: "To go through it on a concrete case, reply to this mail and it reaches me.",

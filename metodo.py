@@ -313,7 +313,7 @@ dict(n="09", title="Valutare per governare",
 
 
 LABELS_EN = dict(
-    kicker="Method",
+    kicker="Methodology",
     title="AI &amp; Organizational Development",
     sub="Designing the technology inside the work.",
     lede="Introducing an AI system changes how people work, decide, learn and are assessed. "
@@ -424,7 +424,7 @@ dict(n="04", title="Diagnosis",
     ("04", "Questions", "Items and guides, each with a reason"),
     ("05", "Data", "Sources triangulated across logs, voices and observation"),
     ("06", "Interpretation", "Alternative hypotheses, not confirmations"),
-    ("07", "Giving back", "Already part of the intervention: it opens dialogue or defence")]),
+    ("07", "Giving back", "Already part of the intervention, it opens dialogue or defence")]),
   ("h3", "«Acceptance» is not a single construct"),
   ("p", "Mandated use, actual use, perceived usefulness, trust and willingness to depend on the "
         "system are different constructs. A person can use it because they must and not trust it; "
@@ -692,16 +692,16 @@ GATE = {
   meta="PDF · 8 pagine · italiano",
   name="Nome", surname="Cognome", email="Email",
   msg="Vuoi aggiungere qualcosa?",
-  msg_ph="Facoltativo — su cosa stai lavorando, cosa vorresti approfondire.",
+  msg_ph="Facoltativo. Su cosa stai lavorando, cosa vorresti approfondire.",
   consent="Voglio ricevere anche le comunicazioni di Iside Systems (poche, e "
           "sempre su questi temi). Puoi disiscriverti quando vuoi.",
   cta="Mandami il whitepaper",
   sending="Invio…",
-  done="Fatto. Controlla la posta: il PDF è in arrivo.",
-  fail="Non è partita. Scrivimi a alessandro@iside.systems e te lo mando a mano.",
+  done="Fatto, il PDF è in arrivo. Controlla la posta.",
+  fail="L'invio non ha funzionato. Scrivimi a alessandro@iside.systems e te lo mando a mano.",
   privacy="I dati servono a mandarti il PDF e a risponderti. Vedi la",
   privacy_link="privacy policy",
-  more="Tabella completa nel whitepaper.",
+  more="Tabelle e definizioni complete nel whitepaper.",
 ),
 "en": dict(
   lbl="Full whitepaper",
@@ -713,15 +713,15 @@ GATE = {
   meta="PDF · 8 pages · Italian",
   name="First name", surname="Last name", email="Email",
   msg="Anything to add?",
-  msg_ph="Optional — what you are working on, what you would like to go deeper on.",
+  msg_ph="Optional. What you are working on, what you would like to go deeper on.",
   consent="I would also like to receive news from Iside Systems (rarely, and "
           "always on these subjects). You can unsubscribe at any time.",
   cta="Send me the whitepaper",
   sending="Sending…",
-  done="Done. Check your inbox: the PDF is on its way.",
-  fail="It did not go through. Write to alessandro@iside.systems and I will send it by hand.",
+  done="Done, the PDF is on its way. Check your inbox.",
+  fail="The send failed. Write to alessandro@iside.systems and I will send it by hand.",
   privacy="The data is used to send you the PDF and to reply. See the",
   privacy_link="privacy policy",
-  more="Full table in the whitepaper.",
+  more="Tables and definitions in full in the whitepaper.",
 ),
 }
