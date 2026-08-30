@@ -685,8 +685,10 @@ GATE = {
 "it": dict(
   lbl="Whitepaper completo",
   h="Scaricalo per intero, in PDF.",
-  p="Otto pagine impaginate, con le tabelle e gli schemi che qui restano fuori. "
-    "Lascia un contatto e te lo mando via mail.",
+  card="Otto pagine impaginate, con le tabelle e gli schemi che qui restano fuori.",
+  open="Scarica il PDF",
+  close="Chiudi",
+  p="Lascia un contatto e te lo mando via mail. Il download parte subito.",
   meta="PDF · 8 pagine · italiano",
   name="Nome", surname="Cognome", email="Email",
   msg="Vuoi aggiungere qualcosa?",
@@ -704,8 +706,10 @@ GATE = {
 "en": dict(
   lbl="Full whitepaper",
   h="Get the whole thing, as a PDF.",
-  p="Eight typeset pages, with the tables and schemes left out here. "
-    "Leave a contact and I will send it over.",
+  card="Eight typeset pages, with the tables and schemes left out here.",
+  open="Download the PDF",
+  close="Close",
+  p="Leave a contact and I will send it over. The download starts right away.",
   meta="PDF · 8 pages · Italian",
   name="First name", surname="Last name", email="Email",
   msg="Anything to add?",

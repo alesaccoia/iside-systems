@@ -1777,47 +1777,64 @@ def page_metodo(L, asset, home, projects, about, alt_href, cases):
     g = M.GATE[lang]
     privacy_href = ("privacy.html" if lang == "en"
                     else ("../" * asset.count("../")) + "privacy.html")
-    gate = f"""
-  <section class="wgate" id="whitepaper">
-    <div class="wcopy">
-      <div class="lbl">{g['lbl']}</div>
-      <h2>{g['h']}</h2>
-      <p>{g['p']}</p>
-      <p class="meta">{g['meta']}</p>
-    </div>
+    cfg = json.dumps({"pdf": M.PDF, "file": M.PDF.rsplit("/", 1)[-1], "lang": lang,
+                      "sending": g["sending"], "done": g["done"], "fail": g["fail"],
+                      "cta": g["cta"]}, ensure_ascii=False)
+    # Il modulo sta in un modale: la pagina resta il documento, il download è un gesto.
+    modal = f"""
+<div class="wmodal" id="wmodal" hidden>
+  <div class="wback" data-wclose></div>
+  <div class="wpanel" role="dialog" aria-modal="true" aria-labelledby="wmtitle">
+    <button class="wx" type="button" data-wclose aria-label="{g['close']}">&#215;</button>
+    <div class="lbl">{g['lbl']}</div>
+    <h2 id="wmtitle">{g['h']}</h2>
+    <p class="dim">{g['p']}</p>
     <form class="wform" id="wform" novalidate>
       <div class="wrow">
         <label>{g['name']}<input name="name" autocomplete="given-name" required></label>
         <label>{g['surname']}<input name="surname" autocomplete="family-name" required></label>
       </div>
       <label>{g['email']}<input name="email" type="email" autocomplete="email" required></label>
-      <label>{g['msg']}<textarea name="message" rows="3" placeholder="{g['msg_ph']}"></textarea></label>
+      <label>{g['msg']}<textarea name="message" rows="2" placeholder="{g['msg_ph']}"></textarea></label>
       <label class="wcheck"><input type="checkbox" name="optin" value="1">
         <span>{g['consent']}</span></label>
       <input class="wpot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button type="submit">{g['cta']}<span class="go">\u2192</span></button>
+      <button type="submit">{g['cta']}<span class="go">&#8594;</span></button>
       <p class="wnote" id="wnote" role="status" aria-live="polite"></p>
       <p class="wfine">{g['privacy']} <a href="{privacy_href}">{g['privacy_link']}</a>.</p>
     </form>
-  </section>
+  </div>
+</div>
 """
     return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "metodo")
             + header(L, asset, home, projects, about, "metodo", alt_href, cases)
             + f"""
-<article class="pad metodo">
-  <header class="mtop">
-    <div class="lbl">{t['kicker']}</div>
-    <h1>{t['title']}</h1>
-    <p class="msubtitle">{t['sub']}</p>
-    <p class="lede dim">{t['lede']}</p>
-    <p class="mstrap">{t['strap']}</p>
-    <p class="meta">{t['meta']}</p>
-  </header>
-{gate}
+<article class="metodo">
+<section class="pad" style="padding-top:clamp(46px,7vh,90px);padding-bottom:clamp(28px,5vh,52px)">
+  <p class="meta">{t['kicker']}</p>
+  <h1 style="margin-top:16px;max-width:17ch">{t['title']}</h1>
+  <div class="mintro rv">
+    <div class="mtext">
+      <p class="lede">{t['sub']}</p>
+      <p class="dim">{t['lede']}</p>
+      <p class="meta">{t['meta']}</p>
+    </div>
+    <aside class="wcard">
+      <div class="lbl">{g['lbl']}</div>
+      <p>{g['card']}</p>
+      <button class="ambtn" type="button" id="wopen">{g['open']}<span class="go">&#8594;</span></button>
+      <p class="meta">{g['meta']}</p>
+    </aside>
+  </div>
+</section>
+
+<div class="pad mbody">
   <nav class="mtoc"><span>{t['toc']}</span>{M.toc(sections)}</nav>
 {M.render(sections, preview=True, more=g['more'])}
+</div>
 </article>
-<script>window.WPAPER={{pdf:"{M.PDF}",sending:{json.dumps(g['sending'])},done:{json.dumps(g['done'])},fail:{json.dumps(g['fail'])},cta:{json.dumps(g['cta'])},lang:"{lang}"}};</script>
+{modal}
+<script>window.WPAPER={cfg};</script>
 <script src="{asset}whitepaper.js" defer></script>
 """
             + footer(L, home, projects, about, asset))

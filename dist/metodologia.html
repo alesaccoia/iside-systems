@@ -122,39 +122,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="navScrim" hidden></div>
 </header>
 
-<article class="pad metodo">
-  <header class="mtop">
-    <div class="lbl">Metodologia</div>
-    <h1>AI &amp; Organizational Development</h1>
-    <p class="msubtitle">Progettare la tecnologia dentro il lavoro.</p>
-    <p class="lede dim">Introdurre un sistema di AI cambia il modo in cui le persone lavorano, decidono, apprendono e vengono valutate. La sua progettazione è quindi un problema organizzativo prima che tecnico.</p>
-    <p class="mstrap">Cultura, diagnosi, sviluppo delle persone e design critico dei sistemi intelligenti.</p>
-    <p class="meta">Whitepaper · 2026 · Alessandro Saccoia</p>
-  </header>
-
-  <section class="wgate" id="whitepaper">
-    <div class="wcopy">
-      <div class="lbl">Whitepaper completo</div>
-      <h2>Scaricalo per intero, in PDF.</h2>
-      <p>Otto pagine impaginate, con le tabelle e gli schemi che qui restano fuori. Lascia un contatto e te lo mando via mail.</p>
-      <p class="meta">PDF · 8 pagine · italiano</p>
+<article class="metodo">
+<section class="pad" style="padding-top:clamp(46px,7vh,90px);padding-bottom:clamp(28px,5vh,52px)">
+  <p class="meta">Metodologia</p>
+  <h1 style="margin-top:16px;max-width:17ch">AI &amp; Organizational Development</h1>
+  <div class="mintro rv">
+    <div class="mtext">
+      <p class="lede">Progettare la tecnologia dentro il lavoro.</p>
+      <p class="dim">Introdurre un sistema di AI cambia il modo in cui le persone lavorano, decidono, apprendono e vengono valutate. La sua progettazione è quindi un problema organizzativo prima che tecnico.</p>
+      <p class="meta">Whitepaper · 2026 · Alessandro Saccoia</p>
     </div>
-    <form class="wform" id="wform" novalidate>
-      <div class="wrow">
-        <label>Nome<input name="name" autocomplete="given-name" required></label>
-        <label>Cognome<input name="surname" autocomplete="family-name" required></label>
-      </div>
-      <label>Email<input name="email" type="email" autocomplete="email" required></label>
-      <label>Vuoi aggiungere qualcosa?<textarea name="message" rows="3" placeholder="Facoltativo — su cosa stai lavorando, cosa vorresti approfondire."></textarea></label>
-      <label class="wcheck"><input type="checkbox" name="optin" value="1">
-        <span>Voglio ricevere anche le comunicazioni di Iside Systems (poche, e sempre su questi temi). Puoi disiscriverti quando vuoi.</span></label>
-      <input class="wpot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button type="submit">Mandami il whitepaper<span class="go">→</span></button>
-      <p class="wnote" id="wnote" role="status" aria-live="polite"></p>
-      <p class="wfine">I dati servono a mandarti il PDF e a risponderti. Vedi la <a href="privacy.html">privacy policy</a>.</p>
-    </form>
-  </section>
+    <aside class="wcard">
+      <div class="lbl">Whitepaper completo</div>
+      <p>Otto pagine impaginate, con le tabelle e gli schemi che qui restano fuori.</p>
+      <button class="ambtn" type="button" id="wopen">Scarica il PDF<span class="go">&#8594;</span></button>
+      <p class="meta">PDF · 8 pagine · italiano</p>
+    </aside>
+  </div>
+</section>
 
+<div class="pad mbody">
   <nav class="mtoc"><span>Le nove sezioni</span><a href="#s01"><span>01</span>Executive summary</a><a href="#s02"><span>02</span>Dove entra la tecnologia</a><a href="#s03"><span>03</span>Cultura organizzativa</a><a href="#s04"><span>04</span>Diagnosi</a><a href="#s05"><span>05</span>Sviluppo delle persone</a><a href="#s06"><span>06</span>Collega o gabbia</a><a href="#s07"><span>07</span>Allocazione dei compiti</a><a href="#s08"><span>08</span>Progettare un sistema di AI</a><a href="#s09"><span>09</span>Valutare per governare</a></nav>
 <section class="msec rv" id="s01">
   <div class="mhead"><span class="n">01</span><h2>Executive summary</h2><p class="msub">Un progetto di AI si valuta sul contesto in cui entra, sul compito che assume, sugli effetti che produce e su chi li subisce.</p></div>
@@ -232,8 +219,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p>Un questionario utile a facilitare dialogo può essere inadatto a classificare persone. Se il sistema produce la metrica con cui viene valutato, l’indicatore non è indipendente.</p>
   <aside class="mnote"><b>Nota metodologica.</b> Questo whitepaper rielabora in forma originale concetti della letteratura su sviluppo organizzativo, cultura organizzativa, diagnosi e valutazione, sviluppo delle persone e AI nelle organizzazioni (fra gli altri Schein sui livelli della cultura e sul feedback; Kram sul mentoring; Kirkpatrick e Quaglino sulla valutazione; Kluger e DeNisi sul feedback; Day sul leader e leadership development; Bankins e colleghi, Hillebrand, Raisch e Schad, Fügener, Walzner e Gupta sull’AI nelle organizzazioni). Nessun contenuto didattico è riprodotto. I dati citati illustrano una logica di progettazione e non costituiscono benchmark trasferibili.</aside>
 </section>
+</div>
 </article>
-<script>window.WPAPER={pdf:"/assets/doc/iside-systems-whitepaper-ai-organizational-development.pdf",sending:"Invio\u2026",done:"Fatto. Controlla la posta: il PDF \u00e8 in arrivo.",fail:"Non \u00e8 partita. Scrivimi a alessandro@iside.systems e te lo mando a mano.",cta:"Mandami il whitepaper",lang:"it"};</script>
+
+<div class="wmodal" id="wmodal" hidden>
+  <div class="wback" data-wclose></div>
+  <div class="wpanel" role="dialog" aria-modal="true" aria-labelledby="wmtitle">
+    <button class="wx" type="button" data-wclose aria-label="Chiudi">&#215;</button>
+    <div class="lbl">Whitepaper completo</div>
+    <h2 id="wmtitle">Scaricalo per intero, in PDF.</h2>
+    <p class="dim">Lascia un contatto e te lo mando via mail. Il download parte subito.</p>
+    <form class="wform" id="wform" novalidate>
+      <div class="wrow">
+        <label>Nome<input name="name" autocomplete="given-name" required></label>
+        <label>Cognome<input name="surname" autocomplete="family-name" required></label>
+      </div>
+      <label>Email<input name="email" type="email" autocomplete="email" required></label>
+      <label>Vuoi aggiungere qualcosa?<textarea name="message" rows="2" placeholder="Facoltativo — su cosa stai lavorando, cosa vorresti approfondire."></textarea></label>
+      <label class="wcheck"><input type="checkbox" name="optin" value="1">
+        <span>Voglio ricevere anche le comunicazioni di Iside Systems (poche, e sempre su questi temi). Puoi disiscriverti quando vuoi.</span></label>
+      <input class="wpot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit">Mandami il whitepaper<span class="go">&#8594;</span></button>
+      <p class="wnote" id="wnote" role="status" aria-live="polite"></p>
+      <p class="wfine">I dati servono a mandarti il PDF e a risponderti. Vedi la <a href="privacy.html">privacy policy</a>.</p>
+    </form>
+  </div>
+</div>
+
+<script>window.WPAPER={"pdf": "/assets/doc/iside-systems-whitepaper-ai-organizational-development.pdf", "file": "iside-systems-whitepaper-ai-organizational-development.pdf", "lang": "it", "sending": "Invio…", "done": "Fatto. Controlla la posta: il PDF è in arrivo.", "fail": "Non è partita. Scrivimi a alessandro@iside.systems e te lo mando a mano.", "cta": "Mandami il whitepaper"};</script>
 <script src="assets/whitepaper.js" defer></script>
 <footer class="site">
   <div class="col">
