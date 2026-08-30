@@ -53,8 +53,8 @@ PROJECTS = [
              ["Applied research", "Prototypes"])),
     dict(seed=5,  cat="analytics strategy",   year="2022 — 23",
          it=("Nielsen", "Senior manager, marketing effectiveness",
-             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari: "
-             "è qui che si è formata la disciplina di misurazione e attribuzione cross-canale che "
+             "Efficacia del marketing e misurazione dei media per grandi investitori pubblicitari. "
+             "Da qui viene la disciplina di misurazione e attribuzione cross-canale che "
              "regge oggi il lavoro di operations.",
              ["Misurazione media", "Attribuzione"]),
          en=("Nielsen", "Senior manager, marketing effectiveness",
@@ -158,7 +158,7 @@ PROJECTS = [
     # ---- recovered from the previous site (mindmaker_www) ----
     dict(seed=15, cat="ai strategy", year="2023",
          it=("Mai Dire AI", "Formato divulgativo · con Angela, Christelle, Sara, Cristian",
-             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile: prende "
+             "Un formato che rende l'intelligenza artificiale accessibile e comprensibile. Prende "
              "per mano chi guarda e lo accompagna dentro un mondo affascinante e complicato, senza "
              "gergo e senza mal di testa.",
              ["Divulgazione", "Formato", "AI"]),
@@ -368,7 +368,7 @@ L_IT = dict(
     am_p="16 domande, 5 minuti, gratis.",
     am_cta="Fai il check",
     pos_lbl="01 — Il punto",
-    pos_h2="La strategia c'è.<br>Mancano numeri<br>di cui fidarsi.",
+    pos_h2="Mancano numeri<br>di cui fidarsi.",
     pos_p=["Quasi tutti sanno già, a grandi linee, cosa dovrebbero fare. Quello che li blocca è che i "
            "numeri non parlano fra loro, gli strumenti non si comunicano, e metà settimana se ne va "
            "a montare report a mano e a analizzarli, togliendo tempo al team.",
@@ -536,7 +536,7 @@ L_IT = dict(
     f_req="Nome, email e messaggio sono obbligatori.",
     f_ok="Messaggio inviato. Ti rispondo entro pochi giorni.",
     f_sending="Invio in corso…",
-    f_fallback="Invio diretto non disponibile: apro il tuo client di posta con il messaggio pronto.",
+    f_fallback="Invio diretto non disponibile. Apro il tuo client di posta con il messaggio pronto.",
     f_hp="Lascia vuoto questo campo",
     f_done_title="Messaggio inviato.",
     f_done_lead="Ti rispondo entro pochi giorni, di solito prima. Se nel frattempo vuoi aggiungere "
@@ -580,13 +580,13 @@ L_IT = dict(
              "mappare il lavoro reale, individuare i low hanging fruit e disegnare agenti che "
              "rispettino i metodi già in uso.",
         h2="Dall'aula<br>dentro i processi.",
-        ctx=["L'AI era già entrata in azienda, ma dalla porta di servizio: ognuno usava lo strumento "
-             "che preferiva, con criteri propri, e senza una risposta condivisa alle due domande "
+        ctx=["L'AI era già entrata in azienda dalla porta di servizio. Ognuno usava lo strumento "
+             "che preferiva, con criteri propri, senza una risposta condivisa alle due domande "
              "che bloccano tutti — dove finiscono i nostri dati, e di chi è la responsabilità "
              "sull'output.",
-             "Il rischio non era tecnologico ma organizzativo: competenze che divergono, know-how "
-             "che esce senza che nessuno se ne accorga, e un uso che resta confinato alla curiosità "
-             "personale invece di diventare capacità dell'organizzazione."],
+             "I rischi erano organizzativi. Competenze che divergono, know-how che esce senza che "
+             "nessuno se ne accorga, e un uso che resta confinato alla curiosità personale invece "
+             "di diventare capacità dell'organizzazione."],
         fig="training",
         steps=[("Fondamenta", "Come funzionano davvero gli strumenti",
                 "Un modello mentale non tecnico: come i modelli generano contenuti, differenza fra "
@@ -606,15 +606,15 @@ L_IT = dict(
                 "emergono i low hanging fruit — le cose che si possono migliorare subito, senza "
                 "riscrivere il modo di lavorare."),
                ("Progettazione", "Agenti disegnati sui metodi esistenti",
-                "Gli agenti nascono dalla mappatura, non da un catalogo: seguono i metodi "
-                "prestabiliti dell'organizzazione invece di chiederle di adattarsi a loro. È la "
-                "differenza fra uno strumento che viene adottato e uno che viene aggirato."),
+                "Gli agenti nascono dalla mappatura e seguono i metodi che l'organizzazione ha "
+                "già, invece di chiederle di adattarsi a loro. Uno strumento costruito così viene "
+                "adottato; il contrario viene aggirato."),
                ("Nel tempo", "Pillole di aggiornamento",
                 "Contenuti brevi e ricorrenti costruiti sui feedback dei seminari e sull'uso "
                 "osservato: riassumere documenti lunghi, estrarre dati strutturati, deep research, "
                 "aggiornamenti normativi.")],
-        out="Il punto di arrivo si misura in capacità: le persone fanno le stesse cose meglio e "
-            "più in fretta, e l'organizzazione ne guadagna di nuove. I seminari costruiscono il "
+        out="Alla fine le persone fanno le stesse cose meglio e più in fretta, e l'organizzazione "
+            "sa fare cose che prima non sapeva fare. I seminari costruiscono il "
             "linguaggio comune, i workshop con le business unit trovano dove intervenire davvero, "
             "gli agenti consolidano il guadagno, le pillole impediscono che tutto si spenga dopo "
             "un mese.",
@@ -639,8 +639,8 @@ L_IT = dict(
         fig="james",
         steps=[("Ingestione", "Un solo magazzino",
                 "I dati arrivano dalle piattaforme pubblicitarie e analytics e vengono raccolti in "
-                "un unico posto, deduplicati per chiave naturale: le sincronizzazioni ripetute non "
-                "creano doppioni."),
+                "un unico posto, deduplicati per chiave naturale, così le sincronizzazioni "
+                "ripetute non creano doppioni."),
                ("Modello", "Funnel configurabile",
                 "Stadi e KPI si definiscono dall'interfaccia: metrica di origine, aggregazione, "
                 "rapporti fra metriche, moltiplicatori, livello di entità. Ogni stadio può essere "
@@ -667,8 +667,8 @@ L_IT = dict(
                 "Tassonomia multidimensionale con quote attese per dimensione, eventi annotati "
                 "direttamente sui grafici, e traffico mensile dei concorrenti importato per "
                 "confrontare la propria quota con quella del mercato.")],
-        out="Il risultato non è una dashboard più bella: è che la pianificazione e la misurazione "
-            "usano lo stesso modello. Il piano editoriale nasce dagli stadi del funnel invece di "
+        out="Pianificazione e misurazione ora usano lo stesso modello. Il piano editoriale nasce "
+            "dagli stadi del funnel invece di "
             "essere scritto a parte, e a fine mese la domanda «quanto abbiamo speso su cosa» ha "
             "una sola risposta.",
         chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM e DEM",
@@ -686,8 +686,8 @@ L_IT = dict(
              "viva, utenti veri, funzionalità AI già in produzione. Quello che non reggeva era "
              "l'ambiente sotto — pensato per partire, non per assorbire traffico crescente e "
              "utenti contemporanei.",
-             "Il rischio in questi casi non è il down di oggi: è arrivare al punto in cui ogni "
-             "aumento di utilizzo obbliga a riprogettare tutto, e intanto nessuno sa dire dove "
+             "Il rischio in questi casi arriva più tardi del down di oggi. Si manifesta quando "
+             "ogni aumento di utilizzo obbliga a riprogettare tutto, e intanto nessuno sa dire dove "
              "passano i dati né con quali condizioni il servizio viene erogato."],
         fig="cloud",
         steps=[("Infrastruttura", "Migrazione verso un ambiente che scala",
@@ -695,8 +695,8 @@ L_IT = dict(
                 "di applicazione, database, accessi, backup e deployment. L'obiettivo dichiarato è "
                 "assorbire la crescita senza riprogettare il sistema a ogni salto di utilizzo."),
                ("Osservabilità", "Monitoraggio dal primo giorno",
-                "Strumenti di monitoraggio impostati subito, non dopo il primo incidente: sapere "
-                "come sta il sistema è parte dell'infrastruttura, non un accessorio."),
+                "Strumenti di monitoraggio impostati prima del primo incidente. Sapere come sta "
+                "il sistema fa parte dell'infrastruttura quanto i server."),
                ("Processo", "Sviluppo più rapido e più controllato",
                 "Organizzazione dell'ambiente e del processo di sviluppo — repository, revisione, "
                 "assistenti di codice — per andare più veloci lungo un percorso documentato e "
@@ -710,15 +710,15 @@ L_IT = dict(
                 "Dall'assessment nascono termini di utilizzo e licenza coerenti con come la "
                 "piattaforma funziona davvero. Gli aspetti ordinari si gestiscono internamente; "
                 "la revisione legale si riserva alle questioni che la meritano.")],
-        out="È il tipo di intervento che non si vede da fuori: nessuna funzionalità nuova, nessun "
-            "redesign. Cambia però la traiettoria — la piattaforma può crescere senza rifarsi, il "
+        out="Da fuori non si vede niente. Nessuna funzionalità nuova, nessun redesign. Cambia la "
+            "traiettoria — la piattaforma può crescere senza rifarsi, il "
             "team sviluppa più in fretta con più controllo, e le domande su dati e condizioni "
             "d'uso hanno una risposta scritta prima che arrivi qualcuno a farle.",
         chips=["Migrazione cloud", "Backup e deployment", "Monitoraggio", "Processo di sviluppo",
                "GDPR e AI Act", "Termini d'uso"])],
     cookie_title="Cookie.",
     cookie_text="Questo sito usa cookie di misurazione per capire quali pagine vengono lette. "
-                "Niente pubblicità, niente profilazione rivenduta a terzi. Puoi rifiutare: il sito "
+                "Niente pubblicità, niente profilazione rivenduta a terzi. Se rifiuti, il sito "
                 "funziona esattamente allo stesso modo.",
     cookie_accept="Accetto",
     cookie_reject="Rifiuto",
@@ -752,7 +752,7 @@ L_EN = dict(
     am_p="16 questions, 5 minutes, free — in Italian.",
     am_cta="Take the check",
     pos_lbl="01 — The point",
-    pos_h2="The strategy exists.<br>The working<br>numbers do not.",
+    pos_h2="The numbers<br>nobody trusts.",
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
            "do not speak to each other, the tools do not communicate, and half the week goes to "
            "assembling reports by hand and reading them — time the team does not get back.",
@@ -916,7 +916,7 @@ L_EN = dict(
     f_req="Name, email and message are required.",
     f_ok="Message sent. I will reply within a few days.",
     f_sending="Sending…",
-    f_fallback="Direct sending unavailable: opening your mail client with the message ready.",
+    f_fallback="Direct sending unavailable. Opening your mail client with the message ready.",
     f_hp="Leave this field empty",
     f_done_title="Message sent.",
     f_done_lead="I will reply within a few days, usually sooner. If you want to add anything in the "
@@ -961,13 +961,13 @@ L_EN = dict(
              "work, find the low-hanging fruit, and design agents that respect the methods already "
              "in use.",
         h2="From the classroom<br>into the processes.",
-        ctx=["AI was already inside the company, but it had come in through the back door: everyone "
-             "used whatever tool they preferred, on their own terms, with no shared answer to the "
+        ctx=["AI was already inside the company, through the back door. Everyone used whatever "
+             "tool they preferred, on their own terms, with no shared answer to the "
              "two questions that stop everybody — where does our data end up, and who is "
              "responsible for the output.",
-             "The risk was organisational rather than technical: skills drifting apart, know-how "
-             "leaving without anyone noticing, and usage staying at the level of personal curiosity "
-             "instead of becoming organisational capability."],
+             "The risks were organisational. Skills drifting apart, know-how leaving without "
+             "anyone noticing, and usage staying at the level of personal curiosity instead of "
+             "becoming organisational capability."],
         fig="training",
         steps=[("Foundations", "How the tools actually work",
                 "A non-technical mental model: how models generate content, the difference between "
@@ -987,14 +987,14 @@ L_EN = dict(
                 "low-hanging fruit falls out of that — what can be improved immediately, without "
                 "rewriting how people work."),
                ("Design", "Agents shaped around existing methods",
-                "The agents come out of the mapping rather than off a shelf: they follow the "
-                "organisation's established methods instead of asking it to adapt to them. That is "
-                "the difference between a tool that gets adopted and one that gets worked around."),
+                "The agents come out of the mapping and follow the methods the organisation "
+                "already has, instead of asking it to adapt to them. A tool built that way gets "
+                "adopted; the other kind gets worked around."),
                ("Over time", "Short recurring briefs",
                 "Brief, regular pieces built on seminar feedback and on observed usage: summarising "
                 "long documents, extracting structured data, deep research, regulatory updates.")],
-        out="The destination is measured in capability: people do the same things better and "
-            "faster, and the organisation gains some it did not have. The seminars build the "
+        out="By the end people do the same things better and faster, and the organisation can do "
+            "things it could not. The seminars build the "
             "shared language, "
             "the business-unit workshops find where to actually intervene, the agents consolidate "
             "the gain, and the recurring briefs stop the whole thing fading after a month.",
@@ -1045,8 +1045,8 @@ L_EN = dict(
                 "A multi-dimensional taxonomy with expected shares per dimension, events annotated "
                 "directly on the charts, and monthly competitor traffic imported to compare your "
                 "own share against the market's.")],
-        out="The result is not a prettier dashboard: it is that planning and measurement now use "
-            "the same model. The editorial plan comes out of the funnel stages instead of being "
+        out="Planning and measurement now use the same model. The editorial plan comes out of "
+            "the funnel stages instead of being "
             "written separately, and at month end “what did we spend it on” has a single answer.",
         chips=["Meta", "TikTok", "Google Ads Search", "Google Ads Display", "CRM &amp; email",
                "Referral", "Configurable funnel", "Plan vs spend", "Editorial calendar",
@@ -1062,7 +1062,7 @@ L_EN = dict(
         ctx=["The product was there and had been built with real pragmatism: a live platform, real "
              "users, AI features already in production. What did not hold was the environment "
              "underneath — designed to launch, not to absorb growing traffic and concurrent users.",
-             "The risk in these situations is not today's outage: it is reaching the point where "
+             "The risk in these situations arrives later than today's outage. It shows up when "
              "every increase in usage forces a redesign, while nobody can say where the data goes "
              "or on what terms the service is provided."],
         fig="cloud",
@@ -1071,8 +1071,8 @@ L_EN = dict(
                 "database, access, backups and deployment properly. The stated goal is absorbing "
                 "growth without redesigning the system at every jump in usage."),
                ("Observability", "Monitoring from day one",
-                "Monitoring set up straight away rather than after the first incident: knowing how "
-                "the system is doing is part of the infrastructure, not an add-on."),
+                "Monitoring set up before the first incident. Knowing how the system is doing is "
+                "as much part of the infrastructure as the servers."),
                ("Process", "Faster development, better controlled",
                 "Organising the environment and the development process — repository, review, "
                 "coding assistants — to move faster along a documented, traceable path. Speed and "
@@ -1085,15 +1085,15 @@ L_EN = dict(
                 "Terms of use and licensing follow from the assessment, matching how the platform "
                 "actually works. Ordinary matters are handled in-house; legal review is kept for "
                 "the questions that deserve it.")],
-        out="This is the kind of work nobody sees from outside: no new features, no redesign. What "
-            "changes is the trajectory — the platform can grow without being rebuilt, the team "
+        out="From outside nothing shows. No new features, no redesign. What changes is the "
+            "trajectory — the platform can grow without being rebuilt, the team "
             "ships faster with more control, and the questions about data and terms have a written "
             "answer before anyone turns up to ask them.",
         chips=["Cloud migration", "Backups and deployment", "Monitoring", "Development process",
                "GDPR and the AI Act", "Terms of use"])],
     cookie_title="Cookies.",
     cookie_text="This site uses measurement cookies to see which pages get read. No advertising, no "
-                "profiling sold on to anyone. You can refuse: the site works exactly the same.",
+                "profiling sold on to anyone. If you refuse, the site works exactly the same.",
     cookie_accept="Accept",
     cookie_reject="Refuse",
 )
@@ -1105,12 +1105,12 @@ LABS = {
 "moire": dict(
     shot="img/moire.jpg", demo="lab/moire/index.html",
     it=dict(kicker="Lab", title="Moire",
-        lede="Generatore di pattern moiré con sintesi audio-video sincronizzata: le figure che "
+        lede="Generatore di pattern moiré con sintesi audio-video sincronizzata. Le figure che "
              "vedete e quello che sentite sono guidati dagli stessi parametri.",
         body=["Quattro famiglie di pattern — linee, griglia, cerchi, radiale — sovrapposte con uno "
-              "sfasamento d'angolo regolabile: è lì che nasce l'interferenza moiré. Densità, "
+              "sfasamento d'angolo regolabile, da cui nasce l'interferenza moiré. Densità, "
               "angolo, scala e velocità si controllano in tempo reale.",
-              "La parte audio è una sintesi FM agganciata agli stessi controlli: cambiare la "
+              "La parte audio è una sintesi FM agganciata agli stessi controlli, quindi cambiare la "
               "densità visiva sposta il timbro. Non è una sonificazione aggiunta dopo, i due "
               "motori condividono lo stato."],
         cols=[("Interazione", ["Pattern: linee, griglia, cerchi, radiale", "Densità e sfasamento angolare",
@@ -1120,14 +1120,14 @@ LABS = {
         cta="Apri lo strumento", note="Meglio con l'audio acceso. Su mobile serve un tocco per avviare il suono.",
         back="Torna ai progetti"),
     en=dict(kicker="Lab", title="Moire",
-        lede="A moiré pattern generator with synchronised audio-visual synthesis: what you see and "
+        lede="A moiré pattern generator with synchronised audio-visual synthesis. What you see and "
              "what you hear are driven by the same parameters.",
         body=["Four pattern families — lines, grid, circles, radial — overlaid with an adjustable "
               "angular offset, which is where the moiré interference comes from. Density, angle, "
               "scale and speed are all live controls.",
               "The audio side is FM synthesis wired to those same controls, so changing the visual "
-              "density moves the timbre. It is not sonification bolted on afterwards: both engines "
-              "share one state."],
+              "density moves the timbre. It is not sonification bolted on afterwards, since both "
+              "engines share one state."],
         cols=[("Interaction", ["Patterns: lines, grid, circles, radial", "Density and angular offset",
                                "Scale and speed", "Everything live"]),
               ("Technical", ["Canvas 2D", "Web Audio API, FM synthesis", "ES modules, no dependencies",
@@ -1137,12 +1137,12 @@ LABS = {
 "algosynth": dict(
     shot="img/algosynth.jpg", demo={"it": "/algosynth", "en": "/algosynth/en"},
     it=dict(kicker="Lab", title="AlgoSynth",
-        lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre: i pattern non si "
+        lede="Sequencer algoritmico ispirato ad Acroyear degli Autechre. I pattern non si "
              "disegnano nota per nota, si generano e poi si piegano.",
         body=["Generazione di pattern ritmici e melodici con controllo dello swing, song mode "
               "multitraccia e uscita MIDI via Web MIDI verso qualunque strumento collegato.",
-              "L'idea presa da Acroyear è che il materiale nasca da regole e non dalla mano: si "
-              "imposta un processo, lo si ascolta, si interviene sui parametri mentre suona."],
+              "L'idea presa da Acroyear è che il materiale nasca da regole invece che dalla mano. "
+              "Si imposta un processo, lo si ascolta, si interviene sui parametri mentre suona."],
         cols=[("Interazione", ["Generazione algoritmica dei pattern", "Controllo dello swing",
                                "Song mode multitraccia", "Parametri modificabili durante l'esecuzione"]),
               ("Tecnica", ["Web MIDI API", "Uscita verso hardware esterno", "Interamente nel browser"])],
@@ -1150,12 +1150,12 @@ LABS = {
         "per far partire l'audio.",
         back="Torna ai progetti"),
     en=dict(kicker="Lab", title="AlgoSynth",
-        lede="An algorithmic sequencer inspired by Autechre's Acroyear: patterns are not drawn note "
+        lede="An algorithmic sequencer inspired by Autechre's Acroyear. Patterns are not drawn note "
              "by note, they are generated and then bent.",
         body=["Rhythmic and melodic pattern generation with swing control, multi-track song mode, "
               "and MIDI output over Web MIDI to any connected instrument.",
-              "The idea taken from Acroyear is that the material comes from rules rather than from "
-              "the hand: you set a process running, listen, and work the parameters while it plays."],
+              "The idea taken from Acroyear is that the material comes from rules rather than the "
+              "hand. You set a process running, listen, and work the parameters while it plays."],
         cols=[("Interaction", ["Algorithmic pattern generation", "Swing control", "Multi-track song mode",
                                "Parameters editable while playing"]),
               ("Technical", ["Web MIDI API", "Output to external hardware", "Entirely in the browser"])],
@@ -1867,7 +1867,7 @@ PRIVACY = {
      "identificatori pubblicitari.",
      "La tua scelta è conservata nel browser (memoria locale, chiave <code>iside-consent</code>) e "
      "non viene trasmessa a noi. Per revocarla puoi cancellare i dati del sito dalle impostazioni "
-     "del browser: alla visita successiva il banner ricomparirà.",
+     "del browser, e alla visita successiva il banner ricomparirà.",
      "Base giuridica: consenso per la misurazione e la pubblicità (art. 6.1.a GDPR e art. 122 del "
      "Codice privacy); legittimo interesse per i cookie tecnici."]),
 
@@ -1970,7 +1970,7 @@ PRIVACY = {
      "Until you consent, consent is set to \"denied\" for every purpose that requires it (Google "
      "Consent Mode): requests to Google carry no advertising identifiers.",
      "Your choice is kept in your browser (local storage, key <code>iside-consent</code>) and is "
-     "not sent to us. To withdraw it, clear the site data in your browser settings: the banner will "
+     "not sent to us. To withdraw it, clear the site data in your browser settings, and the banner will "
      "appear again on your next visit.",
      "Legal basis: consent for measurement and advertising (Art. 6.1.a GDPR and Art. 122 of the "
      "Italian Privacy Code); legitimate interest for technical cookies."]),
