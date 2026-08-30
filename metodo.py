@@ -829,8 +829,12 @@ def render(sections, preview=False, more="", lang="it"):
     out = []
     for s in sections:
         out.append(f'<section class="msec rv" id="s{s["n"]}">')
-        out.append(f'  <div class="mhead"><div><span class="n">{s["n"]}</span>'
-                   f'<h2>{s["title"]}</h2></div><p class="msub">{s["sub"]}</p></div>')
+        # numero e titolo tengono la colonna di sinistra, tutto il resto scorre
+        # nella colonna di testo, a partire dalla frase di apertura
+        out.append(f'  <div class="mhead"><span class="n">{s["n"]}</span>'
+                   f'<h2>{s["title"]}</h2></div>')
+        out.append(f'  <div class="mcol">')
+        out.append(f'  <p class="msub">{s["sub"]}</p>')
         skipped = 0
         fig = FIG_AT.get(s["n"])
         for index, (kind, payload) in enumerate(s["blocks"]):
@@ -878,6 +882,7 @@ def render(sections, preview=False, more="", lang="it"):
                            f"<tbody>{rows}</tbody></table></div>")
         if preview and skipped and more:
             out.append(f'  <p class="mmore">{more}</p>')
+        out.append("  </div>")
         out.append("</section>")
     return "\n".join(out)
 
