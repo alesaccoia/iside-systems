@@ -364,7 +364,7 @@ L_IT = dict(
     am_p="16 domande, 5 minuti, gratis.",
     am_cta="Fai il check",
     pos_lbl="01 — Il punto",
-    pos_h2="La strategia c'è.<br>Mancano numeri<br>di cui fidarsi.",
+    pos_h2="Mancano numeri<br>di cui fidarsi.",
     pos_p=["Quasi tutti sanno già, a grandi linee, cosa dovrebbero fare. Quello che li blocca è che i "
            "numeri non parlano fra loro, gli strumenti non si comunicano, e metà settimana se ne va "
            "a montare report a mano e a analizzarli, togliendo tempo al team.",
@@ -577,9 +577,9 @@ L_IT = dict(
              "rispettino i metodi già in uso.",
         h2="Dall'aula<br>dentro i processi.",
         ctx=["L'AI era già entrata in azienda dalla porta di servizio. Ognuno usava lo strumento che preferiva, con criteri propri, senza una risposta condivisa alle due domande che bloccano tutti — dove finiscono i nostri dati, e di chi è la responsabilità sull'output.",
-             "Il rischio non era tecnologico ma organizzativo: competenze che divergono, know-how "
-             "che esce senza che nessuno se ne accorga, e un uso che resta confinato alla curiosità "
-             "personale invece di diventare capacità dell'organizzazione."],
+             "I rischi erano organizzativi. Competenze che divergono, know-how che esce senza che "
+             "nessuno se ne accorga, e un uso che resta confinato alla curiosità personale invece "
+             "di diventare capacità dell'organizzazione."],
         fig="training",
         steps=[("Fondamenta", "Come funzionano davvero gli strumenti",
                 "Un modello mentale non tecnico: come i modelli generano contenuti, differenza fra "
@@ -604,8 +604,8 @@ L_IT = dict(
                 "Contenuti brevi e ricorrenti costruiti sui feedback dei seminari e sull'uso "
                 "osservato: riassumere documenti lunghi, estrarre dati strutturati, deep research, "
                 "aggiornamenti normativi.")],
-        out="Il punto di arrivo si misura in capacità: le persone fanno le stesse cose meglio e "
-            "più in fretta, e l'organizzazione ne guadagna di nuove. I seminari costruiscono il "
+        out="Alla fine le persone fanno le stesse cose meglio e più in fretta, e l'organizzazione "
+            "sa fare cose che prima non sapeva fare. I seminari costruiscono il "
             "linguaggio comune, i workshop con le business unit trovano dove intervenire davvero, "
             "gli agenti consolidano il guadagno, le pillole impediscono che tutto si spenga dopo "
             "un mese.",
@@ -735,7 +735,7 @@ L_EN = dict(
     am_p="16 questions, 5 minutes, free — in Italian.",
     am_cta="Take the check",
     pos_lbl="01 — The point",
-    pos_h2="The strategy exists.<br>The working<br>numbers do not.",
+    pos_h2="The numbers<br>nobody trusts.",
     pos_p=["Most already know roughly what they should be doing. What stops them is that the numbers "
            "do not speak to each other, the tools do not communicate, and half the week goes to "
            "assembling reports by hand and reading them — time the team does not get back.",
