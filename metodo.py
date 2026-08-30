@@ -17,7 +17,7 @@ LABELS = dict(
 )
 
 SECTIONS = [
-dict(n="01", title="Executive summary",
+dict(n="01", title="Il punto",
      sub="Un progetto di AI si valuta sul contesto in cui entra, sul compito che assume, sugli "
          "effetti che produce e su chi li subisce.",
      blocks=[
@@ -319,7 +319,7 @@ LABELS_EN = dict(
 )
 
 SECTIONS_EN = [
-dict(n="01", title="Executive summary",
+dict(n="01", title="The point",
      sub="An AI project is judged on the context it enters, the task it takes on, the effects it "
          "produces and who bears them.",
      blocks=[
@@ -829,8 +829,8 @@ def render(sections, preview=False, more="", lang="it"):
     out = []
     for s in sections:
         out.append(f'<section class="msec rv" id="s{s["n"]}">')
-        out.append(f'  <div class="mhead"><span class="n">{s["n"]}</span>'
-                   f'<h2>{s["title"]}</h2><p class="msub">{s["sub"]}</p></div>')
+        out.append(f'  <div class="mhead"><div><span class="n">{s["n"]}</span>'
+                   f'<h2>{s["title"]}</h2></div><p class="msub">{s["sub"]}</p></div>')
         skipped = 0
         fig = FIG_AT.get(s["n"])
         for index, (kind, payload) in enumerate(s["blocks"]):
