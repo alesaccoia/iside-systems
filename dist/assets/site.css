@@ -601,6 +601,10 @@ form.contact.sent{opacity:0;transform:translateY(-10px);pointer-events:none;
 .bcard .go{display:inline-block;margin-top:18px;font-family:var(--mono);font-size:11px;
   letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
 
+.bempty{padding:clamp(40px,7vh,80px) 0}
+.bempty h2{font-size:clamp(24px,3.2vw,34px);letter-spacing:-.03em;max-width:20ch}
+.bempty p{color:var(--dim);font-size:16.5px;line-height:1.75;max-width:62ch;margin-top:14px}
+
 /* ---------- blog: the post ---------- */
 .post{padding-top:clamp(46px,8vh,96px);padding-bottom:clamp(56px,9vh,110px)}
 .post h1{font-size:clamp(32px,4.6vw,54px);letter-spacing:-.035em;margin:14px 0 18px;max-width:20ch}

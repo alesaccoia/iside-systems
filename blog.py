@@ -11,13 +11,20 @@ BLOG_LABELS = {
                     "davvero, come si governa, e dove i progetti si incagliano.",
                read="min di lettura", back="← Tutti gli articoli", updated="Pubblicato",
                toc="In questa pagina", more="Continua a leggere",
-               note="Gli articoli sono in italiano."),
+               note="Gli articoli sono in italiano.",
+               empty_h="Il primo articolo sta arrivando.",
+               empty_p="Sto scrivendo. Qui finiranno note su acquisto, governance e adozione "
+                       "dell’AI in azienda — quello che imparo sul campo, non quello che si "
+                       "legge ovunque."),
     "en": dict(kicker="Blog", title="Notes on data, AI and adoption",
                lede="What I learn putting AI inside organisations: what you are actually buying, "
                     "how to govern it, and where these projects run aground.",
                read="min read", back="← All posts", updated="Published",
                toc="On this page", more="Keep reading",
-               note="The posts are written in Italian."),
+               note="The posts are written in Italian.",
+               empty_h="The first post is on its way.",
+               empty_p="Notes on buying, governing and adopting AI inside companies will land "
+                       "here — what I learn on the job, not what is written everywhere else."),
 }
 
 
@@ -140,6 +147,7 @@ FIGURES = {"planes": fig_planes, "layers": fig_layers,
 # Blocks: ("h2"|"h3"|"p"|"ul"|"ol"|"fig"|"note"|"table", payload)
 POSTS = [
 dict(
+  draft=True,
   slug="cosa-si-compra-davvero",
   date="2026-08-26", human_date="26 agosto 2026", read=14,
   tags=["AI adoption", "Enterprise", "Governance"],
@@ -287,6 +295,7 @@ dict(
   ]),
 
 dict(
+  draft=True,
   slug="ecosistema-non-abbonamento",
   date="2026-08-26", human_date="26 agosto 2026", read=9,
   tags=["Architettura", "Skill", "Knowledge"],
@@ -356,6 +365,7 @@ dict(
   ]),
 
 dict(
+  draft=True,
   slug="prima-di-accendere",
   date="2026-08-26", human_date="26 agosto 2026", read=6,
   tags=["Governance", "Sicurezza", "Checklist"],
@@ -392,6 +402,12 @@ dict(
             "errori. Le altre otto si recuperano; queste tre no."),
   ]),
 ]
+
+
+def published():
+    """The posts that actually reach the site. Drafts stay in this file — they
+    are written, not published — and produce no page, no feed entry, no link."""
+    return [p for p in POSTS if not p.get("draft")]
 
 
 # ---------------------------------------------------------------- rendering

@@ -1183,7 +1183,7 @@ PATHS = {"home":      ("", "en"),
          "privacy":   ("privacy.html", "en/privacy.html"),
          "blog":      ("blog", "en/blog")}
 PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
-              for p in B.POSTS})
+              for p in B.published()})
 
 
 def head(L, title, desc, asset, alt_href, self_page):
@@ -1403,12 +1403,25 @@ def footer(L, home, projects, about, asset):
 def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"):
     # the English home sits one level down, so root-level pages need the hop
     root = "../" if asset.startswith("../") else ""
+    blog_band = ""
     blog_rows = "".join(
         f'<a class="bpost" href="{root}blog/{p["slug"]}">'
         f'<span class="d">{p["human_date"]}</span>'
         f'<span class="t">{p["title"]}</span>'
         f'<span class="k">{p["tags"][0]}</span>'
-        f'<span class="go">\u2192</span></a>' for p in B.POSTS[:3])
+        f'<span class="go">\u2192</span></a>' for p in B.published()[:3])
+    if blog_rows:
+        # with nothing published the band would be a heading over a void
+        blog_band = f"""
+<section class="pad rule blogband" style="padding-top:clamp(50px,8vh,96px);padding-bottom:clamp(50px,8vh,96px)">
+  <div class="lbl">{L['blog_lbl']}</div>
+  <div class="cols2" style="align-items:end">
+    <div class="rv"><h2>{L['blog_h2']}</h2></div>
+    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{root}blog">{L['blog_more']}<span class="go">\u2192</span></a></p></div>
+  </div>
+  <div class="bposts rv">{blog_rows}</div>
+</section>
+"""
     caps_html = ""
     for i, (h3, body, tags) in enumerate(L["caps"], 1):
         caps_html += f"""
@@ -1505,16 +1518,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
   <div class="csrows rv">{case_rows(L)}</div>
   <p style="margin-top:26px"><a class="meta" href="{cases}" style="color:var(--acc);text-decoration:none">{L['cs_home_more']}</a></p>
 </section>
-
-<section class="pad rule blogband" style="padding-top:clamp(50px,8vh,96px);padding-bottom:clamp(50px,8vh,96px)">
-  <div class="lbl">{L['blog_lbl']}</div>
-  <div class="cols2" style="align-items:end">
-    <div class="rv"><h2>{L['blog_h2']}</h2></div>
-    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{root}blog">{L['blog_more']}<span class="go">→</span></a></p></div>
-  </div>
-  <div class="bposts rv">{blog_rows}</div>
-</section>
-
+{blog_band}
 <section class="pad rule" style="padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)">
   <div class="lbl">{L['proj_lbl']}</div>
   <div class="grid3 rv" data-cols="3">
@@ -2024,7 +2028,7 @@ PRIVACY = {
 def page_blog(L, asset, home, projects, about, alt_href, cases):
     t = B.BLOG_LABELS[L["lang"]]
     rows = ""
-    for post in B.POSTS:
+    for post in B.published():
         rows += f"""    <a class="bcard rv" href="/blog/{post['slug']}">
       <div class="meta">{post['human_date']} · {post['read']} {t['read']}</div>
       <h2>{post['title']}</h2>
@@ -2034,6 +2038,11 @@ def page_blog(L, asset, home, projects, about, alt_href, cases):
     </a>
 """
     note = f'<p class="meta" style="margin-top:22px">{t["note"]}</p>' if L["lang"] == "en" else ""
+    if not rows:
+        # nothing published yet: say so plainly instead of showing an empty list
+        rows = (f'    <div class="bempty rv"><h2>{t["empty_h"]}</h2>'
+                f'<p>{t["empty_p"]}</p></div>\n')
+        note = ""
     return (head(L, f'{t["title"]} — Iside Systems', t["lede"], asset, alt_href, "blog")
             + header(L, asset, home, projects, about, "blog", alt_href, cases)
             + f"""
@@ -2294,7 +2303,7 @@ def write_seo():
     posts = "".join(
         f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n    <lastmod>{p["date"]}</lastmod>'
         f'\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
-        for p in B.POSTS)
+        for p in B.published())
     sitemap = sitemap.replace("</urlset>", posts + "</urlset>")
     write("sitemap.xml", sitemap)
 
@@ -2306,7 +2315,7 @@ def write_seo():
         f"    <pubDate>{p['date']}</pubDate>\n"
         + "".join(f"    <category>{html.escape(t)}</category>\n" for t in p["tags"])
         + f"    <description>{html.escape(p['dek'])}</description>\n  </item>\n"
-        for p in B.POSTS)
+        for p in B.published())
     write("feed.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
           '<rss version="2.0"><channel>\n'
@@ -2341,7 +2350,18 @@ write("chi-sono.html",  page_about   (L_IT, "assets/", "index.html", "progetti.h
 write("privacy.html",   page_privacy (L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html", "en/privacy.html"))
 write("blog/index.html", page_blog(L_IT, "/assets/", "/", "/progetti.html",
                                    "/chi-sono.html", "/en/blog", "/case-study.html"))
-for _post in B.POSTS:
+# a post that goes back to draft must stop existing as a page, not linger
+import shutil as _shutil
+_live = {p["slug"] for p in B.published()}
+_blogdir = os.path.join(HERE, "blog")
+if os.path.isdir(_blogdir):
+    for _name in os.listdir(_blogdir):
+        _path = os.path.join(_blogdir, _name)
+        if os.path.isdir(_path) and _name not in _live:
+            _shutil.rmtree(_path)
+            print("removed stale", f"blog/{_name}")
+
+for _post in B.published():
     write(f"blog/{_post['slug']}/index.html",
           page_post(L_IT, "/assets/", "/", "/progetti.html",
                     "/chi-sono.html", "/en/blog", "/case-study.html", _post))

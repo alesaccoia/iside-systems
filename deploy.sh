@@ -22,6 +22,7 @@ mkdir -p dist/blog dist/en/blog
 cp blog/index.html                                              dist/blog/
 cp en/blog/index.html                                           dist/en/blog/
 for post in blog/*/ ; do
+  [ -d "$post" ] || continue          # no published posts: the glob stays literal
   slug=$(basename "$post")
   mkdir -p "dist/blog/$slug"
   cp "blog/$slug/index.html" "dist/blog/$slug/"
