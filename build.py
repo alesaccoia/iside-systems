@@ -387,8 +387,8 @@ L_IT = dict(
            "segmentazione, esperimenti, e una lettura intuitiva dei risultati.",
            ["Modellazione statistica", "Data mining", "Machine learning", "Previsione", "Esperimenti", "Dati scientifici"]),
           ("AI <br>Adoption",
-           "Guidare l'adozione aziendale - non consegnare un pilota e sparire. Casi d'uso che pagano "
-           "davvero, "
+           "Portare l'adozione fino al punto in cui l'organizzazione va avanti da sola. Casi d'uso "
+           "che pagano davvero, "
            "costo reale di esercizio, chi deve cambiare modo di lavorare, cosa l'AI Act obbliga a "
            "documentare. Certificato in AI &amp; Law e AI Governance.",
            ["Selezione casi d'uso", "Pilota → produzione", "Governance", "AI Act", "Formazione", "Change"]),
@@ -484,7 +484,7 @@ L_IT = dict(
     p_h1="Esperienza in sistemi, misurazione e decisioni.",
     p_lede="Ruoli ricoperti, non progetti venduti. Ogni voce indica la posizione — fondatore, CTO, "
            "responsabile di funzione, ingegnere di ricerca — perché quello che conta qui è "
-           "l'ampiezza dei problemi affrontati, non un portfolio di consegne.",
+           "l'ampiezza dei problemi affrontati.",
     p_filters=[("all","Tutti"),("ai","Sistemi AI"),("analytics","Analytics e crescita"),
                ("product","Prodotti e open source"),("creative","Interattivo e audio"),
                ("research","Ricerca"),("strategy","Strategia")],
@@ -522,7 +522,7 @@ L_IT = dict(
                               "Milano e Formaper — AI per le imprese."),
                   ("Lingue", "Italiano, inglese e francese: lezioni, conferenze e materiali in tutte e tre. "
                              "Il francese viene da quattro anni di insegnamento in Francia, "
-                             "all'Université de Franche-Comté. Sedi in Italia e all'estero.")],
+                             "all'Université de Franche-Comté. Lavoro in Italia e all'estero.")],
     a_contact_h2="Si parte dal problema,<br>non dalla tecnologia.",
     a_contact_p="I messaggi utili raccontano cosa misura oggi il team, dove finisce il lavoro "
                 "manuale, e quale decisione continua a essere presa a sensazione. Una conversazione "
@@ -568,7 +568,7 @@ L_IT = dict(
     cs_other="Gli altri case study",
     cs_fig_out="FUNNEL|PIANO|CALENDARIO|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · DEM|REFERRAL",
-    cs_cta_h2="Uno dei tre somiglia<br>al vostro problema?",
+    cs_cta_h2="Tre porte diverse<br>sullo stesso problema.",
     cs_cta_p="Sono tre punti d'ingresso diversi: le persone, la misurazione, l'infrastruttura. "
              "Il primo passo è capire quale dei tre corrisponde al problema che avete adesso.",
     cs_cta_link="Scrivimi →",
@@ -607,8 +607,8 @@ L_IT = dict(
                 "riscrivere il modo di lavorare."),
                ("Progettazione", "Agenti disegnati sui metodi esistenti",
                 "Gli agenti nascono dalla mappatura e seguono i metodi che l'organizzazione ha "
-                "già, invece di chiederle di adattarsi a loro. Uno strumento costruito così viene "
-                "adottato; il contrario viene aggirato."),
+                "già, invece di chiederle di adattarsi a loro. Uno strumento che impone il proprio "
+                "metodo viene aggirato nel giro di un mese."),
                ("Nel tempo", "Pillole di aggiornamento",
                 "Contenuti brevi e ricorrenti costruiti sui feedback dei seminari e sull'uso "
                 "osservato: riassumere documenti lunghi, estrarre dati strutturati, deep research, "
@@ -635,7 +635,7 @@ L_IT = dict(
              "altro, e nessuno dei due parlava con la spesa reale.",
              "Invece di comprare l'ennesimo strumento ho costruito James: una piattaforma che tiene "
              "insieme ingestione dei dati, modello del funnel, pianificazione e misurazione. È "
-             "indipendente dal cliente — nasce riutilizzabile."],
+             "indipendente dal cliente e riutilizzabile."],
         fig="james",
         steps=[("Ingestione", "Un solo magazzino",
                 "I dati arrivano dalle piattaforme pubblicitarie e analytics e vengono raccolti in "
@@ -682,7 +682,7 @@ L_IT = dict(
              "ospitava. Migrazione su un'infrastruttura che regge la crescita, processo di "
              "sviluppo controllato, e un assessment su dati, AI Act e condizioni d'uso.",
         h2="Far reggere<br>quello che già<br>funziona.",
-        ctx=["Il prodotto c'era ed era stato costruito con un pragmatismo notevole: piattaforma "
+        ctx=["Il prodotto c'era ed era stato costruito con pragmatismo: piattaforma "
              "viva, utenti veri, funzionalità AI già in produzione. Quello che non reggeva era "
              "l'ambiente sotto — pensato per partire, non per assorbire traffico crescente e "
              "utenti contemporanei.",
@@ -692,7 +692,7 @@ L_IT = dict(
         fig="cloud",
         steps=[("Infrastruttura", "Migrazione verso un ambiente che scala",
                 "Esportazione della piattaforma dall'ambiente esistente e configurazione ordinata "
-                "di applicazione, database, accessi, backup e deployment. L'obiettivo dichiarato è "
+                "di applicazione, database, accessi, backup e deployment. L'obiettivo è "
                 "assorbire la crescita senza riprogettare il sistema a ogni salto di utilizzo."),
                ("Osservabilità", "Monitoraggio dal primo giorno",
                 "Strumenti di monitoraggio impostati prima del primo incidente. Sapere come sta "
@@ -700,8 +700,7 @@ L_IT = dict(
                ("Processo", "Sviluppo più rapido e più controllato",
                 "Organizzazione dell'ambiente e del processo di sviluppo — repository, revisione, "
                 "assistenti di codice — per andare più veloci lungo un percorso documentato e "
-                "tracciabile. Velocità e controllo non sono in conflitto se il processo è "
-                "impostato bene."),
+                "tracciabile."),
                ("Assessment", "Dati, AI e fornitori esterni",
                 "Analisi tecnico-organizzativa delle funzionalità AI e dei flussi di dati: cosa "
                 "esce dal perimetro, verso quali fornitori, con quali implicazioni rispetto a "
@@ -770,8 +769,8 @@ L_EN = dict(
            "segmentation, experiments, and an intuitive reading of the result.",
            ["Statistical modelling", "Data mining", "Machine learning", "Forecasting", "Experiments", "Scientific data"]),
           ("AI <br>Adoption",
-           "Driving adoption across the organisation - not delivering a pilot and leaving. The use cases "
-           "that actually pay, "
+           "Driving adoption to the point where the organisation carries it on its own. The use "
+           "cases that actually pay, "
            "the real cost of running them, who has to change how they work, what the AI Act obliges "
            "you to document. Certified in AI &amp; Law and AI Governance.",
            ["Use-case selection", "Pilot → production", "Governance", "EU AI Act", "Training", "Change"]),
@@ -865,7 +864,7 @@ L_EN = dict(
     p_h1="Experience in systems, measurement and decisions.",
     p_lede="Roles held, not projects sold. Each entry states the position — founder, CTO, head of "
            "function, research engineer — because what matters here is the range of problems "
-           "addressed, not a portfolio of deliverables.",
+           "addressed.",
     p_filters=[("all","All"),("ai","AI systems"),("analytics","Analytics &amp; growth"),
                ("product","Products &amp; open source"),("creative","Interactive &amp; audio"),
                ("research","Research"),("strategy","Strategy")],
@@ -948,7 +947,7 @@ L_EN = dict(
     cs_other="The other case studies",
     cs_fig_out="FUNNEL|PLAN|CALENDAR|SOV",
     cs_fig_src="META|TIKTOK|ADS SEARCH|ADS DISPLAY|CRM · EMAIL|REFERRAL",
-    cs_cta_h2="Does one of the three<br>look like your problem?",
+    cs_cta_h2="Three different doors<br>into the same problem.",
     cs_cta_p="Three different ways in: people, measurement, infrastructure. The first step is "
              "working out which of the three matches the problem you have right now.",
     cs_cta_link="Get in touch →",
@@ -989,7 +988,7 @@ L_EN = dict(
                ("Design", "Agents shaped around existing methods",
                 "The agents come out of the mapping and follow the methods the organisation "
                 "already has, instead of asking it to adapt to them. A tool built that way gets "
-                "adopted; the other kind gets worked around."),
+                "adopted; one that imposes its own gets worked around inside a month."),
                ("Over time", "Short recurring briefs",
                 "Brief, regular pieces built on seminar feedback and on observed usage: summarising "
                 "long documents, extracting structured data, deep research, regulatory updates.")],
@@ -1013,7 +1012,7 @@ L_EN = dict(
              "definition of a conversion. The editorial plan lived in one spreadsheet, the budget "
              "in another, and neither talked to actual spend.",
              "Rather than buy yet another tool I built James: a platform holding ingestion, the "
-             "funnel model, planning and measurement together. It is client-independent — reusable "
+             "funnel model, planning and measurement together. It is client-independent and reusable "
              "by design."],
         fig="james",
         steps=[("Ingestion", "One warehouse",
@@ -1059,7 +1058,7 @@ L_EN = dict(
              "infrastructure that absorbs growth, a controlled development process, and an "
              "assessment covering data, the AI Act and terms of use.",
         h2="Making what<br>already works<br>hold up.",
-        ctx=["The product was there and had been built with real pragmatism: a live platform, real "
+        ctx=["The product was there and had been built pragmatically: a live platform, real "
              "users, AI features already in production. What did not hold was the environment "
              "underneath — designed to launch, not to absorb growing traffic and concurrent users.",
              "The risk in these situations arrives later than today's outage. It shows up when "
@@ -1068,15 +1067,14 @@ L_EN = dict(
         fig="cloud",
         steps=[("Infrastructure", "Migration onto something that scales",
                 "Exporting the platform from its existing environment and configuring application, "
-                "database, access, backups and deployment properly. The stated goal is absorbing "
+                "database, access, backups and deployment properly. The goal is absorbing "
                 "growth without redesigning the system at every jump in usage."),
                ("Observability", "Monitoring from day one",
                 "Monitoring set up before the first incident. Knowing how the system is doing is "
                 "as much part of the infrastructure as the servers."),
                ("Process", "Faster development, better controlled",
                 "Organising the environment and the development process — repository, review, "
-                "coding assistants — to move faster along a documented, traceable path. Speed and "
-                "control are not in conflict when the process is set up properly."),
+                "coding assistants — to move faster along a documented, traceable path."),
                ("Assessment", "Data, AI and external vendors",
                 "A technical and organisational review of the AI features and data flows: what "
                 "leaves the perimeter, towards which providers, and what that implies for GDPR, "
