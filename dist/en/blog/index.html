@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Consent Mode: everything denied until the visitor says otherwise -->
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var _c="denied",_g="granted";
+try{
+  var _v=localStorage.getItem("iside-consent");
+  if(_v==="granted")_c="granted";
+  if(_v==="denied")_g="denied";      // a refusal travels with the visitor everywhere
+}catch(e){}
+// Where consent is legally required, everything waits for the banner. Elsewhere
+// the default is granted — otherwise every region reports a 0% consent rate.
+var _eea=['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT',
+ 'LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH'];
+gtag('consent','default',{
+  ad_storage:_c, ad_user_data:_c, ad_personalization:_c, analytics_storage:_c,
+  functionality_storage:'granted', security_storage:'granted', wait_for_update:500,
+  region:_eea
+});
+gtag('consent','default',{
+  ad_storage:_g, ad_user_data:_g, ad_personalization:_g, analytics_storage:_g,
+  functionality_storage:'granted', security_storage:'granted'
+});
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-584NQHC3');</script>
+<!-- End Google Tag Manager -->
+
+<title>Notes on data, AI and adoption — Iside Systems</title>
+<meta name="description" content="What I learn putting AI inside organisations: what you are actually buying, how to govern it, and where these projects run aground.">
+<meta name="author" content="Alessandro Saccoia">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="alternate" type="application/rss+xml" title="Iside Systems — Blog" href="https://www.isidesystems.com/feed.xml">
+<link rel="canonical" href="https://www.isidesystems.com/en/blog">
+<link rel="alternate" hreflang="it" href="https://www.isidesystems.com/blog">
+<link rel="alternate" hreflang="en" href="https://www.isidesystems.com/en/blog">
+<link rel="alternate" hreflang="x-default" href="https://www.isidesystems.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Iside Systems">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="it_IT">
+<meta property="og:title" content="Notes on data, AI and adoption — Iside Systems">
+<meta property="og:description" content="What I learn putting AI inside organisations: what you are actually buying, how to govern it, and where these projects run aground.">
+<meta property="og:url" content="https://www.isidesystems.com/en/blog">
+<meta property="og:image" content="https://www.isidesystems.com/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://www.isidesystems.com/assets/img/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Iside Systems — Alessandro Saccoia — data strategy, AI adoption, marketing operations">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Notes on data, AI and adoption — Iside Systems">
+<meta name="twitter:description" content="What I learn putting AI inside organisations: what you are actually buying, how to govern it, and where these projects run aground.">
+<meta name="twitter:image" content="https://www.isidesystems.com/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="Iside Systems — Alessandro Saccoia — data strategy, AI adoption, marketing operations">
+
+<link rel="icon" href="/assets/img/mark.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0e0e11">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"ProfessionalService","@id":"https://www.isidesystems.com/#studio","name":"Iside Systems SRLS",
+ "url":"https://www.isidesystems.com/","email":"alessandro@iside.systems","vatID":"IT14733480967",
+ "image":"https://www.isidesystems.com/assets/img/og-image.png","description":"What I learn putting AI inside organisations: what you are actually buying, how to govern it, and where these projects run aground.",
+ "address":{"@type":"PostalAddress","streetAddress":"Via Tortona 12","postalCode":"20144",
+   "addressLocality":"Milano","addressCountry":"IT"},
+ "areaServed":"Europe","founder":{"@id":"https://www.isidesystems.com/#alessandro"},
+ "knowsLanguage":["it","en","fr"]},
+{"@type":"Person","@id":"https://www.isidesystems.com/#alessandro","name":"Alessandro Saccoia",
+ "jobTitle":"Data strategy, AI adoption, marketing and growth operations",
+ "email":"alessandro@iside.systems","worksFor":{"@id":"https://www.isidesystems.com/#studio"},
+ "knowsLanguage":["it","en","fr"],
+ "address":{"@type":"PostalAddress","addressLocality":"Milano","addressCountry":"IT"},
+ "alumniOf":"Universita degli Studi di Milano",
+ "sameAs":["https://www.alessandrosaccoia.com/","https://github.com/alesaccoia",
+   "https://www.linkedin.com/in/alesaccoia/"]},
+{"@type":"WebSite","@id":"https://www.isidesystems.com/#site","url":"https://www.isidesystems.com/","name":"Iside Systems",
+ "inLanguage":"en","publisher":{"@id":"https://www.isidesystems.com/#studio"}}
+]}
+</script>
+
+<script>document.documentElement.classList.add("js");try{document.documentElement.setAttribute("data-theme",localStorage.getItem("iside-theme")||"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-584NQHC3"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<header class="site">
+  <div class="navrow">
+    <a class="brand" href="/en">
+      <span class="glyph"></span>
+      <span><b>Iside Systems</b><span>Data, AI and marketing</span></span>
+    </a>
+    <button id="navToggle" type="button" aria-expanded="false" aria-controls="mainnav"
+            aria-label="Open the menu"><span></span><span></span><span></span></button>
+    <nav class="main" id="mainnav">
+      <a href="/en">Practice</a>
+      <a href="/en/case-studies.html">Case studies</a>
+      <a href="/en/methodology.html">Methodology</a>
+      <a href="/en/projects.html">Projects</a>
+      <a href="/en/blog" aria-current="page">Blog</a>
+      <a href="/en/about.html">About</a>
+      <span class="langsw"><a href="#" aria-current="true">EN</a>/<a href="/blog">IT</a></span>
+      <button id="themeBtn" type="button">Dark</button>
+    </nav>
+  </div>
+  <div id="navScrim" hidden></div>
+</header>
+
+<section class="pad blogindex">
+  <div class="lbl">Blog</div>
+  <h1>Notes on data, AI and adoption</h1>
+  <p class="lede dim">What I learn putting AI inside organisations: what you are actually buying, how to govern it, and where these projects run aground.</p>
+  
+  <div class="bcards">
+    <div class="bempty rv"><h2>No posts yet.</h2><p>Notes on buying, governing and adopting AI inside companies will land here — what I learn on the job, not what is written everywhere else.</p></div>
+  </div>
+</section>
+<footer class="site">
+  <div class="col">
+    <b>Iside Systems SRLS</b>
+    <span>Via Tortona 12<br>20144 Milano</span>
+    <a href="mailto:alessandro@iside.systems">alessandro@iside.systems</a>
+    <a href="mailto:iside.systems.srls@pec.it">iside.systems.srls@pec.it</a>
+    <a href="https://www.linkedin.com/in/alesaccoia/" rel="me noopener" target="_blank">LinkedIn</a>
+    <span>P.IVA 14733480967</span>
+    <span>e-invoicing code KRRH6B9</span>
+  </div>
+  <div class="col">
+    <b>Pages</b>
+    <a href="/en">Practice</a>
+    <a href="/en/projects.html">Projects</a>
+    <a href="/en/about.html">About</a>
+    <a href="/en/case-studies.html">Case studies</a>
+  </div>
+  <div class="col">
+    <b>What I do</b>
+    <a href="/en#capabilities">Data strategy &amp; data science</a><a href="/en#capabilities">AI  Adoption</a><a href="/en#capabilities">Marketing &amp; growth operations</a><a href="/en#capabilities">Advisory for founders &amp; teams</a>
+  </div>
+  <div class="colophon">
+    <span>Iside Systems SRLS — VAT 14733480967</span>
+    <a href="/en/privacy.html">Privacy policy</a>
+    <span>IT · EN · FR</span>
+  </div>
+</footer>
+
+<div id="cookiebar" hidden>
+  <p><b>Cookies.</b> This site uses measurement cookies to see which pages get read. No advertising, no profiling sold on to anyone. If you refuse, the site works exactly the same.</p>
+  <div class="acts">
+    <button type="button" data-consent="denied">Refuse</button>
+    <button type="button" data-consent="granted" class="primary">Accept</button>
+  </div>
+</div>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>
