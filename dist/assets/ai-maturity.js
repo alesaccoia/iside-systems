@@ -90,7 +90,7 @@ var QS=[
   ["Regole informali","Ci sono cautele, non condivise né documentate."],
   ["Un responsabile","Qualcuno valuta dati, rischi e strumenti prima dell’uso."],
   ["Un modo di lavorare","Policy, responsabilità e verifiche dentro il processo."]],{governance:3},{}],
-["norme","NORMATIVA","Quanto conoscete le regole che vi riguardano?","AI Act, GDPR, mercato unico digitale: non serve essere giuristi, serve sapere cosa vi tocca.",
+["norme","NORMATIVA","Quanto conoscete le regole che vi riguardano?","AI Act, GDPR, mercato unico digitale. Basta sapere cosa vi tocca.",
  [["Ne abbiamo sentito parlare","Sappiamo che esistono, non cosa comportano per noi."],
   ["Conosciamo il GDPR","Privacy presidiata; sull’AI Act siamo scoperti."],
   ["Stiamo mappando gli obblighi","Qualcuno sta guardando classificazione dei sistemi e adempimenti."],
