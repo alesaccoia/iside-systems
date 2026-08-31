@@ -664,6 +664,11 @@ form.contact.sent{opacity:0;transform:translateY(-10px);pointer-events:none;
 .bfiglegend span{display:block}
 .bfiglegend b{display:block;color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:400;margin-bottom:3px}
 @media(min-width:760px){.bfiglegend{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
+.bflow{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:clamp(30px,4vh,46px) 0}
+.bflow>div{background:var(--bg);padding:22px 24px;position:relative;min-height:116px}
+.bflow b{display:block;color:var(--acc);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:400;margin-bottom:12px}
+.bflow span{display:block;color:var(--dim);font-size:16px;line-height:1.55}
+@media(min-width:820px){.bflow{grid-template-columns:repeat(4,minmax(0,1fr))}.bflow>div:not(:last-child):after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);z-index:1;color:var(--acc);font-family:var(--mono);font-size:16px}}
 /* SVG attributes cannot read custom properties: set the faces in CSS */
 .bfig text{font-family:var(--mono)}
 .bfig text[font-family="var(--sans)"]{font-family:var(--sans)}

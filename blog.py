@@ -856,10 +856,15 @@ def _render_one(kind, payload, lang="it"):
             return ('<figure class="bfigwrap bfig-cost">' + FIGURES[payload]() +
                     '<figcaption class="bfiglegend">' + ''.join(f'<span>{label}</span>' for label in labels) + '</figcaption></figure>')
         if payload == "loop":
-            labels = (["<b>Traces</b> Tool calls, errors and corrections", "<b>Candidate</b> A model distils a proposed skill", "<b>Human review</b> Approve or reject it before reuse"]
-                      if lang == "en" else ["<b>Tracce</b> Tool call, errori e correzioni", "<b>Candidata</b> Un modello distilla una skill proposta", "<b>Revisione umana</b> Approvare o respingere prima del riuso"])
-            return ('<figure class="bfigwrap">' + FIGURES[payload]() +
-                    '<figcaption class="bfiglegend">' + ''.join(f'<span>{label}</span>' for label in labels) + '</figcaption></figure>')
+            steps = (["<b>01 · Traces</b><span>Tool calls, errors and corrections</span>",
+                      "<b>02 · Candidate</b><span>A model distils a proposed skill</span>",
+                      "<b>03 · Human review</b><span>Approve or reject it before reuse</span>",
+                      "<b>04 · Reuse</b><span>The approved skill is retrieved for similar work</span>"]
+                     if lang == "en" else ["<b>01 · Tracce</b><span>Tool call, errori e correzioni</span>",
+                      "<b>02 · Candidata</b><span>Un modello distilla una skill proposta</span>",
+                      "<b>03 · Revisione umana</b><span>Approvare o respingere prima del riuso</span>",
+                      "<b>04 · Riuso</b><span>La skill approvata torna nelle richieste simili</span>"])
+            return '<div class="bflow">' + ''.join(f'<div>{step}</div>' for step in steps) + '</div>'
         return f'<figure class="bfigwrap">{FIGURES[payload]()}</figure>'
     if kind == "note":
         return f'<aside class="bnote">{payload}</aside>'
