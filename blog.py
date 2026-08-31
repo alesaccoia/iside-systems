@@ -852,10 +852,19 @@ def _render_one(kind, payload, lang="it"):
         return f"<{kind}>{items}</{kind}>"
     if kind == "fig":
         if payload == "cost":
-            labels = (["<b>Skill</b> Rewrite a procedure", "<b>Knowledge graph</b> Add nodes and edges", "<b>Fine-tuning</b> Retrain part of the model"]
-                      if lang == "en" else ["<b>Skill</b> Riscrivere una procedura", "<b>Grafo di conoscenza</b> Aggiungere nodi e archi", "<b>Fine-tuning</b> Riaddestrare parte del modello"])
-            return ('<figure class="bfigwrap bfig-cost">' + FIGURES[payload]() +
-                    '<figcaption class="bfiglegend">' + ''.join(f'<span>{label}</span>' for label in labels) + '</figcaption></figure>')
+            rows = ([
+                ("01", "Skills", "Rewrite a procedure", "Minutes", "A policy or recurring workflow changes"),
+                ("02", "Knowledge graph", "Add nodes and relationships", "Minutes to days", "The agent cannot find related material"),
+                ("03", "Fine-tuning", "Train model behaviour", "Hours to weeks", "You need a stable format or refusal behaviour")]
+                if lang == "en" else [
+                ("01", "Skill", "Riscrivere una procedura", "Minuti", "Cambia una policy o un flusso ricorrente"),
+                ("02", "Grafo di conoscenza", "Aggiungere nodi e relazioni", "Minuti o giorni", "L'agente non trova documenti collegati"),
+                ("03", "Fine-tuning", "Allenare il comportamento del modello", "Ore o settimane", "Serve un formato o un rifiuto stabile")])
+            cards = ''.join(
+                f'<section class="bcost-row"><span class="n">{n}</span><div><h3>{title}</h3><p>{change}</p></div>'
+                f'<div class="bcost-meta"><span>{cost}</span><small>{when}</small></div></section>'
+                for n, title, change, cost, when in rows)
+            return f'<div class="bcost"><div class="bcost-head"><span>{"Cost and commitment" if lang == "en" else "Costo e impegno"}</span><p>{"Start at the lightest level that solves the problem." if lang == "en" else "Parti dal livello più leggero che risolve il problema."}</p></div>{cards}</div>'
         if payload == "loop":
             steps = (["<b>01 · Traces</b><span>Tool calls, errors and corrections</span>",
                       "<b>02 · Candidate</b><span>A model distils a proposed skill</span>",
