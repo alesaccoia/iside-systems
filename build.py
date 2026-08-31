@@ -1324,16 +1324,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 def header(L, asset, home, projects, about, current, alt_href, cases="case-study.html"):
-    # /blog and /blog/<slug> are served without a trailing slash, so relative
-    # links there resolve against the root: those pages ask for absolute paths
-    if asset.startswith("/"):
-        blog_href = "/en/blog" if L["lang"] == "en" else "/blog"
-        metodo_href = "/en/methodology.html" if L["lang"] == "en" else "/metodologia.html"
-    else:
-        depth = asset.count("../")
-        blog_href = ("../" * depth) + "blog" if depth else "blog"
-        metodo_href = ("methodology.html" if L["lang"] == "en"
-                       else ("../" * depth) + "metodologia.html")
+    # These are absolute because article URLs have no trailing slash, and a
+    # relative "blog" link would otherwise resolve to the Italian section.
+    blog_href = "/en/blog" if L["lang"] == "en" else "/blog"
+    metodo_href = "/en/methodology.html" if L["lang"] == "en" else "/metodologia.html"
     def a(href, label, key):
         cur = ' aria-current="page"' if key == current else ""
         return f'<a href="{href}"{cur}>{label}</a>'
@@ -1425,16 +1419,15 @@ def footer(L, home, projects, about, asset):
 
 # ---------------------------------------------------------------- pages
 def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"):
-    # the English home sits one level down, so root-level pages need the hop
-    root = "../" if asset.startswith("../") else ""
+    blog_base = "/en/blog" if L["lang"] == "en" else "/blog"
     metodo_href = "methodology.html" if L["lang"] == "en" else "metodologia.html"
     blog_band = ""
     blog_rows = "".join(
-        f'<a class="bpost" href="{root}blog/{p["slug"]}">'
+        f'<a class="bpost" href="{blog_base}/{p["slug"]}">'
         f'<span class="d">{p["human_date"]}</span>'
         f'<span class="t">{p["title"]}</span>'
         f'<span class="k">{p["tags"][0]}</span>'
-        f'<span class="go">\u2192</span></a>' for p in B.published()[:3])
+        f'<span class="go">\u2192</span></a>' for p in B.published(L["lang"])[:3])
     if blog_rows:
         # with nothing published the band would be a heading over a void
         blog_band = f"""
@@ -1442,7 +1435,7 @@ def page_home(L, asset, home, projects, about, alt_href, cases="case-study.html"
   <div class="lbl">{L['blog_lbl']}</div>
   <div class="cols2" style="align-items:end">
     <div class="rv"><h2>{L['blog_h2']}</h2></div>
-    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{root}blog">{L['blog_more']}<span class="go">\u2192</span></a></p></div>
+    <div class="rv"><p style="margin-top:20px"><a class="ambtn" href="{blog_base}">{L['blog_more']}<span class="go">\u2192</span></a></p></div>
   </div>
   <div class="bposts rv">{blog_rows}</div>
 </section>
@@ -2225,7 +2218,7 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
   <div class="pbody">
 {B.render_blocks(post['body'], L['lang'])}
   </div>
-  <p class="pback"><a href="/blog">{t['back']}</a></p>
+  <p class="pback"><a href="{'/en/blog' if L['lang'] == 'en' else '/blog'}">{t['back']}</a></p>
 </article>
 """
             + footer(L, home, projects, about, asset))
