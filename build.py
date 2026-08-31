@@ -1200,7 +1200,7 @@ PATHS = {"home":      ("", "en"),
          "privacy":   ("privacy.html", "en/privacy.html"),
          "blog":      ("blog", "en/blog"),
          "metodo":    ("metodologia.html", "en/methodology.html")}
-PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
+PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"en/blog/{p['slug']}")
               for p in B.published()})
 
 
@@ -2160,8 +2160,9 @@ PRIVACY = {
 def page_blog(L, asset, home, projects, about, alt_href, cases):
     t = B.BLOG_LABELS[L["lang"]]
     rows = ""
-    for post in B.published():
-        rows += f"""    <a class="bcard rv" href="/blog/{post['slug']}">
+    for post in B.published(L["lang"]):
+        href = f"/en/blog/{post['slug']}" if L["lang"] == "en" else f"/blog/{post['slug']}"
+        rows += f"""    <a class="bcard rv" href="{href}">
       <div class="bck"><span class="meta">{post['human_date']}</span>
         <span class="meta">{post['read']} {t['read']}</span></div>
       <div class="bcb">
@@ -2195,12 +2196,12 @@ def page_blog(L, asset, home, projects, about, alt_href, cases):
 
 def page_post(L, asset, home, projects, about, alt_href, cases, post):
     t = B.BLOG_LABELS[L["lang"]]
-    url = f"{SITE}/blog/{post['slug']}"
+    url = f"{SITE}/{'en/blog' if L['lang'] == 'en' else 'blog'}/{post['slug']}"
     ld = ('<script type="application/ld+json">'
           '{"@context":"https://schema.org","@type":"BlogPosting",'
           f'"headline":{json.dumps(post["title"], ensure_ascii=False)},'
           f'"description":{json.dumps(post["dek"], ensure_ascii=False)},'
-          f'"datePublished":"{post["date"]}","inLanguage":"it",'
+          f'"datePublished":"{post["date"]}","inLanguage":"{L["lang"]}",'
           f'"keywords":{json.dumps(", ".join(post["tags"]), ensure_ascii=False)},'
           f'"mainEntityOfPage":"{url}",'
           '"author":{"@type":"Person","name":"Alessandro Saccoia"},'
@@ -2220,7 +2221,7 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
     <span class="tags">{B.chips(post['tags'])}</span>
   </div>
   <div class="pbody">
-{B.render_blocks(post['body'])}
+{B.render_blocks(post['body'], L['lang'])}
   </div>
   <p class="pback"><a href="/blog">{t['back']}</a></p>
 </article>
@@ -2433,10 +2434,15 @@ def write_seo():
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
                '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
                + "\n".join(rows) + "\n</urlset>\n")
-    # posts are Italian only: one entry each, no alternates
     posts = "".join(
-        f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n    <lastmod>{p["date"]}</lastmod>'
-        f'\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
+        f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n'
+        f'    <xhtml:link rel="alternate" hreflang="it" href="{SITE}/blog/{p["slug"]}"/>\n'
+        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p["slug"]}"/>\n'
+        f'    <lastmod>{p["date"]}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
+        f'  <url>\n    <loc>{SITE}/en/blog/{p["slug"]}</loc>\n'
+        f'    <xhtml:link rel="alternate" hreflang="it" href="{SITE}/blog/{p["slug"]}"/>\n'
+        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p["slug"]}"/>\n'
+        f'    <lastmod>{p["date"]}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
         for p in B.published())
     sitemap = sitemap.replace("</urlset>", posts + "</urlset>")
     write("sitemap.xml", sitemap)
@@ -2501,6 +2507,17 @@ for _post in B.published():
     write(f"blog/{_post['slug']}/index.html",
           page_post(L_IT, "/assets/", "/", "/progetti.html",
                     "/chi-sono.html", "/en/blog", "/case-study.html", _post))
+
+_en_blogdir = os.path.join(HERE, "en", "blog")
+if os.path.isdir(_en_blogdir):
+    for _name in os.listdir(_en_blogdir):
+        _path = os.path.join(_en_blogdir, _name)
+        if os.path.isdir(_path) and _name not in _live:
+            _shutil.rmtree(_path)
+for _post in B.published("en"):
+    write(f"en/blog/{_post['slug']}/index.html",
+          page_post(L_EN, "/assets/", "/en", "/en/projects.html",
+                    "/en/about.html", f"/blog/{_post['slug']}", "/en/case-studies.html", _post))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",

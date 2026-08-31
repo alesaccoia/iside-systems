@@ -19,7 +19,7 @@ BLOG_LABELS = {
                lede="Observations, research and things learned through the work.",
                read="min read", back="← All posts", updated="Published",
                toc="On this page", more="Keep reading",
-               note="The posts are written in Italian.",
+               note="Articles are available in English.",
                empty_h="No posts yet.",
                empty_p="Notes on buying, governing and adopting AI inside companies will land "
                        "here — what I learn on the job, not what is written everywhere else."),
@@ -155,22 +155,6 @@ def fig_loop():
     <path d="M390 128V108"/>
     <path d="M490 66h170"/>
     <path d="M770 108v124"/>
-  </g>
-  <g font-family="var(--mono)" font-size="12.5" letter-spacing="1.2" fill="currentColor">
-    <text x="120" y="164" text-anchor="middle">TRACCE</text>
-    <text x="390" y="164" text-anchor="middle">CANDIDATA</text>
-    <text x="390" y="58"  text-anchor="middle" fill="var(--acc)">PROPOSTA</text>
-    <text x="770" y="58"  text-anchor="middle">REVISIONE UMANA</text>
-    <text x="770" y="266" text-anchor="middle">SKILL BOX</text>
-  </g>
-  <g font-family="var(--sans)" font-size="13" fill="currentColor" fill-opacity=".6">
-    <text x="120" y="190" text-anchor="middle">tool call, errori, correzioni</text>
-    <text x="390" y="190" text-anchor="middle">un LLM distilla</text>
-    <text x="770" y="82"  text-anchor="middle">approva o respinge, con un motivo</text>
-    <text x="770" y="290" text-anchor="middle">l'agente la usa da solo</text>
-  </g>
-  <g font-family="var(--sans)" font-size="14" fill="currentColor" fill-opacity=".6">
-    <text x="450" y="328" text-anchor="middle">l'approvazione trasforma una proposta in comportamento: da lì in poi si ripete da sola</text>
   </g>
 </svg>"""
 
@@ -752,18 +736,111 @@ dict(
   ]),
 ]
 
+# English editions are edited as articles in their own right.  Keeping them
+# separate from POSTS lets titles, cadence and terminology read naturally.
+EN_POSTS = {
+"agente-che-dimentica-ogni-notte": dict(
+    human_date="31 August 2026", read=10,
+    tags=["AI agents", "Memory", "Architecture"],
+    title="Building Adaptive AI Agents: DeepLearning.AI's new course",
+    dek="An internal agent should not have to start from scratch in every new chat. "
+        "DeepLearning.AI's course on adaptive agents lays out a practical method: capture traces, "
+        "approve reusable skills, structure knowledge, and leave model weights until last.",
+    body=[
+      ("p", "On Monday, an internal agent answers an expense claim. It discovers that the valid policy is not in the attached PDF but in a version posted to the intranet three months earlier, finds it and gets the answer right. On Tuesday another colleague asks the same question in a new chat. The agent starts again from the wrong PDF, and someone has to correct it again."),
+      ("p", "That scenario comes almost word for word from <i>Building Adaptive AI Agents</i>, DeepLearning.AI's new course. Its example is a coding agent that repeats the same testing mistake, but the problem is broader: what an agent retains between one conversation and the next, whether it writes Python, handles expenses or drafts a contract."),
+      ("p", "Without a way to retain and reuse what it learns, the agent pays the same learning cost every day. The cost is just scattered across hundreds of chats instead of appearing on an invoice."),
+      ("h2", "Three levels, not one"),
+      ("p", "The course ranks three ways of improving an agent by cost. The first two work on the context the agent reads before replying, the <b>token space</b>: reusable procedures and a better structure for finding knowledge. The third changes the model's weights, the <b>weight space</b>, and should come later."),
+      ("fig", "cost"),
+      ("p", "The first two levels can change in minutes: write a file or add a node to a graph. The third needs training and dedicated hardware, and has to be repeated when the underlying policy changes. Starting with model weights to teach a new company rule means choosing the most expensive layer."),
+      ("h2", "From traces to an approved procedure"),
+      ("p", "The first level is called <i>skill induction</i>. Conversations, tool calls, errors and corrections are recorded; a model then condenses them into a short procedure for the next time the same kind of request arrives."),
+      ("fig", "loop"),
+      ("p", "Human review decides whether that procedure becomes behaviour. Once a skill is approved, the agent retrieves it for similar requests until someone changes it. If a bad skill gets through, the mistake is repeated on every use."),
+      ("note", "Traces are not reliable sources by default. An incorrect instruction, or one deliberately inserted through a malicious tool call, can look like a candidate skill. Review stops it before it is reused."),
+      ("p", "Every approved skill should have an owner and a written rationale, including rejected ones. Without that context the system cannot improve a proposal; it can only submit it again."),
+      ("h2", "Finding the right knowledge"),
+      ("p", "The second level is the organisation of the knowledge an agent consults. The course shows it on a codebase, but the pattern is familiar: as a knowledge base grows, finding the document to start from can take more work than writing the answer. Keyword search finds the term it was given and leaves out related documents that do not contain it."),
+      ("p", "The proposed answer is a graph of relationships between documents: what refers to what, what changes together, what depends on what. In code those links are imports, function calls and changes in the same commit. In a company they are linked policies, procedures that change together and contracts referring to the same supplier."),
+      ("p", "Retrieval happens in two steps. It first finds the node semantically closest to the question, then traverses the graph with a ranking algorithm similar to PageRank. That avoids treating everything one hop away as equally relevant."),
+      ("table", dict(head=["", "Keyword search", "Knowledge graph"], rows=[["Finds related material that is not named", "No", "Yes"], ["Cost of adding a new document", "Low", "Almost zero"], ["Needs near-duplicates removed", "—", "Yes, or the graph gets noisy"], ["Result on tested multi-hop tasks", "Misses the right node", "Finds it"]])),
+      ("p", "In the course benchmarks, the graph cut task time by 11–18%, steps to the first correct change by 7–36%, and tokens by 3–16% on Django and HTTPie repositories. Those percentages do not transfer automatically to a company, but they show why a flat index stops being enough when the relationships are part of the problem."),
+      ("note", "A graph needs maintenance. In the course test, around 4% of nodes were 96% near-duplicates and had to be removed before retrieval became reliable again. Two copies of the same policy in different folders are noise."),
+      ("h2", "When to touch model weights"),
+      ("p", "The third level changes model weights. A base model has already absorbed a vast amount of text; for a policy or piece of knowledge that changes often, rewriting its weights is usually more expensive than supplying it as context at the right time."),
+      ("p", "Fine-tuning makes sense for different jobs: making a refusal reliable, or adapting the format and tone of a response. LoRA, the most common technique, freezes the original weights and trains two small matrices. It changes roughly 1% of the parameters."),
+      ("p", "Training too many parameters risks <i>catastrophic forgetting</i>: the model loses part of what it knew because its original weights are overwritten. Cost rises with model size. In the course, an adapter for 600 million parameters trains in an hour; the equivalent exercise on a frontier model would take hundreds or thousands of compute hours."),
+      ("p", "In production, a router can send a technical request to the base model and a tone-sensitive request to the relevant adapter, without asking the user to choose."),
+      ("h2", "Why this applies to any internal agent"),
+      ("p", "The course uses coding agents because public benchmarks and open-source code exist there. The three levels apply elsewhere too. An agent answering HR policy questions, drafting contracts or routing support tickets has traces to learn from and documents that can be organised as a graph."),
+      ("p", "For an internal agent, the practical starting point is to decide which corrections become reusable procedures, who approves them and where the agent searches for knowledge. Fine-tuning remains a specific choice for behaviour and format, not the normal way to update a rule that will change in three months.")]),
+"tutti-odiano-cookie-banner-europa-divisa-soluzione-digital-omnibus": dict(
+    human_date="31 August 2026", read=15,
+    tags=["Privacy", "Advertising", "European regulation"],
+    title="Everyone hates cookie banners. Europe is divided over the solution",
+    dek="There is near-universal agreement about the problem. The conflict begins when Europe has to decide which activities can happen without consent, who should transmit preferences, and which economic model of the internet it wants to protect.",
+    body=[
+      ("p", "On 19 November 2025 the European Commission presented the Digital Omnibus, a proposal that amends a long list of existing digital rules. Among other things, it tries to fix one of the stranger results of European internet regulation: to give users more control over their data, Europe built a system in which millions of people answer the same question every day, often without reading it."),
+      ("p", "The Commission calls this <i>consent fatigue</i>. On that point, almost everyone agrees. The EDPB and EDPS want to address the spread of cookie banners; the ad industry says consent has become a repetitive compliance ritual; consumer groups acknowledge that setting preferences site by site is inefficient; even the political groups most wary of reopening the GDPR do not seriously defend the status quo."),
+      ("p", "The disagreement starts with what should replace it."),
+      ("cards", [("The problem", "<mark>Consent fatigue</mark>: the same choice is repeated site by site."), ("The proposal", "Fewer consent requests and preferences sent in a <mark>machine-readable</mark> form."), ("The question", "Who controls consent: the user, the publisher or the browser?")]),
+      ("h2", "Fewer banners, but how?"),
+      ("p", "The Commission's proposal works on two fronts. A new Article 88a of the GDPR would broaden some exceptions to consent for access to information stored on a user's device, including certain forms of audience measurement. Article 88b would allow some preferences to be expressed through automated, machine-readable signals: a browser or operating system could tell sites what the user has chosen instead of asking the same question every time."),
+      ("p", "Consent would remain the general rule, but it would be requested less often and a response could persist. The exceptions are the part with the most immediate consequences for advertising."),
+      ("h2", "The line between measurement and tracking"),
+      ("p", "On 11 February 2026 the EDPB and EDPS published their Joint Opinion on the Digital Omnibus. They support the goal of reducing consent fatigue and welcome limited derogations. But they draw a narrow line around audience measurement: it should produce <mark>aggregated and anonymous information</mark> about use of a service, without combining it with data from other services, reusing it for other purposes or sharing it with third parties."),
+      ("p", "They also invite legislators to consider a new exception for <mark>contextual advertising</mark>. It is more privacy-friendly than behavioural advertising when it depends only on the page being viewed or the search being made at that moment, without storing or linking past and future activity."),
+      ("p", "They recognise that a contextual campaign still has to be operated and measured. Frequency capping, advertising audience measurement and click-fraud prevention may require trackers and could be included in cases that do not require consent, if the exception is tightly drawn."),
+      ("note", "Their position does not treat measurement and tracking as the same thing, nor does it exempt anything called “measurement”. The risk depends on what is technically done with the data."),
+      ("h2", "The first divide: risk"),
+      ("p", "The EPP, and Aura Salla in particular, support a more risk-based approach: remove unnecessary banners, increase legal certainty and make it easier for European businesses to use data without abandoning fundamental safeguards. Salla also repeats a second argument: badly designed regulation can strengthen the large US platforms Europe wants to make less dominant."),
+      ("p", "The ECR is even more explicit about proportionality. Diego Solier has cited audience measurement, advertising, cybersecurity updates and fraud prevention as cases where relatively low-intrusion activity should not be treated like behavioural tracking."),
+      ("p", "S&D begins from a different concern. Marina Kaljurand also supports risk-based application of the GDPR, but argues that the Digital Omnibus must not weaken core definitions and protections, beginning with the definition of personal data. The point is to simplify without creating exceptions that can reclassify invasive activity as harmless."),
+      ("p", "Renew takes a middle position. Michael McNamara has called for genuine simplification while retaining safeguards for fundamental rights, with the emphasis on a technically workable compromise."),
+      ("p", "Greens/EFA and The Left are much more suspicious of the exercise. The Greens warn that reopening GDPR and ePrivacy could become a gift to large platforms and call for stronger enforcement of existing rules. Markéta Gregorová still supports finding a real way to remove cookie banners as they work today. The Left sees the proposal as a possible retreat from consumer and data protection."),
+      ("p", "There is no single cookie position even among conservative or nationalist groups. Patriots for Europe, for example, has focused more on pseudonymisation and legal certainty than on a particular consent architecture. Calling the story simply left versus right misses too much."),
+      ("cards", [("EPP · ECR", "<mark>Proportionality and competitiveness</mark>: distinguish low-intrusion activity from behavioural tracking."), ("S&D · Renew", "Simplify without creating <mark>new loopholes</mark> in fundamental protections."), ("Greens · The Left", "More enforcement and caution: the risk is a <mark>gift to platforms</mark>.")]),
+      ("h2", "The second divide: power"),
+      ("p", "Outside Parliament the conflict is clearer. IAB Europe accepts the Commission's aim but says the Article 88a exceptions are too narrow. Continuing to ask consent for low-risk operational activity, it argues, will not remove consent fatigue. At the same time, IAB opposes browser-centred consent because it could damage the ad-funded content ecosystem and increase the power of large technology intermediaries."),
+      ("p", "Alliance Digitale, the French marketing and data association, reaches a similar conclusion. It sees the Article 88b centralised mechanism as a risk to proportionality, competition and technological neutrality, and instead calls for exceptions for low-risk activities including contextual advertising, frequency capping, anti-fraud and aggregated analytics."),
+      ("p", "EuroCommerce makes a similar case: more risk-based exceptions for low-risk processing and more recognition for privacy-enhancing technologies, but no general obligation to manage preferences through the browser and no rigid six-month ban on asking again. Its stated concern is the emergence of new gatekeepers."),
+      ("p", "If a user's preference is expressed mainly through Chrome or Safari, Google and Apple stop being only browser makers. They become <mark>part of the infrastructure through which a legal right is exercised.</mark> The Commission sees a way to end cookie fatigue; part of the industry sees power moving from publishers to two of the world's largest companies."),
+      ("p", "BEUC, which represents European consumer organisations, sees the same architecture from the other side. It cautiously welcomes browser signals because they could make consent easier to exercise, but wants consent to remain the baseline and the exceptions defined much more precisely. It also supports a specific treatment for contextual advertising, provided it does not become a shortcut to profiling."),
+      ("p", "EDRi pushes the criticism further. Cookie fatigue, it argues, does not mainly come from banners but from an economic model built on tracking, manipulative interfaces and weak enforcement. Removing the symptom without changing those incentives could make tracking less visible."),
+      ("h2", "Three conflicts, not one"),
+      ("p", "The Commission has offered an apparently simple answer to a problem on which there is broad agreement. In doing so, it has opened at least three separate conflicts."),
+      ("cards", [("01 — Risk", "Which activities are low-intrusion enough to happen without consent?"), ("02 — Power", "Who should collect and transmit preferences: the publisher or the browser?"), ("03 — The model", "How far can behavioural tracking be limited without undermining free media and services?")]),
+      ("p", "The Council has shown how hard it is to hold those questions together. A Presidency compromise text of 17 April included a new exception for contextual advertising, in the direction suggested by the EDPB and EDPS. In June, however, Member States removed several of the main cookie-banner simplification provisions from the compromise, effectively postponing the issue."),
+      ("p", "The process in Parliament is still open. Salla and Kaljurand's draft report arrived in June; more than a thousand amendments were tabled in July; the next step is to negotiate compromise amendments before the committee vote. On 31 August, the official 2025/0360(COD) file was still listed as “Awaiting committee decision”."),
+      ("h2", "What changes for the advertising ecosystem"),
+      ("p", "For advertising, the result could matter far more than the disappearance of a few banners. A more favourable legal treatment for contextual advertising would make ads based on the page, rather than an individual's history, more economically attractive. Clear exceptions for audience measurement, frequency capping and anti-fraud could separate operational advertising functions from behavioural profiling."),
+      ("p", "Strong browser signals could sharply reduce the number of people available for some forms of tracking while increasing the power of browsers and operating systems. Publishers and retailers would have an even stronger incentive to develop first-party data and direct relationships with users."),
+      ("cards", [("Contextual", "The value of an ad comes from the page, not a person's history."), ("Measurement", "Measure campaigns, frequency and fraud without turning everything into profiling."), ("First-party", "Publishers and retailers have a stronger incentive to build direct relationships.")]),
+      ("p", "There is also a measurement question worth watching without attributing conclusions to the legislator that it has not drawn. The Digital Omnibus does not propose new marketing-effectiveness models or tell companies to replace attribution with incrementality or marketing mix modelling. It does introduce an important regulatory distinction: <mark>not every activity needed to measure a campaign requires reconstructing a person's behaviour across services.</mark>"),
+      ("p", "Digital advertising has had little reason to make that distinction while the same technical infrastructure could handle targeting, tracking, attribution and measurement. It may now have to."),
+      ("h2", "What everyone is trying to save"),
+      ("p", "No one in this debate really wants to preserve cookie banners. The EDPB and EDPS want proportion between risk and processing; the ad industry wants to fund and measure advertising and content; publishers want a direct relationship with their audience; consumers want real control; Greens and digital-rights organisations want existing protections kept intact; EPP and ECR want competitiveness and room for European businesses to use data; S&D and Renew want simplification without new escape routes."),
+      ("p", "The question behind the banner is who gets to observe what we do next, for what purpose and at what level of detail."),
+      ("h2", "Sources and documents"),
+      ("ul", ["<a href=\"https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-regulation-proposal\" target=\"_blank\" rel=\"noopener\">European Commission — Digital Omnibus proposal</a>", "<a href=\"https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2025%2F0360%28COD%29\" target=\"_blank\" rel=\"noopener\">European Parliament — file 2025/0360(COD)</a>", "<a href=\"https://www.edpb.europa.eu/system/files/documents/2026-02/edpb_edps_jointopinion_202602_digitalomnibus_en.pdf\" target=\"_blank\" rel=\"noopener\">EDPB and EDPS — Joint Opinion (11 February 2026)</a>", "<a href=\"https://data.consilium.europa.eu/doc/document/WK-5494-2026-INIT/en/pdf\" target=\"_blank\" rel=\"noopener\">Council of the EU — Presidency compromise text (17 April 2026)</a>", "<a href=\"https://iabeurope.eu/wp-content/uploads/IAB-Europe_Digital-Omnibus_Position-Paper_Feb-2026.pdf\" target=\"_blank\" rel=\"noopener\">IAB Europe — position paper</a>", "<a href=\"https://www.alliancedigitale.org/wp-content/uploads/2026/03/2026-03-Alliance-Digitale-Digital-Omnibus-Simplification-Position_FINAL_4943173684542262799.pdf\" target=\"_blank\" rel=\"noopener\">Alliance Digitale — position paper</a>", "<a href=\"https://www.eurocommerce.eu/2026/06/position-paper-on-the-digital-omnibus/\" target=\"_blank\" rel=\"noopener\">EuroCommerce — position paper</a>", "<a href=\"https://www.beuc.eu/sites/default/files/publications/BEUC-X-2026-011_Protecting_EU_data_and_privacy_rights_in_the_Digital_Omnibus.pdf\" target=\"_blank\" rel=\"noopener\">BEUC — protecting EU data and privacy rights</a>", "<a href=\"https://edri.org/wp-content/uploads/2026/02/layout-eprivacyOmnibus.pdf\" target=\"_blank\" rel=\"noopener\">EDRi — The Digital Omnibus and ePrivacy</a>"])])
+}
 
-def published():
+
+def published(lang="it"):
     """The posts that actually reach the site. Drafts stay in this file — they
     are written, not published — and produce no page, no feed entry, no link."""
-    return [p for p in POSTS if not p.get("draft")]
+    posts = [p for p in POSTS if not p.get("draft")]
+    if lang == "it":
+        return posts
+    return [{**p, **EN_POSTS[p["slug"]]} for p in posts]
 
 
 def _anchor(text):
     return "".join(c.lower() if c.isalnum() else "-" for c in text).strip("-")
 
 
-def _render_one(kind, payload):
+def _render_one(kind, payload, lang="it"):
     """One block, at whatever heading level it turns out to sit inside."""
     if kind == "h3":
         return f"<h3>{payload}</h3>"
@@ -774,10 +851,15 @@ def _render_one(kind, payload):
         return f"<{kind}>{items}</{kind}>"
     if kind == "fig":
         if payload == "cost":
+            labels = (["<b>Skill</b> Rewrite a procedure", "<b>Knowledge graph</b> Add nodes and edges", "<b>Fine-tuning</b> Retrain part of the model"]
+                      if lang == "en" else ["<b>Skill</b> Riscrivere una procedura", "<b>Grafo di conoscenza</b> Aggiungere nodi e archi", "<b>Fine-tuning</b> Riaddestrare parte del modello"])
             return ('<figure class="bfigwrap bfig-cost">' + FIGURES[payload]() +
-                    '<figcaption class="bfiglegend"><span><b>Skill</b> Riscrivere una procedura</span>'
-                    '<span><b>Grafo di conoscenza</b> Aggiungere nodi e archi</span>'
-                    '<span><b>Fine-tuning</b> Riaddestrare parte del modello</span></figcaption></figure>')
+                    '<figcaption class="bfiglegend">' + ''.join(f'<span>{label}</span>' for label in labels) + '</figcaption></figure>')
+        if payload == "loop":
+            labels = (["<b>Traces</b> Tool calls, errors and corrections", "<b>Candidate</b> A model distils a proposed skill", "<b>Human review</b> Approve or reject it before reuse"]
+                      if lang == "en" else ["<b>Tracce</b> Tool call, errori e correzioni", "<b>Candidata</b> Un modello distilla una skill proposta", "<b>Revisione umana</b> Approvare o respingere prima del riuso"])
+            return ('<figure class="bfigwrap">' + FIGURES[payload]() +
+                    '<figcaption class="bfiglegend">' + ''.join(f'<span>{label}</span>' for label in labels) + '</figcaption></figure>')
         return f'<figure class="bfigwrap">{FIGURES[payload]()}</figure>'
     if kind == "note":
         return f'<aside class="bnote">{payload}</aside>'
@@ -799,7 +881,7 @@ def _render_one(kind, payload):
 # on wide screens, the heading and its body on the right — the same rhythm
 # as the section grid on the methodology page. Anything before the first h2
 # is the lead-in and stays a single column, like a magazine standfirst.
-def render_blocks(blocks):
+def render_blocks(blocks, lang="it"):
     intro, sections = [], []
     for kind, payload in blocks:
         if kind == "h2":
@@ -809,10 +891,10 @@ def render_blocks(blocks):
         else:
             intro.append((kind, payload))
 
-    out = ["".join(_render_one(k, v) for k, v in intro)] if intro else []
+    out = ["".join(_render_one(k, v, lang) for k, v in intro)] if intro else []
     for i, (title, body) in enumerate(sections, 1):
         anchor = _anchor(title)
-        inner = "".join(_render_one(k, v) for k, v in body)
+        inner = "".join(_render_one(k, v, lang) for k, v in body)
         out.append(
             f'<section class="bsec rv" id="{anchor}">'
             f'<div class="bhead"><span class="n">{i:02d}</span><h2>{title}</h2></div>'

@@ -27,6 +27,12 @@ for post in blog/*/ ; do
   mkdir -p "dist/blog/$slug"
   cp "blog/$slug/index.html" "dist/blog/$slug/"
 done
+for post in en/blog/*/ ; do
+  [ -d "$post" ] || continue
+  slug=$(basename "$post")
+  mkdir -p "dist/en/blog/$slug"
+  cp "en/blog/$slug/index.html" "dist/en/blog/$slug/"
+done
 
 cp assets/site.css assets/site.js assets/ai-maturity.css assets/ai-maturity.js \
    assets/whitepaper.js                                         dist/assets/
