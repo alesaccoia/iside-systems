@@ -63,6 +63,26 @@ readPal();
   setTimeout(() => els.forEach(e => e.classList.add("in")), 2500);
 })();
 
+/* ---------------- post table of contents ---------------- */
+(function postToc(){
+  const toc = document.querySelector(".post .ptoc");
+  if (!toc) return;
+  const links = [...toc.querySelectorAll('a[href^="#"]')];
+  const pairs = links.map(link => [link, document.querySelector(link.getAttribute("href"))])
+    .filter(([, heading]) => heading);
+  if (!pairs.length) return;
+  const activate = heading => pairs.forEach(([link, current]) =>
+    link.classList.toggle("active", current === heading));
+  activate(pairs[0][1]);
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visible.length) activate(visible[0].target);
+  }, { rootMargin: "-18% 0px -68% 0px", threshold: 0 });
+  pairs.forEach(([, heading]) => observer.observe(heading));
+
+})();
+
 /* ============================================================
    HERO FIGURE — a fixed geometric construction.
    Drawn once with a left-to-right wipe, then still. No loop.
