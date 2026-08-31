@@ -2206,9 +2206,6 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
           '"author":{"@type":"Person","name":"Alessandro Saccoia"},'
           '"publisher":{"@type":"Organization","name":"Iside Systems SRLS"}}'
           "</script>")
-    hero_image = post.get("hero_image", post.get("og_image"))
-    hero = (f'<figure class="posthero"><img src="{hero_image}" alt="" loading="eager"></figure>'
-            if hero_image else "")
     return (head(L, f'{post["title"]} — Iside Systems', post["dek"], asset, alt_href,
                  f"post-{post['slug']}", post.get("og_image"))
             + ld
@@ -2222,7 +2219,6 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
     <span>{t['updated']} {post['human_date']}</span><span>{post['read']} {t['read']}</span>
     <span class="tags">{B.chips(post['tags'])}</span>
   </div>
-  {hero}
   <div class="pbody">
 {B.render_blocks(post['body'])}
   </div>

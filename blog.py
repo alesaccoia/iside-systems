@@ -176,28 +176,16 @@ def fig_loop():
 
 
 def fig_cost():
-    """Three places to adapt, in order of what they cost."""
-    rows = [("STRATO TOKEN — SKILL", "riscrivere una procedura"),
-            ("STRATO TOKEN — GRAFO DI CONOSCENZA", "aggiungere nodi e archi"),
-            ("STRATO PESI — FINE-TUNING", "riaddestrare parte del modello")]
-    out = ['<svg viewBox="0 0 900 340" class="bfig" role="img" '
+    """Three relative adaptation costs, labelled in the HTML caption."""
+    out = ['<svg viewBox="0 0 900 210" class="bfig" role="img" '
            'aria-label="Tre livelli di adattamento, in ordine di costo">']
-    widths = [90, 150, 780]
+    widths = [230, 410, 820]
     y = 30
-    for i, ((title, sub), w) in enumerate(zip(rows, widths)):
+    for i, w in enumerate(widths):
         acc = ' stroke="var(--acc)"' if i == 2 else ' stroke="currentColor" stroke-opacity=".3"'
         fill = ' fill="var(--acc)" fill-opacity=".12"' if i == 2 else ' fill="none"'
-        out.append(f'<rect x="60" y="{y}" width="{w}" height="66"{fill}{acc}/>')
-        # l'etichetta sta dentro la barra: fuori non c'è spazio quando la barra
-        # occupa quasi tutta la larghezza, come nell'ultima riga
-        out.append(f'<text x="76" y="{y+28}" font-family="var(--mono)" font-size="12.5" '
-                   f'letter-spacing="1.1" fill="{"var(--acc)" if i == 2 else "currentColor"}">{title}</text>')
-        out.append(f'<text x="76" y="{y+50}" font-family="var(--sans)" font-size="13.5" '
-                   f'fill="currentColor" fill-opacity=".6">{sub}</text>')
-        y += 96
-    out.append('<text x="450" y="326" text-anchor="middle" font-family="var(--sans)" font-size="14" '
-               'fill="currentColor" fill-opacity=".6">la larghezza della barra è simbolica: la terza '
-               'costa ordini di grandezza in più, non solo "di più"</text>')
+        out.append(f'<rect x="30" y="{y}" width="{w}" height="40"{fill}{acc}/>')
+        y += 62
     out.append("</svg>")
     return "".join(out)
 
@@ -785,6 +773,11 @@ def _render_one(kind, payload):
         items = "".join(f"<li>{i}</li>" for i in payload)
         return f"<{kind}>{items}</{kind}>"
     if kind == "fig":
+        if payload == "cost":
+            return ('<figure class="bfigwrap bfig-cost">' + FIGURES[payload]() +
+                    '<figcaption class="bfiglegend"><span><b>Skill</b> Riscrivere una procedura</span>'
+                    '<span><b>Grafo di conoscenza</b> Aggiungere nodi e archi</span>'
+                    '<span><b>Fine-tuning</b> Riaddestrare parte del modello</span></figcaption></figure>')
         return f'<figure class="bfigwrap">{FIGURES[payload]()}</figure>'
     if kind == "note":
         return f'<aside class="bnote">{payload}</aside>'
