@@ -1200,8 +1200,10 @@ PATHS = {"home":      ("", "en"),
          "privacy":   ("privacy.html", "en/privacy.html"),
          "blog":      ("blog", "en/blog"),
          "metodo":    ("metodologia.html", "en/methodology.html")}
-PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"en/blog/{p['slug']}")
-              for p in B.published()})
+for _post_it, _post_en in zip(B.published(), B.published("en")):
+    _paths = (f"blog/{_post_it['slug']}", f"en/blog/{_post_en['slug']}")
+    PATHS[f"post-{_post_it['slug']}"] = _paths
+    PATHS[f"post-{_post_en['slug']}"] = _paths
 
 
 def head(L, title, desc, asset, alt_href, self_page, og_image=None):
@@ -2437,13 +2439,13 @@ def write_seo():
     posts = "".join(
         f'  <url>\n    <loc>{SITE}/blog/{p["slug"]}</loc>\n'
         f'    <xhtml:link rel="alternate" hreflang="it" href="{SITE}/blog/{p["slug"]}"/>\n'
-        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p["slug"]}"/>\n'
+        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p_en["slug"]}"/>\n'
         f'    <lastmod>{p["date"]}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
-        f'  <url>\n    <loc>{SITE}/en/blog/{p["slug"]}</loc>\n'
+        f'  <url>\n    <loc>{SITE}/en/blog/{p_en["slug"]}</loc>\n'
         f'    <xhtml:link rel="alternate" hreflang="it" href="{SITE}/blog/{p["slug"]}"/>\n'
-        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p["slug"]}"/>\n'
+        f'    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/blog/{p_en["slug"]}"/>\n'
         f'    <lastmod>{p["date"]}</lastmod>\n    <changefreq>yearly</changefreq>\n    <priority>0.6</priority>\n  </url>\n'
-        for p in B.published())
+        for p, p_en in zip(B.published(), B.published("en")))
     sitemap = sitemap.replace("</urlset>", posts + "</urlset>")
     write("sitemap.xml", sitemap)
 
@@ -2509,15 +2511,16 @@ for _post in B.published():
                     "/chi-sono.html", "/en/blog", "/case-study.html", _post))
 
 _en_blogdir = os.path.join(HERE, "en", "blog")
+_en_live = {p["slug"] for p in B.published("en")}
 if os.path.isdir(_en_blogdir):
     for _name in os.listdir(_en_blogdir):
         _path = os.path.join(_en_blogdir, _name)
-        if os.path.isdir(_path) and _name not in _live:
+        if os.path.isdir(_path) and _name not in _en_live:
             _shutil.rmtree(_path)
-for _post in B.published("en"):
+for _post_it, _post in zip(B.published(), B.published("en")):
     write(f"en/blog/{_post['slug']}/index.html",
           page_post(L_EN, "/assets/", "/en", "/en/projects.html",
-                    "/en/about.html", f"/blog/{_post['slug']}", "/en/case-studies.html", _post))
+                    "/en/about.html", f"/blog/{_post_it['slug']}", "/en/case-studies.html", _post))
 
 for key in ("moire", "algosynth"):
     write(f"{key}.html",    page_lab(L_IT, "assets/", "index.html", "progetti.html", "chi-sono.html",

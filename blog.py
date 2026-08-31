@@ -740,6 +740,7 @@ dict(
 # separate from POSTS lets titles, cadence and terminology read naturally.
 EN_POSTS = {
 "agente-che-dimentica-ogni-notte": dict(
+    slug="building-adaptive-ai-agents",
     human_date="31 August 2026", read=10,
     tags=["AI agents", "Memory", "Architecture"],
     title="Building Adaptive AI Agents: DeepLearning.AI's new course",
