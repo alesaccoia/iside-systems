@@ -141,61 +141,61 @@ def fig_phases():
 def fig_loop():
     """Trace, proposal, human review, skill box — and back into use."""
     return """
-<svg viewBox="0 0 900 300" class="bfig" role="img"
+<svg viewBox="0 0 900 340" class="bfig" role="img"
      aria-label="Dalle tracce alla skill approvata">
   <g fill="none" stroke="currentColor" stroke-opacity=".28">
-    <rect x="20"  y="110" width="190" height="70"/>
-    <rect x="280" y="110" width="190" height="70"/>
-    <rect x="670" y="20"  width="210" height="70"/>
+    <rect x="20"  y="128" width="200" height="84"/>
+    <rect x="290" y="128" width="200" height="84"/>
+    <rect x="660" y="24"  width="220" height="84"/>
   </g>
-  <rect x="280" y="20" width="190" height="70" fill="none" stroke="var(--acc)"/>
-  <rect x="670" y="210" width="210" height="70" fill="none" stroke="currentColor" stroke-opacity=".28"/>
+  <rect x="290" y="24" width="200" height="84" fill="none" stroke="var(--acc)"/>
+  <rect x="660" y="232" width="220" height="84" fill="none" stroke="currentColor" stroke-opacity=".28"/>
   <g fill="none" stroke="currentColor" stroke-opacity=".4">
-    <path d="M210 145h70"/>
-    <path d="M375 110V90"/>
-    <path d="M470 55h200"/>
-    <path d="M775 90v120"/>
+    <path d="M220 170h70"/>
+    <path d="M390 128V108"/>
+    <path d="M490 66h170"/>
+    <path d="M770 108v124"/>
   </g>
-  <g font-family="var(--mono)" font-size="11" letter-spacing="1.1" fill="currentColor">
-    <text x="115" y="140" text-anchor="middle">TRACCE</text>
-    <text x="375" y="140" text-anchor="middle">CANDIDATA</text>
-    <text x="375" y="50"  text-anchor="middle" fill="var(--acc)">PROPOSTA</text>
-    <text x="775" y="50"  text-anchor="middle">REVISIONE UMANA</text>
-    <text x="775" y="240" text-anchor="middle">SKILL BOX</text>
-  </g>
-  <g font-family="var(--sans)" font-size="11.5" fill="currentColor" fill-opacity=".6">
-    <text x="115" y="162" text-anchor="middle">tool call, errori, correzioni</text>
-    <text x="375" y="162" text-anchor="middle">un LLM distilla</text>
-    <text x="775" y="72"  text-anchor="middle">approva o respinge, con un motivo</text>
-    <text x="775" y="262" text-anchor="middle">l'agente la usa da solo</text>
+  <g font-family="var(--mono)" font-size="12.5" letter-spacing="1.2" fill="currentColor">
+    <text x="120" y="164" text-anchor="middle">TRACCE</text>
+    <text x="390" y="164" text-anchor="middle">CANDIDATA</text>
+    <text x="390" y="58"  text-anchor="middle" fill="var(--acc)">PROPOSTA</text>
+    <text x="770" y="58"  text-anchor="middle">REVISIONE UMANA</text>
+    <text x="770" y="266" text-anchor="middle">SKILL BOX</text>
   </g>
   <g font-family="var(--sans)" font-size="13" fill="currentColor" fill-opacity=".6">
-    <text x="450" y="290" text-anchor="middle">l'approvazione trasforma una proposta in comportamento: da lì in poi si ripete da sola</text>
+    <text x="120" y="190" text-anchor="middle">tool call, errori, correzioni</text>
+    <text x="390" y="190" text-anchor="middle">un LLM distilla</text>
+    <text x="770" y="82"  text-anchor="middle">approva o respinge, con un motivo</text>
+    <text x="770" y="290" text-anchor="middle">l'agente la usa da solo</text>
+  </g>
+  <g font-family="var(--sans)" font-size="14" fill="currentColor" fill-opacity=".6">
+    <text x="450" y="328" text-anchor="middle">l'approvazione trasforma una proposta in comportamento: da lì in poi si ripete da sola</text>
   </g>
 </svg>"""
 
 
 def fig_cost():
     """Three places to adapt, in order of what they cost."""
-    rows = [("STRATO DEI GETTONI — SKILL", "riscrivere una procedura"),
-            ("STRATO DEI GETTONI — GRAFO DI CONOSCENZA", "aggiungere nodi e archi"),
-            ("STRATO DEI PESI — FINE-TUNING", "riaddestrare parte del modello")]
-    out = ['<svg viewBox="0 0 900 300" class="bfig" role="img" '
+    rows = [("STRATO TOKEN — SKILL", "riscrivere una procedura"),
+            ("STRATO TOKEN — GRAFO DI CONOSCENZA", "aggiungere nodi e archi"),
+            ("STRATO PESI — FINE-TUNING", "riaddestrare parte del modello")]
+    out = ['<svg viewBox="0 0 900 340" class="bfig" role="img" '
            'aria-label="Tre livelli di adattamento, in ordine di costo">']
     widths = [90, 150, 780]
     y = 30
     for i, ((title, sub), w) in enumerate(zip(rows, widths)):
         acc = ' stroke="var(--acc)"' if i == 2 else ' stroke="currentColor" stroke-opacity=".3"'
         fill = ' fill="var(--acc)" fill-opacity=".12"' if i == 2 else ' fill="none"'
-        out.append(f'<rect x="60" y="{y}" width="{w}" height="56"{fill}{acc}/>')
+        out.append(f'<rect x="60" y="{y}" width="{w}" height="66"{fill}{acc}/>')
         # l'etichetta sta dentro la barra: fuori non c'è spazio quando la barra
         # occupa quasi tutta la larghezza, come nell'ultima riga
-        out.append(f'<text x="76" y="{y+24}" font-family="var(--mono)" font-size="11" '
+        out.append(f'<text x="76" y="{y+28}" font-family="var(--mono)" font-size="12.5" '
                    f'letter-spacing="1.1" fill="{"var(--acc)" if i == 2 else "currentColor"}">{title}</text>')
-        out.append(f'<text x="76" y="{y+44}" font-family="var(--sans)" font-size="12.5" '
+        out.append(f'<text x="76" y="{y+50}" font-family="var(--sans)" font-size="13.5" '
                    f'fill="currentColor" fill-opacity=".6">{sub}</text>')
-        y += 86
-    out.append('<text x="450" y="288" text-anchor="middle" font-family="var(--sans)" font-size="13" '
+        y += 96
+    out.append('<text x="450" y="326" text-anchor="middle" font-family="var(--sans)" font-size="14" '
                'fill="currentColor" fill-opacity=".6">la larghezza della barra è simbolica: la terza '
                'costa ordini di grandezza in più, non solo "di più"</text>')
     out.append("</svg>")
@@ -227,13 +227,13 @@ dict(
          "rilegge il PDF sbagliato, sbaglia di nuovo, e qualcuno deve correggerlo di nuovo."),
    ("p", "Questo scenario è preso quasi parola per parola dal materiale di <i>Building Adaptive "
          "AI Agents</i>, il corso che DeepLearning.AI ha pubblicato con l'esempio di un coding "
-         "agent che ripete lo stesso errore sui test. Ma il meccanismo che descrivono non ha "
-         "niente a che fare col codice: è una domanda su cosa succede alla conoscenza di un "
-         "agente fra una conversazione e la successiva, e vale per un agente che scrive Python "
-         "esattamente come per uno che gestisce rimborsi, contratti o ticket."),
-   ("p", "Un agente senza questo meccanismo non è più economico di uno che ce l'ha. È solo un "
-         "agente che paga lo stesso costo di apprendimento ogni singolo giorno, e nessuno se ne "
-         "accorge perché il costo è distribuito su mille conversazioni invece che concentrato in "
+         "agent che ripete lo stesso errore sui test. Il meccanismo che descrivono riguarda "
+         "però cosa succede alla conoscenza di un agente fra una conversazione e la successiva, "
+         "e vale per un agente che scrive Python esattamente come per uno che gestisce "
+         "rimborsi, contratti o ticket."),
+   ("p", "Un agente senza questo meccanismo paga lo stesso costo di apprendimento ogni "
+         "singolo giorno, e nessuno se ne accorge perché il costo è distribuito su mille "
+         "conversazioni invece che concentrato in "
          "una fattura."),
 
    ("h2", "Tre livelli, non uno"),
@@ -255,8 +255,8 @@ dict(
          "usa un modello per distillarle in una procedura scritta, un file breve che descrive "
          "cosa fare la prossima volta che si presenta lo stesso tipo di richiesta."),
    ("fig", "loop"),
-   ("p", "L'approvazione umana trasforma una proposta in comportamento: non è un controllo di "
-         "qualità che si potrebbe saltare per andare più veloci. Una volta che una skill è "
+   ("p", "L'approvazione umana è il passaggio che conta di più in tutto il meccanismo: "
+         "trasforma una proposta in comportamento. Una volta che una skill è "
          "approvata, l'agente la recupera a ogni richiesta simile, per sempre, finché qualcuno "
          "non la rivede di nuovo. Se una skill sbagliata passa senza controllo, l'errore si "
          "ripete a ogni uso e il danno si accumula."),
@@ -271,13 +271,13 @@ dict(
 
    ("h2", "Il collo di bottiglia non è generare, è trovare"),
    ("p", "Il secondo livello riguarda come è organizzata la conoscenza che l'agente consulta. Il "
-         "corso lo dimostra su un caso concreto — un agente che lavora su una base di codice — ma "
-         "l'osservazione di fondo è più generale: quando la base di conoscenza cresce, il problema "
-         "non è più scrivere la risposta, è trovare i documenti giusti da cui partire. Una ricerca "
-         "per parole chiave trova il documento che contiene il termine cercato, e perde tutti "
-         "quelli collegati che non lo contengono."),
-   ("p", "La soluzione che propongono è costruire un grafo: non solo i documenti, ma le relazioni "
-         "fra loro — cosa fa riferimento a cosa, cosa viene aggiornato insieme, cosa dipende da "
+         "corso lo dimostra su un caso concreto, un agente che lavora su una base di codice, "
+         "ma l'osservazione di fondo vale più in generale: quando la base di conoscenza cresce, "
+         "trovare i documenti giusti da cui partire diventa più difficile che scrivere la "
+         "risposta. Una ricerca per parole chiave trova il documento che contiene il termine "
+         "cercato, e perde tutti quelli collegati che non lo contengono."),
+   ("p", "La soluzione che propongono è costruire un grafo delle relazioni fra i documenti, non "
+         "solo dei documenti: cosa fa riferimento a cosa, cosa viene aggiornato insieme, cosa dipende da "
          "cosa. Nel caso del codice sono import, chiamate di funzione e modifiche fatte nello "
          "stesso commit; nella conoscenza aziendale sono policy che si richiamano a vicenda, "
          "procedure che cambiano insieme, contratti che fanno riferimento allo stesso fornitore. "
@@ -294,9 +294,9 @@ dict(
    ("p", "Sui benchmark del corso, aggiungere questa struttura a un agente che lavora su Django e "
          "su HTTPie ha ridotto il tempo sul compito dell'11-18%, i passi necessari per arrivare "
          "alla prima modifica corretta del 7-36% e i token consumati del 3-16%, a seconda del "
-         "repository. Non sono numeri che si trasferiscono automaticamente a un caso diverso, ma "
-         "la direzione — un agente più veloce e più economico quando la conoscenza è strutturata "
-         "invece che indicizzata piatta — è quella che conta."),
+         "repository. Non sono numeri che si trasferiscono automaticamente a un caso diverso: "
+         "un agente con conoscenza strutturata è più veloce e più economico di uno che cerca su "
+         "un indice piatto, a prescindere dalla percentuale esatta."),
    ("note", "Un grafo cresciuto senza manutenzione peggiora: nel caso di test del corso, circa il "
             "4% dei nodi erano quasi-duplicati al 96% e andavano rimossi prima che il recupero "
             "tornasse affidabile. Vale anche per un grafo di documenti aziendali: due copie della "
@@ -331,12 +331,12 @@ dict(
          "che prepara bozze contrattuali, uno che smista ticket di supporto: tutti e tre hanno "
          "tracce da cui imparare, conoscenza che si può strutturare come grafo invece che come "
          "mucchio di documenti, e in tutti e tre il fine-tuning resta l'eccezione, non la regola."),
-   ("p", "Un'azienda che costruisce un agente interno senza un ciclo di tracce-verso-skill sta "
-         "scegliendo di pagare, ogni giorno, il costo dell'amnesia di martedì. Una che organizza "
-         "la propria conoscenza come una pila di PDF invece che come una rete di riferimenti sta "
-         "chiedendo all'agente di indovinare invece che di cercare. E una che punta dritta al "
-         "fine-tuning per insegnare una regola che cambierà fra tre mesi sta comprando un costo "
-         "fisso per risolvere un problema che un file di testo avrebbe risolto in un pomeriggio."),
+   ("p", "Costruire un agente interno senza un ciclo di tracce-verso-skill significa pagare, "
+         "ogni giorno, il costo dell'amnesia di martedì. Organizzare la sua conoscenza come una "
+         "pila di PDF invece che come una rete di riferimenti gli chiede di indovinare invece "
+         "che di cercare. E puntare dritti al fine-tuning per insegnargli una regola che "
+         "cambierà fra tre mesi vuol dire comprare un costo fisso per risolvere un problema che "
+         "un file di testo avrebbe risolto in un pomeriggio."),
   ]),
 dict(
   slug="tutti-odiano-cookie-banner-europa-divisa-soluzione-digital-omnibus",
