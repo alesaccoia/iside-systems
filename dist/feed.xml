@@ -3,5 +3,25 @@
   <title>Iside Systems — Blog</title>
   <link>https://www.isidesystems.com/blog</link>
   <language>it</language>
-  <description>Quello che imparo mettendo l’AI dentro le organizzazioni: cosa si compra davvero, come si governa, e dove i progetti si incagliano.</description>
+  <description>Osservazioni, ricerche e cose imparate lavorando.</description>
+  <item>
+    <title>Il tuo agente interno dimentica tutto ogni notte</title>
+    <link>https://www.isidesystems.com/blog/agente-che-dimentica-ogni-notte</link>
+    <guid>https://www.isidesystems.com/blog/agente-che-dimentica-ogni-notte</guid>
+    <pubDate>2026-08-31</pubDate>
+    <category>Agenti AI</category>
+    <category>Memoria</category>
+    <category>Architettura</category>
+    <description>DeepLearning.AI ha appena pubblicato un corso sugli agenti adattivi. Il pattern che insegnano — tracce, skill, grafo di conoscenza, e i pesi del modello solo come ultima risorsa — non è specifico per un coding agent. È il modo in cui deve essere costruito qualsiasi agente che lavora dentro un&#x27;azienda, punto.</description>
+  </item>
+  <item>
+    <title>Tutti odiano i cookie banner. È sulla soluzione che l’Europa si sta dividendo</title>
+    <link>https://www.isidesystems.com/blog/tutti-odiano-cookie-banner-europa-divisa-soluzione-digital-omnibus</link>
+    <guid>https://www.isidesystems.com/blog/tutti-odiano-cookie-banner-europa-divisa-soluzione-digital-omnibus</guid>
+    <pubDate>2026-08-31</pubDate>
+    <category>Privacy</category>
+    <category>Advertising</category>
+    <category>Regolazione europea</category>
+    <description>Sul problema c’è un consenso quasi universale. Il conflitto comincia quando bisogna decidere quali attività possono avvenire senza consenso, chi deve trasmettere le preferenze e quale modello economico di Internet si vuole proteggere.</description>
+  </item>
 </channel></rss>
