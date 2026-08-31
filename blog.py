@@ -214,6 +214,8 @@ dict(
   slug="agente-che-dimentica-ogni-notte",
   date="2026-08-31", human_date="31 agosto 2026", read=12,
   tags=["Agenti AI", "Memoria", "Architettura"],
+  og_image="/assets/img/og-adaptive-agents.png",
+  hero_image="/assets/img/og-adaptive-agents.png",
   title="Building Adaptive AI Agents: il nuovo corso su DeepLearning.AI",
   dek="DeepLearning.AI ha appena pubblicato un corso sugli agenti adattivi. Il pattern che "
       "insegnano — tracce, skill, grafo di conoscenza, e i pesi del modello solo come ultima "
@@ -343,6 +345,7 @@ dict(
   date="2026-08-31", human_date="31 agosto 2026", read=15,
   tags=["Privacy", "Advertising", "Regolazione europea"],
   og_image="/assets/img/og-cookie-banner.png",
+  hero_image="/assets/img/og-cookie-banner.png",
   title="Tutti odiano i cookie banner. È sulla soluzione che l’Europa si sta dividendo",
   dek="Sul problema c’è un consenso quasi universale. Il conflitto comincia quando bisogna decidere "
       "quali attività possono avvenire senza consenso, chi deve trasmettere le preferenze e quale "

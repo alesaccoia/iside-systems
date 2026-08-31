@@ -41,7 +41,8 @@ cp assets/img/mark.svg assets/img/favicon-32.png \
    assets/img/alessandro.jpg assets/img/moire.jpg \
    assets/img/algosynth.jpg assets/img/og-priors.png \
    assets/img/og-algosynth.png assets/img/og-ai-maturity.png \
-   assets/img/og-cookie-banner.png                              dist/assets/img/
+   assets/img/og-cookie-banner.png assets/img/og-adaptive-agents.png \
+                                                                  dist/assets/img/
 
 mkdir -p dist/lab
 cp -R lab/moire dist/lab/
