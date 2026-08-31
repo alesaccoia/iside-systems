@@ -217,128 +217,102 @@ dict(
   og_image="/assets/img/og-adaptive-agents.png",
   hero_image="/assets/img/og-adaptive-agents.png",
   title="Building Adaptive AI Agents: il nuovo corso su DeepLearning.AI",
-  dek="DeepLearning.AI ha appena pubblicato un corso sugli agenti adattivi. Il pattern che "
-      "insegnano — tracce, skill, grafo di conoscenza, e i pesi del modello solo come ultima "
-      "risorsa — non è specifico per un coding agent. È il modo in cui deve essere costruito "
-      "qualsiasi agente che lavora dentro un'azienda, punto.",
+  dek="Un agente aziendale non dovrebbe ricominciare da capo a ogni chat. Il corso di "
+      "DeepLearning.AI sugli agenti adattivi mostra un metodo concreto: raccogliere tracce, "
+      "approvare procedure riutilizzabili, strutturare la conoscenza e lasciare i pesi del "
+      "modello per ultimi.",
   body=[
-   ("p", "Lunedì un agente interno prova a rispondere a una richiesta di rimborso spese, scopre "
-         "che la policy in vigore non è quella nel PDF allegato ma quella pubblicata tre mesi fa "
-         "sull'intranet, indaga, trova la versione giusta, risponde bene. Martedì un altro "
-         "collega fa la stessa domanda in una chat nuova. L'agente non ha memoria di lunedì: "
-         "rilegge il PDF sbagliato, sbaglia di nuovo, e qualcuno deve correggerlo di nuovo."),
-   ("p", "Questo scenario è preso quasi parola per parola dal materiale di <i>Building Adaptive "
-         "AI Agents</i>, il corso che DeepLearning.AI ha pubblicato con l'esempio di un coding "
-         "agent che ripete lo stesso errore sui test. Il meccanismo che descrivono riguarda "
-         "però cosa succede alla conoscenza di un agente fra una conversazione e la successiva, "
-         "e vale per un agente che scrive Python esattamente come per uno che gestisce "
-         "rimborsi, contratti o ticket."),
-   ("p", "Un agente senza questo meccanismo paga lo stesso costo di apprendimento ogni "
-         "singolo giorno, e nessuno se ne accorge perché il costo è distribuito su mille "
-         "conversazioni invece che concentrato in "
-         "una fattura."),
+   ("p", "Lunedì un agente interno deve rispondere a una richiesta di rimborso spese. Scopre "
+         "che la policy valida non è nel PDF allegato ma in una versione pubblicata tre mesi "
+         "prima sull'intranet, la trova e risponde bene. Martedì un altro collega fa la stessa "
+         "domanda in una chat nuova. L'agente riparte dal PDF sbagliato e qualcuno deve "
+         "correggerlo di nuovo."),
+   ("p", "Lo scenario viene quasi parola per parola da <i>Building Adaptive AI Agents</i>, il "
+         "corso di DeepLearning.AI che parte da un coding agent capace di ripetere lo stesso "
+         "errore sui test. Il problema non è limitato al codice: riguarda ciò che un agente "
+         "riesce a trattenere fra una conversazione e la successiva, sia che scriva Python, "
+         "gestisca rimborsi o prepari una bozza di contratto."),
+   ("p", "Senza un modo per trattenere e riusare ciò che ha imparato, l'agente paga ogni giorno "
+         "lo stesso costo. Solo che quel costo finisce disperso in centinaia di chat, invece di "
+         "comparire in una fattura."),
 
    ("h2", "Tre livelli, non uno"),
-   ("p", "Il corso distingue tre modi di far migliorare un agente, e li ordina per costo. I primi "
-         "due lavorano sul contesto che l'agente legge prima di rispondere — quello che chiamano "
-         "<b>token space</b>: insegnargli procedure riutilizzabili, e dargli una struttura "
-         "migliore su cui cercare la conoscenza. Il terzo tocca i pesi del modello stesso — il "
-         "<b>weight space</b> — e va trattato come l'ultima opzione, non la prima."),
+   ("p", "Il corso ordina per costo tre modi per far migliorare un agente. I primi due agiscono "
+         "sul contesto che legge prima di rispondere, il <b>token space</b>: procedure "
+         "riutilizzabili e una struttura migliore per cercare conoscenza. Il terzo modifica i "
+         "pesi del modello, il <b>weight space</b>, e conviene considerarlo solo dopo."),
    ("fig", "cost"),
-   ("p", "I primi due livelli si aggiornano scrivendo un file o aggiungendo un nodo a un grafo, "
-         "in minuti. Il terzo richiede addestramento, hardware dedicato e va rifatto ogni volta "
-         "che la policy sottostante cambia — quindi costa, in tempo e in soldi, ordini di "
-         "grandezza in più. Un agente interno che prova prima a modificare il modello per fargli "
-         "seguire una nuova regola aziendale sta risolvendo il problema al livello sbagliato."),
+   ("p", "I primi due livelli si aggiornano in minuti: basta scrivere un file o aggiungere un "
+         "nodo a un grafo. Il terzo richiede addestramento e hardware dedicato; inoltre va "
+         "rifatto quando cambia la policy sottostante. Per insegnare una nuova regola aziendale, "
+         "partire dai pesi del modello significa scegliere il livello più costoso."),
 
    ("h2", "Dalle tracce alla procedura approvata"),
-   ("p", "Il primo livello si chiama <i>skill induction</i>: si registrano le tracce di quello "
-         "che l'agente ha fatto — conversazioni, chiamate a strumenti, errori, correzioni — e si "
-         "usa un modello per distillarle in una procedura scritta, un file breve che descrive "
-         "cosa fare la prossima volta che si presenta lo stesso tipo di richiesta."),
+   ("p", "Il primo livello si chiama <i>skill induction</i>. Si registrano conversazioni, chiamate "
+         "a strumenti, errori e correzioni, poi un modello le condensa in una procedura breve: "
+         "cosa fare quando torna lo stesso tipo di richiesta."),
    ("fig", "loop"),
-   ("p", "L'approvazione umana è il passaggio che conta di più in tutto il meccanismo: "
-         "trasforma una proposta in comportamento. Una volta che una skill è "
-         "approvata, l'agente la recupera a ogni richiesta simile, per sempre, finché qualcuno "
-         "non la rivede di nuovo. Se una skill sbagliata passa senza controllo, l'errore si "
-         "ripete a ogni uso e il danno si accumula."),
-   ("note", "Le tracce sono dati raccolti dal mondo, non dati fidati per definizione. Un'istruzione "
-            "scorretta, o messa lì apposta da qualcuno con un tool call malevolo, può presentarsi "
-            "come una skill candidata. La revisione umana è il punto in cui questo viene fermato "
-            "prima che diventi comportamento permanente — non un passaggio burocratico da saltare "
-            "per velocità."),
-   ("p", "Ogni skill approvata ha anche un responsabile e un motivo scritto, sia per l'approvazione "
-         "sia per il rifiuto: quel motivo è quello che permette al sistema di proporre una versione "
-         "migliore la volta dopo, invece di ripresentare la stessa proposta respinta."),
+   ("p", "La revisione umana decide se quella procedura diventa comportamento. Quando una skill "
+         "viene approvata, l'agente la recupera per ogni richiesta simile finché qualcuno non "
+         "la modifica. Se passa una skill sbagliata, l'errore si replica a ogni uso."),
+   ("note", "Le tracce non sono fonti affidabili per definizione. Un'istruzione sbagliata, o inserita "
+            "apposta con un tool call malevolo, può sembrare una skill candidata. La revisione serve "
+            "a fermarla prima che venga riutilizzata."),
+   ("p", "Ogni skill approvata dovrebbe avere un responsabile e una motivazione scritta, anche "
+         "quando viene respinta. Senza quel contesto il sistema non può migliorare la proposta: "
+         "può solo ripresentarla."),
 
-   ("h2", "Il collo di bottiglia non è generare, è trovare"),
-   ("p", "Il secondo livello riguarda come è organizzata la conoscenza che l'agente consulta. Il "
-         "corso lo dimostra su un caso concreto, un agente che lavora su una base di codice, "
-         "ma l'osservazione di fondo vale più in generale: quando la base di conoscenza cresce, "
-         "trovare i documenti giusti da cui partire diventa più difficile che scrivere la "
-         "risposta. Una ricerca per parole chiave trova il documento che contiene il termine "
-         "cercato, e perde tutti quelli collegati che non lo contengono."),
-   ("p", "La soluzione che propongono è costruire un grafo delle relazioni fra i documenti, non "
-         "solo dei documenti: cosa fa riferimento a cosa, cosa viene aggiornato insieme, cosa dipende da "
-         "cosa. Nel caso del codice sono import, chiamate di funzione e modifiche fatte nello "
-         "stesso commit; nella conoscenza aziendale sono policy che si richiamano a vicenda, "
-         "procedure che cambiano insieme, contratti che fanno riferimento allo stesso fornitore. "
-         "La struttura è la stessa, cambia solo cosa conta come nodo."),
-   ("p", "Il recupero funziona in due passi: si trova il nodo più vicino alla domanda per "
-         "somiglianza semantica, poi si percorre il grafo a partire da lì con un algoritmo di "
-         "ranking — lo stesso principio di PageRank — invece di prendere semplicemente tutto "
-         "quello che sta a un passo di distanza allo stesso peso."),
+   ("h2", "Trovare la conoscenza giusta"),
+   ("p", "Il secondo livello riguarda l'organizzazione della conoscenza consultata dall'agente. "
+         "Il corso lo mostra su una base di codice, ma la dinamica è comune: quando la base "
+         "cresce, trovare il documento da cui partire può richiedere più lavoro che scrivere la "
+         "risposta. La ricerca per parole chiave trova il termine cercato e lascia indietro "
+         "documenti collegati che non lo contengono."),
+   ("p", "La proposta è un grafo di relazioni tra documenti: cosa richiama cosa, cosa si aggiorna "
+         "insieme, cosa dipende da cosa. Nel codice sono import, chiamate di funzione e modifiche "
+         "nello stesso commit. In azienda sono policy collegate, procedure che cambiano insieme e "
+         "contratti riferiti allo stesso fornitore."),
+   ("p", "Il recupero avviene in due passaggi. Prima trova il nodo semanticamente più vicino alla "
+         "domanda; poi percorre il grafo con un algoritmo di ranking simile a PageRank. Così non "
+         "tratta allo stesso modo tutto ciò che è a un passaggio di distanza."),
    ("table", dict(head=["", "Ricerca per parole chiave", "Grafo di conoscenza"], rows=[
       ["Trova ciò che è collegato ma non nominato", "No", "Sì"],
       ["Costo di aggiungere un documento nuovo", "Basso", "Quasi zero"],
       ["Serve deduplicare i quasi-doppioni", "—", "Sì, altrimenti il grafo si sporca"],
       ["Risultato sui compiti multi-hop testati", "Manca il nodo giusto", "Lo trova"]])),
-   ("p", "Sui benchmark del corso, aggiungere questa struttura a un agente che lavora su Django e "
-         "su HTTPie ha ridotto il tempo sul compito dell'11-18%, i passi necessari per arrivare "
-         "alla prima modifica corretta del 7-36% e i token consumati del 3-16%, a seconda del "
-         "repository. Non sono numeri che si trasferiscono automaticamente a un caso diverso: "
-         "un agente con conoscenza strutturata è più veloce e più economico di uno che cerca su "
-         "un indice piatto, a prescindere dalla percentuale esatta."),
-   ("note", "Un grafo cresciuto senza manutenzione peggiora: nel caso di test del corso, circa il "
-            "4% dei nodi erano quasi-duplicati al 96% e andavano rimossi prima che il recupero "
-            "tornasse affidabile. Vale anche per un grafo di documenti aziendali: due copie della "
-            "stessa policy salvate in due cartelle sono rumore, non ridondanza utile."),
+   ("p", "Nei benchmark del corso, il grafo ha ridotto dell'11-18% il tempo sul compito, del "
+         "7-36% i passaggi alla prima modifica corretta e del 3-16% i token, su repository "
+         "Django e HTTPie. Le percentuali non si trasferiscono automaticamente a un'azienda, ma "
+         "spiegano perché un indice piatto smette di bastare quando le relazioni diventano parte "
+         "del problema."),
+   ("note", "Un grafo richiede manutenzione. Nel test del corso, circa il 4% dei nodi era quasi "
+            "duplicato al 96% e andava rimosso prima che il recupero tornasse affidabile. Due copie "
+            "della stessa policy in cartelle diverse sono rumore."),
 
-   ("h2", "I pesi del modello: quando è davvero necessario"),
-   ("p", "Il terzo livello, modificare i pesi del modello, resta nel corso l'ultima carta, non la "
-         "prima. Un modello di base è già stato addestrato su una quantità di testo enorme, e "
-         "aggiungerci sopra conoscenza nuova riscrivendo i pesi è quasi sempre la scelta sbagliata "
-         "rispetto a dargliela come contesto al momento giusto."),
-   ("p", "Dove il fine-tuning ha senso è per due obiettivi diversi dal sapere qualcosa in più: "
-         "far <i>rifiutare</i> all'agente certi argomenti in modo affidabile, e adattargli il "
-         "<i>formato</i> o il tono delle risposte — farlo parlare con la voce del proprio brand, "
-         "per esempio. La tecnica più comune, LoRA, congela i pesi originali e aggiunge due "
-         "matrici piccole che si allenano da sole: si tocca circa l'1% dei parametri del modello, "
-         "non uno di più."),
-   ("p", "Allenarne troppo pochi non basta a spostare il comportamento in modo affidabile. "
-         "Allenarne troppi produce quello che il corso chiama <i>catastrophic forgetting</i>: il "
-         "modello dimentica pezzi di quello che sapeva prima perché i suoi pesi originali vengono "
-         "sovrascritti. Il costo cresce con la dimensione del modello — nel corso, un adattatore "
-         "per un modello da 600 milioni di parametri si allena in un'ora, mentre lo stesso "
-         "esercizio su un modello di frontiera richiederebbe centinaia o migliaia di ore di "
-         "calcolo dedicato."),
-   ("p", "In produzione questo si combina con un instradatore: una richiesta tecnica va al modello "
-         "di base, una che chiede un tono particolare va all'adattatore corrispondente, e i due "
-         "convivono senza che l'utente debba scegliere quale usare."),
+   ("h2", "Quando toccare i pesi del modello"),
+   ("p", "Il terzo livello modifica i pesi del modello. Un modello di base ha già assorbito una "
+         "quantità enorme di testo; per aggiungere una policy o una conoscenza che cambia spesso, "
+         "riscriverne i pesi è di solito più costoso che fornirla come contesto al momento giusto."),
+   ("p", "Il fine-tuning ha senso per compiti diversi: rendere affidabile un rifiuto, oppure "
+         "adattare formato e tono delle risposte. LoRA, la tecnica più comune, congela i pesi "
+         "originali e allena due matrici piccole. Si interviene su circa l'1% dei parametri."),
+   ("p", "Se si allenano troppi parametri, si rischia il <i>catastrophic forgetting</i>: il modello "
+         "perde parte di ciò che sapeva perché i pesi originali vengono sovrascritti. Il costo "
+         "cresce con la dimensione del modello. Nel corso, un adattatore per 600 milioni di "
+         "parametri si allena in un'ora; sul modello di frontiera equivalente servirebbero "
+         "centinaia o migliaia di ore di calcolo."),
+   ("p", "In produzione un instradatore può mandare una richiesta tecnica al modello di base e una "
+         "richiesta di tono all'adattatore corrispondente, senza chiedere all'utente di scegliere."),
 
    ("h2", "Perché questo vale per qualsiasi agente interno"),
-   ("p", "Il corso è costruito su esempi di coding agent perché è lì che esistono benchmark "
-         "pubblici e codice open source da mostrare. Ma niente in questi tre livelli dipende dal "
-         "fatto che il compito sia scrivere software. Un agente che risponde su policy HR, uno "
-         "che prepara bozze contrattuali, uno che smista ticket di supporto: tutti e tre hanno "
-         "tracce da cui imparare, conoscenza che si può strutturare come grafo invece che come "
-         "mucchio di documenti, e in tutti e tre il fine-tuning resta l'eccezione, non la regola."),
-   ("p", "Costruire un agente interno senza un ciclo di tracce-verso-skill significa pagare, "
-         "ogni giorno, il costo dell'amnesia di martedì. Organizzare la sua conoscenza come una "
-         "pila di PDF invece che come una rete di riferimenti gli chiede di indovinare invece "
-         "che di cercare. E puntare dritti al fine-tuning per insegnargli una regola che "
-         "cambierà fra tre mesi vuol dire comprare un costo fisso per risolvere un problema che "
-         "un file di testo avrebbe risolto in un pomeriggio."),
+   ("p", "Il corso usa coding agent perché lì esistono benchmark pubblici e codice open source. I "
+         "tre livelli valgono anche altrove. Un agente che risponde sulle policy HR, prepara "
+         "bozze contrattuali o smista ticket ha tracce da cui imparare e documenti che possono "
+         "essere organizzati come un grafo."),
+   ("p", "Per un agente interno, il punto di partenza è pratico: decidere quali correzioni diventano "
+         "procedure riutilizzabili, chi le approva e dove cerca la conoscenza. Il fine-tuning "
+         "rimane una scelta specifica per comportamento e formato, non il modo normale per "
+         "aggiornare una regola che cambierà fra tre mesi."),
   ]),
 dict(
   slug="tutti-odiano-cookie-banner-europa-divisa-soluzione-digital-omnibus",
