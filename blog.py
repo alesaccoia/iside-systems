@@ -214,7 +214,7 @@ dict(
   slug="agente-che-dimentica-ogni-notte",
   date="2026-08-31", human_date="31 agosto 2026", read=12,
   tags=["Agenti AI", "Memoria", "Architettura"],
-  title="Il tuo agente interno dimentica tutto ogni notte",
+  title="Building Adaptive AI Agents: il nuovo corso su DeepLearning.AI",
   dek="DeepLearning.AI ha appena pubblicato un corso sugli agenti adattivi. Il pattern che "
       "insegnano — tracce, skill, grafo di conoscenza, e i pesi del modello solo come ultima "
       "risorsa — non è specifico per un coding agent. È il modo in cui deve essere costruito "
@@ -794,42 +794,62 @@ def published():
     return [p for p in POSTS if not p.get("draft")]
 
 
+def _anchor(text):
+    return "".join(c.lower() if c.isalnum() else "-" for c in text).strip("-")
+
+
+def _render_one(kind, payload):
+    """One block, at whatever heading level it turns out to sit inside."""
+    if kind == "h3":
+        return f"<h3>{payload}</h3>"
+    if kind == "p":
+        return f"<p>{payload}</p>"
+    if kind in ("ul", "ol"):
+        items = "".join(f"<li>{i}</li>" for i in payload)
+        return f"<{kind}>{items}</{kind}>"
+    if kind == "fig":
+        return f'<figure class="bfigwrap">{FIGURES[payload]()}</figure>'
+    if kind == "note":
+        return f'<aside class="bnote">{payload}</aside>'
+    if kind == "cards":
+        cards = "".join(f'<section class="bcallout"><span>{title}</span><p>{text}</p></section>'
+                        for title, text in payload)
+        return f'<div class="bgrid">{cards}</div>'
+    if kind == "table":
+        head = "".join(f"<th>{h}</th>" for h in payload["head"])
+        rows = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>"
+                       for r in payload["rows"])
+        return (f'<div class="btable"><table><thead><tr>{head}</tr></thead>'
+                f"<tbody>{rows}</tbody></table></div>")
+    return ""
+
+
 # ---------------------------------------------------------------- rendering
+# Every h2 opens a two-column section — a numbered label on the left, sticky
+# on wide screens, the heading and its body on the right — the same rhythm
+# as the section grid on the methodology page. Anything before the first h2
+# is the lead-in and stays a single column, like a magazine standfirst.
 def render_blocks(blocks):
-    out = []
-    for kind, payload in blocks:
-        if kind in ("h2", "h3"):
-            anchor = "".join(c.lower() if c.isalnum() else "-" for c in payload).strip("-")
-            out.append(f'<{kind} id="{anchor}">{payload}</{kind}>')
-        elif kind == "p":
-            out.append(f"<p>{payload}</p>")
-        elif kind in ("ul", "ol"):
-            items = "".join(f"<li>{i}</li>" for i in payload)
-            out.append(f"<{kind}>{items}</{kind}>")
-        elif kind == "fig":
-            out.append(f'<figure class="bfigwrap">{FIGURES[payload]()}</figure>')
-        elif kind == "note":
-            out.append(f'<aside class="bnote">{payload}</aside>')
-        elif kind == "cards":
-            cards = "".join(f'<section class="bcallout"><span>{title}</span><p>{text}</p></section>'
-                            for title, text in payload)
-            out.append(f'<div class="bgrid">{cards}</div>')
-        elif kind == "table":
-            head = "".join(f"<th>{h}</th>" for h in payload["head"])
-            rows = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>"
-                           for r in payload["rows"])
-            out.append(f'<div class="btable"><table><thead><tr>{head}</tr></thead>'
-                       f"<tbody>{rows}</tbody></table></div>")
-    return "\n".join(out)
-
-
-def toc(blocks):
-    items = []
+    intro, sections = [], []
     for kind, payload in blocks:
         if kind == "h2":
-            anchor = "".join(c.lower() if c.isalnum() else "-" for c in payload).strip("-")
-            items.append(f'<a href="#{anchor}">{payload}</a>')
-    return "".join(items)
+            sections.append((payload, []))
+        elif sections:
+            sections[-1][1].append((kind, payload))
+        else:
+            intro.append((kind, payload))
+
+    out = ["".join(_render_one(k, v) for k, v in intro)] if intro else []
+    for i, (title, body) in enumerate(sections, 1):
+        anchor = _anchor(title)
+        inner = "".join(_render_one(k, v) for k, v in body)
+        out.append(
+            f'<section class="bsec rv" id="{anchor}">'
+            f'<div class="bhead"><span class="n">{i:02d}</span><h2>{title}</h2></div>'
+            f'<div class="bcol">{inner}</div>'
+            f"</section>"
+        )
+    return "\n".join(out)
 
 
 def chips(tags):

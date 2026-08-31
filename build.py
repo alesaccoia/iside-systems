@@ -1204,13 +1204,13 @@ PATHS.update({f"post-{p['slug']}": (f"blog/{p['slug']}", f"blog/{p['slug']}")
               for p in B.published()})
 
 
-def head(L, title, desc, asset, alt_href, self_page):
+def head(L, title, desc, asset, alt_href, self_page, og_image=None):
     it_path, en_path = PATHS[self_page]
     lang = L["lang"]
     url = SITE + "/" + (it_path if lang == "it" else en_path)
     og_locale = "it_IT" if lang == "it" else "en_GB"
     og_alt = "en_GB" if lang == "it" else "it_IT"
-    img = SITE + "/assets/img/og-image.png"
+    img = SITE + (og_image or "/assets/img/og-image.png")
     person = ("Alessandro Saccoia — strategia dei dati, AI Adoption, operations di marketing"
               if lang == "it" else
               "Alessandro Saccoia — data strategy, AI adoption, marketing operations")
@@ -2162,11 +2162,14 @@ def page_blog(L, asset, home, projects, about, alt_href, cases):
     rows = ""
     for post in B.published():
         rows += f"""    <a class="bcard rv" href="/blog/{post['slug']}">
-      <div class="meta">{post['human_date']} · {post['read']} {t['read']}</div>
-      <h2>{post['title']}</h2>
-      <p>{post['dek']}</p>
-      <div class="tags">{B.chips(post['tags'])}</div>
-      <span class="go">{t['more']} →</span>
+      <div class="bck"><span class="meta">{post['human_date']}</span>
+        <span class="meta">{post['read']} {t['read']}</span></div>
+      <div class="bcb">
+        <h2>{post['title']}</h2>
+        <p>{post['dek']}</p>
+        <div class="tags">{B.chips(post['tags'])}</div>
+        <span class="go">{t['more']} →</span>
+      </div>
     </a>
 """
     note = f'<p class="meta" style="margin-top:22px">{t["note"]}</p>' if L["lang"] == "en" else ""
@@ -2204,7 +2207,7 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
           '"publisher":{"@type":"Organization","name":"Iside Systems SRLS"}}'
           "</script>")
     return (head(L, f'{post["title"]} — Iside Systems', post["dek"], asset, alt_href,
-                 f"post-{post['slug']}")
+                 f"post-{post['slug']}", post.get("og_image"))
             + ld
             + header(L, asset, home, projects, about, "blog", alt_href, cases)
             + f"""
@@ -2216,7 +2219,6 @@ def page_post(L, asset, home, projects, about, alt_href, cases, post):
     <span>{t['updated']} {post['human_date']}</span><span>{post['read']} {t['read']}</span>
     <span class="tags">{B.chips(post['tags'])}</span>
   </div>
-  <nav class="ptoc"><span>{t['toc']}</span>{B.toc(post['body'])}</nav>
   <div class="pbody">
 {B.render_blocks(post['body'])}
   </div>
