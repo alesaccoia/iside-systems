@@ -1,39 +1,20 @@
-# iside.systems
+# isidesystems.com
 
-Static bilingual site for Iside Systems SRLS. No framework, no dependencies,
-no build step in production — Vercel serves `dist/` as-is.
+Single static page for Iside Systems SRLS, in English. No framework, no dependencies, no build step: Vercel serves `public/` as-is.
 
-    /            Italian   index.html · progetti.html · chi-sono.html
-    /en/         English   index.html · projects.html · about.html
-
-## Layout
-
-    build.py              generates all six pages; every string lives here
-    deploy.sh             runs build.py, then copies only publishable files into dist/
-    assets/site.css       shared stylesheet (light + dark)
-    assets/site.js        shared behaviour (figures, filters, theme, consent)
-    assets/img/           mark, favicons, social card, portrait
-    assets/img/make-assets.py   regenerates the raster icons and the OG card
-    dist/                 what Vercel serves — generated, do not edit by hand
+    public/index.html     the whole site: copy, styles and script inline
+    public/assets/        favicons (winged disk), self-hosted Inter (OFL)
+    api/contact.js        contact form endpoint (Mailjet), the only server code
+    brand/                logo sources, not published
+    vercel.json           serves public/, redirects every old URL to /
 
 ## Changing the site
 
-Copy lives in the `L_IT` / `L_EN` dictionaries in `build.py`, projects in the
-`PROJECTS` list. Edit there, then:
-
-    ./deploy.sh
-    git add -A && git commit -m "..." && git push
-
-Editing the HTML directly works until the next build overwrites it.
-
-Domain and Google Tag Manager id are the `SITE` and `GTM` constants at the top
-of `build.py`.
+Edit `public/index.html`, then commit and push: Vercel deploys `main`.
 
 ## Notes
 
-- Consent Mode v2: everything is denied until the visitor accepts in the
-  cookie bar. GTM loads either way but writes nothing without consent.
-- The contact form has no backend: it opens the visitor's mail client with the
-  message prefilled. Point it at an endpoint if that changes.
-- Figures are drawn on canvas from a fixed seed, so they look identical on
-  every visit. Nothing animates except the project thumbnails, gently.
+- Google Tag Manager (`GTM-584NQHC3`) loads with Consent Mode v2 set to denied for every purpose and nothing ever grants it: Google Ads tags send cookieless pings only, no cookie is set, so there is no cookie bar. Granting any consent type requires adding one. The font is served from this domain.
+- A successful form submission pushes `contact_sent` to the dataLayer, for a conversion trigger in GTM.
+- The contact form posts to `/api/contact`. Mailjet credentials live in Vercel environment variables (see `.env.example`), never in the repository.
+- The previous multi-page site (blog, case studies, labs, AI Maturity Check) is in the git history before the `pagina-unica` branch.

@@ -1,5 +1,0 @@
-file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-advisory/source-slides/ai-advisory-1x1-15s-1.mp4'
-file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-advisory/source-slides/ai-advisory-1x1-15s-2.mp4'
-file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-advisory/source-slides/ai-advisory-1x1-15s-3.mp4'
-file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-advisory/source-slides/ai-advisory-1x1-15s-4.mp4'
-file '/tmp/iside-site-AI4SYo/site/campaign-assets/ai-advisory/source-slides/ai-advisory-1x1-15s-5.mp4'

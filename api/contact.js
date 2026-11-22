@@ -15,7 +15,7 @@
 
 const SENDER = "Alessandro — Iside Systems";
 
-const LIMITS = { name: 120, email: 160, organisation: 160, topic: 120, message: 6000 };
+const LIMITS = { name: 120, email: 160, message: 6000 };
 
 function clean(value, max) {
   return String(value ?? "").trim().slice(0, max);
@@ -25,313 +25,27 @@ function looksLikeEmail(value) {
   return /^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(value);
 }
 
-
-/* ------------------------------------------------------------------
-   AI Maturity Check: the same report, as an HTML mail.
-
-   The page sends structured fields, never markup: everything below is
-   escaped and rendered here, so the endpoint cannot be used to post
-   arbitrary HTML through Mailjet.
-   ------------------------------------------------------------------ */
-const BG = "#0e0e11", INK = "#eceae4", DIM = "#a6a3a9", ACC = "#ff4a2b",
-      LINE = "#2a2a30";
-
-function esc(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function items(list, max) {
-  return (Array.isArray(list) ? list : []).slice(0, max).map((row, i) => `
-      <tr><td style="padding:14px 0;border-bottom:1px solid ${LINE}">
-        <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;color:${ACC}">
-          ${String(i + 1).padStart(2, "0")}</div>
-        <div style="font:500 17px Helvetica,Arial,sans-serif;color:${INK};margin:6px 0 4px">
-          ${esc(clean(row && row.title, 160))}</div>
-        <div style="font:14px/1.6 Helvetica,Arial,sans-serif;color:${DIM}">
-          ${esc(clean(row && row.body, 400))}</div>
-      </td></tr>`).join("");
-}
-
-function axesRows(axes) {
-  return (Array.isArray(axes) ? axes : []).slice(0, 8).map(a => {
-    const value = Math.max(0, Math.min(100, Number(a && a.value) || 0));
-    return `
-      <tr>
-        <td style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.12em;color:${DIM};
-                   padding:7px 14px 7px 0;white-space:nowrap">${esc(clean(a && a.name, 40))}</td>
-        <td style="width:100%;padding:7px 0">
-          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
-            <tr><td style="background:#1c1c22;height:8px">
-              <table role="presentation" cellpadding="0" cellspacing="0" style="width:${value}%">
-                <tr><td style="background:${ACC};height:8px"></td></tr>
-              </table>
-            </td></tr>
-          </table>
-        </td>
-        <td style="font:600 12px 'SFMono-Regular',Menlo,monospace;color:${INK};padding:7px 0 7px 14px">
-          ${value}</td>
-      </tr>`;
-  }).join("");
-}
-
-
-function answerRows(answers) {
-  return (Array.isArray(answers) ? answers : []).slice(0, 30).map(row => `
-      <tr><td style="padding:11px 0;border-bottom:1px solid ${LINE}">
-        <div style="font:13px/1.5 Helvetica,Arial,sans-serif;color:${DIM}">
-          ${esc(clean(row && row.q, 200))}</div>
-        <div style="font:500 15px/1.5 Helvetica,Arial,sans-serif;color:${INK};margin-top:3px">
-          ${esc(clean(row && row.a, 400))}</div>
-      </td></tr>`).join("");
-}
-
-function reportHtml(report, { name, forOwner, contact }) {
-  const score = Math.max(0, Math.min(100, Number(report.score) || 0));
-  const hello = forOwner
-    ? `Nuova richiesta dall’AI Maturity Check.`
-    : `Ciao ${esc(name.split(" ")[0] || name)}, ecco la tua mappa.`;
-  const closing = forOwner
-    ? `Rispondi a questa mail per scrivere direttamente a ${esc(name)}.`
-    : `Ti scrivo io a breve, di persona, per dirti da dove partirei nel tuo caso.
-       Se nel frattempo vuoi anticiparmi qualcosa, rispondi pure a questa mail.`;
-  // without the charset an email client reads the accents as latin-1 mojibake
-  return `<!doctype html><html lang="it"><head><meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>La tua mappa di maturità AI</title></head>
-  <body style="margin:0;background:${BG}">
-  <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:${BG}">
-    <tr><td align="center" style="padding:32px 18px 56px">
-      <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px">
-        <tr><td style="padding-bottom:26px;border-bottom:1px solid ${LINE}">
-          <span style="display:inline-block;width:22px;height:22px;border:2px solid ${INK};
-                       vertical-align:middle"></span>
-          <span style="font:700 12px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
-                       color:${INK};padding-left:10px;vertical-align:middle">ISIDE SYSTEMS</span>
-          <span style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
-                       color:${DIM};float:right;padding-top:5px">AI MATURITY CHECK</span>
-        </td></tr>
-
-        <tr><td style="padding:34px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${ACC}">
-            ${esc(hello)}</div>
-          <h1 style="font:600 30px/1.1 Helvetica,Arial,sans-serif;color:${INK};letter-spacing:-.02em;
-                     margin:14px 0 0">${esc(clean(report.title, 200))}</h1>
-          <p style="font:16px/1.65 Helvetica,Arial,sans-serif;color:${DIM};margin:16px 0 0">
-            ${esc(clean(report.summary, 1200))}</p>
-        </td></tr>
-
-        <tr><td style="padding:30px 0 6px">
-          <table role="presentation" cellpadding="0" cellspacing="0"
-                 style="width:100%;border:1px solid ${LINE}">
-            <tr><td style="padding:22px 22px 8px">
-              <span style="font:600 44px Helvetica,Arial,sans-serif;color:${INK};
-                           letter-spacing:-.04em">${score}</span>
-              <span style="font:600 11px 'SFMono-Regular',Menlo,monospace;color:${DIM};
-                           letter-spacing:.14em;padding-left:8px">/100 PRONTEZZA</span>
-            </td></tr>
-            <tr><td style="padding:6px 22px 22px">
-              <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
-                ${axesRows(report.axes)}
-              </table>
-            </td></tr>
-          </table>
-        </td></tr>
-
-        <tr><td style="padding:34px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
-                      padding-bottom:6px">QUICK WIN / PROSSIMI 90 GIORNI</div>
-          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
-            ${items(report.wins, 8)}
-          </table>
-        </td></tr>
-
-        <tr><td style="padding:30px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
-                      padding-bottom:6px">FORMAZIONE</div>
-          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
-            ${items(report.training, 4)}
-          </table>
-        </td></tr>
-
-        <tr><td style="padding:30px 0 0">
-          <div style="border-left:2px solid ${ACC};padding:4px 0 4px 16px">
-            <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;
-                        color:${DIM}">IL PRIMO PASSO</div>
-            <p style="font:17px/1.6 Helvetica,Arial,sans-serif;color:${INK};margin:10px 0 0">
-              ${esc(clean(report.advice, 600))}</p>
-          </div>
-        </td></tr>
-
-        ${forOwner ? `
-        <tr><td style="padding:34px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
-                      padding-bottom:6px">TUTTE LE RISPOSTE</div>
-          <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%">
-            ${answerRows(report.answers)}
-          </table>
-        </td></tr>
-        <tr><td style="padding:26px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${DIM};
-                      padding-bottom:8px">CONTATTO</div>
-          <div style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${INK}">
-            ${esc(name)}<br>
-            <a href="mailto:${esc(contact && contact.email)}" style="color:${ACC};text-decoration:none">
-              ${esc(contact && contact.email)}</a><br>
-            <span style="color:${DIM}">${esc(clean(contact && contact.page, 200))}</span>
-          </div>
-        </td></tr>` : ""}
-
-        <tr><td style="padding:34px 0 0;border-top:1px solid ${LINE}">
-          <p style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:22px 0 0">
-            ${closing}</p>
-          <p style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;color:${DIM};
-                    margin:26px 0 0">
-            ALESSANDRO SACCOIA · ISIDE SYSTEMS SRLS · MILANO<br>
-            <a href="https://www.isidesystems.com" style="color:${ACC};text-decoration:none">
-              isidesystems.com</a>
-          </p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table></body></html>`;
-}
-
-function reportText(report, withAnswers) {
-  const rows = [clean(report.title, 200), "", clean(report.summary, 1200), "",
-    `Prontezza: ${Math.round(Number(report.score) || 0)}/100`];
-  (report.axes || []).forEach(a => rows.push(`  ${clean(a.name, 40)}: ${Math.round(Number(a.value) || 0)}`));
-  rows.push("", "QUICK WIN / PROSSIMI 90 GIORNI");
-  (report.wins || []).forEach((w, i) => rows.push(`  ${i + 1}. ${clean(w.title, 160)} — ${clean(w.body, 400)}`));
-  rows.push("", "FORMAZIONE");
-  (report.training || []).forEach(w => rows.push(`  - ${clean(w.title, 160)} — ${clean(w.body, 400)}`));
-  rows.push("", `IL PRIMO PASSO: ${clean(report.advice, 600)}`);
-  if (withAnswers && Array.isArray(report.answers)) {
-    rows.push("", "TUTTE LE RISPOSTE");
-    report.answers.forEach(a => rows.push(`  ${clean(a.q, 200)} -> ${clean(a.a, 400)}`));
-  }
-  return rows.join("\n");
-}
-
-/* ------------------------------------------------------------------
-   Whitepaper: the page is a preview, the PDF goes out by mail. The file
-   is fetched from the site itself so the function stays a single file.
-   ------------------------------------------------------------------ */
-const PDF_PATH = "/assets/doc/iside-systems-whitepaper-ai-organizational-development.pdf";
-const PDF_NAME = "Iside Systems — AI and Organizational Development.pdf";
-// SITE_URL lets a local run point the attachment at a local copy of the file
-const SITE = process.env.SITE_URL || "https://www.isidesystems.com";
-
-const WP_COPY = {
-  it: {
-    hello: (first) => `Ciao ${first}, eccolo.`,
-    title: "AI &amp; Organizational Development",
-    sub: "Progettare la tecnologia dentro il lavoro.",
-    body: "Il PDF è allegato a questa mail, e il link qui sotto funziona lo stesso se "
-        + "l'allegato non ti arriva. Otto pagine su cultura, diagnosi, sviluppo delle "
-        + "persone e design dei sistemi intelligenti.",
-    cta: "Scarica il PDF",
-    close: "Se vuoi discuterne su un caso concreto, rispondi a questa mail, leggo io.",
-  },
-  en: {
-    hello: (first) => `Hi ${first}, here it is.`,
-    title: "AI &amp; Organizational Development",
-    sub: "Designing the technology inside the work.",
-    body: "The PDF is attached to this mail, and the link below still works if the "
-        + "attachment does not reach you. Eight pages, in Italian, on culture, diagnosis, "
-        + "developing people and the design of intelligent systems.",
-    cta: "Download the PDF",
-    close: "To go through it on a concrete case, reply to this mail and it reaches me.",
-  },
-};
-
-function whitepaperHtml(lang, first) {
-  const c = WP_COPY[lang] || WP_COPY.it;
-  const url = SITE + PDF_PATH;
-  return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${c.title}</title></head>
-  <body style="margin:0;background:${BG}">
-  <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;background:${BG}">
-    <tr><td align="center" style="padding:32px 18px 56px">
-      <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px">
-        <tr><td style="padding-bottom:26px;border-bottom:1px solid ${LINE}">
-          <span style="display:inline-block;width:22px;height:22px;border:2px solid ${INK};
-                       vertical-align:middle"></span>
-          <span style="font:700 12px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
-                       color:${INK};padding-left:10px;vertical-align:middle">ISIDE SYSTEMS</span>
-          <span style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
-                       color:${DIM};float:right;padding-top:5px">WHITEPAPER</span>
-        </td></tr>
-        <tr><td style="padding:34px 0 0">
-          <div style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.16em;color:${ACC}">
-            ${esc(c.hello(first))}</div>
-          <h1 style="font:600 29px/1.15 Helvetica,Arial,sans-serif;color:${INK};letter-spacing:-.02em;
-                     margin:14px 0 0">${c.title}</h1>
-          <p style="font:500 18px/1.5 Helvetica,Arial,sans-serif;color:${ACC};margin:10px 0 0">
-            ${c.sub}</p>
-          <p style="font:16px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:18px 0 0">
-            ${c.body}</p>
-        </td></tr>
-        <tr><td style="padding:28px 0 0">
-          <a href="${url}" style="display:inline-block;background:${INK};color:${BG};
-             font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;
-             padding:14px 22px;text-decoration:none">${c.cta.toUpperCase()} &#8594;</a>
-        </td></tr>
-        <tr><td style="padding:34px 0 0;border-top:1px solid ${LINE}">
-          <p style="font:15px/1.7 Helvetica,Arial,sans-serif;color:${DIM};margin:22px 0 0">
-            ${esc(c.close)}</p>
-          <p style="font:600 11px 'SFMono-Regular',Menlo,monospace;letter-spacing:.14em;color:${DIM};
-                    margin:26px 0 0">
-            ALESSANDRO SACCOIA · ISIDE SYSTEMS SRLS · MILANO<br>
-            <a href="${SITE}" style="color:${ACC};text-decoration:none">isidesystems.com</a>
-          </p>
-        </td></tr>
-      </table>
-    </td></tr>
-  </table></body></html>`;
-}
-
-// Attaching the file is worth one extra request; if it fails the mail still
-// carries the link, so the person is never left without the document.
-async function pdfAttachment() {
-  try {
-    const r = await fetch(SITE + PDF_PATH);
-    if (!r.ok) throw new Error(String(r.status));
-    const buf = Buffer.from(await r.arrayBuffer());
-    if (buf.length > 12 * 1024 * 1024) throw new Error("too_large");
-    return [{ ContentType: "application/pdf", Filename: PDF_NAME,
-              Base64Content: buf.toString("base64") }];
-  } catch (err) {
-    console.error("whitepaper attachment", err);
-    return null;
-  }
-}
-
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ ok: false, error: "method_not_allowed" });
   }
 
-  const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+  let body;
+  try {
+    body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
+  } catch {
+    return res.status(400).json({ ok: false, error: "invalid_input" });
+  }
 
   // Honeypot: a real person never fills a field they cannot see.
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
 
   const name = clean(body.name, LIMITS.name);
   const email = clean(body.email, LIMITS.email);
-  const organisation = clean(body.organisation, LIMITS.organisation);
-  const topic = clean(body.topic, LIMITS.topic);
   const message = clean(body.message, LIMITS.message);
 
-  const whitepaper = body.whitepaper === true;
-  const lang = clean(body.lang, 4) === "en" ? "en" : "it";
-  const optin = body.optin === true;
-
-  if (!name || !email || !looksLikeEmail(email) || (!message && !whitepaper)) {
+  if (!name || !looksLikeEmail(email) || !message) {
     return res.status(400).json({ ok: false, error: "invalid_input" });
   }
 
@@ -340,71 +54,21 @@ export default async function handler(req, res) {
   const from = process.env.MJ_FROM;
   const to = process.env.MJ_TO || from;
 
-  // Without credentials the form must not pretend it worked: the client falls
-  // back to opening a mail client when it sees this.
+  // Without credentials the form must not pretend it worked.
   if (!key || !secret || !from) {
     return res.status(503).json({ ok: false, error: "not_configured" });
   }
 
-  const lines = [
-    message,
-    "",
-    "—",
-    `Nome: ${name}`,
-    organisation ? `Organizzazione: ${organisation}` : null,
-    `Email: ${email}`,
-    topic ? `Argomento: ${topic}` : null,
-    `Pagina: ${clean(body.page, 300) || "—"}`,
-    whitepaper ? `Consenso comunicazioni: ${optin ? "sì" : "no"}` : null,
-  ].filter(Boolean);
-
-  // The maturity check sends its report as structured fields; everything else
-  // is the plain enquiry form.
-  const report = body.report && typeof body.report === "object" ? body.report : null;
-
-  const messages = [{
-    From: { Email: from, Name: SENDER },
-    To: [{ Email: to }],
-    ReplyTo: { Email: email, Name: name },
-    Subject: report ? `AI Maturity Check — ${name}`
-           : whitepaper ? `Whitepaper — ${name}${optin ? " (opt-in)" : ""}`
-                    : `isidesystems.com — ${topic || "richiesta"} — ${name}`,
-    TextPart: report ? `${lines.join("\n")}\n\n${reportText(report, true)}` : lines.join("\n"),
-    ...(report ? { HTMLPart: reportHtml(report, { name, forOwner: true,
-                                                  contact: { email, page: clean(body.page, 300) } }) } : {}),
-  }];
-
-  // and the person who filled it in gets their own copy
-  if (report) {
-    messages.push({
+  const payload = {
+    Messages: [{
       From: { Email: from, Name: SENDER },
-      To: [{ Email: email, Name: name }],
-      ReplyTo: { Email: to },
-      Subject: "AI Maturity Check — Iside Systems",
-      TextPart: `${reportText(report)}\n\nTi scrivo io a breve, di persona.`,
-      HTMLPart: reportHtml(report, { name, forOwner: false }),
-    });
-  }
-
-  if (whitepaper) {
-    const first = name.split(" ")[0] || name;
-    const attachments = await pdfAttachment();
-    messages.push({
-      From: { Email: from, Name: SENDER },
-      To: [{ Email: email, Name: name }],
-      ReplyTo: { Email: to },
-      Subject: lang === "en" ? "The whitepaper — AI & Organizational Development"
-                             : "Il whitepaper — AI & Organizational Development",
-      TextPart: (lang === "en"
-        ? `Hi ${first}, the whitepaper is attached, and it is also here:`
-        : `Ciao ${first}, il whitepaper è in allegato, e lo trovi anche qui:`)
-        + `\n${SITE}${PDF_PATH}\n\nAlessandro Saccoia — Iside Systems`,
-      HTMLPart: whitepaperHtml(lang, first),
-      ...(attachments ? { Attachments: attachments } : {}),
-    });
-  }
-
-  const payload = { Messages: messages };
+      To: [{ Email: to }],
+      ReplyTo: { Email: email, Name: name },
+      Subject: `isidesystems.com — ${name}`,
+      TextPart: [message, "", "—", `Nome: ${name}`, `Email: ${email}`,
+                 `Lingua: ${clean(body.lang, 4) === "en" ? "en" : "it"}`].join("\n"),
+    }],
+  };
 
   try {
     const auth = Buffer.from(`${key}:${secret}`).toString("base64");

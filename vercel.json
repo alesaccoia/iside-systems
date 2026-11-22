@@ -1,15 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "./deploy.sh",
-  "outputDirectory": "dist",
+  "buildCommand": "",
+  "outputDirectory": "public",
   "trailingSlash": false,
   "cleanUrls": false,
   "redirects": [
     {
-      "source": "/ai-maturity.html",
-      "destination": "/ai-maturity",
-      "permanent": true
+      "source": "/((?!api/|assets/|robots\\.txt$).+)",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }
